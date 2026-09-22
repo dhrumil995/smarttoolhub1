@@ -77,6 +77,17 @@ function getGenAI(): GoogleGenAI | null {
   return genAIClient;
 }
 
+// Timeout wrapper for resilient AI generation with fallback
+async function callGeminiWithTimeout<T>(promise: Promise<T>, timeoutMs = 8000): Promise<T> {
+  let timer: NodeJS.Timeout | undefined;
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error('AI generation timed out')), timeoutMs);
+  });
+  return Promise.race([promise, timeoutPromise]).finally(() => {
+    if (timer) clearTimeout(timer);
+  });
+}
+
 // Health check endpoint
 app.get('/api/health', (req: Request, res: Response) => {
   res.json({
@@ -200,14 +211,17 @@ RESPOND WITH VALID JSON ONLY (no markdown formatting, no code fences):
 }`;
 
       try {
-        const response = await ai.models.generateContent({
-          model: 'gemini-3.8-flash',
-          contents: prompt,
-          config: {
-            responseMimeType: 'application/json',
-            temperature: 0.2,
-          },
-        });
+        const response = await callGeminiWithTimeout(
+          ai.models.generateContent({
+            model: 'gemini-3.8-flash',
+            contents: prompt,
+            config: {
+              responseMimeType: 'application/json',
+              temperature: 0.2,
+            },
+          }),
+          7000
+        );
 
         const responseText = response.text;
         if (responseText) {
@@ -360,19 +374,26 @@ RESPOND WITH VALID JSON ONLY (no markdown formatting, no code fences):
   "officialAdvice": "Apple official recommendations regarding this subsystem."
 }`;
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.8-flash',
-        contents: prompt,
-        config: {
-          responseMimeType: 'application/json',
-          temperature: 0.1,
-        },
-      });
+      try {
+        const response = await callGeminiWithTimeout(
+          ai.models.generateContent({
+            model: 'gemini-3.8-flash',
+            contents: prompt,
+            config: {
+              responseMimeType: 'application/json',
+              temperature: 0.1,
+            },
+          }),
+          7000
+        );
 
-      const responseText = response.text;
-      if (responseText) {
-        const parsed = JSON.parse(responseText);
-        return res.json({ success: true, diagnosis: parsed, aiEngine: 'gemini-3.8-flash' });
+        const responseText = response.text;
+        if (responseText) {
+          const parsed = JSON.parse(responseText);
+          return res.json({ success: true, diagnosis: parsed, aiEngine: 'gemini-3.8-flash' });
+        }
+      } catch (geminiErr: any) {
+        console.warn('Gemini diagnosis temporary error, falling back to Pro heuristic engine:', geminiErr?.message);
       }
     }
 
@@ -455,19 +476,26 @@ RESPOND WITH VALID JSON ONLY (no markdown formatting, no code fences):
   "safetyNotes": "Security notes regarding macOS permissions (e.g. Accessibility or Automation prompt)."
 }`;
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.8-flash',
-        contents: prompt,
-        config: {
-          responseMimeType: 'application/json',
-          temperature: 0.2,
-        },
-      });
+      try {
+        const response = await callGeminiWithTimeout(
+          ai.models.generateContent({
+            model: 'gemini-3.8-flash',
+            contents: prompt,
+            config: {
+              responseMimeType: 'application/json',
+              temperature: 0.2,
+            },
+          }),
+          7000
+        );
 
-      const responseText = response.text;
-      if (responseText) {
-        const parsed = JSON.parse(responseText);
-        return res.json({ success: true, script: parsed, aiEngine: 'gemini-3.8-flash' });
+        const responseText = response.text;
+        if (responseText) {
+          const parsed = JSON.parse(responseText);
+          return res.json({ success: true, script: parsed, aiEngine: 'gemini-3.8-flash' });
+        }
+      } catch (geminiErr: any) {
+        console.warn('Gemini script generator temporary error, falling back to Pro engine:', geminiErr?.message);
       }
     }
 
@@ -533,7 +561,7 @@ function loadDodoSettings(): DodoSettings {
   }
 
   const apiKey = (process.env.DODO_PAYMENTS_API_KEY || fileSettings.apiKey || '').trim();
-  const mode = ((fileSettings.mode || process.env.DODO_PAYMENTS_MODE || 'test').toLowerCase() === 'live' ? 'live' : 'test') as 'test' | 'live';
+  const mode = ((fileSettings.mode || process.env.DODO_PAYMENTS_MODE || 'live').toLowerCase() === 'test' ? 'test' : 'live') as 'test' | 'live';
   const productIdLifetime = (fileSettings.productIdLifetime || process.env.DODO_PAYMENTS_PRODUCT_ID_LIFETIME || '').trim();
   const productIdYearly = (fileSettings.productIdYearly || process.env.DODO_PAYMENTS_PRODUCT_ID_YEARLY || '').trim();
   const webhookSecret = (fileSettings.webhookSecret || process.env.DODO_PAYMENTS_WEBHOOK_SECRET || '').trim();
@@ -545,7 +573,7 @@ function saveDodoSettings(settings: Partial<DodoSettings>): DodoSettings {
   const current = loadDodoSettings();
   const updated: DodoSettings = {
     apiKey: settings.apiKey !== undefined ? settings.apiKey.trim() : current.apiKey,
-    mode: settings.mode === 'live' ? 'live' : 'test',
+    mode: settings.mode === 'test' ? 'test' : 'live',
     productIdLifetime: settings.productIdLifetime !== undefined ? settings.productIdLifetime.trim() : current.productIdLifetime,
     productIdYearly: settings.productIdYearly !== undefined ? settings.productIdYearly.trim() : current.productIdYearly,
     webhookSecret: settings.webhookSecret !== undefined ? settings.webhookSecret.trim() : current.webhookSecret,
@@ -617,7 +645,7 @@ app.post('/api/dodo/config', (req: Request, res: Response) => {
 app.post('/api/dodo/test-connection', async (req: Request, res: Response) => {
   try {
     const bodyKey = typeof req.body?.apiKey === 'string' ? req.body.apiKey.trim() : '';
-    const bodyMode = req.body?.mode === 'live' ? 'live' : 'test';
+    const bodyMode = req.body?.mode === 'test' ? 'test' : 'live';
     const settings = loadDodoSettings();
     const apiKey = bodyKey || settings.apiKey;
     const mode = bodyKey ? bodyMode : settings.mode;
@@ -750,9 +778,13 @@ app.post('/api/dodo/create-checkout', async (req: Request, res: Response) => {
     } catch {}
 
     if (!dodoRes.ok) {
+      let friendlyMessage = data?.message || data?.error || 'Failed to create Dodo Payments checkout session.';
+      if (data?.code === 'MERCHANT_NOT_LIVE' || friendlyMessage.includes('Live payments not enabled')) {
+        friendlyMessage = 'Dodo Payments notice: Live payments are not yet enabled for your Dodo merchant account. Please complete your business/merchant verification in the Dodo Payments dashboard (app.dodopayments.com).';
+      }
       return res.status(dodoRes.status).json({
-        error: 'DODO_CHECKOUT_FAILED',
-        message: data?.message || data?.error || 'Failed to create Dodo Payments checkout session.',
+        error: data?.code || 'DODO_CHECKOUT_FAILED',
+        message: friendlyMessage,
         details: responseText,
       });
     }

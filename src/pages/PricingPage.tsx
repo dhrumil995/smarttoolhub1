@@ -179,14 +179,14 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate }) => {
               <div className="flex items-center gap-2">
                 <span className="font-semibold text-white">Dodo Payments Gateway</span>
                 <span className={`w-2 h-2 rounded-full ${dodoConfig?.hasApiKey ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]' : 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]'}`} />
-                <span className="text-[10px] text-[#A3A3A3] font-mono uppercase">
-                  {dodoConfig?.mode || 'test'} mode
+                <span className="text-[10px] text-emerald-400 font-mono uppercase font-semibold">
+                  {dodoConfig?.mode === 'test' ? 'TEST SANDBOX' : 'LIVE PRODUCTION'}
                 </span>
               </div>
               <p className="text-[11px] text-[#888888]">
                 {dodoConfig?.hasApiKey 
-                  ? `Connected (${dodoConfig.maskedKey || 'Key Active'})` 
-                  : 'API Key not configured yet'}
+                  ? `Live Gateway Active (${dodoConfig.maskedKey || 'Key Active'})` 
+                  : 'Configure Live API Key & Products'}
               </p>
             </div>
           </div>
@@ -196,7 +196,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate }) => {
             className="px-3.5 py-1.5 rounded-full bg-white/[0.08] hover:bg-white/[0.15] border border-white/20 text-xs font-normal text-white flex items-center gap-1.5 transition-all cursor-pointer"
           >
             <Settings2 className="w-3.5 h-3.5 text-[#2997FF]" />
-            <span>{dodoConfig?.hasApiKey ? 'Edit API Settings' : 'Setup Dodo API'}</span>
+            <span>{dodoConfig?.hasApiKey ? 'Dodo Live Settings' : 'Setup Live Dodo API'}</span>
           </button>
         </div>
 
@@ -232,14 +232,8 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate }) => {
               ? 'bg-[#0071E3]/20 text-[#68B4FF] border border-[#0071E3]/40' 
               : 'bg-white/[0.06] text-[#86868B] border border-white/[0.08]'
           }`}>
-            {isPro ? 'Pro Active (AI Features Enabled)' : 'Community Free (Curated Mode)'}
+            {isPro ? 'Pro Active (All AI Features Unlocked)' : 'Community Free (Curated Mode)'}
           </span>
-          <button
-            onClick={() => setIsPro(!isPro)}
-            className="text-xs text-[#2997FF] hover:underline font-normal cursor-pointer ml-1"
-          >
-            {isPro ? 'Switch to Free Tier' : 'Switch to Pro Tier'}
-          </button>
         </div>
 
         {activationNotice && (
@@ -398,22 +392,22 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate }) => {
               <span>
                 {isCheckingOut
                   ? 'Connecting to Dodo Payments...'
+                  : isPro
+                  ? `Subscribed to Pro (${billingCycle === 'lifetime' ? '$39 Lifetime' : '$19/yr Annual'})`
                   : `Subscribe with Dodo Payments (${billingCycle === 'lifetime' ? '$39' : '$19/yr'})`}
               </span>
               <ArrowRight className="w-3.5 h-3.5 text-blue-200" />
             </button>
 
-            {/* Direct Instant Sandbox Activation / Toggle */}
+            {/* Gateway Information and Live Settings */}
             <div className="flex items-center justify-between pt-1 text-[11px] text-[#888888]">
-              <button
-                onClick={handleActivate}
-                className="hover:text-blue-300 underline cursor-pointer"
-              >
-                {isPro ? 'Pro Active (Re-verify)' : 'Or Instant Sandbox Test Activation'}
-              </button>
+              <span className="inline-flex items-center gap-1.5 text-emerald-400/90 font-medium">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Live Encrypted Gateway</span>
+              </span>
               <button
                 onClick={() => setIsDodoModalOpen(true)}
-                className="hover:text-white inline-flex items-center gap-1 cursor-pointer"
+                className="hover:text-white inline-flex items-center gap-1 cursor-pointer transition-colors"
               >
                 <Settings2 className="w-3 h-3 text-blue-400" />
                 <span>Dodo API Settings</span>

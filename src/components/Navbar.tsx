@@ -119,16 +119,16 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenS
             <kbd className="hidden sm:inline-flex apple-key text-[10px] py-0 px-1 ml-0.5">⌘K</kbd>
           </button>
 
-          {/* Pro Mode Pill Toggle */}
+          {/* Pro Plan Indicator / Subscription CTA */}
           <button
             id="nav-plan-toggle"
-            onClick={togglePro}
+            onClick={() => handleNav('pricing')}
             className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-xs font-medium cursor-pointer transition-all border shrink-0 ${
               isPro
                 ? 'bg-[#0071E3]/20 border-[#0071E3]/40 text-[#68B4FF] hover:bg-[#0071E3]/30 shadow-[0_0_12px_rgba(0,113,227,0.25)]'
                 : 'bg-white/[0.06] border-white/[0.12] text-[#86868B] hover:text-white hover:bg-white/[0.10]'
             }`}
-            title="Toggle between Free and Pro mode to test AI synthesis features"
+            title={isPro ? "SmartToolHub Pro Active — View Subscription" : "Unlock SmartToolHub Pro"}
           >
             {isPro ? (
               <>

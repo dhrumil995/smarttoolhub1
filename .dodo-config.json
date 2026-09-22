@@ -1,6 +1,6 @@
 {
   "apiKey": "",
-  "mode": "test",
+  "mode": "live",
   "productIdLifetime": "",
   "productIdYearly": "",
   "webhookSecret": ""

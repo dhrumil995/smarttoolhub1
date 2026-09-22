@@ -1,5 +1,6 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
+import crypto from 'node:crypto';
 
 describe('SmartToolHub - Integration Tests', () => {
 
@@ -136,12 +137,12 @@ describe('SmartToolHub - Integration Tests', () => {
   });
 
   describe('3. Dodo Payments Integration Logic', () => {
-    test('constructs valid Dodo Payments checkout payload', () => {
+    test('constructs valid Dodo Payments live checkout payload', () => {
       const settings = {
-        mode: 'test',
-        apiKey: 'dodo_test_key_sample_123',
-        productIdYearly: 'prod_yearly_456',
-        productIdLifetime: 'prod_lifetime_789',
+        mode: 'live',
+        apiKey: 'live_sk_sample_1234567890',
+        productIdYearly: 'p_prod_yearly_456',
+        productIdLifetime: 'p_prod_lifetime_789',
       };
 
       function createCheckoutPayload(plan: 'yearly' | 'lifetime', email: string, origin: string) {
@@ -155,36 +156,42 @@ describe('SmartToolHub - Integration Tests', () => {
       }
 
       const payloadYearly = createCheckoutPayload('yearly', 'user@example.com', 'https://smarttoolhub.com');
-      assert.equal(payloadYearly.product_cart[0].product_id, 'prod_yearly_456');
+      assert.equal(payloadYearly.product_cart[0].product_id, 'p_prod_yearly_456');
       assert.equal(payloadYearly.metadata.plan, 'yearly');
-      assert.equal(payloadYearly.return_url, 'https://smarttoolhub.com/pricing?payment=success&plan=${plan}'.replace('${plan}', 'yearly'));
+      assert.equal(payloadYearly.return_url, 'https://smarttoolhub.com/pricing?payment=success&plan=yearly');
 
       const payloadLifetime = createCheckoutPayload('lifetime', 'user@example.com', 'https://smarttoolhub.com');
-      assert.equal(payloadLifetime.product_cart[0].product_id, 'prod_lifetime_789');
+      assert.equal(payloadLifetime.product_cart[0].product_id, 'p_prod_lifetime_789');
     });
 
-    test('validates test mock session verification', () => {
-      function verifySession(sessionId: string) {
+    test('validates live session status and verification token calculation', () => {
+      const apiKey = 'live_sk_test_gateway_key';
+
+      function verifyPaidSession(sessionId: string, status: string, plan: string) {
         if (!sessionId) {
-          return { valid: false, error: 'Session ID is required' };
+          return { verified: false, error: 'Session ID is required' };
         }
-        if (sessionId.startsWith('test_') || sessionId.startsWith('mock_')) {
-          return {
-            valid: true,
-            status: 'paid',
-            plan: 'yearly',
-            paymentId: `dodo_pay_${Date.now()}`,
-          };
+        const isPaid = ['succeeded', 'paid', 'completed', 'active'].includes(status.toLowerCase());
+        if (!isPaid) {
+          return { verified: false, status, message: 'Payment not completed' };
         }
-        return { valid: false, error: 'Session not found' };
+
+        const token = crypto
+          .createHmac('sha256', apiKey)
+          .update(`${sessionId}:${plan}:${status}`)
+          .digest('hex');
+
+        return { verified: true, status, plan, token };
       }
 
-      const validMock = verifySession('test_checkout_session_999');
-      assert.equal(validMock.valid, true);
-      assert.equal(validMock.status, 'paid');
+      const validSession = verifyPaidSession('checkout_session_live_888', 'succeeded', 'yearly');
+      assert.equal(validSession.verified, true);
+      assert.equal(validSession.status, 'succeeded');
+      assert.equal(typeof validSession.token, 'string');
+      assert.equal(validSession.token.length, 64);
 
-      const invalidEmpty = verifySession('');
-      assert.equal(invalidEmpty.valid, false);
+      const invalidStatus = verifyPaidSession('checkout_session_live_888', 'pending', 'yearly');
+      assert.equal(invalidStatus.verified, false);
     });
   });
 });
