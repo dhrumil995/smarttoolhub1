@@ -188,7 +188,7 @@ describe('SmartToolHub - Integration Tests', () => {
       assert.equal(validSession.verified, true);
       assert.equal(validSession.status, 'succeeded');
       assert.equal(typeof validSession.token, 'string');
-      assert.equal(validSession.token.length, 64);
+      assert.equal(validSession.token?.length, 64);
 
       const invalidStatus = verifyPaidSession('checkout_session_live_888', 'pending', 'yearly');
       assert.equal(invalidStatus.verified, false);

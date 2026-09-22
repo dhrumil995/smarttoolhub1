@@ -5,6 +5,7 @@ interface ProContextType {
   setIsPro: (val: boolean) => void;
   togglePro: () => void;
   activatePro: () => void;
+  deactivatePro: () => void;
   aiConfigured: boolean;
   checkHealth: () => Promise<void>;
 }
@@ -12,10 +13,10 @@ interface ProContextType {
 const ProContext = createContext<ProContextType | undefined>(undefined);
 
 export const ProProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Default to true so user can immediately use their API for pro features, but let them toggle to Free to test
+  // Default to false so user starts on Free tier and must subscribe/purchase to get Pro
   const [isPro, setIsProState] = useState<boolean>(() => {
     const saved = localStorage.getItem('smarttoolhub_pro_active');
-    return saved !== null ? saved === 'true' : true;
+    return saved === 'true';
   });
 
   const [aiConfigured, setAiConfigured] = useState<boolean>(true);
@@ -49,6 +50,10 @@ export const ProProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setIsPro(true);
   };
 
+  const deactivatePro = () => {
+    setIsPro(false);
+  };
+
   return (
     <ProContext.Provider
       value={{
@@ -56,6 +61,7 @@ export const ProProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setIsPro,
         togglePro,
         activatePro,
+        deactivatePro,
         aiConfigured,
         checkHealth,
       }}
