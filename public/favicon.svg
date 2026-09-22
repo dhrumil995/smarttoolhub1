@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="50%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+  </defs>
+  <!-- Background squircle -->
+  <rect width="64" height="64" rx="16" fill="#0A0D14"/>
+  <rect x="1" y="1" width="62" height="62" rx="15" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+  <rect x="4" y="4" width="56" height="56" rx="13" fill="url(#g)"/>
+  <rect x="4" y="4" width="56" height="56" rx="13" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+  
+  <!-- Shortcuts / Automation overlapping lozenges icon -->
+  <!-- Back lozenge (Apple Shortcuts style) -->
+  <rect x="22" y="14" width="28" height="28" rx="8" fill="#F43F5E" transform="rotate(45 36 28)" opacity="0.95"/>
+  <!-- Front lozenge -->
+  <rect x="14" y="22" width="28" height="28" rx="8" fill="#38BDF8" transform="rotate(45 28 36)" opacity="0.95"/>
+  <!-- Overlap spark -->
+  <circle cx="32" cy="32" r="4.5" fill="#FFFFFF"/>
+</svg>

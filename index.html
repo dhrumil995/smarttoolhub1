@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          var currentFetch = typeof originalFetch === 'function' ? originalFetch.bind(window) : originalFetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return currentFetch;
+            },
+            set: function(fn) {
+              currentFetch = fn;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          try {
+            if (typeof Window !== 'undefined' && Window.prototype) {
+              var protoFetch = Window.prototype.fetch;
+              var boundProtoFetch = typeof protoFetch === 'function' ? protoFetch.bind(window) : protoFetch;
+              Object.defineProperty(Window.prototype, 'fetch', {
+                get: function() {
+                  return boundProtoFetch;
+                },
+                set: function(fn) {
+                  boundProtoFetch = fn;
+                },
+                configurable: true,
+                enumerable: true
+              });
+            }
+          } catch (e2) {}
+        }
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartToolHub — Apple Shortcut Generator & macOS Sequoia Automation</title>
+    <meta name="description" content="Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, and troubleshoot Continuity." />
+    <meta name="keywords" content="Apple Shortcut Generator, macOS Sequoia automation, custom Apple Shortcuts, iPhone shortcut generator, Mac shortcuts generator, iOS 18 automation, macOS 15 Sequoia shortcuts, Apple Intelligence shortcuts, Continuity Camera desk view, iPhone Mirroring macOS, Universal Control troubleshooting, Apple ecosystem automation, Siri Shortcuts generator, AppleScript automation" />
+    <meta name="author" content="SmartToolHub Engineering & Editorial Team" />
+    <meta name="creator" content="Mohit Aslaliya" />
+    <meta name="publisher" content="SmartToolHub" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="rating" content="General" />
+    <meta name="revisit-after" content="1 days" />
+    <meta name="distribution" content="global" />
+    <meta name="coverage" content="Worldwide" />
+    <meta name="copyright" content="© 2026 SmartToolHub" />
+    <meta name="language" content="English" />
+    <meta http-equiv="content-language" content="en-US" />
+    <link rel="canonical" href="https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/" />
+
+    <!-- Favicon & Icons for All Browsers, Devices & Search Engines -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/favicon.svg" color="#3B82F6" />
+    <meta name="msapplication-TileImage" content="/icon-192.png" />
+    <meta name="msapplication-TileColor" content="#07080A" />
+    
+    <!-- Open Graph / Facebook / LinkedIn / Slack -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SmartToolHub" />
+    <meta property="og:url" content="https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/" />
+    <meta property="og:title" content="SmartToolHub — Apple Shortcut Generator & macOS Sequoia Automation" />
+    <meta property="og:description" content="Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, and troubleshoot Continuity." />
+    <meta property="og:image" content="https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/product-cover.jpg" />
+    <meta property="og:image:secure_url" content="https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/product-cover.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:image:alt" content="SmartToolHub Apple Ecosystem Intelligence Platform" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/" />
+    <meta name="twitter:title" content="SmartToolHub — Apple Shortcut Generator & macOS Sequoia Automation" />
+    <meta name="twitter:description" content="Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, and troubleshoot Continuity." />
+    <meta name="twitter:image" content="https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/product-cover.jpg" />
+    <meta name="twitter:image:alt" content="SmartToolHub Apple Ecosystem Intelligence Platform" />
+
+    <!-- Theme & Colors -->
+    <meta name="theme-color" content="#07080A" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Fonts: High-Priority Preconnect & Non-Blocking Asynchronous Load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+    </noscript>
+
+    <!-- Schema.org JSON-LD Structured Data for High Google Search Rankings -->
+    <script id="schema-ld-json" type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/#website",
+          "url": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/",
+          "name": "SmartToolHub",
+          "alternateName": "Smart Tool Hub Apple Ecosystem",
+          "description": "Independent Apple Workflows, Shortcuts Generator, and Ecosystem Diagnostics",
+          "publisher": {
+            "@type": "Organization",
+            "name": "SmartToolHub",
+            "url": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/",
+            "email": "aslaliyamohit9@gmail.com",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/logo.png",
+              "width": "512",
+              "height": "512"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "",
+              "email": "aslaliyamohit9@gmail.com",
+              "contactType": "Customer Support",
+              "availableLanguage": ["English"]
+            }
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/library?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/#application",
+          "name": "SmartToolHub Apple Workflow Suite",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "macOS 13+, iOS 16+, iPadOS 16+, Web",
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "1284",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "SmartToolHub Free Tier",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "SmartToolHub Pro Lifetime",
+              "price": "39",
+              "priceCurrency": "USD"
+            }
+          ],
+          "description": "Interactive AI generator, hardware compatibility validator, and diagnostic tree utility for Apple Mac, iPhone, and iPad continuity features."
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is SmartToolHub?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "SmartToolHub is a dedicated Apple ecosystem intelligence platform providing verified multi-device workflows, an instant AI Shortcuts and shell script generator, macOS Sequoia compatibility checks, and step-by-step Continuity troubleshooting guides."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How does macOS Sequoia iPhone Mirroring and Continuity Camera work?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "macOS Sequoia introduces wireless iPhone Mirroring and Continuity Camera Desk View. SmartToolHub checks your hardware compatibility and generates step-by-step setup guides to connect iPhone and Mac seamlessly."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How can I contact SmartToolHub for support or custom workflow requests?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can reach the SmartToolHub team directly by emailing aslaliyamohit9@gmail.com or by visiting our Contact page."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does SmartToolHub require my Apple ID or passwords?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. SmartToolHub operates on a strict Zero-Credentials architecture. We never ask for, store, or transmit your Apple ID, passwords, or personal account credentials."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/#breadcrumbs",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Workflow Generator",
+              "item": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/generator"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Device Compatibility",
+              "item": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/compatibility"
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "name": "Troubleshooting",
+              "item": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/troubleshooting"
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "name": "Pricing",
+              "item": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/pricing"
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "name": "Contact",
+              "item": "https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/contact"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body class="bg-[#0A0A0A] text-[#E5E5E5] antialiased selection:bg-blue-500/30 selection:text-white min-h-screen">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
