@@ -3,7 +3,11 @@ import { PageId, PersonaType } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
 import { EcosystemSwitcher } from '../components/EcosystemSwitcher';
 import { DiagnosticSimulator } from '../components/DiagnosticSimulator';
+import { AuthoritativeReferences } from '../components/AuthoritativeReferences';
 import { haptics } from '../utils/haptics';
+import heroStudioImg from '../assets/images/hero_apple_ecosystem_studio_1790175476500.jpg';
+import featureShortcutsImg from '../assets/images/feature_shortcuts_automation_1790175491181.jpg';
+import featureContinuityImg from '../assets/images/feature_continuity_mirroring_1790175517420.jpg';
 import { 
   Wand2, 
   Cpu, 
@@ -97,11 +101,17 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
           <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/[0.10] shadow-[0_20px_50px_rgba(0,0,0,0.8)] bg-[#0C0D10] group">
             <picture>
               <img 
-                src="/src/assets/images/hero_apple_ecosystem_studio_1790175476500.jpg" 
+                src={heroStudioImg || "/images/hero_apple_ecosystem_studio.jpg"} 
                 alt="Apple Mac, iPhone, and iPad ecosystem workspace on dark minimal desk" 
                 className="w-full h-auto aspect-16/9 object-cover opacity-95 group-hover:opacity-100 transition-opacity duration-500"
                 loading="eager"
                 decoding="async"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.endsWith('/images/hero_apple_ecosystem_studio.jpg')) {
+                    target.src = '/images/hero_apple_ecosystem_studio.jpg';
+                  }
+                }}
               />
             </picture>
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
@@ -173,10 +183,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
             <div className="rounded-xl overflow-hidden border border-white/[0.08] shadow-inner">
               <picture>
                 <img 
-                  src="/src/assets/images/feature_shortcuts_automation_1790175491181.jpg" 
+                  src={featureShortcutsImg || "/images/feature_shortcuts_automation.jpg"} 
                   alt="Apple Shortcuts automation canvas in macOS Sequoia" 
                   className="w-full h-auto aspect-16/9 object-cover group-hover:scale-[1.02] transition-transform duration-500"
                   loading="lazy"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.endsWith('/images/feature_shortcuts_automation.jpg')) {
+                      target.src = '/images/feature_shortcuts_automation.jpg';
+                    }
+                  }}
                 />
               </picture>
             </div>
@@ -216,10 +232,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
             <div className="rounded-xl overflow-hidden border border-white/[0.08]">
               <picture>
                 <img 
-                  src="/src/assets/images/feature_continuity_mirroring_1790175517420.jpg" 
+                  src={featureContinuityImg || "/images/feature_continuity_mirroring.jpg"} 
                   alt="iPhone Mirroring and Continuity Camera Desk View in macOS Sequoia" 
                   className="w-full h-auto aspect-4/3 object-cover group-hover:scale-[1.02] transition-transform duration-500"
                   loading="lazy"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.endsWith('/images/feature_continuity_mirroring.jpg')) {
+                      target.src = '/images/feature_continuity_mirroring.jpg';
+                    }
+                  }}
                 />
               </picture>
             </div>
@@ -313,6 +335,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
           ))}
         </div>
       </section>
+
+      {/* Authoritative Reference Network & High-Quality Citation Backlinks */}
+      <AuthoritativeReferences />
     </div>
   );
 };

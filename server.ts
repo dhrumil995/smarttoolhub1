@@ -1146,6 +1146,16 @@ if (fs.existsSync(publicPath)) {
   }));
 }
 
+// Serve src/assets static directory as an additional fallback for images
+const srcAssetsPath = path.join(process.cwd(), 'src', 'assets');
+if (fs.existsSync(srcAssetsPath)) {
+  app.use('/src/assets', express.static(srcAssetsPath, {
+    maxAge: '1d',
+    etag: true,
+    lastModified: true,
+  }));
+}
+
 // Vite / static file serving
 async function setupServer() {
   if (process.env.NODE_ENV !== 'production') {

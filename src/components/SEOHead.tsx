@@ -240,7 +240,17 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
           'price': '0',
           'priceCurrency': 'USD'
         },
-        'description': 'Interactive generator, compatibility validator, and diagnostic tree utility for Apple Mac, iPhone, and iPad continuity features.'
+        'description': 'Interactive generator, compatibility validator, and diagnostic tree utility for Apple Mac, iPhone, and iPad continuity features.',
+        'citation': [
+          'https://developer.apple.com/documentation/appintents',
+          'https://support.apple.com/guide/security/welcome/web',
+          'https://support.apple.com/guide/mac-help/use-continuity-to-connect-apple-devices-mchl407037be/mac',
+          'https://datatracker.ietf.org/doc/html/rfc6762'
+        ],
+        'isBasedOn': [
+          'https://developer.apple.com/documentation/appintents',
+          'https://support.apple.com/guide/mac-help/use-continuity-to-connect-apple-devices-mchl407037be/mac'
+        ]
       },
       {
         '@type': 'BreadcrumbList',

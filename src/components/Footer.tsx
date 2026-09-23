@@ -194,10 +194,46 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <a 
-                  href="https://support.apple.com" 
+                  href="https://developer.apple.com/documentation/appintents" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors inline-flex items-center gap-1 text-[11px] text-[#2997FF]"
+                  title="Apple Developer App Intents & Shortcuts Documentation"
+                >
+                  <span>Apple App Intents Spec</span>
+                  <ExternalLink className="w-2.5 h-2.5" />
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://support.apple.com/guide/security/welcome/web" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1 text-[11px] text-zinc-400"
+                  title="Apple Platform Security Architecture Guide"
+                >
+                  <span>Apple Platform Security</span>
+                  <ExternalLink className="w-2.5 h-2.5" />
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://opensource.apple.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1 text-[11px] text-zinc-400"
+                  title="Apple Open Source Darwin & macOS Foundation"
+                >
+                  <span>Apple Open Source</span>
+                  <ExternalLink className="w-2.5 h-2.5" />
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://support.apple.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1 text-[11px] text-zinc-400"
                 >
                   <span>Official Apple Support</span>
                   <ExternalLink className="w-2.5 h-2.5" />
