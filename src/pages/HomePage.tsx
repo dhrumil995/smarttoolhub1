@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import { PageId, PersonaType } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
-import { COMPATIBILITY_FEATURES } from '../data/compatibility';
+import { EcosystemSwitcher } from '../components/EcosystemSwitcher';
+import { DiagnosticSimulator } from '../components/DiagnosticSimulator';
+import { haptics } from '../utils/haptics';
 import { 
   Wand2, 
   Cpu, 
   Wrench, 
   BookOpen, 
   ArrowRight, 
-  ShieldCheck, 
-  Sparkles, 
   Search, 
-  Layers, 
-  Clock, 
   ChevronRight, 
   Laptop, 
   Smartphone, 
-  Tablet, 
-  CheckCircle2
+  Check, 
+  ExternalLink
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -27,365 +25,292 @@ interface HomePageProps {
 
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) => {
   const [selectedPersona, setSelectedPersona] = useState<PersonaType>('creators');
-  const [quickSearch, setQuickSearch] = useState('');
 
-  const personas: { id: PersonaType; label: string; icon: string }[] = [
-    { id: 'creators', label: 'Content Creators', icon: '🎨' },
-    { id: 'freelancers', label: 'Freelancers', icon: '💼' },
-    { id: 'students', label: 'Students', icon: '🎓' },
-    { id: 'beginners', label: 'Beginners', icon: '🌱' },
-    { id: 'developers', label: 'Developers', icon: '⚡' },
+  const personas: { id: PersonaType; label: string }[] = [
+    { id: 'creators', label: 'Content Creators' },
+    { id: 'developers', label: 'Software Engineers' },
+    { id: 'freelancers', label: 'Independent Pros' },
+    { id: 'students', label: 'Students & Research' },
+    { id: 'beginners', label: 'Daily Workflows' },
   ];
 
-  const filteredWorkflows = WORKFLOWS_DATA.filter((wf) => {
-    const matchesPersona = wf.persona === selectedPersona;
-    const matchesQuery = quickSearch
-      ? wf.title.toLowerCase().includes(quickSearch.toLowerCase()) ||
-        wf.summary.toLowerCase().includes(quickSearch.toLowerCase())
-      : true;
-    return matchesPersona && matchesQuery;
-  });
+  const filteredWorkflows = WORKFLOWS_DATA.filter((wf) => wf.persona === selectedPersona);
 
   return (
-    <div className="space-y-24 sm:space-y-32 pb-20">
-      {/* Top Ambient Apple Intelligence Rim Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[550px] pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[850px] h-[450px] rounded-full bg-gradient-to-b from-[#0071E3]/20 via-[#A259FF]/10 to-transparent blur-[120px]" />
-      </div>
-
-      {/* Hero Section — Apple Product Style */}
-      <section className="relative pt-16 sm:pt-24 pb-4 px-4 text-center max-w-5xl mx-auto space-y-7">
-        {/* Apple Intelligence Pill Eyebrow */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-white/[0.12] backdrop-blur-xl shadow-[0_2px_12px_rgba(0,0,0,0.4)] animate-in fade-in slide-in-from-bottom-2 duration-300">
-          <div className="w-5 h-5 rounded-full overflow-hidden border border-white/30 shadow-sm shrink-0">
-            <picture>
-              <source srcSet="/logo-sm.webp" type="image/webp" />
-              <img 
-                src="/logo.png" 
-                alt="SmartToolHub Apple Ecosystem Intelligence" 
-                width="20" 
-                height="20" 
-                loading="eager"
-                decoding="async"
-                className="w-full h-full object-cover" 
-              />
-            </picture>
-          </div>
-          <span className="text-xs font-normal tracking-[-0.01em] text-[#F5F5F7]">
-            SmartToolHub • Apple Ecosystem Intelligence
-          </span>
-          <span className="w-1 h-1 rounded-full bg-[#2997FF]"></span>
-          <span className="text-[11px] text-[#2997FF] font-mono font-medium">macOS Sequoia Ready</span>
-        </div>
-
-        {/* Large Confident Apple Display Headline */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[72px] font-semibold tracking-[-0.035em] text-[#F5F5F7] leading-[1.06]">
-          Unlock Your Apple Hardware. <br className="hidden sm:inline" />
-          <span className="bg-gradient-to-r from-[#2997FF] via-[#A259FF] to-[#FF578A] bg-clip-text text-transparent">
-            Without the Friction.
+    <div className="space-y-20 sm:space-y-28 pb-24">
+      {/* Hero Section — Apple Studio Aesthetic */}
+      <section className="relative pt-12 sm:pt-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center space-y-7">
+        
+        {/* Apple Display Headline */}
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.035em] text-[#F5F5F7] leading-[1.08] max-w-4xl mx-auto text-balance">
+          Unleash Your Apple Hardware. <br />
+          <span className="text-[#86868B]">
+            Automate Without the Friction.
           </span>
         </h1>
 
-        {/* Apple Subhead */}
-        <p className="text-base sm:text-xl md:text-2xl text-[#86868B] max-w-3xl mx-auto font-normal leading-relaxed tracking-[-0.015em]">
-          Personalized multi-device workflows, instant Shortcuts generator, exact OS compatibility checks, and step-by-step Continuity troubleshooting for Mac, iPhone, and iPad.
+        {/* Crisp Subhead */}
+        <p className="text-base sm:text-xl text-[#86868B] max-w-2xl mx-auto font-normal leading-relaxed tracking-tight text-balance">
+          Synthesize custom Apple Shortcuts, configure macOS Sequoia Continuity, and eliminate multi-device latency across Mac, iPhone, and iPad.
         </p>
 
-        {/* Apple Centered CTA Action Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-3.5 pt-3">
+        {/* Primary Single-Line CTAs */}
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
           <button
             id="hero-generator-cta"
-            onClick={() => onNavigate('generator')}
-            className="apple-btn-primary px-6 py-3 text-sm sm:text-[15px] cursor-pointer"
+            onClick={() => {
+              haptics.playTap();
+              onNavigate('generator');
+            }}
+            className="px-6 py-3 rounded-xl bg-[#0071E3] hover:bg-[#0077ED] text-white text-sm font-medium tracking-tight shadow-md hover:shadow-lg transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer flex items-center gap-2"
           >
             <Wand2 className="w-4 h-4" />
-            <span>Generate Custom Flow</span>
+            <span>Generate Custom Shortcuts</span>
           </button>
+          
           <button
             id="hero-compatibility-cta"
-            onClick={() => onNavigate('compatibility')}
-            className="apple-btn-secondary px-6 py-3 text-sm sm:text-[15px] cursor-pointer"
+            onClick={() => {
+              haptics.playTap();
+              onNavigate('compatibility');
+            }}
+            className="px-6 py-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.10] border border-white/[0.10] text-[#F5F5F7] text-sm font-medium tracking-tight transition-all cursor-pointer flex items-center gap-2"
           >
-            <Cpu className="w-4 h-4 text-[#A259FF]" />
-            <span>Check Device Matrix</span>
+            <Cpu className="w-4 h-4 text-[#2997FF]" />
+            <span>Hardware Compatibility Matrix</span>
           </button>
         </div>
 
-        {/* Apple Frosted Search Bar */}
-        <div className="max-w-2xl mx-auto pt-4">
-          <div 
-            onClick={onOpenSearch}
-            className="group flex items-center justify-between p-3.5 sm:p-4 rounded-2xl bg-white/[0.05] hover:bg-white/[0.08] border border-white/[0.10] hover:border-white/[0.22] backdrop-blur-2xl shadow-[0_4px_24px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.15)] cursor-pointer transition-all duration-300"
-          >
-            <div className="flex items-center gap-3.5 text-[#86868B] group-hover:text-[#F5F5F7] transition-colors">
-              <Search className="w-4 h-4 sm:w-5 sm:h-5 text-[#2997FF] shrink-0" />
-              <span className="text-xs sm:text-sm font-normal tracking-[-0.01em] text-left">
-                Search workflows, shortcuts, Sequoia features, or error codes...
-              </span>
-            </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <kbd className="apple-key text-xs hidden sm:inline-flex py-0.5 px-2 bg-white/[0.08] border border-white/[0.12] text-[#86868B]">⌘K</kbd>
+        {/* Unboxed Metadata Trust Bar (Anti-Pill Rule) */}
+        <div className="pt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-[#86868B] font-normal">
+          <span>macOS Sequoia 15.2</span>
+          <span aria-hidden="true">·</span>
+          <span>iOS 18.2 Ready</span>
+          <span aria-hidden="true">·</span>
+          <span>Zero-Credential Architecture</span>
+          <span aria-hidden="true">·</span>
+          <span>Local Client Execution</span>
+        </div>
+
+        {/* Apple Hardware Studio Showcase (Generated High-Fidelity Asset) */}
+        <div className="pt-6 max-w-5xl mx-auto">
+          <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/[0.10] shadow-[0_20px_50px_rgba(0,0,0,0.8)] bg-[#0C0D10] group">
+            <picture>
+              <img 
+                src="/src/assets/images/hero_apple_ecosystem_studio_1790175476500.jpg" 
+                alt="Apple Mac, iPhone, and iPad ecosystem workspace on dark minimal desk" 
+                className="w-full h-auto aspect-16/9 object-cover opacity-95 group-hover:opacity-100 transition-opacity duration-500"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+            
+            {/* Overlay Bar inside hardware showcase */}
+            <div className="absolute bottom-0 inset-x-0 p-5 sm:p-7 flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.08] backdrop-blur-md bg-black/40">
+              <div className="text-left space-y-1">
+                <span className="text-[11px] text-[#2997FF] font-medium tracking-wider uppercase">Unified Device Mesh</span>
+                <p className="text-sm sm:text-base font-semibold text-white tracking-tight">
+                  Seamless Continuity Camera · Desk View · iPhone Mirroring
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  haptics.playTap();
+                  onOpenSearch();
+                }}
+                className="px-4 py-2 rounded-lg bg-white/[0.12] hover:bg-white/[0.20] text-white text-xs font-medium backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer"
+              >
+                <Search className="w-3.5 h-3.5 text-[#2997FF]" />
+                <span>Search Recipes (⌘K)</span>
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Bento Grid Features Layout — Section-Based Architecture */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center sm:text-left mb-8">
-          <span className="text-xs font-semibold tracking-wider uppercase text-[#2997FF]">
-            Platform Capabilities
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-semibold tracking-[-0.03em] text-[#F5F5F7] mt-1">
-            Everything your ecosystem needs.
+      {/* Asymmetric Bento Grid Capabilities */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="border-b border-white/[0.08] pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+          <div>
+            <span className="text-xs text-[#2997FF] font-medium tracking-wider uppercase">
+              Capabilities
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#F5F5F7] mt-1">
+              Built specifically for the Apple platform.
+            </h2>
+          </div>
+          <p className="text-xs text-[#86868B] max-w-md">
+            Engineered with deep native hooks into Shortcuts, AppleScript, Shell, and Core Continuity APIs.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Bento Card 1 (Span 2 cols): Precision Shortcuts Engine */}
+          <div 
+            onClick={() => {
+              haptics.playTap();
+              onNavigate('generator');
+            }}
+            className="md:col-span-2 rounded-2xl sm:rounded-3xl border border-white/[0.08] hover:border-white/[0.20] bg-[#0E0F13]/80 backdrop-blur-xl p-6 sm:p-8 flex flex-col justify-between group cursor-pointer transition-all space-y-6"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-xs text-[#86868B]">
+                <span>01. Automation Engine</span>
+                <span className="text-[#2997FF] group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                  Open Generator <ChevronRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
+                Synthesize Production-Grade Apple Shortcuts
+              </h3>
+              <p className="text-sm text-[#86868B] leading-relaxed max-w-xl">
+                Generate tailored automations for your specific combination of macOS and iOS. Download ready-to-run `.shortcut` payloads, AppleScript snippets, and shell hooks with zero configuration overhead.
+              </p>
+            </div>
+
+            <div className="rounded-xl overflow-hidden border border-white/[0.08] shadow-inner">
+              <picture>
+                <img 
+                  src="/src/assets/images/feature_shortcuts_automation_1790175491181.jpg" 
+                  alt="Apple Shortcuts automation canvas in macOS Sequoia" 
+                  className="w-full h-auto aspect-16/9 object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                  loading="lazy"
+                />
+              </picture>
+            </div>
+
+            <div className="pt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[#86868B]">
+              <span>120+ Verified Recipes</span>
+              <span aria-hidden="true">·</span>
+              <span>Siri Voice Triggers</span>
+              <span aria-hidden="true">·</span>
+              <span>AppleScript & Shell</span>
+              <span aria-hidden="true">·</span>
+              <span>Raycast Scripts</span>
+            </div>
+          </div>
+
+          {/* Bento Card 2 (Span 1 col): Continuity & iPhone Mirroring */}
+          <div 
+            onClick={() => {
+              haptics.playTap();
+              onNavigate('troubleshooting');
+            }}
+            className="md:col-span-1 rounded-2xl sm:rounded-3xl border border-white/[0.08] hover:border-white/[0.20] bg-[#0E0F13]/80 backdrop-blur-xl p-6 sm:p-8 flex flex-col justify-between group cursor-pointer transition-all space-y-6"
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-xs text-[#86868B]">
+                <span>02. Continuity Isolation</span>
+                <ChevronRight className="w-3.5 h-3.5 text-[#2997FF] group-hover:translate-x-1 transition-transform" />
+              </div>
+              <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                iPhone Mirroring & Desk View
+              </h3>
+              <p className="text-xs sm:text-sm text-[#86868B] leading-relaxed">
+                Step-by-step diagnostic trees to resolve AWDL dropouts, Universal Clipboard delays, and camera handshake failures without rebooting.
+              </p>
+            </div>
+
+            <div className="rounded-xl overflow-hidden border border-white/[0.08]">
+              <picture>
+                <img 
+                  src="/src/assets/images/feature_continuity_mirroring_1790175517420.jpg" 
+                  alt="iPhone Mirroring and Continuity Camera Desk View in macOS Sequoia" 
+                  className="w-full h-auto aspect-4/3 object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                  loading="lazy"
+                />
+              </picture>
+            </div>
+
+            <div className="pt-2 flex items-center justify-between text-xs text-[#86868B]">
+              <span>Resolution Guides</span>
+              <span className="text-[#2997FF]">Sequoia 15.2</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Hardware Profile & Live Diagnostic Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="border-b border-white/[0.08] pb-4">
+          <span className="text-xs text-[#2997FF] font-medium tracking-wider uppercase">Hardware Intelligence</span>
+          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#F5F5F7] mt-1">
+            Simulate your setup. Run real-time diagnostics.
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          
-          {/* Card 1: Interactive Generator Spotlight */}
-          <div 
-            onClick={() => onNavigate('generator')}
-            className="glass-card p-7 sm:p-8 rounded-[24px] sm:rounded-[28px] flex flex-col justify-between cursor-pointer group relative overflow-hidden h-full border border-white/[0.08] hover:border-white/[0.20]"
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#0071E3]/15 to-transparent rounded-full blur-3xl pointer-events-none -mr-12 -mt-12" />
-            <div className="space-y-4 relative z-10">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-[#0071E3]/15 text-[#68B4FF] border border-[#0071E3]/25 uppercase tracking-wide">
-                  Interactive Engine
-                </span>
-                <span className="text-xs text-[#86868B] flex items-center gap-1 font-normal">
-                  <Clock className="w-3.5 h-3.5" /> 60s setup
-                </span>
-              </div>
-              <h3 className="text-2xl font-semibold tracking-[-0.02em] text-[#F5F5F7] group-hover:text-white transition-colors">
-                Personalized Workflow Synthesizer
-              </h3>
-              <p className="text-sm text-[#86868B] leading-relaxed font-normal">
-                Enter your exact Mac model, iPhone version, preferred apps, and experience level to receive custom end-to-end guidance with shortcuts.
-              </p>
-              {/* Mini visual mockup inside Bento */}
-              <div className="pt-2 grid grid-cols-3 gap-2.5 text-center text-xs">
-                <div className="p-3 rounded-2xl bg-black/40 border border-white/[0.06] backdrop-blur-md">
-                  <Laptop className="w-4 h-4 mx-auto text-[#2997FF] mb-1.5" />
-                  <span className="text-[11px] text-[#A1A1A6]">Mac Studio</span>
-                </div>
-                <div className="p-3 rounded-2xl bg-black/40 border border-white/[0.06] backdrop-blur-md">
-                  <Smartphone className="w-4 h-4 mx-auto text-[#2997FF] mb-1.5" />
-                  <span className="text-[11px] text-[#A1A1A6]">iPhone 16</span>
-                </div>
-                <div className="p-3 rounded-2xl bg-black/40 border border-white/[0.06] backdrop-blur-md">
-                  <Tablet className="w-4 h-4 mx-auto text-[#2997FF] mb-1.5" />
-                  <span className="text-[11px] text-[#A1A1A6]">iPad Pro</span>
-                </div>
-              </div>
-            </div>
-            <div className="pt-7 flex items-center gap-2 text-sm font-normal text-[#2997FF] group-hover:text-[#68B4FF]">
-              <span>Launch Workflow Generator</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-200" />
-            </div>
-          </div>
-
-          {/* Card 2: Compatibility Matrix */}
-          <div 
-            onClick={() => onNavigate('compatibility')}
-            className="glass-card p-7 sm:p-8 rounded-[24px] sm:rounded-[28px] flex flex-col justify-between cursor-pointer group h-full border border-white/[0.08] hover:border-white/[0.20]"
-          >
-            <div className="space-y-4">
-              <div className="w-11 h-11 rounded-2xl bg-[#A259FF]/15 border border-[#A259FF]/25 flex items-center justify-center text-[#C084FC]">
-                <Cpu className="w-5 h-5" />
-              </div>
-              <h3 className="text-2xl font-semibold tracking-[-0.02em] text-[#F5F5F7] group-hover:text-white transition-colors">
-                Hardware Compatibility Matrix
-              </h3>
-              <p className="text-sm text-[#86868B] leading-relaxed font-normal">
-                Instantly check chip requirements for iPhone Mirroring, Sidecar, Universal Control, and Apple Intelligence across every release.
-              </p>
-              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/[0.06] text-xs space-y-2 font-mono text-[11px]">
-                <div className="flex justify-between text-[#86868B]">
-                  <span>iPhone Mirroring</span>
-                  <span className="text-emerald-400 font-medium">T2 / Apple Silicon</span>
-                </div>
-                <div className="flex justify-between text-[#86868B]">
-                  <span>Apple Intelligence</span>
-                  <span className="text-[#2997FF] font-medium">M1+ / A17 Pro+</span>
-                </div>
-              </div>
-            </div>
-            <div className="pt-7 flex items-center justify-between text-sm text-[#86868B]">
-              <span>8 Continuity APIs verified</span>
-              <ChevronRight className="w-4 h-4 text-[#A259FF] group-hover:translate-x-1.5 transition-transform duration-200" />
-            </div>
-          </div>
-
-          {/* Card 3: Troubleshooting Wizard */}
-          <div 
-            onClick={() => onNavigate('troubleshooting')}
-            className="glass-card p-7 sm:p-8 rounded-[24px] sm:rounded-[28px] flex flex-col justify-between cursor-pointer group h-full md:col-span-2 lg:col-span-1 border border-white/[0.08] hover:border-white/[0.20]"
-          >
-            <div className="space-y-4">
-              <div className="w-11 h-11 rounded-2xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-amber-400">
-                <Wrench className="w-5 h-5" />
-              </div>
-              <h3 className="text-2xl font-semibold tracking-[-0.02em] text-[#F5F5F7] group-hover:text-white transition-colors">
-                Diagnostic Troubleshooting
-              </h3>
-              <p className="text-sm text-[#86868B] leading-relaxed font-normal">
-                AirDrop failing? Sidecar black screen? Universal clipboard latency? Step-by-step resolution trees without restarting your machine.
-              </p>
-              <div className="p-3.5 rounded-2xl bg-black/40 border border-white/[0.06] text-xs space-y-2 font-mono text-[11px]">
-                <div className="flex justify-between text-[#86868B]">
-                  <span>AirDrop Discovery</span>
-                  <span className="text-amber-400 font-medium">AWDL Reset</span>
-                </div>
-                <div className="flex justify-between text-[#86868B]">
-                  <span>Clipboard Sync</span>
-                  <span className="text-amber-400 font-medium">pboard daemon</span>
-                </div>
-              </div>
-            </div>
-            <div className="pt-7 flex items-center justify-between text-sm text-[#86868B]">
-              <span>Instant Isolation Guides</span>
-              <ChevronRight className="w-4 h-4 text-amber-400 group-hover:translate-x-1.5 transition-transform duration-200" />
-            </div>
-          </div>
-
-        </div>
+        <EcosystemSwitcher />
+        <DiagnosticSimulator />
       </section>
 
-      {/* Target Audience Persona Filtered Workflows */}
-      <section 
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8"
-        style={{ contentVisibility: 'auto', containIntrinsicSize: '0 800px' }}
-      >
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-5">
+      {/* Tailored Workflow Blueprints (Clean Editorial Tabs, Zero Pills) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-4">
           <div>
-            <span className="text-xs font-semibold tracking-wider uppercase text-[#2997FF] flex items-center gap-1.5 mb-1.5">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Role-Specific Blueprints</span>
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-semibold tracking-[-0.03em] text-[#F5F5F7]">
-              Tailored for how you work.
+            <span className="text-xs text-[#2997FF] font-medium tracking-wider uppercase">Curated Catalog</span>
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#F5F5F7] mt-1">
+              Workflows tuned for your role.
             </h2>
           </div>
 
-          {/* Apple-Style Segmented Persona Control */}
-          <div className="flex flex-wrap items-center gap-1 p-1 bg-white/[0.06] border border-white/[0.08] backdrop-blur-xl rounded-full">
+          {/* Clean Segmented Text Buttons (No Candy Badges) */}
+          <div className="flex flex-wrap items-center gap-1 p-1 bg-white/[0.04] border border-white/[0.08] rounded-xl">
             {personas.map((persona) => (
               <button
                 key={persona.id}
-                onClick={() => setSelectedPersona(persona.id)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs tracking-[-0.01em] transition-all duration-200 cursor-pointer ${
+                onClick={() => {
+                  haptics.playTap();
+                  setSelectedPersona(persona.id);
+                }}
+                className={`px-3.5 py-1.5 rounded-lg text-xs tracking-tight transition-all cursor-pointer ${
                   selectedPersona === persona.id
-                    ? 'bg-white text-black font-medium shadow-[0_2px_8px_rgba(255,255,255,0.2)]'
-                    : 'text-[#86868B] hover:text-[#F5F5F7]'
+                    ? 'bg-white text-black font-medium shadow-sm'
+                    : 'text-[#86868B] hover:text-white'
                 }`}
               >
-                <span>{persona.icon}</span>
-                <span>{persona.label}</span>
+                {persona.label}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Workflow Cards Grid — Apple Style */}
+        {/* Workflow Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredWorkflows.map((wf) => (
             <div
               key={wf.id}
-              onClick={() => onNavigate('workflow-detail', wf.id)}
-              className="glass-card p-6 sm:p-7 rounded-[22px] flex flex-col justify-between cursor-pointer group border border-white/[0.08] hover:border-white/[0.20]"
+              onClick={() => {
+                haptics.playTap();
+                onNavigate('workflow-detail', wf.id);
+              }}
+              className="rounded-2xl border border-white/[0.08] hover:border-white/[0.22] bg-[#0E0F13]/80 backdrop-blur-md p-6 flex flex-col justify-between group cursor-pointer transition-all space-y-4"
             >
-              <div className="space-y-3.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#0071E3]/15 text-[#68B4FF] border border-[#0071E3]/25">
-                    {wf.category}
-                  </span>
-                  <span className="text-xs text-[#86868B] flex items-center gap-1 font-normal">
-                    <Clock className="w-3 h-3" />
-                    {wf.setupTimeMinutes} min
-                  </span>
+              <div className="space-y-2.5">
+                {/* Unboxed Metadata (Zero Pills) */}
+                <div className="text-[11px] text-[#86868B] flex items-center gap-2 font-normal">
+                  <span className="text-[#2997FF]">{wf.category}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{wf.setupTimeMinutes} min setup</span>
                 </div>
 
-                <h3 className="text-lg font-semibold tracking-[-0.02em] text-[#F5F5F7] group-hover:text-[#2997FF] transition-colors line-clamp-2">
+                <h3 className="text-lg font-semibold tracking-tight text-[#F5F5F7] group-hover:text-[#2997FF] transition-colors line-clamp-2">
                   {wf.title}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-[#86868B] line-clamp-3 leading-relaxed font-normal">
+                <p className="text-xs sm:text-sm text-[#86868B] line-clamp-3 leading-relaxed">
                   {wf.summary}
                 </p>
-
-                {/* Device Badges */}
-                <div className="pt-2 flex flex-wrap gap-1.5">
-                  {wf.devicesRequired.map((d, i) => (
-                    <span
-                      key={i}
-                      className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-[#A1A1A6]"
-                    >
-                      {d.device.split('(')[0].trim()}
-                    </span>
-                  ))}
-                </div>
               </div>
 
-              <div className="pt-5 mt-5 border-t border-white/[0.06] flex items-center justify-between text-xs text-[#86868B]">
-                <span className="text-[11px] text-emerald-400/90 font-medium">
-                  {wf.isBuiltInOnly ? '100% Native Tools' : 'Hybrid Tools'}
-                </span>
-                <span className="apple-link text-xs font-normal">
-                  <span>View Guide</span>
-                  <ArrowRight className="w-3.5 h-3.5 chevron" />
-                </span>
+              <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs text-[#86868B]">
+                <span>View Full Recipe</span>
+                <ChevronRight className="w-4 h-4 text-[#2997FF] group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="text-center pt-2">
-          <button
-            onClick={() => onNavigate('library')}
-            className="apple-btn-secondary px-5 py-2.5 text-xs sm:text-sm cursor-pointer"
-          >
-            <BookOpen className="w-4 h-4 text-[#2997FF]" />
-            <span>Browse All {WORKFLOWS_DATA.length}+ Verified Workflows in Library</span>
-          </button>
-        </div>
-      </section>
-
-      {/* Security & Privacy Commitment Banner — Apple Style */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="glass-card-static p-8 sm:p-10 rounded-[28px] border border-emerald-500/20 bg-gradient-to-b from-[#06140D]/80 to-[#020704]/90 backdrop-blur-2xl shadow-[0_16px_48px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(16,185,129,0.15)] space-y-4">
-          <div className="flex items-center gap-3.5">
-            <div className="p-2.5 rounded-2xl bg-emerald-500/15 border border-emerald-500/25 text-emerald-400">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-xl sm:text-2xl font-semibold tracking-[-0.02em] text-[#F5F5F7]">
-                Zero-Credentials Security Pledge
-              </h3>
-              <p className="text-xs sm:text-sm text-emerald-400/80 font-normal">
-                Your credentials and files stay strictly yours. Period.
-              </p>
-            </div>
-          </div>
-          <p className="text-xs sm:text-sm text-[#86868B] leading-relaxed max-w-3xl font-normal">
-            SmartToolHub never asks for your Apple ID, iCloud credentials, device passcodes, contacts, location, camera, or microphone. 
-            All workflow configurations use Apple's native, peer-to-peer, and end-to-end encrypted protocols. No user inputs are stored in server logs.
-          </p>
-          <div className="flex flex-wrap gap-5 pt-2 text-xs text-[#86868B]">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>No Apple ID Login Required</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>No Third-Party Cloud Sync</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>Instant Local Data Purge</span>
-            </div>
-          </div>
         </div>
       </section>
     </div>

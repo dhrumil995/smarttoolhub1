@@ -5,6 +5,7 @@ import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 import { ProProvider } from './context/ProContext';
 import { SEOHead } from './components/SEOHead';
+import { haptics } from './utils/haptics';
 
 // Lazy-load secondary pages and modals to shrink critical landing bundle size
 const GeneratorPage = lazy(() => import('./pages/GeneratorPage').then(m => ({ default: m.GeneratorPage })));
@@ -18,6 +19,23 @@ const TermsPage = lazy(() => import('./pages/TermsPage').then(m => ({ default: m
 const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
 const CommandPalette = lazy(() => import('./components/CommandPalette').then(m => ({ default: m.CommandPalette })));
 
+// Background prefetch for instant zero-latency page transitions
+const prefetchSecondaryRoutes = () => {
+  const routes = [
+    () => import('./pages/GeneratorPage'),
+    () => import('./pages/CompatibilityPage'),
+    () => import('./pages/TroubleshootingPage'),
+    () => import('./pages/LibraryPage'),
+    () => import('./pages/PricingPage'),
+    () => import('./components/CommandPalette'),
+  ];
+  routes.forEach((load) => {
+    try {
+      load();
+    } catch (_) {}
+  });
+};
+
 // Lightweight Apple-style route fallback loader
 const PageLoadingFallback = () => (
   <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 text-center space-y-4 animate-in fade-in duration-200">
@@ -30,6 +48,15 @@ function AppContent() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [selectedWorkflowId, setSelectedWorkflowId] = useState<string>('wf-continuity-camera-desk-view');
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+
+  // Background preload secondary chunks when idle
+  useEffect(() => {
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(prefetchSecondaryRoutes, { timeout: 1500 });
+    } else {
+      setTimeout(prefetchSecondaryRoutes, 1000);
+    }
+  }, []);
 
   // Initialize page from URL query params or pathname on load
   useEffect(() => {
@@ -68,6 +95,7 @@ function AppContent() {
 
   // Scroll to top and synchronize URL when page changes
   const handleNavigate = (page: PageId, workflowId?: string) => {
+    haptics.playTap();
     if (workflowId) {
       setSelectedWorkflowId(workflowId);
     }
@@ -90,14 +118,47 @@ function AppContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Listen for global Cmd+K or Ctrl+K
+  // Listen for global Cmd+K or Ctrl+K & Cmd+1..6 quick navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
+        haptics.playTap();
         setIsSearchOpen((prev) => !prev);
+        return;
+      }
+
+      // Quick number tab switching (Cmd+1 to Cmd+6)
+      if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey) {
+        switch (e.key) {
+          case '1':
+            e.preventDefault();
+            handleNavigate('home');
+            break;
+          case '2':
+            e.preventDefault();
+            handleNavigate('generator');
+            break;
+          case '3':
+            e.preventDefault();
+            handleNavigate('compatibility');
+            break;
+          case '4':
+            e.preventDefault();
+            handleNavigate('troubleshooting');
+            break;
+          case '5':
+            e.preventDefault();
+            handleNavigate('library');
+            break;
+          case '6':
+            e.preventDefault();
+            handleNavigate('pricing');
+            break;
+        }
       }
     };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);

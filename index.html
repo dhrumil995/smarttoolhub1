@@ -257,7 +257,33 @@
     </script>
   </head>
   <body class="bg-[#0A0A0A] text-[#E5E5E5] antialiased selection:bg-blue-500/30 selection:text-white min-h-screen">
-    <div id="root"></div>
+    <div id="root">
+      {/* Instant Inline Skeleton — eliminates blank screen on cold loads */}
+      <div style="min-height:100vh;display:flex;flex-direction:column;background:#07080A;color:#F5F5F7;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;">
+        <!-- Header Skeleton -->
+        <div style="height:52px;border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(0,0,0,0.8);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;padding:0 24px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);"></div>
+            <div style="width:96px;height:16px;border-radius:6px;background:rgba(255,255,255,0.12);"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:64px;height:24px;border-radius:12px;background:rgba(255,255,255,0.06);"></div>
+            <div style="width:80px;height:28px;border-radius:14px;background:#0071E3;"></div>
+          </div>
+        </div>
+
+        <!-- Hero Skeleton -->
+        <div style="max-width:860px;margin:80px auto 40px;padding:0 20px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;">
+          <div style="width:240px;height:28px;border-radius:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);"></div>
+          <div style="width:85%;max-width:620px;height:54px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.12), rgba(41,151,255,0.2), rgba(255,255,255,0.12));background-size:200% 100%;animation:pulse 1.8s ease infinite;"></div>
+          <div style="width:70%;max-width:480px;height:20px;border-radius:8px;background:rgba(255,255,255,0.06);"></div>
+          <div style="display:flex;gap:12px;margin-top:16px;">
+            <div style="width:140px;height:42px;border-radius:24px;background:#0071E3;"></div>
+            <div style="width:140px;height:42px;border-radius:24px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
