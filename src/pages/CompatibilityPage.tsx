@@ -113,7 +113,7 @@ export const CompatibilityPage: React.FC<CompatibilityPageProps> = ({ onNavigate
         <h1 className="text-3xl sm:text-5xl font-semibold text-[#F5F5F7] tracking-[-0.03em] leading-tight">
           Apple Device Compatibility Checker
         </h1>
-        <p className="text-sm sm:text-base text-[#86868B] leading-relaxed font-normal">
+        <p className="text-sm sm:text-base text-[#A1A1A6] leading-relaxed font-normal">
           Select your active hardware to inspect real-time Continuity feature availability, minimum operating systems, and exact networking prerequisites.
         </p>
       </div>

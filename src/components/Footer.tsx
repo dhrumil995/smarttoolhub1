@@ -25,14 +25,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => 
           <div className="flex items-center gap-2.5 w-full sm:w-auto">
             <a
               href="mailto:aslaliyamohit9@gmail.com?subject=SmartToolHub%20Query"
-              className="w-full sm:w-auto px-4 py-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] text-xs font-normal text-white flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] cursor-pointer shadow-[0_2px_8px_rgba(0,113,227,0.35)]"
+              className="w-full sm:w-auto px-4 py-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] text-xs font-bold text-white flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] cursor-pointer shadow-[0_2px_8px_rgba(0,113,227,0.35)]"
             >
-              <Mail className="w-3.5 h-3.5" />
+              <Mail className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>aslaliyamohit9@gmail.com</span>
             </a>
             <button
               onClick={() => onNavigate('contact')}
-              className="px-4 py-2 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.14] text-xs text-[#F5F5F7] transition-all duration-200 cursor-pointer whitespace-nowrap"
+              className="px-4 py-2 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.14] text-xs font-bold text-[#F5F5F7] transition-all duration-200 cursor-pointer whitespace-nowrap"
             >
               Contact Support
             </button>

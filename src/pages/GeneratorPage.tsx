@@ -262,7 +262,7 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onNavigate }) => {
         <h1 className="text-3xl sm:text-5xl font-semibold text-[#F5F5F7] tracking-[-0.03em] leading-tight">
           Personalized Apple Workflow Generator
         </h1>
-        <p className="text-sm sm:text-base text-[#86868B] max-w-xl mx-auto font-normal leading-relaxed">
+        <p className="text-sm sm:text-base text-[#A1A1A6] max-w-xl mx-auto font-normal leading-relaxed">
           Specify your exact Apple devices and workflow goals. Our Gemini-powered engine will formulate a verified, step-by-step procedure with native shortcuts and system prerequisites.
         </p>
       </div>

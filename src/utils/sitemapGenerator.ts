@@ -53,7 +53,7 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
       category: 'core',
       title: 'SmartToolHub — Apple Workflows, Shortcuts & Hardware Diagnostics Hub',
       image: {
-        loc: `${baseUrl}/images/hero_apple_ecosystem_studio.jpg`,
+        loc: `${baseUrl}/images/hero_apple_ecosystem_studio.webp`,
         title: 'SmartToolHub Apple Ecosystem Studio Hub',
         caption: 'Unified Mac, iPhone, and iPad automation workspace on macOS Sequoia',
       },

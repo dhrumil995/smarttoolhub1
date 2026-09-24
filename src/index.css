@@ -15,18 +15,19 @@
   body {
     background-color: #000000;
     color: #F5F5F7;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Inter, Roboto, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Plus Jakarta Sans", system-ui, -system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     overflow-x: hidden;
     min-height: 100vh;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.01em;
     selection-background-color: #0071E3;
     selection-color: #ffffff;
   }
 
   code, kbd, pre {
-    font-family: 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
+    font-family: 'JetBrains Mono', 'SF Mono', SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, monospace;
   }
 }
 
@@ -148,7 +149,7 @@
   background: #0071E3;
   color: #FFFFFF;
   border-radius: 9999px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.01em;
   transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 4px 14px rgba(0, 113, 227, 0.35);
@@ -173,7 +174,7 @@
   color: #F5F5F7;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 9999px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.01em;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -192,7 +193,7 @@
 
 .apple-link {
   color: #2997FF;
-  font-weight: 400;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -332,6 +333,20 @@
     padding: 0 !important;
   }
 
+  /* Unravel multi-column grids in print so content spans full page */
+  .grid {
+    display: block !important;
+  }
+
+  .lg\:col-span-8,
+  .lg\:col-span-12,
+  .lg\:col-span-4,
+  .md\:col-span-1,
+  .md\:col-span-2 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
   /* Convert glassy cards into crisp, paper-friendly bordered boxes */
   .glass-card,
   .glass-card-static,
@@ -344,6 +359,26 @@
     border-radius: 6px !important;
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+
+  /* Badge and status pill overrides for crisp paper contrast */
+  .bg-blue-500\/10,
+  .bg-blue-500\/20,
+  .bg-emerald-500\/10,
+  .bg-emerald-500\/20,
+  .bg-purple-500\/10,
+  .bg-purple-500\/20,
+  .bg-red-500\/10,
+  .bg-red-500\/20,
+  .bg-amber-500\/10,
+  .bg-amber-500\/20,
+  .bg-black\/50,
+  .bg-\[\#090A0E\],
+  .bg-\[\#0A0A0A\],
+  .bg-\[\#161616\] {
+    background: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
   }
 
   /* Headings & Typography */

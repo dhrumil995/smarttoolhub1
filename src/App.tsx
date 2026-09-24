@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { PageId } from './types';
 import { Navbar } from './components/Navbar';
+import { AppleRibbon } from './components/AppleRibbon';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 import { ProProvider } from './context/ProContext';
@@ -195,6 +196,9 @@ function AppContent() {
         <div className="ambient-orb-2" />
         <div className="ambient-orb-3" />
       </div>
+
+      {/* Apple Ecosystem Top Announcement Ribbon */}
+      <AppleRibbon onNavigate={handleNavigate} />
 
       {/* Top Navigation */}
       <Navbar 

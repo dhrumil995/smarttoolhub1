@@ -3,12 +3,13 @@ import { PageId, PersonaType } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
 import { EcosystemSwitcher } from '../components/EcosystemSwitcher';
 import { DiagnosticSimulator } from '../components/DiagnosticSimulator';
+import { AppleSiliconShowcase } from '../components/AppleSiliconShowcase';
 import { AuthoritativeReferences } from '../components/AuthoritativeReferences';
 import { haptics } from '../utils/haptics';
 
-const heroStudioImg = '/images/hero_apple_ecosystem_studio.jpg';
-const featureShortcutsImg = '/images/feature_shortcuts_automation.jpg';
-const featureContinuityImg = '/images/feature_continuity_mirroring.jpg';
+const heroStudioImg = '/images/hero_apple_ecosystem_studio.webp';
+const featureShortcutsImg = '/images/feature_shortcuts_automation.webp';
+const featureContinuityImg = '/images/feature_continuity_mirroring.webp';
 
 import { 
   Wand2, 
@@ -48,15 +49,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
       <section className="relative pt-12 sm:pt-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center space-y-7">
         
         {/* Apple Display Headline */}
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.035em] text-[#F5F5F7] leading-[1.08] max-w-4xl mx-auto text-balance">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.03em] text-[#F5F5F7] leading-[1.1] max-w-4xl mx-auto text-balance">
           Unleash Your Apple Hardware. <br />
-          <span className="text-[#86868B]">
+          <span className="text-[#86868B] font-medium">
             Automate Without the Friction.
           </span>
         </h1>
 
         {/* Crisp Subhead */}
-        <p className="text-base sm:text-xl text-[#86868B] max-w-2xl mx-auto font-normal leading-relaxed tracking-tight text-balance">
+        <p className="text-base sm:text-lg text-[#A1A1A6] max-w-2xl mx-auto font-normal leading-relaxed tracking-normal text-balance">
           Synthesize custom Apple Shortcuts, configure macOS Sequoia Continuity, and eliminate multi-device latency across Mac, iPhone, and iPad.
         </p>
 
@@ -70,7 +71,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
             }}
             className="px-6 py-3 rounded-xl bg-[#0071E3] hover:bg-[#0077ED] text-white text-sm font-medium tracking-tight shadow-md hover:shadow-lg transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer flex items-center gap-2"
           >
-            <Wand2 className="w-4 h-4" />
+            <Wand2 className="w-4 h-4 stroke-[2]" />
             <span>Generate Custom Shortcuts</span>
           </button>
           
@@ -80,34 +81,40 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
               haptics.playTap();
               onNavigate('compatibility');
             }}
-            className="px-6 py-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.10] border border-white/[0.10] text-[#F5F5F7] text-sm font-medium tracking-tight transition-all cursor-pointer flex items-center gap-2"
+            className="px-6 py-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.10] border border-white/[0.15] text-[#F5F5F7] text-sm font-medium tracking-tight transition-all cursor-pointer flex items-center gap-2"
           >
-            <Cpu className="w-4 h-4 text-[#2997FF]" />
+            <Cpu className="w-4 h-4 text-[#2997FF] stroke-[2]" />
             <span>Hardware Compatibility Matrix</span>
           </button>
         </div>
 
         {/* Unboxed Metadata Trust Bar (Anti-Pill Rule) */}
         <div className="pt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-[#86868B] font-normal">
-          <span>macOS Sequoia 15.2</span>
-          <span aria-hidden="true">·</span>
-          <span>iOS 18.2 Ready</span>
-          <span aria-hidden="true">·</span>
+          <span className="text-[#F5F5F7] font-medium">macOS Sequoia 15.4</span>
+          <span aria-hidden="true" className="text-zinc-600">·</span>
+          <span className="text-[#F5F5F7] font-medium">iOS 18.4</span>
+          <span aria-hidden="true" className="text-zinc-600">·</span>
+          <span>Apple Silicon M4 & M3</span>
+          <span aria-hidden="true" className="text-zinc-600">·</span>
           <span>Zero-Credential Architecture</span>
-          <span aria-hidden="true">·</span>
-          <span>Local Client Execution</span>
+          <span aria-hidden="true" className="text-zinc-600">·</span>
+          <span>Local Sandboxed Execution</span>
         </div>
 
         {/* Apple Hardware Studio Showcase (Generated High-Fidelity Asset) */}
         <div className="pt-6 max-w-5xl mx-auto">
           <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/[0.10] shadow-[0_20px_50px_rgba(0,0,0,0.8)] bg-[#0C0D10] group">
             <picture>
+              <source srcSet="/images/hero_apple_ecosystem_studio.webp" type="image/webp" />
               <img 
-                src={heroStudioImg || "/images/hero_apple_ecosystem_studio.jpg"} 
+                src={heroStudioImg} 
                 alt="Apple Mac, iPhone, and iPad ecosystem workspace on dark minimal desk" 
-                className="w-full h-auto aspect-16/9 object-cover opacity-95 group-hover:opacity-100 transition-opacity duration-500"
+                width="1200"
+                height="675"
+                fetchPriority="high"
                 loading="eager"
                 decoding="async"
+                className="w-full h-auto aspect-16/9 object-cover opacity-95 group-hover:opacity-100 transition-opacity duration-500"
                 onError={(e) => {
                   const target = e.currentTarget;
                   if (!target.src.endsWith('/images/hero_apple_ecosystem_studio.jpg')) {
@@ -131,7 +138,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
                   haptics.playTap();
                   onOpenSearch();
                 }}
-                className="px-4 py-2 rounded-lg bg-white/[0.12] hover:bg-white/[0.20] text-white text-xs font-medium backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer"
+                className="px-4 py-2 rounded-lg bg-white/[0.12] hover:bg-white/[0.20] text-white text-xs font-medium backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer border border-white/10"
               >
                 <Search className="w-3.5 h-3.5 text-[#2997FF]" />
                 <span>Search Recipes (⌘K)</span>
@@ -152,7 +159,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
               Built specifically for the Apple platform.
             </h2>
           </div>
-          <p className="text-xs text-[#86868B] max-w-md">
+          <p className="text-xs text-[#86868B] max-w-md font-normal">
             Engineered with deep native hooks into Shortcuts, AppleScript, Shell, and Core Continuity APIs.
           </p>
         </div>
@@ -168,27 +175,31 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
             className="md:col-span-2 rounded-2xl sm:rounded-3xl border border-white/[0.08] hover:border-white/[0.20] bg-[#0E0F13]/80 backdrop-blur-xl p-6 sm:p-8 flex flex-col justify-between group cursor-pointer transition-all space-y-6"
           >
             <div className="space-y-3">
-              <div className="flex items-center justify-between text-xs text-[#86868B]">
+              <div className="flex items-center justify-between text-xs text-[#86868B] font-normal">
                 <span>01. Automation Engine</span>
-                <span className="text-[#2997FF] group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                <span className="text-[#2997FF] group-hover:translate-x-1 transition-transform flex items-center gap-1 font-medium">
                   Open Generator <ChevronRight className="w-3.5 h-3.5" />
                 </span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
                 Synthesize Production-Grade Apple Shortcuts
               </h3>
-              <p className="text-sm text-[#86868B] leading-relaxed max-w-xl">
+              <p className="text-sm text-[#A1A1A6] leading-relaxed max-w-xl font-normal">
                 Generate tailored automations for your specific combination of macOS and iOS. Download ready-to-run `.shortcut` payloads, AppleScript snippets, and shell hooks with zero configuration overhead.
               </p>
             </div>
 
             <div className="rounded-xl overflow-hidden border border-white/[0.08] shadow-inner">
               <picture>
+                <source srcSet="/images/feature_shortcuts_automation.webp" type="image/webp" />
                 <img 
-                  src={featureShortcutsImg || "/images/feature_shortcuts_automation.jpg"} 
+                  src={featureShortcutsImg} 
                   alt="Apple Shortcuts automation canvas in macOS Sequoia" 
+                  width="800"
+                  height="450"
                   className="w-full h-auto aspect-16/9 object-cover group-hover:scale-[1.02] transition-transform duration-500"
                   loading="lazy"
+                  decoding="async"
                   onError={(e) => {
                     const target = e.currentTarget;
                     if (!target.src.endsWith('/images/feature_shortcuts_automation.jpg')) {
@@ -233,11 +244,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
 
             <div className="rounded-xl overflow-hidden border border-white/[0.08]">
               <picture>
+                <source srcSet="/images/feature_continuity_mirroring.webp" type="image/webp" />
                 <img 
-                  src={featureContinuityImg || "/images/feature_continuity_mirroring.jpg"} 
+                  src={featureContinuityImg} 
                   alt="iPhone Mirroring and Continuity Camera Desk View in macOS Sequoia" 
+                  width="600"
+                  height="450"
                   className="w-full h-auto aspect-4/3 object-cover group-hover:scale-[1.02] transition-transform duration-500"
                   loading="lazy"
+                  decoding="async"
                   onError={(e) => {
                     const target = e.currentTarget;
                     if (!target.src.endsWith('/images/feature_continuity_mirroring.jpg')) {
@@ -257,11 +272,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
         </div>
       </section>
 
+      {/* Apple Silicon Hardware Architecture Showcase */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AppleSiliconShowcase />
+      </section>
+
       {/* Hardware Profile & Live Diagnostic Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="border-b border-white/[0.08] pb-4">
-          <span className="text-xs text-[#2997FF] font-medium tracking-wider uppercase">Hardware Intelligence</span>
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#F5F5F7] mt-1">
+          <span className="text-xs text-[#2997FF] font-bold tracking-wider uppercase">Hardware Intelligence</span>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#F5F5F7] mt-1">
             Simulate your setup. Run real-time diagnostics.
           </h2>
         </div>
@@ -289,9 +309,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
                   haptics.playTap();
                   setSelectedPersona(persona.id);
                 }}
-                className={`px-3.5 py-1.5 rounded-lg text-xs tracking-tight transition-all cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium tracking-tight transition-all cursor-pointer ${
                   selectedPersona === persona.id
-                    ? 'bg-white text-black font-medium shadow-sm'
+                    ? 'bg-white text-black font-semibold shadow-sm'
                     : 'text-[#86868B] hover:text-white'
                 }`}
               >
@@ -315,7 +335,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
               <div className="space-y-2.5">
                 {/* Unboxed Metadata (Zero Pills) */}
                 <div className="text-[11px] text-[#86868B] flex items-center gap-2 font-normal">
-                  <span className="text-[#2997FF]">{wf.category}</span>
+                  <span className="text-[#2997FF] font-medium">{wf.category}</span>
                   <span aria-hidden="true">·</span>
                   <span>{wf.setupTimeMinutes} min setup</span>
                 </div>
@@ -324,12 +344,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenSearch }) 
                   {wf.title}
                 </h3>
 
-                <p className="text-xs sm:text-sm text-[#86868B] line-clamp-3 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#A1A1A6] line-clamp-3 leading-relaxed font-normal">
                   {wf.summary}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs text-[#86868B]">
+              <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs text-[#86868B] font-medium group-hover:text-[#F5F5F7]">
                 <span>View Full Recipe</span>
                 <ChevronRight className="w-4 h-4 text-[#2997FF] group-hover:translate-x-1 transition-transform" />
               </div>

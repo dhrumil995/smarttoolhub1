@@ -63,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenS
               />
             </picture>
           </div>
-          <span className="font-semibold text-sm sm:text-[15px] tracking-tight text-[#F5F5F7] group-hover:text-white transition-colors">
+          <span className="font-semibold text-sm sm:text-[15px] tracking-[-0.01em] text-[#F5F5F7] group-hover:text-white transition-colors">
             SmartToolHub
           </span>
         </button>
@@ -84,7 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenS
                 className={`relative py-1 transition-colors whitespace-nowrap cursor-pointer ${
                   isActive
                     ? 'text-white font-medium'
-                    : 'text-[#86868B] hover:text-[#F5F5F7]'
+                    : 'text-[#86868B] hover:text-[#F5F5F7] font-normal'
                 }`}
               >
                 <span>{item.label}</span>
@@ -105,7 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenS
               haptics.playTap();
               onOpenSearch();
             }}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.08] hover:border-white/15 text-[#86868B] hover:text-[#F5F5F7] text-xs transition-all cursor-pointer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.08] hover:border-white/15 text-[#86868B] hover:text-[#F5F5F7] text-xs font-normal transition-all cursor-pointer"
             title="Search shortcuts, workflows, errors (⌘K)"
           >
             <Search className="w-3.5 h-3.5 text-[#2997FF] shrink-0" />
@@ -137,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPage, onNavigate, onOpenS
             onClick={() => handleNav('generator')}
             className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#0071E3] hover:bg-[#0077ED] text-white text-xs font-medium tracking-tight shadow-sm transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
           >
-            <Wand2 className="w-3 h-3" />
+            <Wand2 className="w-3.5 h-3.5" />
             <span>Generate Flow</span>
           </button>
 

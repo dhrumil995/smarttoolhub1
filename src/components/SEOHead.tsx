@@ -193,15 +193,19 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
     setMeta('property', 'og:url', fullCanonicalUrl);
     setMeta('property', 'og:type', config.ogType);
     setMeta('property', 'og:site_name', 'SmartToolHub');
-    setMeta('property', 'og:image', `${BASE_URL}/logo.png`);
-    setMeta('property', 'og:image:alt', 'SmartToolHub Logo and Apple Ecosystem Diagnostic Engine');
+    setMeta('property', 'og:image', `${BASE_URL}/product-cover.jpg`);
+    setMeta('property', 'og:image:secure_url', `${BASE_URL}/product-cover.jpg`);
+    setMeta('property', 'og:image:type', 'image/jpeg');
+    setMeta('property', 'og:image:width', '1024');
+    setMeta('property', 'og:image:height', '1024');
+    setMeta('property', 'og:image:alt', 'SmartToolHub Apple Ecosystem Intelligence Platform');
     setMeta('property', 'og:locale', 'en_US');
 
     // Twitter Cards
     setMeta('name', 'twitter:card', 'summary_large_image');
     setMeta('name', 'twitter:title', config.title);
     setMeta('name', 'twitter:description', config.description);
-    setMeta('name', 'twitter:image', `${BASE_URL}/logo.png`);
+    setMeta('name', 'twitter:image', `${BASE_URL}/product-cover.jpg`);
     setMeta('name', 'twitter:image:alt', 'SmartToolHub Apple Workflows');
 
     // Generate JSON-LD Structured Data Graph

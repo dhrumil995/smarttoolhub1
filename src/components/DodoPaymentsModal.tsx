@@ -449,17 +449,30 @@ export const DodoPaymentsModal: React.FC<DodoPaymentsModalProps> = ({
           </div>
 
           <div className="p-3.5 rounded-xl bg-black/40 border border-white/10 flex items-center gap-4">
-            <img
-              src="/product-cover.jpg"
-              alt="SmartToolHub Pro Product Cover"
-              className="w-16 h-16 rounded-lg object-cover border border-white/20 shadow-md shrink-0"
-              referrerPolicy="no-referrer"
-            />
+            <picture>
+              <source srcSet="/product-cover.webp" type="image/webp" />
+              <img
+                src="/product-cover.webp"
+                alt="SmartToolHub Pro Product Cover"
+                width="64"
+                height="64"
+                loading="lazy"
+                decoding="async"
+                className="w-16 h-16 rounded-lg object-cover border border-white/20 shadow-md shrink-0"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.endsWith('/product-cover.jpg')) {
+                    target.src = '/product-cover.jpg';
+                  }
+                }}
+              />
+            </picture>
             <div className="text-[11px] text-[#A3A3A3] space-y-1">
               <p className="text-white font-medium">SmartToolHub Pro 3D Product Badge</p>
               <p>Square 1:1 format optimized for Dodo Payments' "Media & Description" image upload.</p>
               <p className="text-[10px] font-mono text-[#888888]">
-                Direct image path: <span className="text-blue-300 select-all">/product-cover.jpg</span>
+                Direct image path: <span className="text-blue-300 select-all">/product-cover.webp</span>
               </p>
             </div>
           </div>

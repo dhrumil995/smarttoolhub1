@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PageId, AIDiagnosticResult } from '../types';
 import { TROUBLESHOOTING_DATA } from '../data/troubleshooting';
 import { usePro } from '../context/ProContext';
+import { haptics } from '../utils/haptics';
 import { 
   Wrench, 
   Search, 
@@ -18,7 +19,9 @@ import {
   Zap,
   RefreshCw,
   Cpu,
-  ShieldCheck
+  ShieldCheck,
+  FileDown,
+  Printer
 } from 'lucide-react';
 
 interface TroubleshootingPageProps {
@@ -150,9 +153,9 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
-      {/* Header — Apple Style */}
-      <div className="text-center space-y-3.5 max-w-3xl mx-auto">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 print:py-0 print:space-y-4 print:max-w-none">
+      {/* Header — Apple Style (Hidden in Print) */}
+      <div className="text-center space-y-3.5 max-w-3xl mx-auto no-print">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.12] text-xs font-normal text-[#2997FF] shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
           <Wrench className="w-3.5 h-3.5" />
           <span>Ecosystem Diagnostics & Isolation</span>
@@ -160,7 +163,7 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
         <h1 className="text-3xl sm:text-5xl font-semibold text-[#F5F5F7] tracking-[-0.03em] leading-tight">
           Apple Troubleshooting Wizard
         </h1>
-        <p className="text-sm sm:text-base text-[#86868B] leading-relaxed font-normal">
+        <p className="text-sm sm:text-base text-[#A1A1A6] leading-relaxed font-normal">
           Interactive step-by-step resolution trees for Continuity disconnects, AirDrop dropouts, Universal Clipboard latency, and live Gemini AI root-cause diagnosis.
         </p>
 
@@ -169,7 +172,7 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
           <div className="inline-flex items-center p-1 rounded-full bg-white/[0.06] border border-white/[0.1] text-xs backdrop-blur-xl">
             <button
               onClick={() => setActiveTab('curated')}
-              className={`px-5 py-2 rounded-full font-normal transition-all duration-200 cursor-pointer ${
+              className={`px-5 py-2 rounded-full font-medium transition-all duration-200 cursor-pointer ${
                 activeTab === 'curated'
                   ? 'bg-[#0071E3] text-white shadow-md'
                   : 'text-[#86868B] hover:text-white'
@@ -179,7 +182,7 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
             </button>
             <button
               onClick={() => setActiveTab('ai-diagnose')}
-              className={`px-5 py-2 rounded-full font-normal transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+              className={`px-5 py-2 rounded-full font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
                 activeTab === 'ai-diagnose'
                   ? 'bg-[#0071E3] text-white shadow-md'
                   : 'text-[#F5F5F7] hover:text-white'
@@ -188,7 +191,7 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
               <Sparkles className="w-3.5 h-3.5 text-[#2997FF]" />
               <span>AI Deep Diagnosis (Pro)</span>
               {!isPro && (
-                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 ml-1">
+                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 ml-1 font-medium">
                   PRO
                 </span>
               )}
@@ -199,9 +202,9 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
 
       {/* Mode 1: AI Deep Diagnostic Assistant (Pro Feature) */}
       {activeTab === 'ai-diagnose' && (
-        <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
+        <div className="max-w-4xl mx-auto space-y-6 animate-fade-in print:max-w-none">
           {!isPro ? (
-            <div className="glass-card p-6 rounded-2xl border border-amber-500/30 bg-amber-500/5 space-y-4">
+            <div className="glass-card p-6 rounded-2xl border border-amber-500/30 bg-amber-500/5 space-y-4 no-print">
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2 text-amber-300 font-semibold text-sm">
@@ -222,7 +225,7 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
               </div>
             </div>
           ) : (
-            <div className="p-3.5 rounded-xl glass-panel border border-blue-400/30 bg-blue-500/5 flex items-center justify-between text-xs">
+            <div className="p-3.5 rounded-xl glass-panel border border-blue-400/30 bg-blue-500/5 flex items-center justify-between text-xs no-print">
               <div className="flex items-center gap-2 text-blue-300 font-medium">
                 <Sparkles className="w-4 h-4 text-blue-400" />
                 <span>SmartToolHub Pro Active • Gemini 3.8 Flash Diagnostic Engineer ready</span>
@@ -236,8 +239,8 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
             </div>
           )}
 
-          {/* AI Diagnostic Form */}
-          <form onSubmit={handleRunAiDiagnosis} className="glass-card p-6 rounded-2xl border border-white/15 space-y-4">
+          {/* AI Diagnostic Form (Hidden in Print) */}
+          <form onSubmit={handleRunAiDiagnosis} className="glass-card p-6 rounded-2xl border border-white/15 space-y-4 no-print">
             <div className="space-y-2">
               <label className="block text-xs font-semibold text-white uppercase tracking-wider">
                 Describe Your Apple Ecosystem Failure or Symptoms
@@ -306,15 +309,46 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
 
           {/* AI Diagnostic Output */}
           {aiDiagnosticResult && (
-            <div className="glass-card p-6 sm:p-8 rounded-2xl border border-blue-400/40 space-y-6 animate-fade-in shadow-[0_15px_40px_rgba(59,130,246,0.15)]">
-              <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
+            <div className="glass-card p-6 sm:p-8 rounded-2xl border border-blue-400/40 space-y-6 animate-fade-in shadow-[0_15px_40px_rgba(59,130,246,0.15)] print:p-4 print:border-gray-300 print:shadow-none">
+              {/* Print-Only Header Banner for AI Diagnosis */}
+              <div className="hidden print:block print-header border-b-2 border-gray-900 pb-3 mb-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-xs uppercase font-mono tracking-wider text-gray-600 font-bold">
+                      SmartToolHub • Apple Subsystem AI Diagnostic Report
+                    </div>
+                    <div className="text-lg font-black text-gray-950 tracking-tight">
+                      Subsystem Analysis & Incident Recovery Plan
+                    </div>
+                  </div>
+                  <div className="text-right text-[9pt] font-mono text-gray-500">
+                    <div>Engine: Gemini 3.8 Flash</div>
+                    <div>Target: {customDeviceDetails}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 print:hidden">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/40 flex items-center gap-1">
+                  <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/40 flex items-center gap-1">
                     <Sparkles className="w-3 h-3 text-blue-400" />
                     Gemini 3.8 Flash Diagnostic Report
                   </span>
-                  <span className="text-xs text-[#888888]">Subsystem Analysis</span>
+                  <span className="text-xs text-[#888888] font-bold">Subsystem Analysis</span>
                 </div>
+
+                <button
+                  id="download-ai-diagnostic-pdf-btn"
+                  onClick={() => {
+                    haptics.playTap();
+                    window.print();
+                  }}
+                  title="Download and save this AI diagnosis as a clean PDF"
+                  className="px-4 py-2 rounded-xl bg-[#0071E3] hover:bg-[#0077ED] text-white text-xs font-bold transition-all cursor-pointer shadow-[0_2px_12px_rgba(0,113,227,0.35)] hover:shadow-[0_4px_16px_rgba(0,113,227,0.5)] flex items-center gap-2 group border border-blue-400/40"
+                >
+                  <FileDown className="w-4 h-4 text-white stroke-[2.5] group-hover:scale-110 transition-transform" />
+                  <span className="font-bold tracking-wide">Download as PDF</span>
+                </button>
               </div>
 
               {/* Root Cause */}
@@ -368,7 +402,7 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
                           <code className="overflow-x-auto selection:bg-emerald-800">{tc.command}</code>
                           <button
                             onClick={() => handleCopy(tc.command)}
-                            className="px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-[11px] text-white shrink-0 ml-2 cursor-pointer flex items-center gap-1"
+                            className="px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-[11px] text-white shrink-0 ml-2 cursor-pointer flex items-center gap-1 no-print"
                           >
                             {copiedCommand === tc.command ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
                             <span>{copiedCommand === tc.command ? 'Copied' : 'Copy'}</span>
@@ -394,6 +428,12 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
                   </ul>
                 </div>
               )}
+
+              {/* Print-Only Document Reference Footer */}
+              <div className="hidden print:flex border-t border-gray-300 pt-3 mt-6 items-center justify-between text-[8pt] text-gray-500 font-mono">
+                <div>SmartToolHub • Apple Ecosystem Diagnostic Report</div>
+                <div>Engine: Gemini 3.8 Flash Subsystem Diagnostic Specialist</div>
+              </div>
             </div>
           )}
         </div>
@@ -403,8 +443,8 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
       {activeTab === 'curated' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          {/* Left Column: Issue Directory & Search */}
-          <div className="lg:col-span-4 space-y-3">
+          {/* Left Column: Issue Directory & Search (Hidden in Print) */}
+          <div className="lg:col-span-4 space-y-3 no-print">
             <div className="relative">
               <Search className="w-4 h-4 text-[#888888] absolute left-3 top-3.5" />
               <input
@@ -461,33 +501,67 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
           </div>
 
           {/* Right Column: Diagnostic Canvas */}
-          <div className="lg:col-span-8">
-            <div className="glass-card p-6 sm:p-8 rounded-2xl border border-white/15 space-y-6">
+          <div className="lg:col-span-8 print:w-full print:max-w-none">
+            <div className="glass-card p-6 sm:p-8 rounded-2xl border border-white/15 space-y-6 print:p-4 print:border-gray-300 print:shadow-none">
               
+              {/* Print-Only Header Banner for Curated Diagnosis */}
+              <div className="hidden print:block print-header border-b-2 border-gray-900 pb-3 mb-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-xs uppercase font-mono tracking-wider text-gray-600 font-bold">
+                      SmartToolHub • Apple Subsystem Diagnostic Guide
+                    </div>
+                    <div className="text-lg font-black text-gray-950 tracking-tight">
+                      {activeIssue.title}
+                    </div>
+                  </div>
+                  <div className="text-right text-[9pt] font-mono text-gray-500">
+                    <div>Feature: {activeIssue.feature}</div>
+                    <div>Category: {activeIssue.category}</div>
+                    <div>Doc ID: {activeIssue.id}</div>
+                  </div>
+                </div>
+              </div>
+
               {/* Active Issue Header */}
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-white/[0.08] pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-white/[0.08] pb-4 print:border-gray-300">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-blue-400 font-semibold uppercase">
+                    <span className="text-xs font-mono text-blue-400 font-semibold uppercase print:text-blue-800">
                       {activeIssue.feature}
                     </span>
-                    <span className="text-[10px] text-[#888888] font-mono">
+                    <span className="text-[10px] text-[#888888] font-mono print:text-gray-600">
                       • {activeIssue.category}
                     </span>
                   </div>
-                  <h2 className="text-xl font-bold text-white tracking-tight">
+                  <h2 className="text-xl font-bold text-white tracking-tight print:text-gray-950">
                     {activeIssue.title}
                   </h2>
                 </div>
 
-                <button
-                  onClick={loadActiveIssueIntoAi}
-                  className="px-3 py-1.5 rounded-xl glass-button-primary text-xs font-semibold text-white flex items-center gap-1.5 shrink-0 cursor-pointer"
-                  title="Run live Gemini deep diagnosis on this symptom"
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Deep AI Diagnose</span>
-                </button>
+                <div className="flex items-center gap-2 no-print shrink-0">
+                  <button
+                    id="download-troubleshooting-pdf-btn"
+                    onClick={() => {
+                      haptics.playTap();
+                      window.print();
+                    }}
+                    title="Download this diagnostic resolution guide as a clean PDF"
+                    className="px-4 py-2 rounded-xl bg-[#0071E3] hover:bg-[#0077ED] text-white text-xs font-bold transition-all cursor-pointer shadow-[0_2px_12px_rgba(0,113,227,0.35)] hover:shadow-[0_4px_16px_rgba(0,113,227,0.5)] flex items-center gap-2 group border border-blue-400/40"
+                  >
+                    <FileDown className="w-4 h-4 text-white stroke-[2.5] group-hover:scale-110 transition-transform" />
+                    <span className="font-bold tracking-wide">Download as PDF</span>
+                  </button>
+
+                  <button
+                    onClick={loadActiveIssueIntoAi}
+                    className="px-3.5 py-2 rounded-xl glass-button-primary text-xs font-bold text-white flex items-center gap-1.5 shrink-0 cursor-pointer border border-blue-400/30"
+                    title="Run live Gemini deep diagnosis on this symptom"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 stroke-[2.5]" />
+                    <span>Deep AI Diagnose</span>
+                  </button>
+                </div>
               </div>
 
               {/* Symptoms */}
@@ -558,7 +632,7 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
                             <code className="overflow-x-auto">{diag.command}</code>
                             <button
                               onClick={() => handleCopy(diag.command!)}
-                              className="px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-[11px] text-white shrink-0 ml-2 cursor-pointer flex items-center gap-1"
+                              className="px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-[11px] text-white shrink-0 ml-2 cursor-pointer flex items-center gap-1 no-print"
                             >
                               {copiedCommand === diag.command ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
                               <span>{copiedCommand === diag.command ? 'Copied' : 'Copy'}</span>
@@ -591,6 +665,12 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
                   <span>Apple Knowledge Base</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
+              </div>
+
+              {/* Print-Only Document Reference Footer */}
+              <div className="hidden print:flex border-t border-gray-300 pt-3 mt-6 items-center justify-between text-[8pt] text-gray-500 font-mono">
+                <div>SmartToolHub • Apple Ecosystem Diagnostic Wizard</div>
+                <div>Verified Subsystem Isolation Reference • Doc Ref #{activeIssue.id}</div>
               </div>
 
             </div>

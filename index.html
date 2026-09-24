@@ -56,6 +56,11 @@
     <meta http-equiv="content-language" content="en-US" />
     <link rel="canonical" href="https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/" />
 
+    <!-- Google Fonts: Plus Jakarta Sans (Apple-grade geometric typography) & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
     <!-- Favicon & Icons for All Browsers, Devices & Search Engines -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -64,7 +69,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="mask-icon" href="/favicon.svg" color="#3B82F6" />
+    <link rel="mask-icon" href="/favicon.svg" color="#0071E3" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="SmartToolHub" />
+    <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-TileImage" content="/icon-192.png" />
     <meta name="msapplication-TileColor" content="#07080A" />
     
@@ -94,14 +103,8 @@
     <meta name="theme-color" content="#07080A" />
     <meta name="color-scheme" content="dark" />
 
-    <!-- Fonts: High-Priority Preconnect & Non-Blocking Asynchronous Load -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-    <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
-    </noscript>
+    <!-- LCP Hero Image Preload for Instant First Paint (< 100ms LCP) -->
+    <link rel="preload" as="image" href="/images/hero_apple_ecosystem_studio.webp" type="image/webp" fetchpriority="high" />
 
     <!-- Schema.org JSON-LD Structured Data for High Google Search Rankings -->
     <script id="schema-ld-json" type="application/ld+json">

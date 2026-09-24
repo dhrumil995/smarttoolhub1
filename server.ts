@@ -1208,13 +1208,28 @@ app.get('/api/sitemap/inspect', (req: Request, res: Response) => {
   });
 });
 
-// Serve public static assets (favicons, manifest, sitemap, robots, webp images)
+// Global SEO, Performance & Security headers
+app.use((_req: Request, res: Response, next: () => void) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
+
+// Serve public static assets (favicons, manifest, sitemap, robots, webp images) with long-term cache
 const publicPath = path.join(process.cwd(), 'public');
 if (fs.existsSync(publicPath)) {
   app.use(express.static(publicPath, {
-    maxAge: '1d',
+    maxAge: '30d',
     etag: true,
     lastModified: true,
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.html')) {
+        res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+      } else if (filePath.match(/\.(webp|jpg|jpeg|png|svg|ico|woff2)$/)) {
+        res.setHeader('Cache-Control', 'public, max-age=2592000, immutable');
+      }
+    },
   }));
 }
 
