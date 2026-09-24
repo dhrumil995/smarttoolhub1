@@ -13,6 +13,7 @@ import {
   DodoPaymentsException,
   PlanType,
 } from './src/server/billing';
+import { generateSitemapXml, getAllSitemapRoutes } from './src/utils/sitemapGenerator';
 
 dotenv.config();
 
@@ -1136,20 +1137,81 @@ app.get('/api/health', (req: Request, res: Response) => {
   });
 });
 
+// Automated Dynamic Sitemap XML Engine
+app.get('/sitemap.xml', (req: Request, res: Response) => {
+  try {
+    const rawHost = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
+    const host = Array.isArray(rawHost) ? rawHost[0] : rawHost;
+    const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+    const baseUrl = `${proto}://${host}`;
+
+    const xml = generateSitemapXml(baseUrl);
+    res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=14400, stale-while-revalidate=86400');
+    res.setHeader('X-Robots-Tag', 'all');
+    return res.status(200).send(xml);
+  } catch (err: any) {
+    console.error('[Sitemap] Dynamic generation error:', err);
+    const staticSitemap = path.join(process.cwd(), 'public', 'sitemap.xml');
+    if (fs.existsSync(staticSitemap)) {
+      res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+      return res.sendFile(staticSitemap);
+    }
+    return res.status(500).send('Error generating dynamic sitemap');
+  }
+});
+
+// Dynamic robots.txt with active host reference
+app.get('/robots.txt', (req: Request, res: Response) => {
+  const rawHost = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
+  const host = Array.isArray(rawHost) ? rawHost[0] : rawHost;
+  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const baseUrl = `${proto}://${host}`;
+
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=86400');
+  return res.status(200).send(`User-agent: *\nAllow: /\nDisallow: /api/\n\n# Dynamic Automated Sitemap\nSitemap: ${baseUrl}/sitemap.xml\n`);
+});
+
+// Sitemap Inspection & Crawl Audit API
+app.get('/api/sitemap/inspect', (req: Request, res: Response) => {
+  const rawHost = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
+  const host = Array.isArray(rawHost) ? rawHost[0] : rawHost;
+  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const baseUrl = `${proto}://${host}`;
+
+  const routes = getAllSitemapRoutes(baseUrl);
+  const categories = routes.reduce((acc, r) => {
+    acc[r.category] = (acc[r.category] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  return res.status(200).json({
+    status: 'ok',
+    total_routes: routes.length,
+    base_url: baseUrl,
+    generated_at: new Date().toISOString(),
+    sitemap_url: `${baseUrl}/sitemap.xml`,
+    robots_url: `${baseUrl}/robots.txt`,
+    categories,
+    google_ping_url: `https://www.google.com/ping?sitemap=${encodeURIComponent(`${baseUrl}/sitemap.xml`)}`,
+    routes: routes.map((r) => ({
+      path: r.path,
+      url: r.url,
+      lastmod: r.lastmod,
+      changefreq: r.changefreq,
+      priority: r.priority,
+      category: r.category,
+      title: r.title,
+      has_image: !!r.image,
+    })),
+  });
+});
+
 // Serve public static assets (favicons, manifest, sitemap, robots, webp images)
 const publicPath = path.join(process.cwd(), 'public');
 if (fs.existsSync(publicPath)) {
   app.use(express.static(publicPath, {
-    maxAge: '1d',
-    etag: true,
-    lastModified: true,
-  }));
-}
-
-// Serve src/assets static directory as an additional fallback for images
-const srcAssetsPath = path.join(process.cwd(), 'src', 'assets');
-if (fs.existsSync(srcAssetsPath)) {
-  app.use('/src/assets', express.static(srcAssetsPath, {
     maxAge: '1d',
     etag: true,
     lastModified: true,

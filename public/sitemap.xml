@@ -1,118 +1,210 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Core Landing & Hub -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<!-- Generated automatically by SmartToolHub Automated Sitemap Engine -->
+<!-- Total indexed routes: 23 -->
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <!-- Interactive Tools & Engines -->
-  <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/generator</loc>
-    <lastmod>2026-09-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>1.00</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/hero_apple_ecosystem_studio.jpg</image:loc>
+      <image:title>SmartToolHub Apple Ecosystem Studio Hub</image:title>
+      <image:caption>Unified Mac, iPhone, and iPad automation workspace on macOS Sequoia</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/compatibility</loc>
-    <lastmod>2026-09-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/troubleshooting</loc>
-    <lastmod>2026-09-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/library</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/generator</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/feature_shortcuts_automation.jpg</image:loc>
+      <image:title>Apple Shortcuts Visual Builder &amp; Code Synthesizer</image:title>
+      <image:caption>Generate zero-friction Apple Shortcuts and shell automations</image:caption>
+    </image:image>
   </url>
-
-  <!-- Verified Workflows & Technical Guides -->
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/continuity-camera-desk-view-streaming</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/compatibility</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/hero_apple_ecosystem_studio.jpg</image:loc>
+      <image:title>Apple Silicon Hardware Compatibility Matrix</image:title>
+      <image:caption>Hardware and OS requirements for iPhone Mirroring and Continuity</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/seamless-dual-display-universal-control</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/troubleshooting</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/feature_continuity_mirroring.jpg</image:loc>
+      <image:title>Continuity &amp; iPhone Mirroring Troubleshooting Diagnostics</image:title>
+      <image:caption>Step-by-step diagnostic trees for AWDL dropouts and clipboard sync</image:caption>
+    </image:image>
   </url>
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/iphone-mirroring-sequoia-remote-access</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/library</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/library?persona=creators</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/sidecar-ipad-math-apple-pencil-notes</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/library?persona=developers</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/universal-clipboard-handoff-developer-flow</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/library?persona=freelancers</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/high-speed-airdrop-prores-batch-transfer</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/library?persona=students</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/unified-apple-focus-shortcuts-automation</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/library?persona=beginners</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/instant-personal-hotspot-zero-password</loc>
-    <lastmod>2026-09-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/apple-intelligence-writing-tools-system-mac-ios</loc>
-    <lastmod>2026-09-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Legal & Transparency Pages -->
-  <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/pricing</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/pricing</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.70</priority>
   </url>
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/privacy</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/privacy</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.60</priority>
   </url>
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/terms</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/terms</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.60</priority>
   </url>
   <url>
-    <loc>https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/contact</loc>
-    <lastmod>2026-09-20</lastmod>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/contact</loc>
+    <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/continuity-camera-desk-view-streaming</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/hero_apple_ecosystem_studio.jpg</image:loc>
+      <image:title>4K Studio Webcam &amp; Desk View Overhaul with iPhone</image:title>
+      <image:caption>Turn your iPhone Ultra Wide camera into a professional overhead document camera and 4K webcam on Mac with zero cables or third-party capture cards.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/seamless-dual-display-universal-control</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/hero_apple_ecosystem_studio.jpg</image:loc>
+      <image:title>Dual-Device Command Center with Universal Control</image:title>
+      <image:caption>Control your MacBook, iMac, and iPad seamlessly with a single keyboard and mouse. Push cursor and drag-and-drop assets across device screens with zero configuration.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/iphone-mirroring-sequoia-remote-access</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/hero_apple_ecosystem_studio.jpg</image:loc>
+      <image:title>iPhone Mirroring on macOS Sequoia: Seamless Desktop Interaction</image:title>
+      <image:caption>Interact with your iPhone entirely from your Mac desktop while your iPhone stays locked in your pocket or charging across the room, with unified notifications and drag-and-drop.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/sidecar-ipad-math-apple-pencil-notes</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/hero_apple_ecosystem_studio.jpg</image:loc>
+      <image:title>Paperless Study Station: iPad Sidecar with Apple Pencil Digitizer</image:title>
+      <image:caption>Turn your iPad into a precision secondary Mac screen and graphics tablet. Annotate PDF lecture slides and solve complex math equations in Mac apps using Apple Pencil.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/universal-clipboard-handoff-developer-flow</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/hero_apple_ecosystem_studio.jpg</image:loc>
+      <image:title>Cross-Device Clipboard Sync: Mac, iPhone &amp; iPad Clipboard Pipeline</image:title>
+      <image:caption>Copy code snippets, authentication 2FA tokens, images, and URLs on one Apple device and instantly paste on another with zero lag or manual sharing steps.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/high-speed-airdrop-prores-batch-transfer</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/hero_apple_ecosystem_studio.jpg</image:loc>
+      <image:title>High-Speed 4K ProRes Video Ingestion via Peer-to-Peer AirDrop</image:title>
+      <image:caption>Transfer gigabytes of 4K 60fps ProRes footage and RAW photos from iPhone to Mac at maximum hardware Wi-Fi 6E/7 speeds without cables or cloud upload delays.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/unified-apple-focus-shortcuts-automation</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/hero_apple_ecosystem_studio.jpg</image:loc>
+      <image:title>Cross-Device Deep Work Focus Mode with Automated Filter Pipelines</image:title>
+      <image:caption>Trigger an ecosystem-wide deep focus state with one tap or keyboard shortcut: silence notifications, launch specific Safari tab groups, switch Apple Watch face, and tint displays.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/instant-personal-hotspot-zero-password</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/hero_apple_ecosystem_studio.jpg</image:loc>
+      <image:title>Instant Personal Hotspot with Zero Passwords or Manual Pairing</image:title>
+      <image:caption>Connect your Mac or iPad to your iPhone cellular data connection instantly from the Wi-Fi menu without touching your iPhone, typing passwords, or waking its screen.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/workflows/apple-intelligence-writing-tools-system-mac-ios</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/images/hero_apple_ecosystem_studio.jpg</image:loc>
+      <image:title>Apple Intelligence Writing Tools &amp; Smart Proofreading across Mac &amp; iPhone</image:title>
+      <image:caption>Harness on-device Apple Intelligence Writing Tools across any text field in macOS and iOS to rewrite, proofread, summarize long PDF documents, and extract key action items with zero cloud privacy exposure.</image:caption>
+    </image:image>
   </url>
 </urlset>

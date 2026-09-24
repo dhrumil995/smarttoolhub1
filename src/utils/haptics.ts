@@ -1,3 +1,5 @@
+import { safeStorage } from './storage';
+
 /**
  * Apple-style Micro-Haptics & Audio Feedback Engine
  * Synthesizes ultra-low-latency, elegant UI sounds using the native Web Audio API.
@@ -9,11 +11,9 @@ class SoundHapticEngine {
   private enabled: boolean = true;
 
   constructor() {
-    // Load persisted user preference
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('smarttoolhub_sound_enabled');
-      this.enabled = stored !== null ? stored === 'true' : true;
-    }
+    // Load persisted user preference safely
+    const stored = safeStorage.getItem('smarttoolhub_sound_enabled');
+    this.enabled = stored !== null ? stored === 'true' : true;
   }
 
   private getContext(): AudioContext | null {
@@ -36,9 +36,7 @@ class SoundHapticEngine {
 
   public setEnabled(val: boolean) {
     this.enabled = val;
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('smarttoolhub_sound_enabled', String(val));
-    }
+    safeStorage.setItem('smarttoolhub_sound_enabled', String(val));
   }
 
   public toggle(): boolean {

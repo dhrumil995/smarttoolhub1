@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { safeStorage } from '../utils/storage';
 
 interface ProContextType {
   isPro: boolean;
@@ -15,7 +16,7 @@ const ProContext = createContext<ProContextType | undefined>(undefined);
 export const ProProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Default to false so user starts on Free tier and must subscribe/purchase to get Pro
   const [isPro, setIsProState] = useState<boolean>(() => {
-    const saved = localStorage.getItem('smarttoolhub_pro_active');
+    const saved = safeStorage.getItem('smarttoolhub_pro_active');
     return saved === 'true';
   });
 
@@ -39,7 +40,7 @@ export const ProProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const setIsPro = (val: boolean) => {
     setIsProState(val);
-    localStorage.setItem('smarttoolhub_pro_active', String(val));
+    safeStorage.setItem('smarttoolhub_pro_active', String(val));
   };
 
   const togglePro = () => {

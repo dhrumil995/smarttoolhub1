@@ -5,9 +5,11 @@ import { EcosystemSwitcher } from '../components/EcosystemSwitcher';
 import { DiagnosticSimulator } from '../components/DiagnosticSimulator';
 import { AuthoritativeReferences } from '../components/AuthoritativeReferences';
 import { haptics } from '../utils/haptics';
-import heroStudioImg from '../assets/images/hero_apple_ecosystem_studio_1790175476500.jpg';
-import featureShortcutsImg from '../assets/images/feature_shortcuts_automation_1790175491181.jpg';
-import featureContinuityImg from '../assets/images/feature_continuity_mirroring_1790175517420.jpg';
+
+const heroStudioImg = '/images/hero_apple_ecosystem_studio.jpg';
+const featureShortcutsImg = '/images/feature_shortcuts_automation.jpg';
+const featureContinuityImg = '/images/feature_continuity_mirroring.jpg';
+
 import { 
   Wand2, 
   Cpu, 

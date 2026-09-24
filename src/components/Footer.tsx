@@ -4,9 +4,10 @@ import { ShieldCheck, Heart, ExternalLink, Mail, MessageSquare, Sparkles } from 
 
 interface FooterProps {
   onNavigate: (page: PageId, workflowId?: string) => void;
+  onOpenSitemap?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => {
   return (
     <footer role="contentinfo" className="border-t border-white/[0.08] bg-black text-[#86868B] pt-14 pb-12 mt-24 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -102,6 +103,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   className="hover:text-white transition-colors cursor-pointer"
                 >
                   Workflow Library
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => {
+                    if (onOpenSitemap) {
+                      onOpenSitemap();
+                    } else {
+                      window.open('/sitemap.xml', '_blank');
+                    }
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
+                  title="View auto-generated Google & Bing Sitemap XML"
+                >
+                  <span>Sitemap & Indexing</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-400 font-mono">XML</span>
                 </button>
               </li>
             </ul>

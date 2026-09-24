@@ -6,6 +6,7 @@ import { HomePage } from './pages/HomePage';
 import { ProProvider } from './context/ProContext';
 import { SEOHead } from './components/SEOHead';
 import { haptics } from './utils/haptics';
+import { WORKFLOWS_DATA } from './data/workflows';
 
 // Lazy-load secondary pages and modals to shrink critical landing bundle size
 const GeneratorPage = lazy(() => import('./pages/GeneratorPage').then(m => ({ default: m.GeneratorPage })));
@@ -18,6 +19,7 @@ const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then(m => ({ defaul
 const TermsPage = lazy(() => import('./pages/TermsPage').then(m => ({ default: m.TermsPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
 const CommandPalette = lazy(() => import('./components/CommandPalette').then(m => ({ default: m.CommandPalette })));
+const SitemapModal = lazy(() => import('./components/SitemapModal').then(m => ({ default: m.SitemapModal })));
 
 // Background prefetch for instant zero-latency page transitions
 const prefetchSecondaryRoutes = () => {
@@ -48,6 +50,7 @@ function AppContent() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [selectedWorkflowId, setSelectedWorkflowId] = useState<string>('wf-continuity-camera-desk-view');
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [isSitemapOpen, setIsSitemapOpen] = useState<boolean>(false);
 
   // Background preload secondary chunks when idle
   useEffect(() => {
@@ -65,6 +68,17 @@ function AppContent() {
       const pageParam = params.get('page') as PageId | null;
       const wfParam = params.get('workflow');
       const pathname = window.location.pathname.replace(/^\/+|\/+$/g, '');
+
+      // Check if path matches /workflows/:slug
+      if (pathname.startsWith('workflows/')) {
+        const slug = pathname.replace(/^workflows\//, '');
+        const found = WORKFLOWS_DATA.find(w => w.slug === slug || w.id === slug);
+        if (found) {
+          setSelectedWorkflowId(found.id);
+          setCurrentPage('workflow-detail');
+          return;
+        }
+      }
 
       if (wfParam) {
         setSelectedWorkflowId(wfParam);
@@ -104,13 +118,20 @@ function AppContent() {
     try {
       const url = new URL(window.location.href);
       if (page === 'home') {
+        url.pathname = '/';
         url.search = '';
       } else if (page === 'workflow-detail' && workflowId) {
-        url.searchParams.set('page', 'workflow-detail');
-        url.searchParams.set('workflow', workflowId);
+        const found = WORKFLOWS_DATA.find(w => w.id === workflowId);
+        if (found) {
+          url.pathname = `/workflows/${found.slug}`;
+          url.search = '';
+        } else {
+          url.searchParams.set('page', 'workflow-detail');
+          url.searchParams.set('workflow', workflowId);
+        }
       } else {
-        url.searchParams.set('page', page);
-        url.searchParams.delete('workflow');
+        url.pathname = `/${page}`;
+        url.search = '';
       }
       window.history.pushState({ page, workflowId }, '', url.toString());
     } catch (e) {}
@@ -235,8 +256,22 @@ function AppContent() {
         </Suspense>
       )}
 
+      {/* Global Sitemap & Indexing Inspector Modal (Loaded on-demand) */}
+      {isSitemapOpen && (
+        <Suspense fallback={null}>
+          <SitemapModal
+            isOpen={isSitemapOpen}
+            onClose={() => setIsSitemapOpen(false)}
+            onNavigate={handleNavigate}
+          />
+        </Suspense>
+      )}
+
       {/* Global Footer */}
-      <Footer onNavigate={handleNavigate} />
+      <Footer 
+        onNavigate={handleNavigate} 
+        onOpenSitemap={() => setIsSitemapOpen(true)}
+      />
     </div>
   );
 }
