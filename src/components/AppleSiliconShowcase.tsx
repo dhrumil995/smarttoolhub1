@@ -104,7 +104,7 @@ export const AppleSiliconShowcase: React.FC = () => {
   return (
     <section 
       aria-label="Apple Silicon Architecture Matrix"
-      className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-[#0A0B0E]/90 backdrop-blur-2xl p-6 sm:p-8 space-y-6"
+      className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-[#0A0B0E]/90 backdrop-blur-2xl p-4 sm:p-8 space-y-5 sm:space-y-6"
     >
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-5">
         <div>

@@ -71,7 +71,7 @@ export const EcosystemSwitcher: React.FC<EcosystemSwitcherProps> = ({
   };
 
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-[#0E0F13]/90 backdrop-blur-xl p-6 sm:p-7 space-y-5">
+    <div className="rounded-2xl border border-white/[0.08] bg-[#0E0F13]/90 backdrop-blur-xl p-4 sm:p-7 space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-4">
         <div className="space-y-0.5">
           <span className="text-xs text-[#2997FF] font-medium tracking-wider uppercase">Active Setup</span>

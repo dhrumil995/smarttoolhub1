@@ -1,19 +1,12 @@
 import React, { useState } from 'react';
-import { PageId, PersonaType } from '../types';
+import { PageId } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
-import { 
-  BookOpen, 
-  Search, 
-  Filter, 
-  Clock, 
-  ArrowRight, 
-  Sparkles, 
-  Laptop, 
-  Smartphone, 
-  Tablet, 
-  SlidersHorizontal,
+import {
+  Search,
+  Clock,
+  ArrowRight,
   Bookmark,
-  Check
+  X
 } from 'lucide-react';
 
 interface LibraryPageProps {
@@ -65,9 +58,7 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
     setSavedWorkflows(updated);
     try {
       localStorage.setItem('smarttoolhub_bookmarks', JSON.stringify(updated));
-    } catch {
-      // localstorage guard
-    }
+    } catch {}
   };
 
   const filtered = WORKFLOWS_DATA.filter((wf) => {
@@ -84,63 +75,73 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
-      {/* Header — Apple Style */}
-      <div className="text-center space-y-3.5 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.12] text-xs font-normal text-[#2997FF] shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-          <BookOpen className="w-3.5 h-3.5" />
-          <span>Curated Ecosystem Repository</span>
-        </div>
-        <h1 className="text-3xl sm:text-5xl font-semibold text-[#F5F5F7] tracking-[-0.03em] leading-tight">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+      {/* Header */}
+      <div className="text-center space-y-3 max-w-3xl mx-auto">
+        <p className="text-xs font-medium text-indigo-600 dark:text-indigo-400">
+          Curated Ecosystem Repository
+        </p>
+        <h1 className="text-3xl sm:text-5xl font-extrabold text-metallic tracking-tight leading-tight">
           Verified Apple Workflow Library
         </h1>
-        <p className="text-sm sm:text-base text-[#86868B] leading-relaxed font-normal">
-          Explore complete production blueprints with tested hardware setups, keyboard shortcut cheat-sheets, and step numbering.
+        <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 leading-relaxed">
+          Explore complete production blueprints with tested hardware setups, keyboard shortcut cheat-sheets, and step-by-step actions.
         </p>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="glass-card p-6 sm:p-7 rounded-[28px] border border-white/[0.08] space-y-5">
+      <div className="ios-card-static p-6 sm:p-7 space-y-5">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          
           {/* Main Search Input */}
-          <div className="relative w-full md:w-96">
-            <Search className="w-4 h-4 text-[#888888] absolute left-3 top-3.5" />
+          <div className="relative w-full md:w-96 flex items-center">
+            <Search className="w-4 h-4 text-indigo-500 dark:text-indigo-400 absolute left-3.5 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by keyword, app name, or tag..."
-              aria-label="Search by keyword, app name, or tag"
-              className="w-full pl-9 pr-3 py-2 rounded-xl glass-input text-xs text-white placeholder-[#86868B] focus:outline-none"
+              placeholder="Search by keyword, app name, or workflow..."
+              aria-label="Search by keyword, app name, or workflow"
+              className="w-full pl-10 pr-8 py-2.5 rounded-xl glass-input text-xs focus:outline-none"
             />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-2.5 text-slate-400 hover:text-white cursor-pointer"
+                aria-label="Clear search"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
 
           {/* Native Tools Only Filter */}
-          <label className="flex items-center gap-2 text-xs text-[#A3A3A3] cursor-pointer shrink-0 select-none">
+          <label className="flex items-center gap-2 text-xs text-slate-600 dark:text-zinc-300 cursor-pointer shrink-0 select-none">
             <input
               type="checkbox"
               checked={builtInOnly}
               onChange={(e) => setBuiltInOnly(e.target.checked)}
-              className="rounded bg-[#14161F] border-white/20 text-blue-500 focus:ring-0 focus:ring-offset-0"
+              className="rounded accent-indigo-500"
             />
             <span>Show 100% Native Apple Tools Only</span>
           </label>
         </div>
 
         {/* Persona & Category Tabs */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2 border-t border-white/[0.08]">
-          {/* Persona Pills */}
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 pt-4 border-t border-slate-900/10 dark:border-white/10">
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[11px] text-[#888888] font-medium mr-1">Role:</span>
+            <span className="text-xs text-slate-500 dark:text-zinc-400 font-medium mr-1">
+              Role:
+            </span>
             {personas.map((p) => (
               <button
                 key={p.id}
+                type="button"
                 onClick={() => setSelectedPersona(p.id)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer whitespace-nowrap ${
                   selectedPersona === p.id
-                    ? 'bg-blue-500/25 text-blue-200 border border-blue-400/50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]'
-                    : 'glass-pill text-[#888888] hover:text-white'
+                    ? 'bg-indigo-600 text-white shadow-sm'
+                    : 'glass-pill text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 {p.label}
@@ -148,16 +149,19 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
             ))}
           </div>
 
-          {/* Category Dropdown */}
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] text-[#888888] font-medium">Category:</span>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-xs text-slate-500 dark:text-zinc-400 font-medium">
+              Category:
+            </span>
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-2.5 py-1 rounded-lg glass-input text-xs text-white focus:outline-none"
+              className="px-3 py-1.5 rounded-xl glass-input text-xs focus:outline-none"
             >
               {categories.map((c) => (
-                <option key={c} value={c} className="bg-[#12141A] text-white">{c === 'all' ? 'All Categories' : c}</option>
+                <option key={c} value={c} className="bg-[#0B0F19] text-white">
+                  {c === 'all' ? 'All Categories' : c}
+                </option>
               ))}
             </select>
           </div>
@@ -172,70 +176,55 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
             <div
               key={wf.id}
               onClick={() => onNavigate('workflow-detail', wf.id)}
-              className="glass-card p-5 sm:p-6 rounded-2xl flex flex-col justify-between cursor-pointer group relative border border-white/15 hover:border-blue-400/50 hover:shadow-[0_12px_35px_rgba(59,130,246,0.18)] transition-all"
+              className="bento-card p-6 flex flex-col justify-between cursor-pointer group"
             >
               <div className="space-y-3.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-300 border border-blue-400/30">
-                    {wf.category}
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={(e) => toggleBookmark(e, wf.id)}
-                      className="p-1.5 rounded-lg hover:bg-white/10 text-[#888888] hover:text-white transition-colors"
-                      title={isSaved ? 'Remove bookmark' : 'Bookmark workflow'}
-                    >
-                      <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'text-blue-400 fill-blue-400' : ''}`} />
-                    </button>
-                    <span className="text-[11px] text-[#888888] flex items-center gap-1 font-mono">
-                      <Clock className="w-3 h-3 text-blue-400" />
-                      {wf.setupTimeMinutes}m
+                {/* Unboxed metadata row */}
+                <div className="flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-zinc-400">
+                  <div className="flex items-center gap-1.5 truncate">
+                    <span className="font-medium text-indigo-600 dark:text-indigo-400 truncate">
+                      {wf.category}
                     </span>
+                    <span aria-hidden="true">·</span>
+                    <span className="font-mono tabular-nums shrink-0">{wf.setupTimeMinutes}m</span>
                   </div>
+                  <button
+                    type="button"
+                    onClick={(e) => toggleBookmark(e, wf.id)}
+                    className="p-1.5 rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10 text-slate-400 hover:text-indigo-400 transition-colors shrink-0 cursor-pointer"
+                    title={isSaved ? 'Remove bookmark' : 'Bookmark workflow'}
+                  >
+                    <Bookmark
+                      className={`w-3.5 h-3.5 ${
+                        isSaved ? 'text-indigo-400 fill-indigo-400' : ''
+                      }`}
+                    />
+                  </button>
                 </div>
 
-                <h3 className="text-base font-bold text-white group-hover:text-blue-300 transition-colors line-clamp-2">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors line-clamp-2">
                   {wf.title}
                 </h3>
 
-                <p className="text-xs text-[#A3A3A3] line-clamp-3 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-3 leading-relaxed">
                   {wf.summary}
                 </p>
 
-                {/* Device Requirements */}
-                <div className="space-y-1.5 pt-1">
-                  <span className="text-[10px] text-[#888888] uppercase tracking-wider block font-semibold">
-                    Target Hardware
+                <div className="pt-1 text-[11px] text-slate-500 dark:text-zinc-400">
+                  <span className="font-medium text-slate-700 dark:text-zinc-300">Hardware: </span>
+                  <span>
+                    {wf.devicesRequired.map((d) => d.device.split('(')[0].trim()).join(' · ')}
                   </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {wf.devicesRequired.map((d, didx) => (
-                      <span
-                        key={didx}
-                        className="text-[10px] font-mono px-2 py-0.5 rounded-md glass-pill text-[#CCCCCC]"
-                      >
-                        {d.device.split('(')[0].trim()}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tag Pills */}
-                <div className="flex flex-wrap gap-1 pt-1">
-                  {wf.tags.slice(0, 3).map((tag, tidx) => (
-                    <span key={tidx} className="text-[10px] text-[#666666]">
-                      #{tag}
-                    </span>
-                  ))}
                 </div>
               </div>
 
-              <div className="pt-5 border-t border-white/[0.06] flex items-center justify-between text-xs text-[#888888]">
-                <span className="text-[11px] font-medium text-emerald-400/90">
-                  {wf.steps.length} Verified Steps
+              <div className="pt-5 mt-5 border-t border-slate-900/5 dark:border-white/[0.06] flex items-center justify-between text-xs">
+                <span className="font-mono tabular-nums text-[11px] text-slate-500 dark:text-zinc-400">
+                  {wf.steps.length} verified steps
                 </span>
-                <span className="text-white group-hover:text-blue-400 flex items-center gap-1 font-medium transition-colors">
-                  Open Guide <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                <span className="text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 flex items-center gap-1 font-semibold transition-colors">
+                  <span>Open Blueprint</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </div>
             </div>
@@ -244,9 +233,25 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
       </div>
 
       {filtered.length === 0 && (
-        <div className="py-16 text-center text-[#888888] glass-card rounded-2xl p-8">
-          <p className="text-base font-semibold text-white">No workflows found</p>
-          <p className="text-xs text-[#666666] mt-1">Try broadening your search term or unchecking filter constraints.</p>
+        <div className="py-16 text-center ios-card-static p-8 space-y-3">
+          <p className="text-base font-semibold text-slate-900 dark:text-white">
+            No workflows match your current filter
+          </p>
+          <p className="text-xs text-slate-500 dark:text-zinc-400">
+            Try clearing your search query or selecting All Categories.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setSearchQuery('');
+              setSelectedPersona('all');
+              setSelectedCategory('all');
+              setBuiltInOnly(false);
+            }}
+            className="px-4 py-2 rounded-xl glass-button-primary text-xs font-semibold text-white cursor-pointer"
+          >
+            Reset All Filters
+          </button>
         </div>
       )}
     </div>

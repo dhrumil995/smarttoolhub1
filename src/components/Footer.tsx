@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageId } from '../types';
-import { ShieldCheck, Heart, ExternalLink, Mail, MessageSquare, Sparkles } from 'lucide-react';
+import { ShieldCheck, ExternalLink, Mail, Wand2, ArrowRight } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (page: PageId, workflowId?: string) => void;
@@ -9,153 +9,170 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => {
   return (
-    <footer role="contentinfo" className="border-t border-white/[0.08] bg-black text-[#86868B] pt-14 pb-12 mt-24 relative z-10">
+    <footer
+      role="contentinfo"
+      className="border-t border-slate-900/10 dark:border-white/10 bg-[#F1F5F9] dark:bg-[#02050E] text-slate-500 dark:text-zinc-400 pt-16 pb-14 mt-20 relative z-10 transition-colors select-none"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top Contact & Help Banner — Apple Style */}
-        <div className="mb-12 p-6 sm:p-7 rounded-[22px] bg-white/[0.04] border border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 backdrop-blur-xl">
-          <div className="flex items-center gap-3.5 text-left">
-            <div className="w-10 h-10 rounded-2xl bg-[#0071E3]/15 border border-[#0071E3]/25 flex items-center justify-center text-[#2997FF] shrink-0">
-              <Mail className="w-5 h-5" />
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-[#F5F5F7]">Have a question or workflow request?</p>
-              <p className="text-xs text-[#86868B] font-normal">Our editorial and engineering team personally responds to all inquiries.</p>
-            </div>
+        {/* High-End Conversion & Support CTA Banner */}
+        <div className="mb-14 p-6 sm:p-8 rounded-3xl bg-white/80 dark:bg-white/[0.03] border border-slate-900/10 dark:border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
+          <div className="space-y-1.5 max-w-xl">
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight">
+              Ready to automate your Apple workspace?
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
+              Synthesize custom Siri Shortcuts, benchmark Apple Silicon, or reach our engineering team for custom workflow requests.
+            </p>
           </div>
-          <div className="flex items-center gap-2.5 w-full sm:w-auto">
-            <a
-              href="mailto:aslaliyamohit9@gmail.com?subject=SmartToolHub%20Query"
-              className="w-full sm:w-auto px-4 py-2 rounded-full bg-[#0071E3] hover:bg-[#0077ED] text-xs font-bold text-white flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] cursor-pointer shadow-[0_2px_8px_rgba(0,113,227,0.35)]"
-            >
-              <Mail className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>aslaliyamohit9@gmail.com</span>
-            </a>
+          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto shrink-0">
             <button
-              onClick={() => onNavigate('contact')}
-              className="px-4 py-2 rounded-full bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.14] text-xs font-bold text-[#F5F5F7] transition-all duration-200 cursor-pointer whitespace-nowrap"
+              type="button"
+              onClick={() => onNavigate('generator')}
+              className="px-5 py-2.5 min-h-[40px] rounded-xl glass-button-primary text-xs font-semibold text-white flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap"
             >
-              Contact Support
+              <Wand2 className="w-3.5 h-3.5" />
+              <span>Launch Generator</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => onNavigate('contact')}
+              className="px-5 py-2.5 min-h-[40px] rounded-xl bg-slate-900/[0.05] dark:bg-white/[0.06] hover:bg-slate-900/[0.10] dark:hover:bg-white/[0.12] border border-slate-900/10 dark:border-white/10 text-xs font-semibold text-slate-900 dark:text-white transition-colors cursor-pointer whitespace-nowrap"
+            >
+              Contact Engineering
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/[0.08]">
-          
-          {/* Brand & Manifesto */}
+        {/* Navigation Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-900/10 dark:border-white/10">
+          {/* Brand Column */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded-[9px] overflow-hidden border border-white/20 bg-white/[0.05] shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]">
+              <div className="w-7 h-7 rounded-lg overflow-hidden border border-slate-900/10 dark:border-white/15 bg-slate-900/5 dark:bg-white/[0.06] shadow-sm shrink-0">
                 <picture>
                   <source srcSet="/logo-sm.webp" type="image/webp" />
-                  <img 
-                    src="/logo.png" 
-                    alt="SmartToolHub verified Apple Workflows and Continuity diagnostics" 
-                    width="28" 
-                    height="28" 
+                  <img
+                    src="/logo.png"
+                    alt="SmartToolHub"
+                    width="28"
+                    height="28"
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-full object-cover" 
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover"
                   />
                 </picture>
               </div>
-              <span className="font-semibold text-base text-[#F5F5F7] tracking-[-0.02em]">SmartToolHub</span>
+              <span className="font-bold text-base text-slate-900 dark:text-white tracking-tight">
+                SmartToolHub
+              </span>
             </div>
-            <p className="text-xs text-[#86868B] max-w-sm leading-relaxed font-normal">
-              Empowering Mac, iPhone, and iPad users with personalized multi-device workflows, verified Continuity shortcuts, hardware compatibility checks, and diagnostic steps.
+            <p className="text-xs text-slate-500 dark:text-zinc-400 max-w-sm leading-relaxed">
+              Precision multi-device automations, client-side media & SEO utilities, and Continuity diagnostics for macOS Sequoia and iOS 18.
             </p>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11px] text-[#86868B]">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>Zero-Credentials: No Apple ID or passwords requested.</span>
+            <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-zinc-400">
+              <ShieldCheck className="w-4 h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
+              <span>Zero-Credentials Architecture · No passwords required</span>
             </div>
           </div>
 
-          {/* Core Tools */}
+          {/* Core Suites */}
           <div>
-            <h4 className="text-xs font-semibold text-[#F5F5F7] uppercase tracking-wider mb-4">Core Tools</h4>
+            <h4 className="text-xs font-semibold text-slate-900 dark:text-white mb-4">
+              Platform Suites
+            </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('generator')}
-                  className="hover:text-white transition-colors cursor-pointer"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  Workflow Generator
+                  AI Shortcut Generator
                 </button>
               </li>
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('compatibility')}
-                  className="hover:text-white transition-colors cursor-pointer"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  Device Compatibility Checker
+                  Compatibility Matrix
                 </button>
               </li>
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('troubleshooting')}
-                  className="hover:text-white transition-colors cursor-pointer"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  Troubleshooting Wizard
+                  Continuity Sync Doctor
                 </button>
               </li>
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('library')}
-                  className="hover:text-white transition-colors cursor-pointer"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  Workflow Library
+                  120+ Workflow Library
                 </button>
               </li>
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => {
                     if (onOpenSitemap) {
                       onOpenSitemap();
-                    } else {
-                      window.open('/sitemap.xml', '_blank');
                     }
                   }}
-                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
-                  title="View auto-generated Google & Bing Sitemap XML"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  <span>Sitemap & Indexing</span>
-                  <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-500/20 text-emerald-400 font-mono">XML</span>
+                  Sitemap & Search Index
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Featured Workflows */}
+          {/* Featured Blueprints */}
           <div>
-            <h4 className="text-xs font-semibold text-[#F5F5F7] uppercase tracking-wider mb-4">Top Workflows</h4>
+            <h4 className="text-xs font-semibold text-slate-900 dark:text-white mb-4">
+              Popular Blueprints
+            </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('workflow-detail', 'wf-continuity-camera-desk-view')}
-                  className="hover:text-white transition-colors text-left cursor-pointer"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors text-left cursor-pointer"
                 >
                   4K Continuity Desk View
                 </button>
               </li>
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('workflow-detail', 'wf-universal-control-freelancer-desk')}
-                  className="hover:text-white transition-colors text-left cursor-pointer"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors text-left cursor-pointer"
                 >
                   Universal Control Setup
                 </button>
               </li>
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('workflow-detail', 'wf-iphone-mirroring-macos-sequoia')}
-                  className="hover:text-white transition-colors text-left cursor-pointer"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors text-left cursor-pointer"
                 >
                   iPhone Mirroring (macOS 15)
                 </button>
               </li>
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('workflow-detail', 'wf-student-sidecar-handwritten-math')}
-                  className="hover:text-white transition-colors text-left cursor-pointer"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors text-left cursor-pointer"
                 >
                   Sidecar & Apple Pencil
                 </button>
@@ -163,117 +180,76 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => 
             </ul>
           </div>
 
-          {/* Trust & Company */}
+          {/* Company & Legal */}
           <div>
-            <h4 className="text-xs font-semibold text-[#F5F5F7] uppercase tracking-wider mb-4">Trust & Contact</h4>
+            <h4 className="text-xs font-semibold text-slate-900 dark:text-white mb-4">
+              Resources & Legal
+            </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('pricing')}
-                  className="hover:text-white transition-colors cursor-pointer"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  Pricing & Subscriptions
+                  Pricing & Pro Access
                 </button>
               </li>
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('contact')}
-                  className="hover:text-white transition-colors cursor-pointer flex items-center gap-1 text-[#68B4FF]"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  <span>Contact & Support</span>
-                  <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-[#0071E3]/20 text-[#68B4FF]">Fast</span>
+                  Contact Support
                 </button>
               </li>
               <li>
-                <a 
-                  href="mailto:aslaliyamohit9@gmail.com"
-                  className="hover:text-white transition-colors text-[11px] font-mono text-[#86868B] block truncate"
-                  title="Direct contact email"
-                >
-                  aslaliyamohit9@gmail.com
-                </a>
-              </li>
-              <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('privacy')}
-                  className="hover:text-white transition-colors cursor-pointer"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Privacy Policy
                 </button>
               </li>
               <li>
-                <button 
+                <button
+                  type="button"
                   onClick={() => onNavigate('terms')}
-                  className="hover:text-white transition-colors cursor-pointer"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Terms of Service
                 </button>
               </li>
               <li>
-                <a 
-                  href="https://developer.apple.com/documentation/appintents" 
-                  target="_blank" 
+                <a
+                  href="https://developer.apple.com/documentation/appintents"
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors inline-flex items-center gap-1 text-[11px] text-[#2997FF]"
-                  title="Apple Developer App Intents & Shortcuts Documentation"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors inline-flex items-center gap-1"
                 >
-                  <span>Apple App Intents Spec</span>
-                  <ExternalLink className="w-2.5 h-2.5" />
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://support.apple.com/guide/security/welcome/web" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors inline-flex items-center gap-1 text-[11px] text-zinc-400"
-                  title="Apple Platform Security Architecture Guide"
-                >
-                  <span>Apple Platform Security</span>
-                  <ExternalLink className="w-2.5 h-2.5" />
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://opensource.apple.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors inline-flex items-center gap-1 text-[11px] text-zinc-400"
-                  title="Apple Open Source Darwin & macOS Foundation"
-                >
-                  <span>Apple Open Source</span>
-                  <ExternalLink className="w-2.5 h-2.5" />
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://support.apple.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors inline-flex items-center gap-1 text-[11px] text-zinc-400"
-                >
-                  <span>Official Apple Support</span>
-                  <ExternalLink className="w-2.5 h-2.5" />
+                  <span>Apple App Intents Docs</span>
+                  <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
             </ul>
           </div>
-
         </div>
 
-        {/* Legal Disclaimer & Status — Apple Style */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#666666]">
-          <p className="text-center md:text-left leading-relaxed max-w-4xl">
-            SmartToolHub is an independent reference publication and workflow discovery tool. 
-            Mac, iPhone, iPad, macOS, iOS, iPadOS, AirDrop, Sidecar, and Apple Intelligence are registered trademarks of Apple Inc. 
-            SmartToolHub is not affiliated with, endorsed by, or sponsored by Apple Inc.
+        {/* Quiet Copyright & Independent Publication Notice */}
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-slate-500 dark:text-zinc-500">
+          <p className="text-center md:text-left leading-relaxed max-w-3xl">
+            SmartToolHub is an independent engineering reference and workflow utility platform. Mac, iPhone, iPad, macOS, iOS, AirDrop, Sidecar, and Apple Intelligence are trademarks of Apple Inc.
           </p>
-          <div className="flex items-center gap-4 shrink-0">
-            <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>All Systems Operational</span>
-            </span>
-            <span>•</span>
+          <div className="flex items-center gap-3 shrink-0">
+            <a
+              href="mailto:aslaliyamohit9@gmail.com"
+              className="hover:text-slate-900 dark:hover:text-zinc-300 transition-colors font-mono"
+            >
+              aslaliyamohit9@gmail.com
+            </a>
+            <span aria-hidden="true">·</span>
             <span>© 2026 SmartToolHub</span>
           </div>
         </div>

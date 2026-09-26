@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageId, GeneratorFormData, GeneratedWorkflowOutput, AIAutomationScriptResult } from '../types';
 import { usePro } from '../context/ProContext';
 import { 
@@ -54,6 +54,17 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onNavigate }) => {
   const [generatedScript, setGeneratedScript] = useState<AIAutomationScriptResult | null>(null);
   const [scriptCopied, setScriptCopied] = useState(false);
   const [scriptError, setScriptError] = useState<string | null>(null);
+
+  // Sync task prompt if passed via URL (e.g., from Home 1-tap quick actions)
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const taskParam = params.get('task');
+      if (taskParam && taskParam.trim()) {
+        setFormData(prev => ({ ...prev, task: taskParam.trim() }));
+      }
+    } catch (_) {}
+  }, []);
 
   const deviceOptions = [
     { label: 'Mac (MacBook Pro / Air, Mac Studio, iMac)', icon: Laptop },
@@ -257,13 +268,13 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onNavigate }) => {
       <div className="text-center space-y-3.5">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.12] text-xs font-normal text-[#2997FF] shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
           <Wand2 className="w-3.5 h-3.5" />
-          <span>Intelligent Workflow Engine (Pro AI)</span>
+          <span>Intelligent Workflow Engine</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-semibold text-[#F5F5F7] tracking-[-0.03em] leading-tight">
-          Personalized Apple Workflow Generator
+          Shortcut & Workflow Generator
         </h1>
         <p className="text-sm sm:text-base text-[#A1A1A6] max-w-xl mx-auto font-normal leading-relaxed">
-          Specify your exact Apple devices and workflow goals. Our Gemini-powered engine will formulate a verified, step-by-step procedure with native shortcuts and system prerequisites.
+          Describe what you want to achieve across your Apple devices to generate tailored Shortcuts and automations.
         </p>
       </div>
 
@@ -321,7 +332,7 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onNavigate }) => {
         {/* Question 1: Apple Devices Owned */}
         <div className="space-y-3">
           <label className="block text-xs font-semibold text-white uppercase tracking-wider">
-            1. Which Apple devices do you own or have available?
+            1. Select Devices
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {deviceOptions.map((dev) => {
@@ -349,7 +360,7 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onNavigate }) => {
         {/* Question 2: OS Versions */}
         <div className="space-y-2">
           <label htmlFor="osVersions" className="block text-xs font-semibold text-white uppercase tracking-wider">
-            2. OS Versions in use
+            2. OS Versions
           </label>
           <input
             type="text"
@@ -364,7 +375,7 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onNavigate }) => {
         {/* Question 3: Task Description */}
         <div className="space-y-3">
           <label htmlFor="task" className="block text-xs font-semibold text-white uppercase tracking-wider">
-            3. What specific task or multi-device flow do you want to achieve? *
+            3. Automation Goal *
           </label>
           <textarea
             id="task"

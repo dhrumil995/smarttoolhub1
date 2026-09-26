@@ -1,15 +1,15 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { PageId } from './types';
-import { Navbar } from './components/Navbar';
-import { AppleRibbon } from './components/AppleRibbon';
+import { Navbar, ToolCategoryFilter } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 import { ProProvider } from './context/ProContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { SEOHead } from './components/SEOHead';
 import { haptics } from './utils/haptics';
 import { WORKFLOWS_DATA } from './data/workflows';
 
-// Lazy-load secondary pages and modals to shrink critical landing bundle size
+// Lazy-load secondary pages and modals
 const GeneratorPage = lazy(() => import('./pages/GeneratorPage').then(m => ({ default: m.GeneratorPage })));
 const CompatibilityPage = lazy(() => import('./pages/CompatibilityPage').then(m => ({ default: m.CompatibilityPage })));
 const TroubleshootingPage = lazy(() => import('./pages/TroubleshootingPage').then(m => ({ default: m.TroubleshootingPage })));
@@ -22,7 +22,6 @@ const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ defaul
 const CommandPalette = lazy(() => import('./components/CommandPalette').then(m => ({ default: m.CommandPalette })));
 const SitemapModal = lazy(() => import('./components/SitemapModal').then(m => ({ default: m.SitemapModal })));
 
-// Background prefetch for instant zero-latency page transitions
 const prefetchSecondaryRoutes = () => {
   const routes = [
     () => import('./pages/GeneratorPage'),
@@ -39,11 +38,10 @@ const prefetchSecondaryRoutes = () => {
   });
 };
 
-// Lightweight Apple-style route fallback loader
 const PageLoadingFallback = () => (
-  <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 text-center space-y-4 animate-in fade-in duration-200">
-    <div className="w-8 h-8 rounded-full border-2 border-[#2997FF]/20 border-t-[#2997FF] animate-spin" />
-    <span className="text-xs text-[#86868B] font-mono tracking-wider uppercase">Loading module...</span>
+  <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 text-center space-y-4">
+    <div className="w-8 h-8 rounded-full border-2 border-indigo-500/20 border-t-indigo-400 animate-spin" />
+    <span className="text-xs text-zinc-400 font-mono">Loading workspace...</span>
   </div>
 );
 
@@ -52,8 +50,8 @@ function AppContent() {
   const [selectedWorkflowId, setSelectedWorkflowId] = useState<string>('wf-continuity-camera-desk-view');
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [isSitemapOpen, setIsSitemapOpen] = useState<boolean>(false);
+  const [activeCategory, setActiveCategory] = useState<ToolCategoryFilter>('all');
 
-  // Background preload secondary chunks when idle
   useEffect(() => {
     if ('requestIdleCallback' in window) {
       (window as any).requestIdleCallback(prefetchSecondaryRoutes, { timeout: 1500 });
@@ -62,7 +60,6 @@ function AppContent() {
     }
   }, []);
 
-  // Initialize page from URL query params or pathname on load
   useEffect(() => {
     const parseUrl = () => {
       const params = new URLSearchParams(window.location.search);
@@ -70,7 +67,6 @@ function AppContent() {
       const wfParam = params.get('workflow');
       const pathname = window.location.pathname.replace(/^\/+|\/+$/g, '');
 
-      // Check if path matches /workflows/:slug
       if (pathname.startsWith('workflows/')) {
         const slug = pathname.replace(/^workflows\//, '');
         const found = WORKFLOWS_DATA.find(w => w.slug === slug || w.id === slug);
@@ -99,16 +95,10 @@ function AppContent() {
     };
 
     parseUrl();
-
-    const handlePopState = () => {
-      parseUrl();
-    };
-
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener('popstate', parseUrl);
+    return () => window.removeEventListener('popstate', parseUrl);
   }, []);
 
-  // Scroll to top and synchronize URL when page changes
   const handleNavigate = (page: PageId, workflowId?: string) => {
     haptics.playTap();
     if (workflowId) {
@@ -140,7 +130,6 @@ function AppContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Listen for global Cmd+K or Ctrl+K & Cmd+1..6 quick navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
@@ -150,7 +139,6 @@ function AppContent() {
         return;
       }
 
-      // Quick number tab switching (Cmd+1 to Cmd+6)
       if ((e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey) {
         switch (e.key) {
           case '1':
@@ -186,34 +174,25 @@ function AppContent() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#07080A] text-[#E5E5E5] relative selection:bg-blue-600 selection:text-white overflow-x-hidden">
-      {/* Dynamic SEO Meta Tags & JSON-LD Structured Data */}
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-[#030712] text-slate-900 dark:text-[#F8FAFC] relative selection:bg-indigo-500 selection:text-white overflow-x-hidden transition-colors duration-200">
       <SEOHead currentPage={currentPage} workflowId={selectedWorkflowId} />
 
-      {/* Ambient Lighting Orbs for Glassy UI Refraction */}
-      <div className="glass-ambient-orbs">
-        <div className="ambient-orb-1" />
-        <div className="ambient-orb-2" />
-        <div className="ambient-orb-3" />
-      </div>
-
-      {/* Apple Ecosystem Top Announcement Ribbon */}
-      <AppleRibbon onNavigate={handleNavigate} />
-
-      {/* Top Navigation */}
-      <Navbar 
-        currentPage={currentPage} 
-        onNavigate={handleNavigate} 
-        onOpenSearch={() => setIsSearchOpen(true)} 
+      <Navbar
+        currentPage={currentPage}
+        onNavigate={handleNavigate}
+        onOpenSearch={() => setIsSearchOpen(true)}
+        activeCategory={activeCategory}
+        onSelectCategory={setActiveCategory}
       />
 
-      {/* Main Content Area */}
       <main className="flex-1 w-full relative">
         <Suspense fallback={<PageLoadingFallback />}>
           {currentPage === 'home' && (
-            <HomePage 
-              onNavigate={handleNavigate} 
-              onOpenSearch={() => setIsSearchOpen(true)} 
+            <HomePage
+              onNavigate={handleNavigate}
+              onOpenSearch={() => setIsSearchOpen(true)}
+              activeCategory={activeCategory}
+              onSelectCategory={setActiveCategory}
             />
           )}
           {currentPage === 'generator' && (
@@ -229,9 +208,9 @@ function AppContent() {
             <LibraryPage onNavigate={handleNavigate} />
           )}
           {currentPage === 'workflow-detail' && (
-            <WorkflowDetailPage 
-              workflowId={selectedWorkflowId} 
-              onNavigate={handleNavigate} 
+            <WorkflowDetailPage
+              workflowId={selectedWorkflowId}
+              onNavigate={handleNavigate}
             />
           )}
           {currentPage === 'pricing' && (
@@ -249,7 +228,6 @@ function AppContent() {
         </Suspense>
       </main>
 
-      {/* Global Command Palette / Search Modal (Loaded on-demand) */}
       {isSearchOpen && (
         <Suspense fallback={null}>
           <CommandPalette
@@ -260,7 +238,6 @@ function AppContent() {
         </Suspense>
       )}
 
-      {/* Global Sitemap & Indexing Inspector Modal (Loaded on-demand) */}
       {isSitemapOpen && (
         <Suspense fallback={null}>
           <SitemapModal
@@ -271,9 +248,8 @@ function AppContent() {
         </Suspense>
       )}
 
-      {/* Global Footer */}
-      <Footer 
-        onNavigate={handleNavigate} 
+      <Footer
+        onNavigate={handleNavigate}
         onOpenSitemap={() => setIsSitemapOpen(true)}
       />
     </div>
@@ -282,11 +258,12 @@ function AppContent() {
 
 export function App() {
   return (
-    <ProProvider>
-      <AppContent />
-    </ProProvider>
+    <ThemeProvider>
+      <ProProvider>
+        <AppContent />
+      </ProProvider>
+    </ThemeProvider>
   );
 }
 
 export default App;
-

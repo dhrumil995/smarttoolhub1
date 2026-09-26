@@ -65,6 +65,7 @@ const AUTHORITATIVE_REFERENCES: ReferenceLink[] = [
 export const AuthoritativeReferences: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'markdown' | 'html'>('markdown');
   const [copiedFormat, setCopiedFormat] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<boolean>(false);
 
   const markdownSnippet = `[SmartToolHub — Apple Shortcuts & macOS Sequoia Automation](https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/)`;
   const htmlSnippet = `<a href="https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/" title="SmartToolHub Apple Shortcuts and Continuity Automation Platform" rel="noopener">SmartToolHub Apple Automation Suite</a>`;
@@ -77,6 +78,10 @@ export const AuthoritativeReferences: React.FC = () => {
       setTimeout(() => setCopiedFormat(null), 2000);
     });
   };
+
+  const displayedReferences = mobileExpanded 
+    ? AUTHORITATIVE_REFERENCES 
+    : AUTHORITATIVE_REFERENCES.slice(0, 3);
 
   return (
     <section 
@@ -103,7 +108,7 @@ export const AuthoritativeReferences: React.FC = () => {
 
       {/* Grid of High-Authority Tier-1 Backlinks & Citations */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {AUTHORITATIVE_REFERENCES.map((ref, idx) => (
+        {displayedReferences.map((ref, idx) => (
           <a
             key={idx}
             href={ref.url}
@@ -139,6 +144,21 @@ export const AuthoritativeReferences: React.FC = () => {
           </a>
         ))}
       </div>
+
+      {/* Mobile Toggle to prevent endless scrolling */}
+      {!mobileExpanded && (
+        <div className="text-center pt-1 md:hidden">
+          <button
+            onClick={() => {
+              haptics.playTap();
+              setMobileExpanded(true);
+            }}
+            className="px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.10] border border-white/[0.10] text-xs font-medium text-[#2997FF] transition-all cursor-pointer"
+          >
+            Show All {AUTHORITATIVE_REFERENCES.length} Authoritative Citations ↓
+          </button>
+        </div>
+      )}
 
       {/* Reciprocal Backlink & Citation Embed Hub (Empowers Bloggers & Engineers to Link Back) */}
       <div className="rounded-2xl border border-white/[0.08] bg-[#0E0F13]/90 backdrop-blur-xl p-6 sm:p-7 space-y-4">
