@@ -9,6 +9,12 @@ import { AppleSiliconShowcase } from '../components/AppleSiliconShowcase';
 import { IOSBottomSheet } from '../components/ios/IOSBottomSheet';
 import { IOSToggle } from '../components/ios/IOSToggle';
 import { haptics } from '../utils/haptics';
+import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.jpg';
+import heroStudioImg from '../assets/images/hero_mac_studio_ecosystem_1790827213135.jpg';
+import shortcutsAutomationImg from '../assets/images/feature_shortcuts_automation_1790175491181.jpg';
+import bentoRetinaImg from '../assets/images/bento_retina_image_engine_1790827223139.jpg';
+import bentoSiliconImg from '../assets/images/bento_apple_silicon_neural_1790827235951.jpg';
+import bentoContinuityImg from '../assets/images/bento_continuity_sync_matrix_1790827245735.jpg';
 import {
   Wand2,
   Wrench,
@@ -52,6 +58,7 @@ interface BentoToolItem {
   workbenchTab?: 'image' | 'text' | 'seo' | 'calculator' | 'diagnostics' | 'silicon';
   targetPage?: PageId;
   featuredImage?: string;
+  fallbackImage?: string;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
@@ -146,7 +153,8 @@ export const HomePage: React.FC<HomePageProps> = ({
       ctaLabel: 'Open AI Shortcut Generator',
       actionType: 'navigate',
       targetPage: 'generator',
-      featuredImage: '/images/feature_shortcuts_automation.webp',
+      featuredImage: shortcutsAutomationImg,
+      fallbackImage: '/images/feature_shortcuts_automation.webp',
     },
     {
       id: 'tool-image-studio',
@@ -162,7 +170,8 @@ export const HomePage: React.FC<HomePageProps> = ({
       ctaLabel: 'Launch Image Studio',
       actionType: 'workbench',
       workbenchTab: 'image',
-      featuredImage: '/src/assets/images/bento_retina_image_engine_1790827223139.jpg',
+      featuredImage: bentoRetinaImg,
+      fallbackImage: '/images/bento_retina_image_engine_1790827223139.jpg',
     },
     {
       id: 'tool-text-generator',
@@ -208,7 +217,8 @@ export const HomePage: React.FC<HomePageProps> = ({
       ctaLabel: 'Launch Calculators',
       actionType: 'workbench',
       workbenchTab: 'calculator',
-      featuredImage: '/src/assets/images/bento_apple_silicon_neural_1790827235951.jpg',
+      featuredImage: bentoSiliconImg,
+      fallbackImage: '/images/bento_apple_silicon_neural_1790827235951.jpg',
     },
     {
       id: 'tool-continuity-doctor',
@@ -224,7 +234,8 @@ export const HomePage: React.FC<HomePageProps> = ({
       ctaLabel: 'Run Interactive Sync Doctor',
       actionType: 'workbench',
       workbenchTab: 'diagnostics',
-      featuredImage: '/src/assets/images/bento_continuity_sync_matrix_1790827245735.jpg',
+      featuredImage: bentoContinuityImg,
+      fallbackImage: '/images/bento_continuity_sync_matrix_1790827245735.jpg',
     },
   ];
 
@@ -519,7 +530,10 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="relative rounded-3xl p-2 sm:p-3 bg-gradient-to-b from-slate-200/80 via-slate-100/40 to-transparent dark:from-white/[0.14] dark:via-white/[0.04] dark:to-transparent border border-slate-300/90 dark:border-white/20 shadow-[0_30px_90px_-15px_rgba(79,70,229,0.28),inset_0_1px_0_0_rgba(255,255,255,0.25)] overflow-hidden group">
             <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-2xl overflow-hidden bg-[#030712] border border-white/15">
               <img
-                src="/src/assets/images/hero_mac_studio_ecosystem_1790827213135.jpg"
+                src={heroStudioImg}
+                onError={(e) => {
+                  e.currentTarget.src = '/images/hero_mac_studio_ecosystem_1790827213135.jpg';
+                }}
                 alt="SmartToolHub Apple Ecosystem Hardware and Automation Studio"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700"
@@ -531,7 +545,10 @@ export const HomePage: React.FC<HomePageProps> = ({
               {/* Top-left Luxury Emblem Overlay */}
               <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5 flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#030712]/80 backdrop-blur-xl border border-white/20 shadow-lg">
                 <img
-                  src="/src/assets/images/smarttoolhub_luxury_logo_1790827199493.jpg"
+                  src={luxuryLogoImg}
+                  onError={(e) => {
+                    e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.jpg';
+                  }}
                   alt="SmartToolHub Studio Emblem"
                   referrerPolicy="no-referrer"
                   className="w-5 h-5 rounded-md object-cover border border-white/20"
@@ -737,6 +754,11 @@ export const HomePage: React.FC<HomePageProps> = ({
                     <div className="relative h-36 sm:h-44 w-full rounded-xl overflow-hidden bg-[#030712] border border-slate-300/80 dark:border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)]">
                       <img
                         src={tool.featuredImage}
+                        onError={(e) => {
+                          if (tool.fallbackImage && e.currentTarget.src !== tool.fallbackImage) {
+                            e.currentTarget.src = tool.fallbackImage;
+                          }
+                        }}
                         alt={tool.title}
                         loading="lazy"
                         referrerPolicy="no-referrer"

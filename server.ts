@@ -1278,8 +1278,55 @@ app.use((_req: Request, res: Response, next: () => void) => {
   next();
 });
 
-// Serve public static assets (favicons, manifest, sitemap, robots, webp images) with long-term cache
+// Sync generated images from src/assets/images into public/images so both paths always resolve in production
+const srcAssetsPath = path.join(process.cwd(), 'src', 'assets');
+const srcImagesPath = path.join(srcAssetsPath, 'images');
 const publicPath = path.join(process.cwd(), 'public');
+const publicImagesPath = path.join(publicPath, 'images');
+
+try {
+  if (fs.existsSync(srcImagesPath)) {
+    if (!fs.existsSync(publicImagesPath)) {
+      fs.mkdirSync(publicImagesPath, { recursive: true });
+    }
+    const imageFiles = fs.readdirSync(srcImagesPath);
+    for (const file of imageFiles) {
+      if (/\.(jpg|jpeg|png|webp|svg)$/i.test(file)) {
+        const srcFile = path.join(srcImagesPath, file);
+        const destFile = path.join(publicImagesPath, file);
+        if (!fs.existsSync(destFile)) {
+          fs.copyFileSync(srcFile, destFile);
+        }
+      }
+    }
+  }
+} catch (err) {
+  console.warn('Warning syncing src/assets/images to public/images:', err);
+}
+
+// Serve /src/assets directly in both dev and production so /src/assets/images/* URLs always work when published
+if (fs.existsSync(srcAssetsPath)) {
+  app.use('/src/assets', express.static(srcAssetsPath, {
+    maxAge: '30d',
+    etag: true,
+    lastModified: true,
+    setHeaders: (res, filePath) => {
+      if (filePath.match(/\.(webp|jpg|jpeg|png|svg|ico|woff2)$/i)) {
+        res.setHeader('Cache-Control', 'public, max-age=2592000, immutable');
+      }
+    },
+  }));
+}
+
+if (fs.existsSync(srcImagesPath)) {
+  app.use('/images', express.static(srcImagesPath, {
+    maxAge: '30d',
+    etag: true,
+    lastModified: true,
+  }));
+}
+
+// Serve public static assets (favicons, manifest, sitemap, robots, webp images) with long-term cache
 if (fs.existsSync(publicPath)) {
   app.use(express.static(publicPath, {
     maxAge: '30d',
@@ -1288,7 +1335,7 @@ if (fs.existsSync(publicPath)) {
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('.html')) {
         res.setHeader('Cache-Control', 'no-cache, must-revalidate');
-      } else if (filePath.match(/\.(webp|jpg|jpeg|png|svg|ico|woff2)$/)) {
+      } else if (filePath.match(/\.(webp|jpg|jpeg|png|svg|ico|woff2)$/i)) {
         res.setHeader('Cache-Control', 'public, max-age=2592000, immutable');
       }
     },
@@ -1323,6 +1370,9 @@ async function setupServer() {
 
     // HTML fallback with no-cache so users always receive latest bundle references
     app.get('*', (req: Request, res: Response) => {
+      if (/\.(jpg|jpeg|png|webp|gif|svg|ico|woff2?|ttf|eot|css|js|map)$/i.test(req.path)) {
+        return res.status(404).end();
+      }
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.sendFile(path.join(distPath, 'index.html'));
     });

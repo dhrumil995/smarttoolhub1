@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageId } from '../types';
 import { ShieldCheck, ExternalLink, Mail, Wand2, ArrowRight } from 'lucide-react';
+import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.jpg';
 
 interface FooterProps {
   onNavigate: (page: PageId, workflowId?: string) => void;
@@ -19,7 +20,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => 
           <div className="flex items-center gap-5 max-w-2xl relative z-10">
             <div className="hidden sm:flex w-16 h-16 rounded-2xl overflow-hidden border border-white/20 bg-[#030712] shrink-0 shadow-[0_10px_30px_rgba(99,102,241,0.3)]">
               <img
-                src="/src/assets/images/smarttoolhub_luxury_logo_1790827199493.jpg"
+                src={luxuryLogoImg}
+                onError={(e) => {
+                  e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.jpg';
+                }}
                 alt="SmartToolHub Studio Emblem"
                 width="64"
                 height="64"
@@ -64,7 +68,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => 
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-xl overflow-hidden border border-slate-300 dark:border-white/25 bg-[#030712] shadow-[0_4px_14px_rgba(99,102,241,0.25)] shrink-0">
                 <img
-                  src="/src/assets/images/smarttoolhub_luxury_logo_1790827199493.jpg"
+                  src={luxuryLogoImg}
+                  onError={(e) => {
+                    e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.jpg';
+                  }}
                   alt="SmartToolHub"
                   width="32"
                   height="32"

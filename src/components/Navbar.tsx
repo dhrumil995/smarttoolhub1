@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PageId } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { haptics } from '../utils/haptics';
+import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.jpg';
 import {
   Search,
   Menu,
@@ -155,7 +156,13 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           <div className="relative w-8 h-8 rounded-xl overflow-hidden border border-slate-300 dark:border-white/25 bg-[#030712] flex items-center justify-center shrink-0 shadow-[0_4px_14px_rgba(99,102,241,0.28),inset_0_1px_0_0_rgba(255,255,255,0.28)] group-hover:border-indigo-400/70 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.45)] transition-all">
             <img
-              src="/src/assets/images/smarttoolhub_luxury_logo_1790827199493.jpg"
+              src={luxuryLogoImg}
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.endsWith('/logo.png')) {
+                  target.src = '/images/smarttoolhub_luxury_logo_1790827199493.jpg';
+                }
+              }}
               alt="SmartToolHub Emblem"
               width="32"
               height="32"
