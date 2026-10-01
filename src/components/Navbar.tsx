@@ -146,29 +146,31 @@ export const Navbar: React.FC<NavbarProps> = ({
       className="sticky top-0 z-50 w-full h-16 ios-glass-nav transition-colors duration-200 select-none"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
-        {/* Zone 1: Brand Wordmark */}
+        {/* Zone 1: Brand Wordmark & Luxury 3D Emblem */}
         <button
           id="nav-brand-button"
           onClick={() => handleNav('home')}
-          className="flex items-center gap-2.5 group text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-xl shrink-0 py-1 active:scale-[0.98] transition-transform"
+          className="flex items-center gap-3 group text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-xl shrink-0 py-1 active:scale-[0.98] transition-transform"
           aria-label="SmartToolHub Home"
         >
-          <div className="w-7 h-7 rounded-lg overflow-hidden border border-slate-900/10 dark:border-white/15 bg-slate-900/5 dark:bg-white/[0.06] flex items-center justify-center shrink-0 shadow-sm">
-            <picture>
-              <source srcSet="/logo-sm.webp" type="image/webp" />
-              <img
-                src="/logo.png"
-                alt="SmartToolHub"
-                width="28"
-                height="28"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
-              />
-            </picture>
+          <div className="relative w-8 h-8 rounded-xl overflow-hidden border border-slate-300 dark:border-white/25 bg-[#030712] flex items-center justify-center shrink-0 shadow-[0_4px_14px_rgba(99,102,241,0.28),inset_0_1px_0_0_rgba(255,255,255,0.28)] group-hover:border-indigo-400/70 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.45)] transition-all">
+            <img
+              src="/src/assets/images/smarttoolhub_luxury_logo_1790827199493.jpg"
+              alt="SmartToolHub Emblem"
+              width="32"
+              height="32"
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-300"
+            />
           </div>
-          <span className="font-bold text-base tracking-tight text-slate-900 dark:text-white group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors whitespace-nowrap">
-            SmartToolHub
-          </span>
+          <div className="flex flex-col">
+            <span className="font-bold text-base leading-none tracking-tight text-slate-900 dark:text-white group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors whitespace-nowrap">
+              SmartToolHub
+            </span>
+            <span className="text-[10px] font-mono tracking-wider uppercase text-slate-400 dark:text-zinc-500 mt-0.5 hidden sm:inline">
+              Apple Studio Suite
+            </span>
+          </div>
         </button>
 
         {/* Zone 2: Primary Navigation & Category Dropdown */}
@@ -222,11 +224,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             {categoryDropdownOpen && (
-              <div className="absolute top-full right-0 mt-3 w-80 p-2 rounded-2xl bg-white/95 dark:bg-[#090D16]/95 backdrop-blur-2xl border border-slate-900/10 dark:border-white/10 shadow-2xl shadow-indigo-500/10 z-50">
-                <div className="px-3 py-1.5 text-[11px] font-medium text-slate-400 dark:text-zinc-500">
+              <div className="absolute top-full right-0 mt-3 w-80 p-2 rounded-2xl bg-white/95 dark:bg-[#090D16]/95 backdrop-blur-2xl border border-slate-300/80 dark:border-white/15 shadow-[0_24px_60px_rgba(0,0,0,0.55),inset_0_1px_0_0_rgba(255,255,255,0.16)] z-50">
+                <div className="px-3 py-1.5 text-[11px] font-medium text-slate-400 dark:text-zinc-500 border-b border-slate-200/80 dark:border-white/10 pb-2">
                   Tool Suites & Workbenches
                 </div>
-                <div className="space-y-0.5 mt-1">
+                <div className="space-y-1 mt-1.5">
                   {toolCategories.map((cat) => {
                     const Icon = cat.icon;
                     const isSelected = activeCategory === cat.id;
@@ -235,13 +237,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                         key={cat.id}
                         type="button"
                         onClick={() => handleCategoryPick(cat.id)}
-                        className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-colors cursor-pointer ${
+                        className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-all cursor-pointer border ${
                           isSelected
-                            ? 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-300'
-                            : 'hover:bg-slate-900/5 dark:hover:bg-white/[0.05] text-slate-700 dark:text-zinc-200'
+                            ? 'bg-indigo-500/10 border-indigo-500/35 text-indigo-600 dark:text-indigo-300'
+                            : 'border-transparent hover:border-slate-200 dark:hover:border-white/10 hover:bg-slate-900/5 dark:hover:bg-white/[0.05] text-slate-700 dark:text-zinc-200'
                         }`}
                       >
-                        <div className="w-8 h-8 rounded-lg bg-slate-900/5 dark:bg-white/[0.05] border border-slate-900/10 dark:border-white/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <div className="w-8 h-8 rounded-lg bg-slate-900/5 dark:bg-white/[0.05] border border-slate-300/80 dark:border-white/15 flex items-center justify-center shrink-0 mt-0.5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]">
                           <Icon className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
                         </div>
                         <div className="min-w-0 flex-1">
@@ -271,13 +273,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               haptics.playTap();
               onOpenSearch();
             }}
-            className="flex items-center gap-2.5 px-3 py-1.5 min-h-[38px] rounded-xl bg-slate-900/[0.04] dark:bg-white/[0.04] hover:bg-slate-900/[0.08] dark:hover:bg-white/[0.08] border border-slate-900/10 dark:border-white/10 text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white text-xs transition-all cursor-pointer whitespace-nowrap shrink-0"
+            className="flex items-center gap-2.5 px-3 py-1.5 min-h-[38px] rounded-xl glass-pill text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white text-xs cursor-pointer whitespace-nowrap shrink-0"
             title="Search tools, shortcuts, and workflows (⌘K)"
             aria-label="Search tools and workflows"
           >
             <Search className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400 shrink-0" />
             <span className="hidden sm:inline text-xs">Search tools...</span>
-            <kbd className="hidden sm:inline-flex px-1.5 py-0.5 text-[10px] rounded bg-slate-900/5 dark:bg-white/[0.06] border border-slate-900/10 dark:border-white/10 text-slate-500 dark:text-zinc-400 font-mono">
+            <kbd className="hidden sm:inline-flex apple-key text-[10px]">
               ⌘K
             </kbd>
           </button>
@@ -290,7 +292,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               haptics.playTap();
               toggleTheme();
             }}
-            className="w-[38px] h-[38px] rounded-xl bg-slate-900/[0.04] dark:bg-white/[0.04] hover:bg-slate-900/[0.08] dark:hover:bg-white/[0.08] border border-slate-900/10 dark:border-white/10 text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center transition-all cursor-pointer shrink-0"
+            className="w-[38px] h-[38px] rounded-xl glass-pill text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white flex items-center justify-center cursor-pointer shrink-0"
             title={`Switch to ${resolvedTheme === 'dark' ? 'Light' : 'Obsidian Dark'} mode`}
             aria-label="Toggle theme"
           >
@@ -306,7 +308,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             id="nav-generator-cta"
             type="button"
             onClick={() => handleNav('generator')}
-            className="hidden sm:inline-flex items-center gap-2 px-4 py-2 min-h-[38px] rounded-xl bg-white text-slate-950 hover:bg-zinc-200 dark:bg-white dark:text-slate-950 dark:hover:bg-zinc-200 font-semibold text-xs tracking-tight shadow-lg shadow-indigo-500/10 transition-all cursor-pointer whitespace-nowrap shrink-0"
+            className="hidden sm:inline-flex items-center gap-2 px-4 py-2 min-h-[38px] rounded-xl bg-white text-slate-950 hover:bg-zinc-100 border border-slate-300 dark:border-white/80 font-semibold text-xs tracking-tight shadow-[0_6px_20px_rgba(99,102,241,0.18),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all cursor-pointer whitespace-nowrap shrink-0"
           >
             <Wand2 className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
             <span>Launch Generator</span>
@@ -317,7 +319,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             id="nav-mobile-toggle"
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden w-[38px] h-[38px] rounded-xl text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white bg-slate-900/[0.04] dark:bg-white/[0.04] border border-slate-900/10 dark:border-white/10 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+            className="lg:hidden w-[38px] h-[38px] rounded-xl glass-pill text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white flex items-center justify-center cursor-pointer shrink-0"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}

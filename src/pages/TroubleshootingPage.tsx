@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PageId, AIDiagnosticResult } from '../types';
 import { TROUBLESHOOTING_DATA } from '../data/troubleshooting';
+import { ScrollProgressBar } from '../components/ScrollProgressBar';
 import { usePro } from '../context/ProContext';
 import { haptics } from '../utils/haptics';
 import { 
@@ -152,8 +153,25 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
     setActiveTab('ai-diagnose');
   };
 
+  const activeIssueResolvedCount = activeIssue.steps.filter(
+    (_, idx) => resolvedSteps[`${activeIssue.id}-${idx}`]
+  ).length;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 print:py-0 print:space-y-4 print:max-w-none">
+      <ScrollProgressBar
+        label={
+          activeTab === 'curated'
+            ? activeIssue.title
+            : 'AI Deep Root-Cause Diagnosis'
+        }
+        sublabel={
+          activeTab === 'curated'
+            ? `${activeIssueResolvedCount}/${activeIssue.steps.length} checks`
+            : activeIssue.feature
+        }
+        contentKey={`${activeTab}-${activeIssue.id}-${Boolean(aiDiagnosticResult)}`}
+      />
       {/* Header — Apple Style (Hidden in Print) */}
       <div className="text-center space-y-3.5 max-w-3xl mx-auto no-print">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/[0.12] text-xs font-normal text-[#2997FF] shadow-[0_2px_8px_rgba(0,0,0,0.3)]">

@@ -122,16 +122,16 @@ Verified by SmartToolHub 2026`;
   };
 
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-[#0E0F13]/90 backdrop-blur-xl p-4 sm:p-7 space-y-5 sm:space-y-6">
+    <div className="ios-card-static p-5 sm:p-7 space-y-5 sm:space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.06] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 dark:border-white/12 pb-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-xs text-[#2997FF] font-medium tracking-wider uppercase">Live Profiler</span>
-            <span aria-hidden="true" className="text-zinc-600">·</span>
-            <span className="text-xs text-emerald-400 font-medium">All Handshakes Verified</span>
+            <span className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold">Live Profiler</span>
+            <span aria-hidden="true" className="text-slate-400 dark:text-zinc-600">·</span>
+            <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">All Handshakes Verified</span>
           </div>
-          <h3 className="font-semibold text-white text-base sm:text-lg tracking-tight">
+          <h3 className="font-bold text-slate-900 dark:text-white text-base sm:text-lg tracking-tight">
             System & Continuity Readiness
           </h3>
         </div>
@@ -143,26 +143,26 @@ Verified by SmartToolHub 2026`;
               const next = haptics.toggle();
               setSoundActive(next);
             }}
-            className="p-2 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-[#86868B] hover:text-white border border-white/[0.08] transition-colors cursor-pointer"
+            className="p-2 rounded-xl glass-pill text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white cursor-pointer"
             title={soundActive ? 'Mute Audio' : 'Enable Audio'}
           >
-            {soundActive ? <Volume2 className="w-3.5 h-3.5 text-[#2997FF]" /> : <VolumeX className="w-3.5 h-3.5 text-zinc-500" />}
+            {soundActive ? <Volume2 className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" /> : <VolumeX className="w-3.5 h-3.5 text-zinc-500" />}
           </button>
 
           {/* Rerun Button */}
           <button
             onClick={runDiagnostics}
             disabled={isRunning}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.10] text-white text-xs border border-white/[0.08] transition-all cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl glass-pill text-slate-800 dark:text-white text-xs font-medium cursor-pointer disabled:opacity-50"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isRunning ? 'animate-spin text-[#2997FF]' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isRunning ? 'animate-spin text-indigo-500' : ''}`} />
             <span>{isRunning ? 'Analyzing...' : 'Re-verify'}</span>
           </button>
 
           {/* Copy Report */}
           <button
             onClick={handleCopyReport}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0071E3] hover:bg-[#0077ED] text-white text-xs font-medium transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl glass-button-primary text-white text-xs font-semibold cursor-pointer"
           >
             {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
             <span>{copied ? 'Copied' : 'Export Audit'}</span>
@@ -175,19 +175,19 @@ Verified by SmartToolHub 2026`;
         {results.map((r, i) => (
           <div 
             key={i}
-            className="p-4 rounded-xl bg-black/40 border border-white/[0.05] hover:border-white/[0.12] transition-colors space-y-2"
+            className="p-4 rounded-xl glass-panel space-y-2"
           >
             <div className="flex items-center justify-between gap-2">
-              <span className="text-xs font-medium text-white tracking-tight">{r.title}</span>
+              <span className="text-xs font-semibold text-slate-900 dark:text-white tracking-tight">{r.title}</span>
               {r.status === 'passed' ? (
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400 shrink-0" />
               ) : (
-                <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 shrink-0" />
               )}
             </div>
-            <p className="text-xs text-[#86868B] leading-relaxed">{r.details}</p>
+            <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">{r.details}</p>
             {r.metric && (
-              <div className="pt-1 text-[11px] text-[#2997FF] font-medium font-mono tabular-nums">
+              <div className="pt-1 text-[11px] text-indigo-600 dark:text-indigo-400 font-semibold font-mono tabular-nums">
                 {r.metric}
               </div>
             )}

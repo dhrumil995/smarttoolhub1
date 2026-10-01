@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
 import { PageId, WorkflowItem } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
 import { ToolCategoryFilter } from '../components/Navbar';
@@ -61,6 +62,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 }) => {
   const [heroSearch, setHeroSearch] = useState('');
   const [localCategory, setLocalCategory] = useState<ToolCategoryFilter>('all');
+  const shouldReduceMotion = useReducedMotion();
   const effectiveCategory = activeCategory !== 'all' ? activeCategory : localCategory;
 
   const handleCategoryChange = (cat: ToolCategoryFilter) => {
@@ -160,6 +162,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       ctaLabel: 'Launch Image Studio',
       actionType: 'workbench',
       workbenchTab: 'image',
+      featuredImage: '/src/assets/images/bento_retina_image_engine_1790827223139.jpg',
     },
     {
       id: 'tool-text-generator',
@@ -205,6 +208,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       ctaLabel: 'Launch Calculators',
       actionType: 'workbench',
       workbenchTab: 'calculator',
+      featuredImage: '/src/assets/images/bento_apple_silicon_neural_1790827235951.jpg',
     },
     {
       id: 'tool-continuity-doctor',
@@ -220,7 +224,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       ctaLabel: 'Run Interactive Sync Doctor',
       actionType: 'workbench',
       workbenchTab: 'diagnostics',
-      featuredImage: '/images/feature_continuity_mirroring.webp',
+      featuredImage: '/src/assets/images/bento_continuity_sync_matrix_1790827245735.jpg',
     },
   ];
 
@@ -360,20 +364,65 @@ export const HomePage: React.FC<HomePageProps> = ({
           SECTION 1: HERO SECTION WITH METALLIC TYPOGRAPHY & LIVE TOOL SEARCH BAR
           ========================================================================= */}
       <section className="relative pt-12 sm:pt-20 md:pt-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center space-y-8">
-        <div className="space-y-4 max-w-4xl mx-auto">
-          <p className="text-xs sm:text-[13px] font-medium text-indigo-600 dark:text-indigo-400 tracking-tight">
+        <motion.div
+          initial={shouldReduceMotion ? false : 'hidden'}
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.08,
+                delayChildren: 0.02,
+              },
+            },
+          }}
+          className="space-y-4 max-w-4xl mx-auto"
+        >
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 10 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { type: 'spring', stiffness: 280, damping: 28, mass: 0.8 },
+              },
+            }}
+            className="text-xs sm:text-[13px] font-medium text-indigo-600 dark:text-indigo-400 tracking-tight will-change-transform"
+          >
             macOS Sequoia 15 · iOS 18 · Universal Web & Silicon Utilities
-          </p>
+          </motion.p>
 
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-[-0.035em] leading-[1.06] text-metallic">
+          <motion.h1
+            variants={{
+              hidden: { opacity: 0, y: 16, scale: 0.985 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                transition: { type: 'spring', stiffness: 240, damping: 26, mass: 0.9 },
+              },
+            }}
+            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-[-0.035em] leading-[1.06] text-metallic will-change-transform"
+          >
             Precision Tools for the{' '}
             <span className="text-accent-gradient">Modern Apple Ecosystem.</span>
-          </h1>
+          </motion.h1>
 
-          <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-zinc-400 max-w-2xl mx-auto font-normal leading-relaxed pt-1">
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 12 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { type: 'spring', stiffness: 260, damping: 28, mass: 0.85 },
+              },
+            }}
+            className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-zinc-400 max-w-2xl mx-auto font-normal leading-relaxed pt-1 will-change-transform"
+          >
             Synthesize custom Siri Shortcuts and macOS scripts with AI, run client-side Image, Text, SEO, and Silicon calculators, and resolve Continuity sync in one unified workspace.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Primary Glowing CTA & Secondary Action */}
         <div className="flex flex-wrap items-center justify-center gap-3.5 pt-1">
@@ -396,7 +445,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               haptics.playTap();
               onNavigate('library');
             }}
-            className="inline-flex items-center gap-2 px-6 py-3.5 min-h-[46px] rounded-2xl bg-slate-900/[0.04] dark:bg-white/[0.05] hover:bg-slate-900/[0.08] dark:hover:bg-white/[0.10] border border-slate-900/10 dark:border-white/10 text-slate-900 dark:text-white text-xs sm:text-sm font-semibold tracking-tight transition-all cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-2 px-6 py-3.5 min-h-[46px] rounded-2xl glass-pill text-slate-900 dark:text-white text-xs sm:text-sm font-semibold tracking-tight cursor-pointer whitespace-nowrap"
           >
             <BookOpen className="w-4 h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
             <span>Explore 120+ Workflows</span>
@@ -405,7 +454,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* Interactive Modern Tool Search & Instant Filter Bar */}
         <div className="max-w-3xl mx-auto pt-4 space-y-3">
-          <div className="relative flex items-center rounded-2xl bg-white/90 dark:bg-[#0B0F19]/90 backdrop-blur-xl border border-slate-900/10 dark:border-white/10 shadow-2xl shadow-indigo-500/10 focus-within:border-indigo-500/60 transition-all">
+          <div className="relative flex items-center rounded-2xl bg-white/95 dark:bg-[#0B0F19]/90 backdrop-blur-xl border border-slate-300/90 dark:border-white/20 hover:border-indigo-500/45 dark:hover:border-indigo-400/45 shadow-[0_20px_50px_rgba(99,102,241,0.12),inset_0_1px_0_0_rgba(255,255,255,0.18)] focus-within:!border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/25 transition-all">
             <Search className="w-4 h-4 text-indigo-500 dark:text-indigo-400 ml-4 shrink-0" />
             <input
               type="text"
@@ -428,11 +477,11 @@ export const HomePage: React.FC<HomePageProps> = ({
             <button
               type="button"
               onClick={onOpenSearch}
-              className="hidden sm:inline-flex items-center gap-1.5 mr-2.5 px-3 py-1.5 rounded-xl bg-slate-900/5 dark:bg-white/[0.06] hover:bg-slate-900/10 dark:hover:bg-white/[0.12] border border-slate-900/10 dark:border-white/10 text-[11px] text-slate-600 dark:text-zinc-300 font-mono cursor-pointer shrink-0 transition-colors"
+              className="hidden sm:inline-flex items-center gap-1.5 mr-2.5 px-3 py-1.5 rounded-xl glass-pill text-[11px] text-slate-600 dark:text-zinc-300 font-mono cursor-pointer shrink-0"
               title="Open Global Command Palette"
             >
               <span>Command</span>
-              <kbd className="text-indigo-500 dark:text-indigo-400">⌘K</kbd>
+              <kbd className="text-indigo-500 dark:text-indigo-400 font-semibold">⌘K</kbd>
             </button>
           </div>
 
@@ -451,16 +500,171 @@ export const HomePage: React.FC<HomePageProps> = ({
                   aria-selected={isSelected}
                   type="button"
                   onClick={() => handleCategoryChange(btn.id)}
-                  className={`px-3.5 py-1.5 min-h-[34px] rounded-xl text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 ${
+                  className={`px-3.5 py-1.5 min-h-[34px] rounded-xl text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 border ${
                     isSelected
-                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/25'
-                      : 'bg-slate-900/[0.04] dark:bg-white/[0.04] hover:bg-slate-900/[0.08] dark:hover:bg-white/[0.08] text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white border border-slate-900/5 dark:border-white/5'
+                      ? 'bg-indigo-600 border-indigo-400/60 text-white shadow-[0_6px_20px_rgba(99,102,241,0.35),inset_0_1px_0_0_rgba(255,255,255,0.3)]'
+                      : 'glass-pill text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
                   {btn.label}
                 </button>
               );
             })}
+          </div>
+        </div>
+
+        {/* Luxury Apple Ecosystem Studio Visual Showcase & Architecture Logos */}
+        <div className="max-w-5xl mx-auto pt-8 space-y-8">
+          {/* Framed Obsidian Hardware & Workflow Studio Preview */}
+          <div className="relative rounded-3xl p-2 sm:p-3 bg-gradient-to-b from-slate-200/80 via-slate-100/40 to-transparent dark:from-white/[0.14] dark:via-white/[0.04] dark:to-transparent border border-slate-300/90 dark:border-white/20 shadow-[0_30px_90px_-15px_rgba(79,70,229,0.28),inset_0_1px_0_0_rgba(255,255,255,0.25)] overflow-hidden group">
+            <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-2xl overflow-hidden bg-[#030712] border border-white/15">
+              <img
+                src="/src/assets/images/hero_mac_studio_ecosystem_1790827213135.jpg"
+                alt="SmartToolHub Apple Ecosystem Hardware and Automation Studio"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700"
+              />
+              {/* Atmospheric Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/35 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#030712]/70 via-transparent to-[#030712]/70" />
+
+              {/* Top-left Luxury Emblem Overlay */}
+              <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5 flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#030712]/80 backdrop-blur-xl border border-white/20 shadow-lg">
+                <img
+                  src="/src/assets/images/smarttoolhub_luxury_logo_1790827199493.jpg"
+                  alt="SmartToolHub Studio Emblem"
+                  referrerPolicy="no-referrer"
+                  className="w-5 h-5 rounded-md object-cover border border-white/20"
+                />
+                <span className="text-[11px] font-semibold tracking-tight text-white">
+                  Obsidian Studio Engine
+                </span>
+                <span className="text-[10px] font-mono text-indigo-300 hidden sm:inline">
+                  · M4 Max Ready
+                </span>
+              </div>
+
+              {/* Bottom Floating Studio Status Strip */}
+              <div className="absolute bottom-3.5 inset-x-3.5 sm:bottom-5 sm:inset-x-5 flex flex-wrap items-center justify-between gap-3 text-left">
+                <div className="space-y-0.5">
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-indigo-300">
+                    Multi-Device Continuity Architecture
+                  </p>
+                  <p className="text-xs sm:text-sm font-semibold text-white">
+                    Native Siri Shortcuts, Retina Media Pipeline & Zero-Latency AWDL Handoff
+                  </p>
+                </div>
+                <div className="hidden md:flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-lg bg-white/[0.08] backdrop-blur-md border border-white/15 text-[11px] font-mono text-zinc-200">
+                    macOS 15 Sequoia
+                  </span>
+                  <span className="px-3 py-1 rounded-lg bg-white/[0.08] backdrop-blur-md border border-white/15 text-[11px] font-mono text-zinc-200">
+                    iOS 18.2
+                  </span>
+                  <span className="px-3 py-1 rounded-lg bg-indigo-500/25 backdrop-blur-md border border-indigo-400/40 text-[11px] font-mono text-indigo-200">
+                    800 GB/s Unified Memory
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Native Apple & Web Standards Partner / Ecosystem Logo Ribbon */}
+          <div className="pt-2 space-y-3">
+            <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-slate-400 dark:text-zinc-500">
+              Engineered for Native Apple Architecture & Modern Web Standards
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-left">
+              {/* Logo 1: Apple macOS Sequoia */}
+              <div className="glass-panel px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 group hover:border-indigo-500/40 transition-colors">
+                <div className="w-7 h-7 rounded-lg bg-slate-900/5 dark:bg-white/[0.06] border border-slate-300/60 dark:border-white/15 flex items-center justify-center shrink-0">
+                  <svg className="w-4 h-4 text-slate-800 dark:text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.33c.64-.78 1.08-1.86.96-2.94-.93.04-2.06.62-2.72 1.4-.58.68-1.1 1.79-.96 2.84 1.04.08 2.08-.52 2.72-1.3" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">macOS Sequoia</div>
+                  <div className="text-[10px] font-mono text-slate-500 dark:text-zinc-400 truncate">Darwin 24.x</div>
+                </div>
+              </div>
+
+              {/* Logo 2: Apple Silicon M4 Max */}
+              <div className="glass-panel px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 group hover:border-indigo-500/40 transition-colors">
+                <div className="w-7 h-7 rounded-lg bg-slate-900/5 dark:bg-white/[0.06] border border-slate-300/60 dark:border-white/15 flex items-center justify-center shrink-0">
+                  <svg className="w-4 h-4 text-indigo-500 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <rect x="6" y="6" width="12" height="12" rx="2" />
+                    <rect x="9" y="9" width="6" height="6" rx="1" />
+                    <path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">Apple Silicon</div>
+                  <div className="text-[10px] font-mono text-slate-500 dark:text-zinc-400 truncate">M1 – M4 Max</div>
+                </div>
+              </div>
+
+              {/* Logo 3: Siri Shortcuts Engine */}
+              <div className="glass-panel px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 group hover:border-indigo-500/40 transition-colors">
+                <div className="w-7 h-7 rounded-lg bg-slate-900/5 dark:bg-white/[0.06] border border-slate-300/60 dark:border-white/15 flex items-center justify-center shrink-0">
+                  <svg className="w-4 h-4 text-violet-500 dark:text-violet-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">Shortcuts API</div>
+                  <div className="text-[10px] font-mono text-slate-500 dark:text-zinc-400 truncate">Native Actions</div>
+                </div>
+              </div>
+
+              {/* Logo 4: Retina & ProRes sips */}
+              <div className="glass-panel px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 group hover:border-indigo-500/40 transition-colors">
+                <div className="w-7 h-7 rounded-lg bg-slate-900/5 dark:bg-white/[0.06] border border-slate-300/60 dark:border-white/15 flex items-center justify-center shrink-0">
+                  <svg className="w-4 h-4 text-cyan-500 dark:text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M12 3v2M12 19v2M3 12h2M19 12h2" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">Retina XDR</div>
+                  <div className="text-[10px] font-mono text-slate-500 dark:text-zinc-400 truncate">@2x/@3x sips</div>
+                </div>
+              </div>
+
+              {/* Logo 5: Schema.org & GEO */}
+              <div className="glass-panel px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 group hover:border-indigo-500/40 transition-colors">
+                <div className="w-7 h-7 rounded-lg bg-slate-900/5 dark:bg-white/[0.06] border border-slate-300/60 dark:border-white/15 flex items-center justify-center shrink-0">
+                  <svg className="w-4 h-4 text-emerald-500 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <circle cx="18" cy="5" r="3" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="19" r="3" />
+                    <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">Schema.org</div>
+                  <div className="text-[10px] font-mono text-slate-500 dark:text-zinc-400 truncate">JSON-LD @graph</div>
+                </div>
+              </div>
+
+              {/* Logo 6: AWDL Wireless Continuity */}
+              <div className="glass-panel px-3.5 py-2.5 rounded-xl flex items-center gap-2.5 group hover:border-indigo-500/40 transition-colors">
+                <div className="w-7 h-7 rounded-lg bg-slate-900/5 dark:bg-white/[0.06] border border-slate-300/60 dark:border-white/15 flex items-center justify-center shrink-0">
+                  <svg className="w-4 h-4 text-amber-500 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+                    <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+                    <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+                    <circle cx="12" cy="20" r="1" fill="currentColor" />
+                  </svg>
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">AWDL Sync</div>
+                  <div className="text-[10px] font-mono text-slate-500 dark:text-zinc-400 truncate">Peer-to-Peer</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -523,10 +727,28 @@ export const HomePage: React.FC<HomePageProps> = ({
                       <span aria-hidden="true">·</span>
                       <span className="truncate">{tool.metadata}</span>
                     </div>
-                    <div className="w-9 h-9 rounded-xl bg-slate-900/[0.04] dark:bg-white/[0.05] border border-slate-900/10 dark:border-white/10 flex items-center justify-center shrink-0 group-hover:border-indigo-500/40 transition-colors">
+                    <div className="w-9 h-9 rounded-xl bg-slate-900/[0.04] dark:bg-white/[0.05] border border-slate-300/80 dark:border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16)] flex items-center justify-center shrink-0 group-hover:border-indigo-500/50 transition-colors">
                       <Icon className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     </div>
                   </div>
+
+                  {/* Luxury Visual Showcase Banner inside Bento Card when featuredImage is present */}
+                  {tool.featuredImage && (
+                    <div className="relative h-36 sm:h-44 w-full rounded-xl overflow-hidden bg-[#030712] border border-slate-300/80 dark:border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)]">
+                      <img
+                        src={tool.featuredImage}
+                        alt={tool.title}
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#030712]/80 via-transparent to-transparent" />
+                      <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 text-[10px] font-mono text-zinc-200 bg-[#030712]/70 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/15">
+                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+                        <span>{tool.categoryLabel} Engine</span>
+                      </div>
+                    </div>
+                  )}
 
                   <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors">
                     {tool.title}
@@ -537,7 +759,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   </p>
                 </div>
 
-                <div className="pt-6 mt-6 border-t border-slate-900/5 dark:border-white/[0.06] flex items-center justify-between relative z-10">
+                <div className="pt-6 mt-6 border-t border-slate-200/80 dark:border-white/12 flex items-center justify-between relative z-10">
                   <span className="text-xs font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors flex items-center gap-1.5">
                     <span>{tool.ctaLabel}</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -610,7 +832,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div
             role="tablist"
             aria-label="Select active utility workbench"
-            className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-900/[0.04] dark:bg-white/[0.04] border border-slate-900/10 dark:border-white/10 overflow-x-auto"
+            className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/[0.04] dark:bg-white/[0.04] border border-slate-300/80 dark:border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] overflow-x-auto"
           >
             {[
               { id: 'image', label: 'Image Tools', icon: Image },
@@ -632,10 +854,10 @@ export const HomePage: React.FC<HomePageProps> = ({
                     haptics.playTap();
                     setActiveWorkbench(tab.id as any);
                   }}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap shrink-0 border ${
                     isActive
-                      ? 'bg-white dark:bg-indigo-600 text-slate-950 dark:text-white shadow-sm'
-                      : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
+                      ? 'bg-white dark:bg-indigo-600 border-slate-300 dark:border-indigo-400/60 text-slate-950 dark:text-white shadow-[0_4px_12px_rgba(99,102,241,0.25),inset_0_1px_0_0_rgba(255,255,255,0.3)]'
+                      : 'border-transparent text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300/50 dark:hover:border-white/10'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5 shrink-0" />
@@ -882,81 +1104,175 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* WORKBENCH TAB 3: TECHNICAL SEO & SCHEMA BUILDER */}
         {activeWorkbench === 'seo' && (
-          <div className="ios-card-static p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-6 space-y-4">
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                Schema.org JSON-LD & OpenGraph Tag Generator
-              </h3>
-              <div className="space-y-3">
-                <div>
-                  <label className="text-xs font-medium text-slate-700 dark:text-zinc-300 block mb-1">
-                    Page / Application Title ({seoTitle.length}/60 chars)
-                  </label>
-                  <input
-                    type="text"
-                    value={seoTitle}
-                    onChange={(e) => setSeoTitle(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl glass-input text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-medium text-slate-700 dark:text-zinc-300 block mb-1">
-                    Meta Description ({seoDesc.length}/160 chars)
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={seoDesc}
-                    onChange={(e) => setSeoDesc(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-xl glass-input text-xs"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="text-xs font-medium text-slate-700 dark:text-zinc-300 block mb-1">
-                      Canonical URL
-                    </label>
-                    <input
-                      type="url"
-                      value={seoUrl}
-                      onChange={(e) => setSeoUrl(e.target.value)}
-                      className="w-full px-3.5 py-2 rounded-xl glass-input text-xs font-mono"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs font-medium text-slate-700 dark:text-zinc-300 block mb-1">
-                      Schema Entity Type
-                    </label>
-                    <select
-                      value={seoType}
-                      onChange={(e) => setSeoType(e.target.value as any)}
-                      className="w-full px-3.5 py-2 rounded-xl glass-input text-xs"
-                    >
-                      <option value="SoftwareApplication" className="bg-[#0B0F19] text-white">SoftwareApplication</option>
-                      <option value="WebSite" className="bg-[#0B0F19] text-white">WebSite</option>
-                      <option value="FAQPage" className="bg-[#0B0F19] text-white">FAQPage</option>
-                    </select>
-                  </div>
-                </div>
+          <div className="ios-card-static p-6 sm:p-8 space-y-6">
+            {/* Active Site SEO & GEO Indexing Status Strip */}
+            <div className="p-4 rounded-xl glass-panel flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-slate-600 dark:text-zinc-300">
+                <span className="font-semibold text-slate-900 dark:text-white">
+                  SmartToolHub Active SEO & GEO Engine
+                </span>
+                <span aria-hidden="true">·</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                  JSON-LD @graph (6 Entities)
+                </span>
+                <span aria-hidden="true">·</span>
+                <span className="font-mono tabular-nums">Canonical & OpenGraph Synced</span>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
+                <a
+                  href="/sitemap.xml"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 rounded-lg glass-pill text-[11px] font-mono text-indigo-600 dark:text-indigo-400 flex items-center gap-1"
+                >
+                  <span>/sitemap.xml</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+                <a
+                  href="/llms.txt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 rounded-lg glass-pill text-[11px] font-mono text-indigo-600 dark:text-indigo-400 flex items-center gap-1"
+                >
+                  <span>/llms.txt (AI Search)</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+                <a
+                  href="/robots.txt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 rounded-lg glass-pill text-[11px] font-mono text-slate-600 dark:text-zinc-300 flex items-center gap-1"
+                >
+                  <span>/robots.txt</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </div>
             </div>
 
-            <div className="lg:col-span-6 space-y-3 border-t lg:border-t-0 lg:border-l border-slate-900/10 dark:border-white/10 pt-6 lg:pt-0 lg:pl-8">
-              <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-slate-700 dark:text-zinc-300">
-                  Production HTML Head & JSON-LD Markup
-                </span>
-                <button
-                  type="button"
-                  onClick={() => copyToClipboard(generatedSeoCode, 'seo-code')}
-                  className="inline-flex items-center gap-1 text-indigo-500 dark:text-indigo-400 hover:underline font-medium cursor-pointer"
-                >
-                  {copiedId === 'seo-code' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copiedId === 'seo-code' ? 'Copied Markup' : 'Copy Code'}</span>
-                </button>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="lg:col-span-6 space-y-4">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  Schema.org JSON-LD & OpenGraph Tag Generator
+                </h3>
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <label className="font-medium text-slate-700 dark:text-zinc-300">
+                        Page / Application Title
+                      </label>
+                      <span
+                        className={`font-mono tabular-nums text-[11px] ${
+                          seoTitle.length >= 30 && seoTitle.length <= 60
+                            ? 'text-emerald-600 dark:text-emerald-400'
+                            : 'text-amber-500'
+                        }`}
+                      >
+                        {seoTitle.length}/60 chars (Optimal: 30–60)
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      value={seoTitle}
+                      onChange={(e) => setSeoTitle(e.target.value)}
+                      className="w-full px-3.5 py-2 rounded-xl glass-input text-xs"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <label className="font-medium text-slate-700 dark:text-zinc-300">
+                        Meta Description
+                      </label>
+                      <span
+                        className={`font-mono tabular-nums text-[11px] ${
+                          seoDesc.length >= 120 && seoDesc.length <= 160
+                            ? 'text-emerald-600 dark:text-emerald-400'
+                            : 'text-amber-500'
+                        }`}
+                      >
+                        {seoDesc.length}/160 chars (Optimal: 120–160)
+                      </span>
+                    </div>
+                    <textarea
+                      rows={2}
+                      value={seoDesc}
+                      onChange={(e) => setSeoDesc(e.target.value)}
+                      className="w-full px-3.5 py-2 rounded-xl glass-input text-xs"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-medium text-slate-700 dark:text-zinc-300 block mb-1">
+                        Canonical URL
+                      </label>
+                      <input
+                        type="url"
+                        value={seoUrl}
+                        onChange={(e) => setSeoUrl(e.target.value)}
+                        className="w-full px-3.5 py-2 rounded-xl glass-input text-xs font-mono"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-medium text-slate-700 dark:text-zinc-300 block mb-1">
+                        Schema Entity Type
+                      </label>
+                      <select
+                        value={seoType}
+                        onChange={(e) => setSeoType(e.target.value as any)}
+                        className="w-full px-3.5 py-2 rounded-xl glass-input text-xs"
+                      >
+                        <option value="SoftwareApplication" className="bg-[#0B0F19] text-white">
+                          SoftwareApplication
+                        </option>
+                        <option value="WebSite" className="bg-[#0B0F19] text-white">
+                          WebSite
+                        </option>
+                        <option value="FAQPage" className="bg-[#0B0F19] text-white">
+                          FAQPage
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Live Google SERP & Social Snippet Preview */}
+                <div className="p-4 rounded-xl glass-panel space-y-1.5">
+                  <div className="text-[10px] font-mono text-slate-400 dark:text-zinc-500">
+                    Live Search Engine & Social Snippet Preview
+                  </div>
+                  <div className="text-xs font-mono text-emerald-600 dark:text-emerald-400 truncate">
+                    {seoUrl}
+                  </div>
+                  <div className="text-sm font-bold text-indigo-600 dark:text-indigo-400 truncate">
+                    {seoTitle || 'Untitled Page'}
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+                    {seoDesc || 'Add a meta description between 120 and 160 characters.'}
+                  </p>
+                </div>
               </div>
-              <pre className="p-4 rounded-xl bg-slate-950 text-zinc-200 text-[11px] font-mono overflow-x-auto max-h-[240px] border border-white/10">
-                {generatedSeoCode}
-              </pre>
+
+              <div className="lg:col-span-6 space-y-3 border-t lg:border-t-0 lg:border-l border-slate-900/10 dark:border-white/10 pt-6 lg:pt-0 lg:pl-8">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-semibold text-slate-700 dark:text-zinc-300">
+                    Production HTML Head & JSON-LD Markup
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => copyToClipboard(generatedSeoCode, 'seo-code')}
+                    className="inline-flex items-center gap-1 text-indigo-500 dark:text-indigo-400 hover:underline font-medium cursor-pointer"
+                  >
+                    {copiedId === 'seo-code' ? (
+                      <Check className="w-3.5 h-3.5" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5" />
+                    )}
+                    <span>{copiedId === 'seo-code' ? 'Copied Markup' : 'Copy Code'}</span>
+                  </button>
+                </div>
+                <pre className="p-4 rounded-xl bg-slate-950 text-zinc-200 text-[11px] font-mono overflow-x-auto max-h-[280px] border border-white/10">
+                  {generatedSeoCode}
+                </pre>
+              </div>
             </div>
           </div>
         )}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PageId } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
+import { ScrollProgressBar } from '../components/ScrollProgressBar';
 import { haptics } from '../utils/haptics';
 import { 
   ArrowLeft, 
@@ -75,9 +76,15 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
   };
 
   const relatedWorkflows = WORKFLOWS_DATA.filter((w) => w.id !== workflow.id).slice(0, 2);
+  const completedCount = Object.values(completedSteps).filter(Boolean).length;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10 print:py-0 print:space-y-6 print:max-w-none">
+      <ScrollProgressBar
+        label={workflow.title}
+        sublabel={`${completedCount}/${workflow.steps.length} steps`}
+        contentKey={workflow.id}
+      />
       {/* Navigation Breadcrumb & Action Bar (Hidden in Print) */}
       <div className="flex items-center justify-between no-print">
         <button

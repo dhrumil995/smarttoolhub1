@@ -2,5 +2,24 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-# Sitemaps
-Sitemap: https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/sitemap.xml
+# Search Engine & AI Discovery Crawlers (GEO Optimization)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Sitemaps & AI Knowledge Index
+Sitemap: https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/sitemap.xml

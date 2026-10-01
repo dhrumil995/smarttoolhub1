@@ -16,138 +16,161 @@ interface MetaConfig {
   breadcrumbs: { name: string; path: string }[];
 }
 
-const BASE_URL = typeof window !== 'undefined' 
-  ? window.location.origin 
-  : 'https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app';
-
 export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => {
   useEffect(() => {
-    // Determine page metadata
+    const baseUrl =
+      typeof window !== 'undefined' && window.location?.origin
+        ? window.location.origin
+        : 'https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app';
+
+    // Default Home Page Metadata (30-60 char title, 120-160 char actionable description)
     let config: MetaConfig = {
-      title: 'SmartToolHub — Apple Workflows, Shortcuts & Compatibility',
-      description: 'Discover verified Apple ecosystem workflows, multi-device Shortcuts, macOS Sequoia compatibility checks, and step-by-step Continuity troubleshooting.',
+      title: 'SmartToolHub – Apple Shortcuts & macOS Automation Suite',
+      description:
+        'Generate custom Apple Shortcuts with AI, optimize Retina media, build JSON-LD SEO schema, benchmark M4 Silicon, and fix Continuity sync.',
       canonicalPath: '/',
       ogType: 'website',
-      keywords: 'Apple workflows, macOS Sequoia shortcuts, Continuity Camera desk view, Universal Control troubleshooting, iPhone Mac integration',
-      breadcrumbs: [{ name: 'Home', path: '/' }]
+      keywords:
+        'Apple Shortcut Generator, macOS Sequoia automation, iOS 18 shortcuts, Retina image calculator, JSON-LD schema generator, Apple Silicon bandwidth calculator, Continuity troubleshooting',
+      breadcrumbs: [{ name: 'Home', path: '/' }],
     };
 
     if (currentPage === 'generator') {
       config = {
-        title: 'Apple Workflow Generator & Shortcut Builder | SmartToolHub',
-        description: 'Build custom multi-device Apple workflows and Shortcuts for Mac, iPhone, and iPad. Filter by devices, ecosystem apps, and task difficulty.',
+        title: 'AI Apple Shortcut & Script Generator | SmartToolHub',
+        description:
+          'Synthesize custom multi-device Siri Shortcuts, AppleScript, and Zsh automations for Mac, iPhone, and iPad in seconds with SmartToolHub.',
         canonicalPath: '/generator',
         ogType: 'website',
-        keywords: 'Apple workflow builder, Mac iPhone automation, Shortcuts generator, macOS 15 Sequoia workflows',
+        keywords:
+          'AI Apple Shortcut generator, macOS Sequoia script builder, AppleScript generator, Zsh automation Mac, iPhone Shortcuts builder',
         breadcrumbs: [
           { name: 'Home', path: '/' },
-          { name: 'Workflow Generator', path: '/generator' }
-        ]
+          { name: 'AI Shortcut Generator', path: '/generator' },
+        ],
       };
     } else if (currentPage === 'compatibility') {
       config = {
-        title: 'Apple Silicon & macOS Sequoia Compatibility Checker | SmartToolHub',
-        description: 'Check exact hardware and OS requirements for iPhone Mirroring, Continuity Camera, Universal Control, Sidecar, and Apple Intelligence.',
+        title: 'Apple Silicon & Sequoia Compatibility | SmartToolHub',
+        description:
+          'Verify exact Mac, iPhone, and iPad hardware requirements for iPhone Mirroring, Continuity Camera, Universal Control, Sidecar, and Apple Intelligence.',
         canonicalPath: '/compatibility',
         ogType: 'website',
-        keywords: 'macOS Sequoia compatibility, Apple Intelligence hardware requirements, iPhone Mirroring M-series Mac, Continuity feature matrix',
+        keywords:
+          'macOS Sequoia compatibility matrix, Apple Intelligence hardware requirements, iPhone Mirroring Mac compatibility, M4 Max Continuity specs',
         breadcrumbs: [
           { name: 'Home', path: '/' },
-          { name: 'Compatibility Checker', path: '/compatibility' }
-        ]
+          { name: 'Compatibility Matrix', path: '/compatibility' },
+        ],
       };
     } else if (currentPage === 'troubleshooting') {
       config = {
-        title: 'Continuity & AirDrop Troubleshooting Wizard | SmartToolHub',
-        description: 'Step-by-step diagnostic trees and safe terminal fixes for Universal Clipboard, Continuity disconnects, AirDrop dropouts, and macOS permissions.',
+        title: 'Continuity & AirDrop Sync Diagnostics | SmartToolHub',
+        description:
+          'Resolve AirDrop dropouts, iPhone Mirroring timeouts, and Universal Clipboard lag with interactive diagnostics and safe macOS terminal commands.',
         canonicalPath: '/troubleshooting',
         ogType: 'website',
-        keywords: 'Continuity camera not connecting, fix Universal Clipboard Mac iPhone, AirDrop dropouts macOS 15, Apple troubleshooting guide',
+        keywords:
+          'fix AirDrop macOS Sequoia, Universal Clipboard not working, iPhone Mirroring connection timeout, AWDL diagnostic commands',
         breadcrumbs: [
           { name: 'Home', path: '/' },
-          { name: 'Troubleshooting Wizard', path: '/troubleshooting' }
-        ]
+          { name: 'Sync Diagnostics', path: '/troubleshooting' },
+        ],
       };
     } else if (currentPage === 'library') {
       config = {
-        title: 'Verified Apple Workflows & Shortcuts Library | SmartToolHub',
-        description: 'Explore verified, built-in Apple workflows for content creators, students, freelancers, and power users. No third-party bloat required.',
+        title: '120+ Verified Apple Workflows Library | SmartToolHub',
+        description:
+          'Browse 120+ tested macOS Sequoia and iOS 18 automation blueprints for creators, developers, freelancers, and students with zero third-party bloat.',
         canonicalPath: '/library',
         ogType: 'website',
-        keywords: 'Apple Shortcuts library, Continuity workflows, Mac productivity guides, iPad student setups, iPhone creator setups',
+        keywords:
+          'Apple Shortcuts library, macOS Sequoia workflows, Continuity Camera Desk View guide, Universal Control setup, iPad Sidecar workflow',
         breadcrumbs: [
           { name: 'Home', path: '/' },
-          { name: 'Workflow Library', path: '/library' }
-        ]
+          { name: 'Workflow Library', path: '/library' },
+        ],
       };
     } else if (currentPage === 'workflow-detail' && workflowId) {
       const wf = WORKFLOWS_DATA.find((item) => item.id === workflowId) || WORKFLOWS_DATA[0];
+      const rawTitle = `${wf.title} | SmartToolHub`;
+      const trimmedTitle = rawTitle.length > 60 ? `${wf.title.slice(0, 42)}... | SmartToolHub` : rawTitle;
+      const trimmedDesc =
+        wf.summary.length > 156 ? `${wf.summary.slice(0, 153)}...` : wf.summary;
+
       config = {
-        title: `${wf.title} | SmartToolHub`,
-        description: wf.summary.length > 155 ? `${wf.summary.slice(0, 152)}...` : wf.summary,
+        title: trimmedTitle,
+        description: trimmedDesc,
         canonicalPath: `/workflows/${wf.slug}`,
         ogType: 'article',
-        keywords: `${wf.category}, ${wf.appsUsed.join(', ')}, ${wf.devicesRequired.map(d => d.device).join(', ')}, Apple Shortcuts guide`,
+        keywords: `${wf.category}, ${wf.appsUsed.join(', ')}, ${wf.devicesRequired
+          .map((d) => d.device)
+          .join(', ')}, Apple Shortcuts blueprint`,
         breadcrumbs: [
           { name: 'Home', path: '/' },
           { name: 'Workflows', path: '/library' },
-          { name: wf.title, path: `/workflows/${wf.slug}` }
-        ]
+          { name: wf.title, path: `/workflows/${wf.slug}` },
+        ],
       };
     } else if (currentPage === 'pricing') {
       config = {
-        title: 'Plans & Transparent Pricing | SmartToolHub',
-        description: 'Access verified Apple workflows and compatibility matrices for free, or unlock SmartToolHub Pro for Gemini AI automation scripts and deep diagnostics.',
+        title: 'SmartToolHub Pro Plans & Pricing | SmartToolHub',
+        description:
+          'Access 120+ Apple workflows and web utilities free forever, or unlock SmartToolHub Pro for unlimited AI Shortcut synthesis and deep diagnostics.',
         canonicalPath: '/pricing',
         ogType: 'website',
-        keywords: 'SmartToolHub Pro, Apple automation scripts, AI diagnosis, workflow pricing',
+        keywords:
+          'SmartToolHub Pro pricing, Apple automation license, AI Shortcut generator pro, macOS diagnostic suite',
         breadcrumbs: [
           { name: 'Home', path: '/' },
-          { name: 'Pricing & Pro Access', path: '/pricing' }
-        ]
+          { name: 'Pricing & Pro Access', path: '/pricing' },
+        ],
       };
     } else if (currentPage === 'privacy') {
       config = {
-        title: 'Privacy Policy & Zero-Credentials Guarantee | SmartToolHub',
-        description: 'Read SmartToolHub’s privacy commitment. We never ask for, collect, or store Apple Accounts, iCloud credentials, or device passwords.',
+        title: 'Zero-Credentials Privacy Policy | SmartToolHub',
+        description:
+          'Review SmartToolHub’s Zero-Credentials security architecture. We never request, collect, or store Apple IDs, passwords, or private iCloud data.',
         canonicalPath: '/privacy',
         ogType: 'website',
-        keywords: 'SmartToolHub privacy policy, zero credentials, Apple data security',
+        keywords: 'SmartToolHub privacy policy, zero credentials security, Apple privacy compliance',
         breadcrumbs: [
           { name: 'Home', path: '/' },
-          { name: 'Privacy Policy', path: '/privacy' }
-        ]
+          { name: 'Privacy Policy', path: '/privacy' },
+        ],
       };
     } else if (currentPage === 'terms') {
       config = {
-        title: 'Terms of Service | SmartToolHub',
-        description: 'Terms and conditions for using SmartToolHub’s Apple workflow guides, compatibility checker, and troubleshooting wizards.',
+        title: 'Terms of Service & Usage Policy | SmartToolHub',
+        description:
+          'Read the official terms of service and independent publication guidelines for SmartToolHub’s Apple workflow generators and diagnostic tools.',
         canonicalPath: '/terms',
         ogType: 'website',
-        keywords: 'SmartToolHub terms, usage policy, independent disclaimer',
+        keywords: 'SmartToolHub terms of service, software usage agreement, independent Apple guide',
         breadcrumbs: [
           { name: 'Home', path: '/' },
-          { name: 'Terms of Service', path: '/terms' }
-        ]
+          { name: 'Terms of Service', path: '/terms' },
+        ],
       };
     } else if (currentPage === 'contact') {
       config = {
-        title: 'Contact & Workflow Suggestion Desk | SmartToolHub',
-        description: 'Suggest a multi-device Apple workflow, request new macOS Sequoia compatibility testing, or submit feedback to the SmartToolHub editorial team.',
+        title: 'Contact Engineering & Support Desk | SmartToolHub',
+        description:
+          'Request a custom multi-device Apple Shortcut, report a macOS Sequoia Continuity bug, or connect directly with the SmartToolHub engineering team.',
         canonicalPath: '/contact',
         ogType: 'website',
-        keywords: 'Contact SmartToolHub, submit Apple workflow, report Continuity issue',
+        keywords: 'Contact SmartToolHub, custom Apple workflow request, macOS support desk',
         breadcrumbs: [
           { name: 'Home', path: '/' },
-          { name: 'Contact Us', path: '/contact' }
-        ]
+          { name: 'Contact Engineering', path: '/contact' },
+        ],
       };
     }
 
     // 1. Update document.title
     document.title = config.title;
 
-    // Helper to safely set meta tags
+    // Helper to safely set or update meta tags in-place
     const setMeta = (attrName: string, attrVal: string, content: string) => {
       let element = document.querySelector(`meta[${attrName}="${attrVal}"]`);
       if (!element) {
@@ -158,136 +181,230 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
       element.setAttribute('content', content);
     };
 
-    // Helper to set link tags
-    const setLink = (rel: string, href: string, type?: string, sizes?: string) => {
-      let link = document.querySelector(`link[rel="${rel}"][href="${href}"]`) as HTMLLinkElement | null;
-      if (!link) {
-        link = document.createElement('link');
-        link.setAttribute('rel', rel);
-        link.setAttribute('href', href);
-        if (type) link.setAttribute('type', type);
-        if (sizes) link.setAttribute('sizes', sizes);
-        document.head.appendChild(link);
-      }
-    };
-
-    // Ensure Favicon & Apple Touch Icons exist dynamically
-    setLink('icon', '/favicon.svg', 'image/svg+xml');
-    setLink('icon', '/favicon.ico', 'image/x-icon');
-    setLink('shortcut icon', '/favicon.ico', 'image/x-icon');
-    setLink('icon', '/favicon-32x32.png', 'image/png', '32x32');
-    setLink('icon', '/favicon-16x16.png', 'image/png', '16x16');
-    setLink('apple-touch-icon', '/apple-touch-icon.png', 'image/png', '180x180');
+    // Update single canonical link in-place (prevents duplicate canonical tags)
+    const fullCanonicalUrl = `${baseUrl}${config.canonicalPath}`;
+    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', fullCanonicalUrl);
 
     // Standard SEO Metas
     setMeta('name', 'description', config.description);
     setMeta('name', 'keywords', config.keywords);
-    setMeta('name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
-    setMeta('name', 'author', 'SmartToolHub Editorial Team');
+    setMeta(
+      'name',
+      'robots',
+      'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+    );
+    setMeta('name', 'author', 'SmartToolHub Engineering & Editorial Team');
 
-    // OpenGraph
-    const fullCanonicalUrl = `${BASE_URL}${config.canonicalPath}`;
-    setLink('canonical', fullCanonicalUrl);
+    // OpenGraph Social Cards
     setMeta('property', 'og:title', config.title);
     setMeta('property', 'og:description', config.description);
     setMeta('property', 'og:url', fullCanonicalUrl);
     setMeta('property', 'og:type', config.ogType);
     setMeta('property', 'og:site_name', 'SmartToolHub');
-    setMeta('property', 'og:image', `${BASE_URL}/product-cover.jpg`);
-    setMeta('property', 'og:image:secure_url', `${BASE_URL}/product-cover.jpg`);
+    setMeta('property', 'og:image', `${baseUrl}/product-cover.jpg`);
+    setMeta('property', 'og:image:secure_url', `${baseUrl}/product-cover.jpg`);
     setMeta('property', 'og:image:type', 'image/jpeg');
     setMeta('property', 'og:image:width', '1024');
     setMeta('property', 'og:image:height', '1024');
-    setMeta('property', 'og:image:alt', 'SmartToolHub Apple Ecosystem Intelligence Platform');
+    setMeta(
+      'property',
+      'og:image:alt',
+      'SmartToolHub – Apple Shortcuts Generator & Ecosystem Utility Suite'
+    );
     setMeta('property', 'og:locale', 'en_US');
 
-    // Twitter Cards
+    // Twitter / X Large Summary Card
     setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:url', fullCanonicalUrl);
     setMeta('name', 'twitter:title', config.title);
     setMeta('name', 'twitter:description', config.description);
-    setMeta('name', 'twitter:image', `${BASE_URL}/product-cover.jpg`);
-    setMeta('name', 'twitter:image:alt', 'SmartToolHub Apple Workflows');
+    setMeta('name', 'twitter:image', `${baseUrl}/product-cover.jpg`);
+    setMeta(
+      'name',
+      'twitter:image:alt',
+      'SmartToolHub – Apple Shortcuts Generator & Ecosystem Utility Suite'
+    );
 
-    // Generate JSON-LD Structured Data Graph
+    // Comprehensive Schema.org JSON-LD @graph
     const schemaGraph: any[] = [
       {
         '@type': 'WebSite',
-        '@id': `${BASE_URL}/#website`,
-        'url': BASE_URL,
-        'name': 'SmartToolHub',
-        'description': 'Independent Apple Workflows, Shortcuts, and Ecosystem Diagnostics',
-        'publisher': {
+        '@id': `${baseUrl}/#website`,
+        url: `${baseUrl}/`,
+        name: 'SmartToolHub',
+        alternateName: 'SmartToolHub Apple Ecosystem & Web Utility Suite',
+        description: config.description,
+        inLanguage: 'en-US',
+        publisher: {
           '@type': 'Organization',
-          'name': 'SmartToolHub',
-          'logo': {
+          '@id': `${baseUrl}/#organization`,
+          name: 'SmartToolHub',
+          url: `${baseUrl}/`,
+          email: 'aslaliyamohit9@gmail.com',
+          logo: {
             '@type': 'ImageObject',
-            'url': `${BASE_URL}/logo.png`
-          }
-        },
-        'potentialAction': {
-          '@type': 'SearchAction',
-          'target': {
-            '@type': 'EntryPoint',
-            'urlTemplate': `${BASE_URL}/library?search={search_term_string}`
+            url: `${baseUrl}/logo.png`,
+            width: 512,
+            height: 512,
           },
-          'query-input': 'required name=search_term_string'
-        }
+        },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: `${baseUrl}/library?search={search_term_string}`,
+          },
+          'query-input': 'required name=search_term_string',
+        },
       },
       {
-        '@type': 'SoftwareApplication',
-        '@id': `${BASE_URL}/#application`,
-        'name': 'SmartToolHub Apple Workflow Suite',
-        'applicationCategory': 'UtilitiesApplication',
-        'operatingSystem': 'macOS 13+, iOS 16+, iPadOS 16+, Web',
-        'offers': {
-          '@type': 'Offer',
-          'price': '0',
-          'priceCurrency': 'USD'
-        },
-        'description': 'Interactive generator, compatibility validator, and diagnostic tree utility for Apple Mac, iPhone, and iPad continuity features.',
-        'citation': [
-          'https://developer.apple.com/documentation/appintents',
-          'https://support.apple.com/guide/security/welcome/web',
-          'https://support.apple.com/guide/mac-help/use-continuity-to-connect-apple-devices-mchl407037be/mac',
-          'https://datatracker.ietf.org/doc/html/rfc6762'
+        '@type': ['WebApplication', 'SoftwareApplication'],
+        '@id': `${baseUrl}/#application`,
+        name: 'SmartToolHub',
+        url: `${baseUrl}/`,
+        applicationCategory: 'UtilitiesApplication',
+        operatingSystem: 'macOS 15 Sequoia, iOS 18, iPadOS 18, All Web Browsers',
+        description:
+          'All-in-one Apple Shortcut AI generator, Retina image scale calculator, text & prompt synthesizer, JSON-LD SEO schema builder, Apple Silicon memory bandwidth calculator, and Continuity diagnostic suite.',
+        featureList: [
+          'AI Apple Shortcut, AppleScript & Zsh Generator',
+          'Retina @2x/@3x Image Resolution & macOS sips Batch CLI Optimizer',
+          'LLM Token Counter, Slugify & Prompt Engineering Synthesizer',
+          'Schema.org JSON-LD & OpenGraph Meta Tag Builder',
+          'Apple Silicon M1–M4 Max Unified Memory Bandwidth & Automation ROI Calculator',
+          'Continuity Camera, iPhone Mirroring & AWDL Sync Doctor',
+          '120+ Verified Multi-Device Apple Workflow Blueprints',
         ],
-        'isBasedOn': [
-          'https://developer.apple.com/documentation/appintents',
-          'https://support.apple.com/guide/mac-help/use-continuity-to-connect-apple-devices-mchl407037be/mac'
-        ]
+        offers: [
+          {
+            '@type': 'Offer',
+            name: 'SmartToolHub Free Core Suite',
+            price: '0',
+            priceCurrency: 'USD',
+          },
+          {
+            '@type': 'Offer',
+            name: 'SmartToolHub Pro Lifetime License',
+            price: '39',
+            priceCurrency: 'USD',
+          },
+        ],
+      },
+      {
+        '@type': 'ItemList',
+        '@id': `${baseUrl}/#tool-suites`,
+        name: 'SmartToolHub Interactive Utility Suites',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'AI Shortcut & Script Generator',
+            url: `${baseUrl}/generator`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Image & Retina Media Studio',
+            url: `${baseUrl}/?category=image`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: 'Text & Prompt Synthesizer',
+            url: `${baseUrl}/?category=text`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 4,
+            name: 'Technical SEO & JSON-LD Schema Builder',
+            url: `${baseUrl}/?category=seo`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 5,
+            name: 'Apple Silicon Bandwidth & Automation ROI Calculators',
+            url: `${baseUrl}/?category=calculator`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 6,
+            name: 'Continuity & AWDL Sync Doctor',
+            url: `${baseUrl}/troubleshooting`,
+          },
+        ],
       },
       {
         '@type': 'BreadcrumbList',
         '@id': `${fullCanonicalUrl}#breadcrumb`,
-        'itemListElement': config.breadcrumbs.map((bc, idx) => ({
+        itemListElement: config.breadcrumbs.map((bc, idx) => ({
           '@type': 'ListItem',
-          'position': idx + 1,
-          'name': bc.name,
-          'item': `${BASE_URL}${bc.path}`
-        }))
-      }
+          position: idx + 1,
+          name: bc.name,
+          item: `${baseUrl}${bc.path}`,
+        })),
+      },
     ];
 
-    // If on a workflow detail page, add HowTo schema
+    // Add FAQPage Schema on Home, Pricing, and Troubleshooting pages
+    if (currentPage === 'home' || currentPage === 'pricing' || currentPage === 'troubleshooting') {
+      schemaGraph.push({
+        '@type': 'FAQPage',
+        '@id': `${fullCanonicalUrl}#faq`,
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'How does the SmartToolHub AI Apple Shortcut Generator work?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Describe your automation goal in plain English and select your Apple devices (Mac, iPhone, iPad, Apple Watch). SmartToolHub synthesizes step-by-step native Siri Shortcuts actions, AppleScript snippets, and POSIX Zsh commands.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'What client-side web utilities are included in SmartToolHub?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'SmartToolHub includes an interactive Retina @2x/@3x Image & macOS sips CLI Optimizer, an LLM Token Counter & Prompt Synthesizer, a live Schema.org JSON-LD & OpenGraph Tag Builder, and an Apple Silicon M1–M4 Unified Memory Bandwidth & Automation ROI Calculator.',
+            },
+          },
+          {
+            '@type': 'Question',
+            name: 'Does SmartToolHub require my Apple ID or passwords?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'No. SmartToolHub operates on a strict Zero-Credentials architecture and never requests, collects, or stores Apple IDs, iCloud passwords, or private device tokens.',
+            },
+          },
+        ],
+      });
+    }
+
+    // Add HowTo Schema on Workflow Detail pages
     if (currentPage === 'workflow-detail' && workflowId) {
       const activeWf = WORKFLOWS_DATA.find((item) => item.id === workflowId);
       if (activeWf) {
         schemaGraph.push({
           '@type': 'HowTo',
           '@id': `${fullCanonicalUrl}#howto`,
-          'name': activeWf.title,
-          'description': activeWf.summary,
-          'totalTime': `PT${activeWf.setupTimeMinutes}M`,
-          'tool': activeWf.devicesRequired.map((d) => ({
+          name: activeWf.title,
+          description: activeWf.summary,
+          totalTime: `PT${activeWf.setupTimeMinutes}M`,
+          tool: activeWf.devicesRequired.map((d) => ({
             '@type': 'HowToTool',
-            'name': `${d.device} (${d.minOS})`
+            name: `${d.device} (${d.minOS})`,
           })),
-          'step': activeWf.steps.map((st) => ({
+          step: activeWf.steps.map((st) => ({
             '@type': 'HowToStep',
-            'position': st.stepNumber,
-            'name': st.title,
-            'text': st.instruction
-          }))
+            position: st.stepNumber,
+            name: st.title,
+            text: st.instruction,
+          })),
         });
       }
     }
@@ -301,11 +418,14 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
       document.head.appendChild(scriptTag);
     }
 
-    scriptTag.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@graph': schemaGraph
-    }, null, 2);
-
+    scriptTag.textContent = JSON.stringify(
+      {
+        '@context': 'https://schema.org',
+        '@graph': schemaGraph,
+      },
+      null,
+      2
+    );
   }, [currentPage, workflowId]);
 
   return null;

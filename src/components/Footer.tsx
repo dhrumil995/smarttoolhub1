@@ -15,16 +15,29 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => 
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* High-End Conversion & Support CTA Banner */}
-        <div className="mb-14 p-6 sm:p-8 rounded-3xl bg-white/80 dark:bg-white/[0.03] border border-slate-900/10 dark:border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 backdrop-blur-xl shadow-2xl shadow-indigo-500/5">
-          <div className="space-y-1.5 max-w-xl">
-            <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight">
-              Ready to automate your Apple workspace?
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
-              Synthesize custom Siri Shortcuts, benchmark Apple Silicon, or reach our engineering team for custom workflow requests.
-            </p>
+        <div className="mb-14 p-6 sm:p-8 ios-card-static flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative overflow-hidden">
+          <div className="flex items-center gap-5 max-w-2xl relative z-10">
+            <div className="hidden sm:flex w-16 h-16 rounded-2xl overflow-hidden border border-white/20 bg-[#030712] shrink-0 shadow-[0_10px_30px_rgba(99,102,241,0.3)]">
+              <img
+                src="/src/assets/images/smarttoolhub_luxury_logo_1790827199493.jpg"
+                alt="SmartToolHub Studio Emblem"
+                width="64"
+                height="64"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover scale-105"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight">
+                Ready to automate your Apple workspace?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
+                Synthesize custom Siri Shortcuts, benchmark Apple Silicon, or reach our engineering team for custom workflow requests.
+              </p>
+            </div>
           </div>
-          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto shrink-0">
+          <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto shrink-0 relative z-10">
             <button
               type="button"
               onClick={() => onNavigate('generator')}
@@ -37,7 +50,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => 
             <button
               type="button"
               onClick={() => onNavigate('contact')}
-              className="px-5 py-2.5 min-h-[40px] rounded-xl bg-slate-900/[0.05] dark:bg-white/[0.06] hover:bg-slate-900/[0.10] dark:hover:bg-white/[0.12] border border-slate-900/10 dark:border-white/10 text-xs font-semibold text-slate-900 dark:text-white transition-colors cursor-pointer whitespace-nowrap"
+              className="px-5 py-2.5 min-h-[40px] rounded-xl glass-pill text-xs font-semibold text-slate-900 dark:text-white cursor-pointer whitespace-nowrap"
             >
               Contact Engineering
             </button>
@@ -45,28 +58,30 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => 
         </div>
 
         {/* Navigation Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-900/10 dark:border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-200/80 dark:border-white/15">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded-lg overflow-hidden border border-slate-900/10 dark:border-white/15 bg-slate-900/5 dark:bg-white/[0.06] shadow-sm shrink-0">
-                <picture>
-                  <source srcSet="/logo-sm.webp" type="image/webp" />
-                  <img
-                    src="/logo.png"
-                    alt="SmartToolHub"
-                    width="28"
-                    height="28"
-                    loading="lazy"
-                    decoding="async"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                </picture>
+              <div className="w-8 h-8 rounded-xl overflow-hidden border border-slate-300 dark:border-white/25 bg-[#030712] shadow-[0_4px_14px_rgba(99,102,241,0.25)] shrink-0">
+                <img
+                  src="/src/assets/images/smarttoolhub_luxury_logo_1790827199493.jpg"
+                  alt="SmartToolHub"
+                  width="32"
+                  height="32"
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover scale-105"
+                />
               </div>
-              <span className="font-bold text-base text-slate-900 dark:text-white tracking-tight">
-                SmartToolHub
-              </span>
+              <div className="flex flex-col">
+                <span className="font-bold text-base leading-none text-slate-900 dark:text-white tracking-tight">
+                  SmartToolHub
+                </span>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 dark:text-zinc-500 mt-0.5">
+                  Obsidian Pro Ecosystem
+                </span>
+              </div>
             </div>
             <p className="text-xs text-slate-500 dark:text-zinc-400 max-w-sm leading-relaxed">
               Precision multi-device automations, client-side media & SEO utilities, and Continuity diagnostics for macOS Sequoia and iOS 18.

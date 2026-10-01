@@ -104,33 +104,33 @@ export const AppleSiliconShowcase: React.FC = () => {
   return (
     <section 
       aria-label="Apple Silicon Architecture Matrix"
-      className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-[#0A0B0E]/90 backdrop-blur-2xl p-4 sm:p-8 space-y-5 sm:space-y-6"
+      className="ios-card-static p-5 sm:p-8 space-y-5 sm:space-y-6"
     >
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200/80 dark:border-white/12 pb-5">
         <div>
-          <span className="text-xs text-[#2997FF] font-medium tracking-wider uppercase">
+          <span className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold">
             Hardware Acceleration Matrix
           </span>
-          <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#F5F5F7] mt-1">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white mt-1">
             Engineered for Apple Silicon.
           </h2>
-          <p className="text-xs sm:text-sm text-[#A1A1A6] mt-1 font-normal">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 mt-1 font-normal">
             Inspect real-time Neural Engine throughput, AWDL wireless continuity latency, and shortcut compilation benchmarks.
           </p>
         </div>
 
         {/* Chip Selection Tabs */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-white/[0.04] border border-white/[0.08] rounded-xl shrink-0">
+        <div className="flex flex-wrap items-center gap-1.5 p-1.5 bg-slate-900/[0.04] dark:bg-white/[0.04] border border-slate-300/80 dark:border-white/15 rounded-xl shrink-0">
           {SILICON_CHIPS.map((item) => {
             const isSelected = item.id === activeChipId;
             return (
               <button
                 key={item.id}
                 onClick={() => handleSelect(item.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium tracking-tight transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium tracking-tight transition-all cursor-pointer border ${
                   isSelected
-                    ? 'bg-white text-black font-semibold shadow-sm'
-                    : 'text-[#86868B] hover:text-white'
+                    ? 'bg-white dark:bg-indigo-600 border-slate-300 dark:border-indigo-400/60 text-slate-950 dark:text-white font-semibold shadow-sm'
+                    : 'border-transparent text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 {item.name.replace('Apple ', '')}
@@ -146,94 +146,94 @@ export const AppleSiliconShowcase: React.FC = () => {
         {/* Left Column: Core Architecture & Description */}
         <div className="lg:col-span-2 space-y-5">
           <div className="space-y-2">
-            <div className="text-xs text-[#2997FF] font-medium flex items-center gap-2">
+            <div className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold flex items-center gap-2">
               <Cpu className="w-4 h-4 stroke-[2]" />
               <span>{chip.architecture}</span>
             </div>
-            <h3 className="text-2xl font-semibold text-white tracking-tight">
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
               {chip.name}
             </h3>
-            <p className="text-sm text-[#A1A1A6] leading-relaxed font-normal">
+            <p className="text-sm text-slate-600 dark:text-zinc-400 leading-relaxed font-normal">
               {chip.description}
             </p>
           </div>
 
           {/* Benchmark Metrics Grid (Tabular Numerals) */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
-              <span className="text-[11px] text-[#86868B] block font-medium uppercase tracking-wider">
+            <div className="p-3.5 rounded-xl glass-panel space-y-1">
+              <span className="text-[11px] text-slate-500 dark:text-zinc-400 block font-medium">
                 Neural Engine
               </span>
-              <div className="text-lg font-semibold text-white font-mono tabular-nums">
-                {chip.neuralEngineTops} <span className="text-xs text-[#2997FF] font-medium">TOPS</span>
+              <div className="text-lg font-bold text-slate-900 dark:text-white font-mono tabular-nums">
+                {chip.neuralEngineTops} <span className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold">TOPS</span>
               </div>
-              <span className="text-[10px] text-[#86868B] block font-normal">On-device ML operations</span>
+              <span className="text-[10px] text-slate-500 dark:text-zinc-500 block font-normal">On-device ML operations</span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1">
-              <span className="text-[11px] text-[#86868B] block font-medium uppercase tracking-wider">
+            <div className="p-3.5 rounded-xl glass-panel space-y-1">
+              <span className="text-[11px] text-slate-500 dark:text-zinc-400 block font-medium">
                 Continuity Latency
               </span>
-              <div className="text-lg font-semibold text-emerald-400 font-mono tabular-nums">
+              <div className="text-lg font-bold text-emerald-600 dark:text-emerald-400 font-mono tabular-nums">
                 {chip.continuityLatency}
               </div>
-              <span className="text-[10px] text-[#86868B] block font-normal">AWDL peer-to-peer ping</span>
+              <span className="text-[10px] text-slate-500 dark:text-zinc-500 block font-normal">AWDL peer-to-peer ping</span>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-1 col-span-2 sm:col-span-1">
-              <span className="text-[11px] text-[#86868B] block font-medium uppercase tracking-wider">
+            <div className="p-3.5 rounded-xl glass-panel space-y-1 col-span-2 sm:col-span-1">
+              <span className="text-[11px] text-slate-500 dark:text-zinc-400 block font-medium">
                 Execution Time
               </span>
-              <div className="text-lg font-semibold text-blue-400 font-mono tabular-nums">
+              <div className="text-lg font-bold text-indigo-600 dark:text-indigo-400 font-mono tabular-nums">
                 {chip.shortcutsThroughput}
               </div>
-              <span className="text-[10px] text-[#86868B] block font-normal">Native script compilation</span>
+              <span className="text-[10px] text-slate-500 dark:text-zinc-500 block font-normal">Native script compilation</span>
             </div>
           </div>
 
           {/* Hardware Specs Row */}
-          <div className="p-4 rounded-xl bg-black/40 border border-white/[0.06] text-xs space-y-2">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.06] pb-2">
-              <span className="text-[#86868B] font-bold">CPU Topology</span>
-              <span className="text-white font-mono">{chip.cpuCores}</span>
+          <div className="p-4 rounded-xl glass-panel text-xs space-y-2">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 dark:border-white/10 pb-2">
+              <span className="text-slate-500 dark:text-zinc-400 font-semibold">CPU Topology</span>
+              <span className="text-slate-900 dark:text-white font-mono">{chip.cpuCores}</span>
             </div>
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.06] pb-2">
-              <span className="text-[#86868B] font-bold">Graphics Engine</span>
-              <span className="text-white font-mono">{chip.gpuCores}</span>
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 dark:border-white/10 pb-2">
+              <span className="text-slate-500 dark:text-zinc-400 font-semibold">Graphics Engine</span>
+              <span className="text-slate-900 dark:text-white font-mono">{chip.gpuCores}</span>
             </div>
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="text-[#86868B] font-bold">Memory Bandwidth</span>
-              <span className="text-white font-mono">{chip.bandwidth}</span>
+              <span className="text-slate-500 dark:text-zinc-400 font-semibold">Memory Bandwidth</span>
+              <span className="text-slate-900 dark:text-white font-mono">{chip.bandwidth}</span>
             </div>
           </div>
         </div>
 
         {/* Right Column: Native Continuity Features */}
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-5 flex flex-col justify-between space-y-4">
+        <div className="rounded-xl glass-panel p-5 flex flex-col justify-between space-y-4">
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-xs font-bold text-white uppercase tracking-wider">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 stroke-[2.5]" />
+            <div className="flex items-center gap-2 text-xs font-bold text-slate-900 dark:text-white">
+              <ShieldCheck className="w-4 h-4 text-emerald-500 dark:text-emerald-400 stroke-[2.2]" />
               <span>Hardware Acceleration Support</span>
             </div>
-            <ul className="space-y-2.5 text-xs text-[#CCCCCC]">
+            <ul className="space-y-2.5 text-xs text-slate-700 dark:text-zinc-300">
               {chip.supportedFeatures.map((feat, idx) => (
                 <li key={idx} className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#2997FF] shrink-0" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
                   <span>{feat}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="pt-3 border-t border-white/[0.06] space-y-2">
-            <div className="text-[11px] text-[#86868B] flex items-center gap-2 font-bold">
+          <div className="pt-3 border-t border-slate-200/80 dark:border-white/10 space-y-2">
+            <div className="text-[11px] text-slate-500 dark:text-zinc-400 flex items-center gap-2 font-semibold">
               <span>Sequoia Ready</span>
               <span aria-hidden="true">·</span>
               <span>Metal 3 Compute</span>
               <span aria-hidden="true">·</span>
               <span>Secure Enclave</span>
             </div>
-            <div className="text-[11px] text-[#86868B] font-normal">
+            <div className="text-[11px] text-slate-500 dark:text-zinc-500 font-normal">
               Validated against official Apple Silicon hardware registers.
             </div>
           </div>

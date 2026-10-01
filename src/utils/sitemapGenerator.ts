@@ -112,7 +112,45 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
       title: 'Verified Apple Workflows & Shortcuts Blueprint Library',
     },
 
-    // 3. High-Value Persona Filter Routes (Long-Tail Search Intent)
+    // 3. Interactive Workbench Suite Routes (High-Intent Utility Queries)
+    {
+      path: '/?category=image',
+      url: `${baseUrl}/?category=image`,
+      lastmod: today,
+      changefreq: 'weekly',
+      priority: 0.85,
+      category: 'tool',
+      title: 'Retina Image Scale, Aspect Ratio & macOS sips Batch Optimizer | SmartToolHub',
+    },
+    {
+      path: '/?category=text',
+      url: `${baseUrl}/?category=text`,
+      lastmod: today,
+      changefreq: 'weekly',
+      priority: 0.85,
+      category: 'tool',
+      title: 'AI Shortcut Prompt Synthesizer, Slugify & LLM Token Counter | SmartToolHub',
+    },
+    {
+      path: '/?category=seo',
+      url: `${baseUrl}/?category=seo`,
+      lastmod: today,
+      changefreq: 'weekly',
+      priority: 0.85,
+      category: 'tool',
+      title: 'Schema.org JSON-LD & OpenGraph Meta Tag Generator | SmartToolHub',
+    },
+    {
+      path: '/?category=calculator',
+      url: `${baseUrl}/?category=calculator`,
+      lastmod: today,
+      changefreq: 'weekly',
+      priority: 0.85,
+      category: 'tool',
+      title: 'Apple Silicon Memory Bandwidth & Automation ROI Calculator | SmartToolHub',
+    },
+
+    // 4. High-Value Persona Filter Routes (Long-Tail Search Intent)
     {
       path: '/library?persona=creators',
       url: `${baseUrl}/library?persona=creators`,

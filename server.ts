@@ -1161,7 +1161,7 @@ app.get('/sitemap.xml', (req: Request, res: Response) => {
   }
 });
 
-// Dynamic robots.txt with active host reference
+// Dynamic robots.txt with active host reference and AI crawler allowances
 app.get('/robots.txt', (req: Request, res: Response) => {
   const rawHost = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
   const host = Array.isArray(rawHost) ? rawHost[0] : rawHost;
@@ -1170,7 +1170,69 @@ app.get('/robots.txt', (req: Request, res: Response) => {
 
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=86400');
-  return res.status(200).send(`User-agent: *\nAllow: /\nDisallow: /api/\n\n# Dynamic Automated Sitemap\nSitemap: ${baseUrl}/sitemap.xml\n`);
+  return res.status(200).send(
+    [
+      'User-agent: *',
+      'Allow: /',
+      'Disallow: /api/',
+      '',
+      'User-agent: Googlebot',
+      'Allow: /',
+      '',
+      'User-agent: Bingbot',
+      'Allow: /',
+      '',
+      'User-agent: Applebot',
+      'Allow: /',
+      '',
+      'User-agent: OAI-SearchBot',
+      'Allow: /',
+      '',
+      'User-agent: PerplexityBot',
+      'Allow: /',
+      '',
+      '# Dynamic Automated Sitemap & LLM Index',
+      `Sitemap: ${baseUrl}/sitemap.xml`,
+      `# LLMs Structured Index: ${baseUrl}/llms.txt`,
+      '',
+    ].join('\n')
+  );
+});
+
+// Dynamic /llms.txt for Generative Engine Optimization (GEO / AI Search Indexing)
+app.get('/llms.txt', (req: Request, res: Response) => {
+  const rawHost = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
+  const host = Array.isArray(rawHost) ? rawHost[0] : rawHost;
+  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const baseUrl = `${proto}://${host}`;
+  const routes = getAllSitemapRoutes(baseUrl);
+
+  const lines = [
+    '# SmartToolHub — Apple Shortcuts & macOS Sequoia Automation Suite',
+    '',
+    '> Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, run client-side Retina image, text, SEO, and Apple Silicon calculators, and troubleshoot Continuity.',
+    '',
+    '## Core Utility Suites',
+    `- [Overview & Interactive Workbench](${baseUrl}/): Unified Apple & web utility dashboard`,
+    `- [AI Shortcut & Script Generator](${baseUrl}/generator): Synthesize Siri Shortcuts, AppleScript, and Zsh scripts`,
+    `- [Image & Retina Media Studio](${baseUrl}/?category=image): Retina @2x/@3x resolution scale, aspect ratio & macOS sips CLI batch optimizer`,
+    `- [Text & Prompt Synthesizer](${baseUrl}/?category=text): LLM token counter, URL slugify & Apple Shortcut prompt builder`,
+    `- [Technical SEO & Schema Builder](${baseUrl}/?category=seo): Live Schema.org JSON-LD & OpenGraph meta tag generator`,
+    `- [Silicon & Automation ROI Calculators](${baseUrl}/?category=calculator): M1–M4 Max memory bandwidth & workflow ROI calculator`,
+    `- [Continuity & AWDL Sync Doctor](${baseUrl}/troubleshooting): AirDrop, iPhone Mirroring & Universal Clipboard diagnostics`,
+    `- [Apple Silicon Compatibility Matrix](${baseUrl}/compatibility): Hardware & OS matrix for macOS Sequoia and iOS 18`,
+    `- [120+ Verified Workflow Library](${baseUrl}/library): Tested multi-device Apple automation blueprints`,
+    '',
+    '## Indexed Blueprints & Routes',
+    ...routes
+      .filter((r) => r.category === 'workflow')
+      .map((r) => `- [${r.title}](${r.url})`),
+    '',
+  ];
+
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  return res.status(200).send(lines.join('\n'));
 });
 
 // Sitemap Inspection & Crawl Audit API
