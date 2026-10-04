@@ -1,0 +1,2 @@
+# Google AdSense Publisher Verification File for smarttoolhub.net
+google.com, pub-4598132123552240, DIRECT, f08c47fec0942fa0

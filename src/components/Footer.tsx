@@ -6,9 +6,10 @@ import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_17908271994
 interface FooterProps {
   onNavigate: (page: PageId, workflowId?: string) => void;
   onOpenSitemap?: () => void;
+  onOpenSettings?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpenSettings }) => {
   return (
     <footer
       role="contentinfo"
@@ -205,25 +206,35 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => 
           {/* Company & Legal */}
           <div>
             <h4 className="text-xs font-semibold text-slate-900 dark:text-white mb-4">
-              Resources & Legal
+              Editorial & Legal
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
                 <button
                   type="button"
-                  onClick={() => onNavigate('pricing')}
-                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+                  onClick={() => onOpenSettings?.()}
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer text-indigo-600 dark:text-indigo-400 font-semibold flex items-center gap-1.5"
                 >
-                  Pricing & Pro Access
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                  <span>Preferences & Haptics</span>
                 </button>
               </li>
               <li>
                 <button
                   type="button"
-                  onClick={() => onNavigate('contact')}
+                  onClick={() => onNavigate('about')}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  Contact Support
+                  About SmartToolHub
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('guides')}
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+                >
+                  Engineering Guides
                 </button>
               </li>
               <li>
@@ -245,13 +256,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => 
                 </button>
               </li>
               <li>
+                <button
+                  type="button"
+                  onClick={() => onNavigate('contact')}
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+                >
+                  Contact & Support
+                </button>
+              </li>
+              <li>
                 <a
-                  href="https://developer.apple.com/documentation/appintents"
+                  href="/ads.txt"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-slate-900 dark:hover:text-white transition-colors inline-flex items-center gap-1"
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors inline-flex items-center gap-1 font-mono text-[11px]"
                 >
-                  <span>Apple App Intents Docs</span>
+                  <span>ads.txt</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </li>

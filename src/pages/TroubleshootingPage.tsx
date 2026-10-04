@@ -153,8 +153,8 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
     setActiveTab('ai-diagnose');
   };
 
-  const activeIssueResolvedCount = activeIssue.steps.filter(
-    (_, idx) => resolvedSteps[`${activeIssue.id}-${idx}`]
+  const activeIssueResolvedCount = (activeIssue.deepDiagnostics || []).filter(
+    (_: unknown, idx: number) => resolvedSteps[`${activeIssue.id}-${idx}`]
   ).length;
 
   return (
@@ -167,7 +167,7 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
         }
         sublabel={
           activeTab === 'curated'
-            ? `${activeIssueResolvedCount}/${activeIssue.steps.length} checks`
+            ? `${activeIssueResolvedCount}/${activeIssue.deepDiagnostics.length} checks`
             : activeIssue.feature
         }
         contentKey={`${activeTab}-${activeIssue.id}-${Boolean(aiDiagnosticResult)}`}

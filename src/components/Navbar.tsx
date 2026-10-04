@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { PageId } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { haptics } from '../utils/haptics';
+import { useHaptics } from '../utils/useHaptics';
 import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.jpg';
 import {
   Search,
@@ -16,7 +17,9 @@ import {
   Globe,
   Calculator,
   Wrench,
-  Cpu
+  Cpu,
+  Sliders,
+  Volume2
 } from 'lucide-react';
 
 export type ToolCategoryFilter =
@@ -32,6 +35,7 @@ interface NavbarProps {
   currentPage: PageId;
   onNavigate: (page: PageId, workflowId?: string) => void;
   onOpenSearch: () => void;
+  onOpenSettings?: () => void;
   activeCategory?: ToolCategoryFilter;
   onSelectCategory?: (category: ToolCategoryFilter) => void;
 }
@@ -40,6 +44,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   currentPage,
   onNavigate,
   onOpenSearch,
+  onOpenSettings,
   activeCategory = 'all',
   onSelectCategory,
 }) => {
@@ -47,14 +52,16 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme, toggleTheme } = useTheme();
+  const { intensity, setIntensity } = useHaptics();
 
   const navItems: { id: PageId; label: string }[] = [
     { id: 'home', label: 'Overview' },
     { id: 'generator', label: 'Generator' },
     { id: 'library', label: 'Workflows' },
+    { id: 'guides', label: 'Guides' },
     { id: 'troubleshooting', label: 'Diagnostics' },
     { id: 'compatibility', label: 'Compatibility' },
-    { id: 'pricing', label: 'Pricing' },
+    { id: 'about', label: 'About' },
   ];
 
   const toolCategories: {
@@ -310,14 +317,50 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </button>
 
+          {/* User Profile & Persistent Haptics Settings Trigger */}
+          <button
+            id="nav-settings-button"
+            type="button"
+            onClick={() => {
+              haptics.playTap();
+              onOpenSettings?.();
+            }}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 min-h-[38px] rounded-xl glass-pill text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white text-xs cursor-pointer shrink-0 transition-all hover:border-indigo-400/40"
+            title={`Haptics: ${intensity.toUpperCase()} · User Profile & Settings`}
+            aria-label="User Profile and Haptic Feedback Settings"
+          >
+            <Sliders className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400 shrink-0" />
+            <span className="hidden xl:inline text-xs font-medium">Settings</span>
+            <span
+              className={`flex items-center gap-1 text-[10px] font-mono uppercase px-1.5 py-0.5 rounded-full font-semibold transition-all ${
+                intensity === 'high'
+                  ? 'bg-indigo-500/20 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30'
+                  : intensity === 'low'
+                  ? 'bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border border-cyan-500/30'
+                  : 'bg-slate-400/20 text-slate-500 dark:text-zinc-400 border border-slate-400/30'
+              }`}
+            >
+              <span
+                className={`w-1.5 h-1.5 rounded-full ${
+                  intensity === 'high'
+                    ? 'bg-indigo-400 shadow-[0_0_6px_#818CF8]'
+                    : intensity === 'low'
+                    ? 'bg-cyan-400 shadow-[0_0_6px_#22D3EE]'
+                    : 'bg-slate-400'
+                }`}
+              />
+              <span>{intensity}</span>
+            </span>
+          </button>
+
           {/* Primary Action CTA */}
           <button
             id="nav-generator-cta"
             type="button"
             onClick={() => handleNav('generator')}
-            className="hidden sm:inline-flex items-center gap-2 px-4 py-2 min-h-[38px] rounded-xl bg-white text-slate-950 hover:bg-zinc-100 border border-slate-300 dark:border-white/80 font-semibold text-xs tracking-tight shadow-[0_6px_20px_rgba(99,102,241,0.18),inset_0_1px_0_0_rgba(255,255,255,0.9)] transition-all cursor-pointer whitespace-nowrap shrink-0"
+            className="hidden sm:inline-flex items-center gap-2 px-4 py-2 min-h-[38px] rounded-xl glass-button-primary text-white font-semibold text-xs tracking-tight shadow-[0_6px_20px_rgba(99,102,241,0.35)] transition-all cursor-pointer whitespace-nowrap shrink-0"
           >
-            <Wand2 className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
+            <Wand2 className="w-3.5 h-3.5 text-white shrink-0" />
             <span>Launch Generator</span>
           </button>
 
@@ -374,6 +417,55 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-left bg-slate-900/[0.03] dark:bg-white/[0.03] hover:bg-slate-900/[0.06] dark:hover:bg-white/[0.07] border border-slate-900/5 dark:border-white/5 text-slate-700 dark:text-zinc-300 truncate"
                 >
                   <span className="truncate">{cat.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Persistent Haptics & Sensory Feedback Setting in Mobile Drawer */}
+          <div className="pt-3 border-t border-slate-900/10 dark:border-white/10 space-y-2">
+            <div className="flex items-center justify-between px-2">
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-700 dark:text-zinc-300">
+                <Sliders className="w-3.5 h-3.5 text-indigo-500" />
+                <span>Haptic Feedback</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenSettings?.();
+                }}
+                className="text-[11px] text-indigo-500 dark:text-indigo-400 font-semibold hover:underline cursor-pointer"
+              >
+                Profile & Settings
+              </button>
+            </div>
+            <div className="grid grid-cols-3 gap-1.5">
+              {(['high', 'low', 'off'] as const).map((level) => (
+                <button
+                  key={level}
+                  type="button"
+                  onClick={() => setIntensity(level)}
+                  className={`py-2 px-2 rounded-xl text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
+                    intensity === level
+                      ? level === 'high'
+                        ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/30'
+                        : level === 'low'
+                        ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/30'
+                        : 'bg-slate-600 text-white shadow-md'
+                      : 'bg-slate-900/[0.04] dark:bg-white/[0.04] text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
+                  }`}
+                >
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      level === 'high'
+                        ? 'bg-indigo-300'
+                        : level === 'low'
+                        ? 'bg-cyan-300'
+                        : 'bg-slate-300'
+                    }`}
+                  />
+                  <span>{level}</span>
                 </button>
               ))}
             </div>

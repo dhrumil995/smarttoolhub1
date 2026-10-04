@@ -10,6 +10,7 @@ import {
   VolumeX
 } from 'lucide-react';
 import { haptics } from '../utils/haptics';
+import { useHaptics } from '../utils/useHaptics';
 
 interface DiagnosticResult {
   title: string;
@@ -22,7 +23,7 @@ interface DiagnosticResult {
 export const DiagnosticSimulator: React.FC = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
-  const [soundActive, setSoundActive] = useState<boolean>(haptics.isEnabled());
+  const { intensity, cycleIntensity, isEnabled } = useHaptics();
   const [results, setResults] = useState<DiagnosticResult[]>([]);
 
   const runDiagnostics = () => {
@@ -137,16 +138,22 @@ Verified by SmartToolHub 2026`;
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          {/* Sound Toggle */}
+          {/* Sound & Haptic Cycle Toggle */}
           <button
             onClick={() => {
-              const next = haptics.toggle();
-              setSoundActive(next);
+              cycleIntensity();
             }}
-            className="p-2 rounded-xl glass-pill text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white cursor-pointer"
-            title={soundActive ? 'Mute Audio' : 'Enable Audio'}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl glass-pill text-slate-600 dark:text-zinc-300 hover:text-slate-900 dark:hover:text-white cursor-pointer"
+            title={`Haptics: ${intensity.toUpperCase()} (Click to toggle High / Low / Off)`}
           >
-            {soundActive ? <Volume2 className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" /> : <VolumeX className="w-3.5 h-3.5 text-zinc-500" />}
+            {isEnabled ? (
+              <Volume2 className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
+            ) : (
+              <VolumeX className="w-3.5 h-3.5 text-zinc-500" />
+            )}
+            <span className="text-[10px] font-mono uppercase font-semibold text-indigo-500 dark:text-indigo-400">
+              {intensity}
+            </span>
           </button>
 
           {/* Rerun Button */}

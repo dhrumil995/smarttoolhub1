@@ -3,17 +3,20 @@ import { PageId } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
 import { COMPATIBILITY_FEATURES } from '../data/compatibility';
 import { TROUBLESHOOTING_DATA } from '../data/troubleshooting';
-import { Search, X, BookOpen, Cpu, Wrench, ArrowRight } from 'lucide-react';
+import { useHaptics } from '../utils/useHaptics';
+import { Search, X, BookOpen, Cpu, Wrench, ArrowRight, Sliders, Volume2 } from 'lucide-react';
 
 interface CommandPaletteProps {
   isOpen: boolean;
   onClose: () => void;
   onNavigate: (page: PageId, workflowId?: string) => void;
+  onOpenSettings?: () => void;
 }
 
-export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose, onNavigate }) => {
+export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose, onNavigate, onOpenSettings }) => {
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+  const { intensity, playTap } = useHaptics();
 
   useEffect(() => {
     if (isOpen) {
@@ -66,7 +69,16 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
     ts.symptoms.some((s) => s.toLowerCase().includes(normalizedQuery))
   ).slice(0, 3);
 
-  const totalResults = matchedWorkflows.length + matchedCompatibility.length + matchedTroubleshooting.length;
+  const isSettingsMatch =
+    !normalizedQuery ||
+    'settings'.includes(normalizedQuery) ||
+    'preferences'.includes(normalizedQuery) ||
+    'haptics'.includes(normalizedQuery) ||
+    'vibration'.includes(normalizedQuery) ||
+    'sound'.includes(normalizedQuery) ||
+    'profile'.includes(normalizedQuery);
+
+  const totalResults = matchedWorkflows.length + matchedCompatibility.length + matchedTroubleshooting.length + (isSettingsMatch ? 1 : 0);
 
   return (
     <div 
@@ -111,6 +123,44 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
             </div>
           ) : (
             <>
+              {/* Preferences & System Settings */}
+              {isSettingsMatch && (
+                <div>
+                  <div className="flex items-center gap-1.5 px-2 py-1 text-[11px] font-semibold text-[#888888] uppercase tracking-wider">
+                    <Sliders className="w-3.5 h-3.5 text-indigo-400" />
+                    <span>Preferences & System Settings</span>
+                  </div>
+                  <div className="mt-1 space-y-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        playTap();
+                        onClose();
+                        onOpenSettings?.();
+                      }}
+                      className="w-full flex items-center justify-between p-2.5 rounded-xl text-left bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 hover:border-indigo-500/40 transition-colors group cursor-pointer"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0">
+                          <Sliders className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-white group-hover:text-indigo-300 transition-colors">
+                            Haptic Feedback & Sensory Preferences
+                          </p>
+                          <p className="text-[11px] text-[#888888] line-clamp-1 mt-0.5">
+                            Current Intensity: <strong className="text-indigo-400 uppercase font-mono">{intensity}</strong> • Physical vibration & audio synthesizer
+                          </p>
+                        </div>
+                      </div>
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shrink-0 ml-2 font-mono">
+                        ⌘,
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Workflows Group */}
               {matchedWorkflows.length > 0 && (
                 <div>

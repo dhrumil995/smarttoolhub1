@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { PageId } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
+import { generateWorkflowFAQSchema } from '../utils/faqSchemaGenerator';
 
 interface SEOHeadProps {
   currentPage: PageId;
@@ -109,6 +110,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
         breadcrumbs: [
           { name: 'Home', path: '/' },
           { name: 'Workflows', path: '/library' },
+          { name: wf.category, path: `/library?category=${encodeURIComponent(wf.category)}` },
           { name: wf.title, path: `/workflows/${wf.slug}` },
         ],
       };
@@ -163,6 +165,32 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
         breadcrumbs: [
           { name: 'Home', path: '/' },
           { name: 'Contact Engineering', path: '/contact' },
+        ],
+      };
+    } else if (currentPage === 'about') {
+      config = {
+        title: 'About SmartToolHub | Systems Engineering & Hardware Lab',
+        description:
+          'Learn about SmartToolHub’s mission, lead architect Dhrumil Aslaliya, physical Apple Silicon testing lab, and 5-stage editorial review standard.',
+        canonicalPath: '/about',
+        ogType: 'website',
+        keywords: 'About SmartToolHub, Dhrumil Aslaliya, Apple Silicon lab, editorial integrity, macOS engineering',
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'About Us', path: '/about' },
+        ],
+      };
+    } else if (currentPage === 'guides') {
+      config = {
+        title: 'Apple Systems Engineering & Automation Guides | SmartToolHub',
+        description:
+          'In-depth architectural guides on macOS 15 AWDL protocol, Apple Silicon unified memory for local LLMs, and native sips media automation.',
+        canonicalPath: '/guides',
+        ogType: 'website',
+        keywords: 'macOS AWDL protocol guide, Apple Silicon memory bandwidth, sips tutorial, Apple Shortcuts architecture',
+        breadcrumbs: [
+          { name: 'Home', path: '/' },
+          { name: 'Engineering Guides', path: '/guides' },
         ],
       };
     }
@@ -406,6 +434,10 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
             text: st.instruction,
           })),
         });
+
+        // Add dynamic Schema.org FAQPage for Rich Result Eligibility & Search Visibility
+        const faqSchema = generateWorkflowFAQSchema(activeWf, fullCanonicalUrl);
+        schemaGraph.push(faqSchema);
       }
     }
 

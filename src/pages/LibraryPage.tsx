@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageId } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
+import { Breadcrumbs } from '../components/Breadcrumbs';
+import { getGlassTheme } from '../utils/glassTheme';
 import {
   Search,
   Clock,
@@ -22,7 +24,25 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
     return '';
   });
   const [selectedPersona, setSelectedPersona] = useState<string>('all');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get('category');
+      if (cat) return decodeURIComponent(cat);
+    }
+    return 'all';
+  });
+
+  // Listen to popstate or url changes for category
+  useEffect(() => {
+    const handleUrlSync = () => {
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get('category');
+      setSelectedCategory(cat ? decodeURIComponent(cat) : 'all');
+    };
+    window.addEventListener('popstate', handleUrlSync);
+    return () => window.removeEventListener('popstate', handleUrlSync);
+  }, []);
   const [builtInOnly, setBuiltInOnly] = useState<boolean>(false);
   const [savedWorkflows, setSavedWorkflows] = useState<string[]>(() => {
     try {
@@ -74,8 +94,35 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
     return matchesSearch && matchesPersona && matchesCategory && matchesBuiltIn;
   });
 
+  const handleCategoryChange = (cat: string) => {
+    setSelectedCategory(cat);
+    try {
+      const url = new URL(window.location.href);
+      if (cat && cat !== 'all') {
+        url.searchParams.set('category', cat);
+      } else {
+        url.searchParams.delete('category');
+      }
+      window.history.replaceState({}, '', url.toString());
+    } catch {}
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-8">
+      {/* Breadcrumbs Navigation */}
+      <Breadcrumbs
+        currentPage="library"
+        categoryFilter={selectedCategory}
+        onNavigate={(page, wfId, cat) => {
+          if (cat) {
+            handleCategoryChange(cat);
+          } else {
+            handleCategoryChange('all');
+            onNavigate(page, wfId);
+          }
+        }}
+      />
+
       {/* Header */}
       <div className="text-center space-y-3 max-w-3xl mx-auto">
         <p className="text-xs font-medium text-indigo-600 dark:text-indigo-400">
@@ -155,7 +202,7 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
             </span>
             <select
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e) => handleCategoryChange(e.target.value)}
               className="px-3 py-1.5 rounded-xl glass-input text-xs focus:outline-none"
             >
               {categories.map((c) => (
@@ -172,17 +219,18 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {filtered.map((wf) => {
           const isSaved = savedWorkflows.includes(wf.id);
+          const theme = getGlassTheme(wf.category);
           return (
             <div
               key={wf.id}
               onClick={() => onNavigate('workflow-detail', wf.id)}
-              className="bento-card p-6 flex flex-col justify-between cursor-pointer group"
+              className={`${theme.cardClass} p-6 flex flex-col justify-between cursor-pointer group rounded-3xl transition-all duration-300 hover:scale-[1.02] shadow-xl`}
             >
               <div className="space-y-3.5">
                 {/* Unboxed metadata row */}
                 <div className="flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-zinc-400">
                   <div className="flex items-center gap-1.5 truncate">
-                    <span className="font-medium text-indigo-600 dark:text-indigo-400 truncate">
+                    <span className={`font-semibold ${theme.textAccentClass} truncate`}>
                       {wf.category}
                     </span>
                     <span aria-hidden="true">·</span>
@@ -218,11 +266,11 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
                 </div>
               </div>
 
-              <div className="pt-5 mt-5 border-t border-slate-900/5 dark:border-white/[0.06] flex items-center justify-between text-xs">
+              <div className="pt-5 mt-5 border-t border-slate-900/5 dark:border-white/[0.08] flex items-center justify-between text-xs">
                 <span className="font-mono tabular-nums text-[11px] text-slate-500 dark:text-zinc-400">
                   {wf.steps.length} verified steps
                 </span>
-                <span className="text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 flex items-center gap-1 font-semibold transition-colors">
+                <span className={`font-semibold ${theme.textAccentClass} flex items-center gap-1 transition-colors`}>
                   <span>Open Blueprint</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>

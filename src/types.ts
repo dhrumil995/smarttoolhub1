@@ -8,7 +8,9 @@ export type PageId =
   | 'pricing'
   | 'privacy'
   | 'terms'
-  | 'contact';
+  | 'contact'
+  | 'about'
+  | 'guides';
 
 export type PersonaType = 'creators' | 'students' | 'freelancers' | 'beginners' | 'developers';
 

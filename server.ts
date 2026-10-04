@@ -1176,6 +1176,10 @@ app.get('/robots.txt', (req: Request, res: Response) => {
       'Allow: /',
       'Disallow: /api/',
       '',
+      '# Google AdSense Crawler & General Google Search',
+      'User-agent: Mediapartners-Google',
+      'Allow: /',
+      '',
       'User-agent: Googlebot',
       'Allow: /',
       '',
@@ -1199,6 +1203,17 @@ app.get('/robots.txt', (req: Request, res: Response) => {
   );
 });
 
+// Google AdSense Publisher Verification ads.txt
+app.get('/ads.txt', (_req: Request, res: Response) => {
+  const adsPath = path.join(process.cwd(), 'public', 'ads.txt');
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=86400');
+  if (fs.existsSync(adsPath)) {
+    return res.sendFile(adsPath);
+  }
+  return res.status(200).send('google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0\n');
+});
+
 // Dynamic /llms.txt for Generative Engine Optimization (GEO / AI Search Indexing)
 app.get('/llms.txt', (req: Request, res: Response) => {
   const rawHost = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
@@ -1211,6 +1226,13 @@ app.get('/llms.txt', (req: Request, res: Response) => {
     '# SmartToolHub — Apple Shortcuts & macOS Sequoia Automation Suite',
     '',
     '> Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, run client-side Retina image, text, SEO, and Apple Silicon calculators, and troubleshoot Continuity.',
+    '',
+    '## Editorial & Publisher Standards',
+    `- [About Us & Editorial Standards](${baseUrl}/about): Lead architect Dhrumil Aslaliya, physical Apple Silicon testing lab, and 5-stage editorial review standard`,
+    `- [Engineering Guides & Knowledge Base](${baseUrl}/guides): Deep architectural teardowns of macOS 15 AWDL, Apple Silicon memory bandwidth, and native sips automation`,
+    `- [Privacy Policy (AdSense Compliant)](${baseUrl}/privacy): Zero-Credentials security charter, advertising cookies, and opt-out transparency`,
+    `- [Terms of Service](${baseUrl}/terms): Independent engineering publication terms`,
+    `- [Contact & Support](${baseUrl}/contact): Operational office in Surat, Gujarat, India`,
     '',
     '## Core Utility Suites',
     `- [Overview & Interactive Workbench](${baseUrl}/): Unified Apple & web utility dashboard`,
@@ -1268,6 +1290,17 @@ app.get('/api/sitemap/inspect', (req: Request, res: Response) => {
       has_image: !!r.image,
     })),
   });
+});
+
+// Explicit AdSense ads.txt crawler endpoint with text/plain header
+app.get('/ads.txt', (_req: Request, res: Response) => {
+  const adsTxtPath = path.join(process.cwd(), 'public', 'ads.txt');
+  if (fs.existsSync(adsTxtPath)) {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    return res.sendFile(adsTxtPath);
+  }
+  res.status(404).send('ads.txt not found');
 });
 
 // Global SEO, Performance & Security headers

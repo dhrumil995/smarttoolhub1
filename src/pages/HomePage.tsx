@@ -9,6 +9,7 @@ import { AppleSiliconShowcase } from '../components/AppleSiliconShowcase';
 import { IOSBottomSheet } from '../components/ios/IOSBottomSheet';
 import { IOSToggle } from '../components/ios/IOSToggle';
 import { haptics } from '../utils/haptics';
+import { getGlassTheme } from '../utils/glassTheme';
 import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.jpg';
 import heroStudioImg from '../assets/images/hero_mac_studio_ecosystem_1790827213135.jpg';
 import shortcutsAutomationImg from '../assets/images/feature_shortcuts_automation_1790175491181.jpg';
@@ -719,23 +720,24 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-5">
           {filteredBentoTools.map((tool) => {
             const Icon = tool.icon;
+            const theme = getGlassTheme(tool.category);
             return (
               <div
                 key={tool.id}
                 onClick={() => handleToolCardClick(tool)}
-                className={`${tool.colSpan} bento-card group relative overflow-hidden p-6 sm:p-8 flex flex-col justify-between cursor-pointer`}
+                className={`${tool.colSpan} ${theme.cardClass} group relative overflow-hidden p-6 sm:p-8 flex flex-col justify-between cursor-pointer rounded-3xl transition-all duration-300`}
               >
-                {/* Subtle inner ambient glow on hover */}
+                {/* Dynamic colored ambient light glow on hover */}
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute -right-16 -top-16 w-56 h-56 rounded-full bg-indigo-500/10 opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-200"
+                  className={`pointer-events-none absolute -right-16 -top-16 w-64 h-64 rounded-full ${theme.glowClass} opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-300`}
                 />
 
                 <div className="space-y-4 relative z-10">
                   {/* Unboxed clean metadata line (Zero-Pill discipline) */}
                   <div className="flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-zinc-400">
                     <div className="flex items-center gap-2 truncate">
-                      <span className="font-mono font-semibold text-indigo-600 dark:text-indigo-400 tabular-nums">
+                      <span className={`font-mono font-semibold ${theme.textAccentClass} tabular-nums`}>
                         {tool.number}.
                       </span>
                       <span className="font-medium text-slate-700 dark:text-zinc-300">
@@ -744,14 +746,14 @@ export const HomePage: React.FC<HomePageProps> = ({
                       <span aria-hidden="true">·</span>
                       <span className="truncate">{tool.metadata}</span>
                     </div>
-                    <div className="w-9 h-9 rounded-xl bg-slate-900/[0.04] dark:bg-white/[0.05] border border-slate-300/80 dark:border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.16)] flex items-center justify-center shrink-0 group-hover:border-indigo-500/50 transition-colors">
-                      <Icon className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                    <div className={`w-9 h-9 rounded-xl ${theme.iconBgClass} shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2)] flex items-center justify-center shrink-0 transition-all duration-200 group-hover:scale-105`}>
+                      <Icon className="w-4 h-4" />
                     </div>
                   </div>
 
                   {/* Luxury Visual Showcase Banner inside Bento Card when featuredImage is present */}
                   {tool.featuredImage && (
-                    <div className="relative h-36 sm:h-44 w-full rounded-xl overflow-hidden bg-[#030712] border border-slate-300/80 dark:border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)]">
+                    <div className="relative h-36 sm:h-44 w-full rounded-2xl overflow-hidden bg-[#030712] border border-slate-300/80 dark:border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)]">
                       <img
                         src={tool.featuredImage}
                         onError={(e) => {
@@ -765,8 +767,8 @@ export const HomePage: React.FC<HomePageProps> = ({
                         className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#030712]/80 via-transparent to-transparent" />
-                      <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 text-[10px] font-mono text-zinc-200 bg-[#030712]/70 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/15">
-                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+                      <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 text-[10px] font-mono text-zinc-200 bg-[#030712]/70 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/15">
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: theme.dotColor }} />
                         <span>{tool.categoryLabel} Engine</span>
                       </div>
                     </div>
@@ -782,9 +784,9 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
 
                 <div className="pt-6 mt-6 border-t border-slate-200/80 dark:border-white/12 flex items-center justify-between relative z-10">
-                  <span className="text-xs font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors flex items-center gap-1.5">
+                  <span className={`text-xs font-semibold text-slate-900 dark:text-white ${theme.textAccentClass} transition-colors flex items-center gap-1.5`}>
                     <span>{tool.ctaLabel}</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform" />
                   </span>
                   <span className="text-[11px] font-mono text-slate-400 dark:text-zinc-500">
                     Interactive
@@ -795,37 +797,37 @@ export const HomePage: React.FC<HomePageProps> = ({
           })}
         </div>
 
-        {/* Quantified Proof & Engineering Benchmarks (Adjacent to Capability Claims) */}
+        {/* Quantified Proof & Engineering Benchmarks in Colorful Glass Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-          <div className="ios-card-static p-5 space-y-1">
-            <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tabular-nums">
+          <div className="glass-violet p-5 space-y-1 rounded-2xl">
+            <div className="text-2xl sm:text-3xl font-bold text-violet-600 dark:text-violet-300 font-mono tabular-nums">
               120+
             </div>
-            <p className="text-xs text-slate-500 dark:text-zinc-400">
+            <p className="text-xs text-slate-600 dark:text-zinc-400">
               Verified macOS Sequoia & iOS 18 automation blueprints
             </p>
           </div>
-          <div className="ios-card-static p-5 space-y-1">
-            <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tabular-nums">
+          <div className="glass-cyan p-5 space-y-1 rounded-2xl">
+            <div className="text-2xl sm:text-3xl font-bold text-cyan-600 dark:text-cyan-300 font-mono tabular-nums">
               800 GB/s
             </div>
-            <p className="text-xs text-slate-500 dark:text-zinc-400">
+            <p className="text-xs text-slate-600 dark:text-zinc-400">
               Apple Silicon M1–M4 & Ultra memory specs indexed
             </p>
           </div>
-          <div className="ios-card-static p-5 space-y-1">
-            <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tabular-nums">
-              42.5 hrs
+          <div className="glass-emerald p-5 space-y-1 rounded-2xl">
+            <div className="text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-300 font-mono tabular-nums">
+              140+ hrs
             </div>
-            <p className="text-xs text-slate-500 dark:text-zinc-400">
+            <p className="text-xs text-slate-600 dark:text-zinc-400">
               Average annual engineering time saved per workspace
             </p>
           </div>
-          <div className="ios-card-static p-5 space-y-1">
-            <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tabular-nums">
+          <div className="glass-amber p-5 space-y-1 rounded-2xl">
+            <div className="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-300 font-mono tabular-nums">
               0 Keys
             </div>
-            <p className="text-xs text-slate-500 dark:text-zinc-400">
+            <p className="text-xs text-slate-600 dark:text-zinc-400">
               Zero-Credentials privacy — no Apple IDs ever requested
             </p>
           </div>
@@ -892,7 +894,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* WORKBENCH TAB 1: IMAGE & RETINA MEDIA STUDIO */}
         {activeWorkbench === 'image' && (
-          <div className="ios-card-static p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="glass-cyan p-6 sm:p-8 rounded-3xl grid grid-cols-1 lg:grid-cols-12 gap-8 shadow-2xl">
             <div className="lg:col-span-6 space-y-5">
               <div>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -1040,7 +1042,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* WORKBENCH TAB 2: TEXT & PROMPT GENERATORS */}
         {activeWorkbench === 'text' && (
-          <div className="ios-card-static p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="glass-amber p-6 sm:p-8 rounded-3xl grid grid-cols-1 lg:grid-cols-12 gap-8 shadow-2xl">
             <div className="lg:col-span-6 space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">
@@ -1126,7 +1128,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* WORKBENCH TAB 3: TECHNICAL SEO & SCHEMA BUILDER */}
         {activeWorkbench === 'seo' && (
-          <div className="ios-card-static p-6 sm:p-8 space-y-6">
+          <div className="glass-emerald p-6 sm:p-8 rounded-3xl space-y-6 shadow-2xl">
             {/* Active Site SEO & GEO Indexing Status Strip */}
             <div className="p-4 rounded-xl glass-panel flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-slate-600 dark:text-zinc-300">
@@ -1301,7 +1303,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* WORKBENCH TAB 4: APPLE SILICON & AUTOMATION ROI CALCULATORS */}
         {activeWorkbench === 'calculator' && (
-          <div className="ios-card-static p-6 sm:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <div className="glass-rose p-6 sm:p-8 rounded-3xl grid grid-cols-1 lg:grid-cols-12 gap-8 shadow-2xl">
             {/* Left: Automation ROI Calculator */}
             <div className="lg:col-span-6 space-y-5">
               <div>
@@ -1466,45 +1468,48 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {filteredWorkflows.map((wf) => (
-            <div
-              key={wf.id}
-              onClick={() => {
-                haptics.playTap();
-                setSelectedWorkflowForSheet(wf);
-              }}
-              className="bento-card p-6 flex flex-col justify-between group cursor-pointer space-y-5"
-            >
-              <div className="space-y-3">
-                {/* Unboxed metadata with middle dot separator */}
-                <div className="text-[11px] text-slate-500 dark:text-zinc-400 flex items-center gap-1.5 truncate">
-                  <span className="font-medium text-indigo-600 dark:text-indigo-400 truncate">
-                    {wf.category}
-                  </span>
-                  <span aria-hidden="true">·</span>
-                  <span className="font-mono tabular-nums shrink-0">{wf.setupTimeMinutes}m setup</span>
+          {filteredWorkflows.map((wf) => {
+            const theme = getGlassTheme(wf.category);
+            return (
+              <div
+                key={wf.id}
+                onClick={() => {
+                  haptics.playTap();
+                  setSelectedWorkflowForSheet(wf);
+                }}
+                className={`${theme.cardClass} p-6 flex flex-col justify-between group cursor-pointer space-y-5 rounded-3xl transition-all duration-300 hover:scale-[1.02] shadow-lg`}
+              >
+                <div className="space-y-3">
+                  {/* Unboxed metadata with middle dot separator */}
+                  <div className="text-[11px] text-slate-500 dark:text-zinc-400 flex items-center gap-1.5 truncate">
+                    <span className={`font-semibold ${theme.textAccentClass} truncate`}>
+                      {wf.category}
+                    </span>
+                    <span aria-hidden="true">·</span>
+                    <span className="font-mono tabular-nums shrink-0">{wf.setupTimeMinutes}m setup</span>
+                  </div>
+
+                  <h3 className="text-base font-bold tracking-tight text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors line-clamp-2 leading-snug">
+                    {wf.title}
+                  </h3>
+
+                  <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+                    {wf.summary}
+                  </p>
                 </div>
 
-                <h3 className="text-base font-bold tracking-tight text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors line-clamp-2 leading-snug">
-                  {wf.title}
-                </h3>
-
-                <p className="text-xs text-slate-600 dark:text-zinc-400 line-clamp-2 leading-relaxed">
-                  {wf.summary}
-                </p>
+                <div className="pt-3 border-t border-slate-900/5 dark:border-white/[0.08] flex items-center justify-between text-xs text-slate-500 dark:text-zinc-400 group-hover:text-slate-900 dark:group-hover:text-white">
+                  <span className="font-mono tabular-nums text-[11px]">
+                    {wf.steps.length} steps
+                  </span>
+                  <span className={`font-semibold ${theme.textAccentClass} flex items-center gap-1`}>
+                    <span>Inspect</span>
+                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </div>
               </div>
-
-              <div className="pt-3 border-t border-slate-900/5 dark:border-white/[0.06] flex items-center justify-between text-xs text-slate-500 dark:text-zinc-400 group-hover:text-slate-900 dark:group-hover:text-white">
-                <span className="font-mono tabular-nums text-[11px]">
-                  {wf.steps.length} steps
-                </span>
-                <span className="font-semibold text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
-                  <span>Inspect</span>
-                  <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                </span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 

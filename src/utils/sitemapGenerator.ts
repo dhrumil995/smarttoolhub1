@@ -197,7 +197,25 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
       title: 'Daily Apple Ecosystem Starter Shortcuts & Instant Hotspot',
     },
 
-    // 4. Commercial & Legal Pages
+    // 4. Commercial, Editorial & Legal Pages
+    {
+      path: '/about',
+      url: `${baseUrl}/about`,
+      lastmod: today,
+      changefreq: 'weekly',
+      priority: 0.85,
+      category: 'core',
+      title: 'About SmartToolHub — Systems Engineering & Physical Hardware Lab',
+    },
+    {
+      path: '/guides',
+      url: `${baseUrl}/guides`,
+      lastmod: today,
+      changefreq: 'daily',
+      priority: 0.90,
+      category: 'core',
+      title: 'Apple Systems Engineering & Automation Guides | SmartToolHub',
+    },
     {
       path: '/pricing',
       url: `${baseUrl}/pricing`,

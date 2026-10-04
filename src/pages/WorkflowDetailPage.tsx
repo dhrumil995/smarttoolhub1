@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { PageId } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
 import { ScrollProgressBar } from '../components/ScrollProgressBar';
+import { WorkflowFAQSection } from '../components/WorkflowFAQSection';
+import { Breadcrumbs } from '../components/Breadcrumbs';
+import { getGlassTheme } from '../utils/glassTheme';
 import { haptics } from '../utils/haptics';
 import { 
   ArrowLeft, 
@@ -30,6 +33,7 @@ interface WorkflowDetailPageProps {
 
 export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflowId, onNavigate }) => {
   const workflow = WORKFLOWS_DATA.find((w) => w.id === workflowId || w.slug === workflowId) || WORKFLOWS_DATA[0];
+  const theme = getGlassTheme(workflow.category);
   
   const [completedSteps, setCompletedSteps] = useState<Record<number, boolean>>({});
   const [copied, setCopied] = useState(false);
@@ -86,19 +90,17 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
         contentKey={workflow.id}
       />
       {/* Navigation Breadcrumb & Action Bar (Hidden in Print) */}
-      <div className="flex items-center justify-between no-print">
-        <button
-          onClick={() => onNavigate('library')}
-          className="flex items-center gap-2 text-xs text-[#888888] hover:text-white transition-colors cursor-pointer"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to Workflow Library</span>
-        </button>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 no-print border-b border-slate-900/10 dark:border-white/10 pb-4">
+        <Breadcrumbs
+          currentPage="workflow-detail"
+          workflowId={workflow.id}
+          onNavigate={onNavigate}
+        />
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
           <button
             onClick={handleCopyLink}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl glass-panel hover:bg-white/[0.12] text-xs font-medium text-white transition-colors cursor-pointer border border-white/15"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl glass-panel hover:bg-white/[0.12] text-xs font-medium text-slate-800 dark:text-white transition-colors cursor-pointer border border-slate-200 dark:border-white/15"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-400 stroke-[2]" /> : <Share2 className="w-3.5 h-3.5 stroke-[2]" />}
             <span>{copied ? 'Link Copied' : 'Share'}</span>
@@ -138,48 +140,48 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
       </div>
 
       {/* Header Info */}
-      <div className="glass-card p-6 sm:p-8 rounded-2xl border border-white/10 space-y-4 print:p-4 print:space-y-2 print:border-gray-300">
+      <div className={`${theme.cardClass} p-6 sm:p-8 rounded-3xl space-y-4 print:p-4 print:space-y-2 print:border-gray-300 shadow-xl`}>
         <div className="flex flex-wrap items-center gap-2 text-xs print:text-[9pt]">
-          <span className="font-mono font-medium px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20 uppercase print:bg-gray-100 print:text-gray-900 print:border-gray-300">
+          <span className={`font-mono font-semibold px-2.5 py-1 rounded-lg ${theme.badgeClass} uppercase print:bg-gray-100 print:text-gray-900 print:border-gray-300`}>
             {workflow.category}
           </span>
-          <span className="text-[#666666] print:text-gray-400">•</span>
-          <span className="text-emerald-400 font-medium print:text-gray-800">
+          <span className="text-slate-400 dark:text-zinc-600 print:text-gray-400">•</span>
+          <span className="text-emerald-500 dark:text-emerald-400 font-semibold print:text-gray-800">
             {workflow.isBuiltInOnly ? '100% Native Apple Tools' : 'Hybrid Tools'}
           </span>
-          <span className="text-[#666666] print:text-gray-400">•</span>
-          <span className="text-[#888888] flex items-center gap-1 print:text-gray-700">
+          <span className="text-slate-400 dark:text-zinc-600 print:text-gray-400">•</span>
+          <span className="text-slate-500 dark:text-zinc-400 flex items-center gap-1 print:text-gray-700">
             <Clock className="w-3.5 h-3.5 no-print" /> {workflow.setupTimeMinutes} min setup
           </span>
         </div>
 
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white tracking-tight print:text-gray-950 print:text-xl print:font-bold">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight print:text-gray-950 print:text-xl print:font-bold">
           {workflow.title}
         </h1>
 
-        <p className="text-sm text-[#A1A1A6] leading-relaxed print:text-gray-800 print:text-[10pt] font-normal">
+        <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-300 leading-relaxed print:text-gray-800 print:text-[10pt] font-normal">
           {workflow.summary}
         </p>
 
-        <div className="pt-2 flex items-center gap-2 text-xs text-[#86868B] print:text-gray-600 print:pt-0 print:text-[9pt]">
+        <div className="pt-2 flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400 print:text-gray-600 print:pt-0 print:text-[9pt]">
           <Calendar className="w-3.5 h-3.5 no-print" />
-          <span>Last technical review: <strong>{workflow.lastReviewedDate}</strong> by SmartToolHub Team</span>
+          <span>Last technical review: <strong className="text-slate-700 dark:text-zinc-200">{workflow.lastReviewedDate}</strong> by SmartToolHub Systems Lab</span>
         </div>
       </div>
 
       {/* Required Hardware & Devices Matrix */}
-      <div className="glass-card p-6 rounded-2xl border border-white/15 space-y-4">
-        <h2 className="text-xs font-medium text-[#86868B] uppercase tracking-wider flex items-center gap-2">
-          <Laptop className="w-4 h-4 text-blue-400 stroke-[2]" />
+      <div className="glass-cyan p-6 sm:p-7 rounded-3xl space-y-4 shadow-lg">
+        <h2 className="text-xs font-semibold text-cyan-600 dark:text-cyan-300 uppercase tracking-wider flex items-center gap-2">
+          <Laptop className="w-4 h-4 text-cyan-500 stroke-[2]" />
           <span>Required Hardware & Minimum Operating Systems</span>
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           {workflow.devicesRequired.map((dev, idx) => (
-            <div key={idx} className="p-3.5 rounded-xl glass-panel text-xs space-y-1">
-              <div className="font-semibold text-white">{dev.device}</div>
-              <div className="text-blue-400 font-mono text-[11px] font-medium">{dev.minOS}</div>
+            <div key={idx} className="p-4 rounded-2xl glass-panel text-xs space-y-1.5 border border-cyan-500/20">
+              <div className="font-bold text-slate-900 dark:text-white">{dev.device}</div>
+              <div className="text-cyan-600 dark:text-cyan-400 font-mono text-[11px] font-semibold">{dev.minOS}</div>
               {dev.hardwareNotes && (
-                <div className="text-[#888888] text-[11px] font-normal">{dev.hardwareNotes}</div>
+                <div className="text-slate-500 dark:text-zinc-400 text-[11px] font-normal">{dev.hardwareNotes}</div>
               )}
             </div>
           ))}
@@ -187,15 +189,15 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
       </div>
 
       {/* Required Settings & Connectivity */}
-      <div className="glass-card p-6 rounded-2xl border border-white/15 space-y-4">
-        <h2 className="text-xs font-medium text-[#86868B] uppercase tracking-wider flex items-center gap-2">
-          <Settings className="w-4 h-4 text-purple-400 stroke-[2]" />
+      <div className="glass-violet p-6 sm:p-7 rounded-3xl space-y-4 shadow-lg">
+        <h2 className="text-xs font-semibold text-violet-600 dark:text-violet-300 uppercase tracking-wider flex items-center gap-2">
+          <Settings className="w-4 h-4 text-violet-500 stroke-[2]" />
           <span>Prerequisite System Settings & Accounts</span>
         </h2>
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           {workflow.requiredSettings.map((setting, sidx) => (
-            <div key={sidx} className="flex items-start gap-2.5 p-3 rounded-xl glass-panel text-xs text-[#CCCCCC] font-normal">
-              <CheckCircle2 className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
+            <div key={sidx} className="flex items-start gap-3 p-3.5 rounded-2xl glass-panel text-xs text-slate-700 dark:text-zinc-200 font-normal border border-violet-500/20">
+              <CheckCircle2 className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
               <span>{setting}</span>
             </div>
           ))}
@@ -204,11 +206,11 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
 
       {/* Step-by-Step Instructions with Completion Checklist */}
       <div className="space-y-4 print:space-y-2">
-        <div className="flex items-center justify-between border-b border-white/[0.08] pb-2 print:border-gray-300">
-          <h2 className="text-xs font-medium text-[#86868B] uppercase tracking-wider print:text-gray-900 print:text-xs print:font-bold">
+        <div className="flex items-center justify-between border-b border-slate-900/10 dark:border-white/[0.08] pb-2 print:border-gray-300">
+          <h2 className="text-xs font-semibold text-slate-500 dark:text-zinc-400 uppercase tracking-wider print:text-gray-900 print:text-xs print:font-bold">
             Step-by-Step Execution Guide
           </h2>
-          <span className="text-xs text-[#86868B] print:text-gray-600 print:font-mono print:text-[9pt] font-normal">
+          <span className="text-xs text-slate-500 dark:text-zinc-400 print:text-gray-600 print:font-mono print:text-[9pt] font-normal">
             {Object.values(completedSteps).filter(Boolean).length} of {workflow.steps.length} steps completed
           </span>
         </div>
@@ -219,10 +221,10 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
             return (
               <div
                 key={step.stepNumber}
-                className={`glass-card step-card p-5 sm:p-6 rounded-2xl border transition-all print:p-3 print:mb-2 print:border-gray-300 print:rounded-lg ${
+                className={`p-5 sm:p-6 rounded-3xl border transition-all duration-300 print:p-3 print:mb-2 print:border-gray-300 print:rounded-lg ${
                   isCompleted
-                    ? 'border-emerald-400/40 bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.1)]'
-                    : 'border-white/15'
+                    ? 'glass-emerald shadow-[0_12px_32px_rgba(16,185,129,0.2)]'
+                    : 'glass-colorful hover:border-indigo-400/50 hover:shadow-xl'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3 mb-3 print:mb-1">
@@ -281,16 +283,16 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
 
       {/* Common Problems & Resolution */}
       {workflow.commonProblems && workflow.commonProblems.length > 0 && (
-        <div className="glass-card p-6 rounded-2xl border border-white/15 space-y-4 print:p-4 print:border-gray-300 print:space-y-2">
-          <h2 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2 print:text-gray-900 print:font-bold">
-            <AlertCircle className="w-4 h-4 text-amber-400 no-print stroke-[2.5]" />
+        <div className="glass-amber p-6 sm:p-7 rounded-3xl space-y-4 shadow-lg print:p-4 print:border-gray-300 print:space-y-2">
+          <h2 className="text-xs font-bold text-amber-600 dark:text-amber-300 uppercase tracking-wider flex items-center gap-2 print:text-gray-900 print:font-bold">
+            <AlertCircle className="w-4 h-4 text-amber-500 no-print stroke-[2.5]" />
             <span>Common Pitfalls & Troubleshooting Solutions</span>
           </h2>
           <div className="space-y-3 print:space-y-1.5">
             {workflow.commonProblems.map((prob, pidx) => (
-              <div key={pidx} className="p-4 rounded-xl glass-panel border-amber-500/30 text-xs space-y-1.5 print:p-2.5 print:border-gray-300 print:bg-gray-50 print:text-gray-900">
-                <div className="font-bold text-amber-300 print:text-amber-900">Symptom: {prob.issue}</div>
-                <div className="text-[#CCCCCC] leading-relaxed print:text-gray-700">Fix: {prob.solution}</div>
+              <div key={pidx} className="p-4 rounded-2xl glass-panel border border-amber-500/25 text-xs space-y-1.5 print:p-2.5 print:border-gray-300 print:bg-gray-50 print:text-gray-900">
+                <div className="font-bold text-amber-600 dark:text-amber-300 print:text-amber-900">Symptom: {prob.issue}</div>
+                <div className="text-slate-600 dark:text-zinc-300 leading-relaxed print:text-gray-700">Fix: {prob.solution}</div>
               </div>
             ))}
           </div>
@@ -298,12 +300,12 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
       )}
 
       {/* Privacy Guardrails & Security Notes */}
-      <div className="glass-card p-6 rounded-2xl border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.08)] space-y-3 print:p-4 print:border-gray-300 print:shadow-none">
-        <h2 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2 text-emerald-400 print:text-emerald-900 print:font-bold">
+      <div className="glass-emerald p-6 sm:p-7 rounded-3xl space-y-3 shadow-lg print:p-4 print:border-gray-300 print:shadow-none">
+        <h2 className="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-emerald-600 dark:text-emerald-400 print:text-emerald-900 print:font-bold">
           <ShieldCheck className="w-4 h-4 no-print stroke-[2.5]" />
           <span>Security & Data Privacy Standards</span>
         </h2>
-        <ul className="list-disc list-inside space-y-1.5 text-xs text-[#A3A3A3] leading-relaxed print:text-gray-800 print:space-y-1 print:text-[9pt]">
+        <ul className="list-disc list-inside space-y-1.5 text-xs text-slate-600 dark:text-zinc-300 leading-relaxed print:text-gray-800 print:space-y-1 print:text-[9pt]">
           {workflow.privacyNotes.map((pn, pidx) => (
             <li key={pidx}>{pn}</li>
           ))}
@@ -312,15 +314,18 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
 
       {/* Alternative Workflow Card */}
       {workflow.alternativeWorkflow && (
-        <div className="glass-card p-6 rounded-2xl border border-white/10 space-y-2 text-xs print:p-4 print:border-gray-300">
-          <span className="text-[10px] font-mono text-[#888888] uppercase tracking-wider print:text-gray-500">Alternative Blueprint</span>
-          <h3 className="text-sm font-bold text-white print:text-gray-900">{workflow.alternativeWorkflow.title}</h3>
-          <p className="text-[#A3A3A3] print:text-gray-700">{workflow.alternativeWorkflow.description}</p>
-          <div className="pt-2 text-purple-300 font-medium print:text-purple-900">
+        <div className="glass-violet p-6 sm:p-7 rounded-3xl space-y-2 text-xs shadow-lg print:p-4 print:border-gray-300">
+          <span className="text-[10px] font-mono text-violet-600 dark:text-violet-400 uppercase tracking-wider font-semibold print:text-gray-500">Alternative Blueprint</span>
+          <h3 className="text-sm font-bold text-slate-900 dark:text-white print:text-gray-900">{workflow.alternativeWorkflow.title}</h3>
+          <p className="text-slate-600 dark:text-zinc-300 print:text-gray-700">{workflow.alternativeWorkflow.description}</p>
+          <div className="pt-2 text-violet-600 dark:text-violet-300 font-medium print:text-purple-900">
             ⚖️ Trade-off: {workflow.alternativeWorkflow.tradeOff}
           </div>
         </div>
       )}
+
+      {/* Dynamic Schema.org FAQSection with Structured Data Injection */}
+      <WorkflowFAQSection workflow={workflow} />
 
       {/* Official Apple Support Links */}
       <div className="glass-card p-5 rounded-2xl border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs print:p-3 print:border-gray-300">
