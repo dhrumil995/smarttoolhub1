@@ -362,10 +362,10 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
                     window.print();
                   }}
                   title="Download and save this AI diagnosis as a clean PDF"
-                  className="px-4 py-2 rounded-xl bg-[#0071E3] hover:bg-[#0077ED] text-white text-xs font-bold transition-all cursor-pointer shadow-[0_2px_12px_rgba(0,113,227,0.35)] hover:shadow-[0_4px_16px_rgba(0,113,227,0.5)] flex items-center gap-2 group border border-blue-400/40"
+                  className="px-4 py-2 rounded-xl glass-button-primary text-white text-xs font-semibold transition-all cursor-pointer flex items-center gap-2 group"
                 >
-                  <FileDown className="w-4 h-4 text-white stroke-[2.5] group-hover:scale-110 transition-transform" />
-                  <span className="font-bold tracking-wide">Download as PDF</span>
+                  <FileDown className="w-4 h-4 text-white stroke-[2.2] group-hover:scale-105 transition-transform" />
+                  <span>Download as PDF</span>
                 </button>
               </div>
 

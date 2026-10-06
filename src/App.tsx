@@ -205,26 +205,14 @@ function AppContent() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-[#030712] text-slate-900 dark:text-[#F8FAFC] relative selection:bg-indigo-500 selection:text-white overflow-x-hidden transition-colors duration-200">
-      {/* Dynamic Colorful Ambient Lighting Backdrops for Frosted Glassmorphism */}
+    <div className="min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-[#070B14] text-slate-900 dark:text-[#F8FAFC] relative selection:bg-indigo-500 selection:text-white overflow-x-hidden transition-colors duration-200">
+      {/* High-Fidelity Studio Ambient Lighting & Technical Grid */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden select-none" aria-hidden="true">
-        {/* Violet / Indigo Aurora Core */}
-        <div className="absolute -top-[12%] -left-[10%] w-[680px] h-[680px] rounded-full bg-gradient-to-tr from-indigo-600/25 via-violet-600/20 to-purple-500/10 blur-[130px] opacity-70 dark:opacity-80 transition-all duration-700" />
+        {/* Subtle Top-Center Studio Spotlight */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[540px] bg-[radial-gradient(ellipse_70%_55%_at_50%_0%,rgba(99,102,241,0.14),rgba(129,140,248,0.04)_50%,transparent_80%)] dark:bg-[radial-gradient(ellipse_70%_55%_at_50%_0%,rgba(99,102,241,0.16),rgba(59,130,246,0.05)_55%,transparent_80%)] blur-2xl" />
         
-        {/* Electric Cyan / Sky Horizon Glow */}
-        <div className="absolute top-[8%] -right-[12%] w-[620px] h-[620px] rounded-full bg-gradient-to-bl from-cyan-500/25 via-sky-600/15 to-blue-600/10 blur-[140px] opacity-60 dark:opacity-75 transition-all duration-700" />
-        
-        {/* Rose / Fuchsia Atmospheric Flare */}
-        <div className="absolute top-[48%] -left-[15%] w-[580px] h-[580px] rounded-full bg-gradient-to-r from-rose-500/18 via-pink-600/15 to-purple-600/10 blur-[150px] opacity-50 dark:opacity-65 transition-all duration-700" />
-        
-        {/* Emerald / Mint Neural Node */}
-        <div className="absolute top-[68%] -right-[10%] w-[560px] h-[560px] rounded-full bg-gradient-to-tl from-emerald-500/20 via-teal-500/15 to-cyan-600/10 blur-[140px] opacity-45 dark:opacity-60 transition-all duration-700" />
-        
-        {/* Amber / Sunset Ground Radiance */}
-        <div className="absolute -bottom-[10%] left-[25%] w-[640px] h-[480px] rounded-full bg-gradient-to-t from-amber-500/15 via-indigo-600/10 to-transparent blur-[160px] opacity-40 dark:opacity-55 transition-all duration-700" />
-        
-        {/* Subtle Frosted Dot Grid Texture */}
-        <div className="absolute inset-0 bg-[radial-gradient(rgba(15,23,42,0.03)_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:28px_28px] opacity-70 dark:opacity-40" />
+        {/* Micro-technical Dot Grid */}
+        <div className="absolute inset-0 bg-[radial-gradient(rgba(15,23,42,0.04)_1px,transparent_1px)] dark:bg-[radial-gradient(rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:28px_28px] opacity-60 dark:opacity-40" />
       </div>
 
       <SEOHead currentPage={currentPage} workflowId={selectedWorkflowId} />

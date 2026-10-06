@@ -224,7 +224,7 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
             <div
               key={wf.id}
               onClick={() => onNavigate('workflow-detail', wf.id)}
-              className={`${theme.cardClass} p-6 flex flex-col justify-between cursor-pointer group rounded-3xl transition-all duration-300 hover:scale-[1.02] shadow-xl`}
+              className="bento-card p-6 flex flex-col justify-between cursor-pointer group rounded-2xl transition-all duration-200 hover:-translate-y-1 hover:border-indigo-500/40 shadow-lg"
             >
               <div className="space-y-3.5">
                 {/* Unboxed metadata row */}

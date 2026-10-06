@@ -140,9 +140,9 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
       </div>
 
       {/* Header Info */}
-      <div className={`${theme.cardClass} p-6 sm:p-8 rounded-3xl space-y-4 print:p-4 print:space-y-2 print:border-gray-300 shadow-xl`}>
+      <div className="bento-card p-6 sm:p-8 rounded-2xl space-y-4 print:p-4 print:space-y-2 print:border-gray-300 shadow-xl">
         <div className="flex flex-wrap items-center gap-2 text-xs print:text-[9pt]">
-          <span className={`font-mono font-semibold px-2.5 py-1 rounded-lg ${theme.badgeClass} uppercase print:bg-gray-100 print:text-gray-900 print:border-gray-300`}>
+          <span className="font-mono font-semibold px-2.5 py-1 rounded-lg bg-indigo-500/10 text-indigo-500 dark:text-indigo-300 border border-indigo-500/20 uppercase print:bg-gray-100 print:text-gray-900 print:border-gray-300">
             {workflow.category}
           </span>
           <span className="text-slate-400 dark:text-zinc-600 print:text-gray-400">•</span>
@@ -170,16 +170,16 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
       </div>
 
       {/* Required Hardware & Devices Matrix */}
-      <div className="glass-cyan p-6 sm:p-7 rounded-3xl space-y-4 shadow-lg">
-        <h2 className="text-xs font-semibold text-cyan-600 dark:text-cyan-300 uppercase tracking-wider flex items-center gap-2">
-          <Laptop className="w-4 h-4 text-cyan-500 stroke-[2]" />
+      <div className="bento-card p-6 sm:p-7 rounded-2xl space-y-4 shadow-lg border border-white/10">
+        <h2 className="text-xs font-semibold text-slate-800 dark:text-zinc-200 uppercase tracking-wider flex items-center gap-2">
+          <Laptop className="w-4 h-4 text-indigo-500 stroke-[2]" />
           <span>Required Hardware & Minimum Operating Systems</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           {workflow.devicesRequired.map((dev, idx) => (
-            <div key={idx} className="p-4 rounded-2xl glass-panel text-xs space-y-1.5 border border-cyan-500/20">
+            <div key={idx} className="p-4 rounded-xl glass-panel text-xs space-y-1.5 border border-slate-200 dark:border-white/10">
               <div className="font-bold text-slate-900 dark:text-white">{dev.device}</div>
-              <div className="text-cyan-600 dark:text-cyan-400 font-mono text-[11px] font-semibold">{dev.minOS}</div>
+              <div className="text-indigo-600 dark:text-indigo-400 font-mono text-[11px] font-semibold">{dev.minOS}</div>
               {dev.hardwareNotes && (
                 <div className="text-slate-500 dark:text-zinc-400 text-[11px] font-normal">{dev.hardwareNotes}</div>
               )}
@@ -189,15 +189,15 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
       </div>
 
       {/* Required Settings & Connectivity */}
-      <div className="glass-violet p-6 sm:p-7 rounded-3xl space-y-4 shadow-lg">
-        <h2 className="text-xs font-semibold text-violet-600 dark:text-violet-300 uppercase tracking-wider flex items-center gap-2">
-          <Settings className="w-4 h-4 text-violet-500 stroke-[2]" />
+      <div className="bento-card p-6 sm:p-7 rounded-2xl space-y-4 shadow-lg border border-white/10">
+        <h2 className="text-xs font-semibold text-slate-800 dark:text-zinc-200 uppercase tracking-wider flex items-center gap-2">
+          <Settings className="w-4 h-4 text-indigo-500 stroke-[2]" />
           <span>Prerequisite System Settings & Accounts</span>
         </h2>
         <div className="space-y-2.5">
           {workflow.requiredSettings.map((setting, sidx) => (
-            <div key={sidx} className="flex items-start gap-3 p-3.5 rounded-2xl glass-panel text-xs text-slate-700 dark:text-zinc-200 font-normal border border-violet-500/20">
-              <CheckCircle2 className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
+            <div key={sidx} className="flex items-start gap-3 p-3.5 rounded-xl glass-panel text-xs text-slate-700 dark:text-zinc-200 font-normal border border-slate-200 dark:border-white/10">
+              <CheckCircle2 className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
               <span>{setting}</span>
             </div>
           ))}
@@ -221,10 +221,10 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
             return (
               <div
                 key={step.stepNumber}
-                className={`p-5 sm:p-6 rounded-3xl border transition-all duration-300 print:p-3 print:mb-2 print:border-gray-300 print:rounded-lg ${
+                className={`p-5 sm:p-6 rounded-2xl border transition-all duration-200 print:p-3 print:mb-2 print:border-gray-300 print:rounded-lg ${
                   isCompleted
-                    ? 'glass-emerald shadow-[0_12px_32px_rgba(16,185,129,0.2)]'
-                    : 'glass-colorful hover:border-indigo-400/50 hover:shadow-xl'
+                    ? 'bento-card border-emerald-500/40 shadow-sm'
+                    : 'bento-card hover:border-indigo-400/40 hover:shadow-md'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3 mb-3 print:mb-1">

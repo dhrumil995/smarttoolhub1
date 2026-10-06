@@ -489,16 +489,16 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onNavigate }) => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3.5 rounded-full font-normal text-sm sm:text-base text-white flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg duration-200 ${
+            className={`w-full py-3.5 rounded-2xl font-semibold text-sm sm:text-base text-white flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg duration-200 ${
               loading
-                ? 'bg-[#0071E3]/50 cursor-not-allowed'
-                : 'apple-btn-primary'
+                ? 'bg-indigo-600/50 cursor-not-allowed'
+                : 'glass-button-primary'
             }`}
           >
             {loading ? (
               <>
-                <RefreshCw className="w-4 h-4 animate-spin text-blue-300" />
-                <span>Gemini 3.8 Flash Synthesizing Ecosystem Setup...</span>
+                <RefreshCw className="w-4 h-4 animate-spin text-indigo-300" />
+                <span>Synthesizing Ecosystem Setup...</span>
               </>
             ) : (
               <>

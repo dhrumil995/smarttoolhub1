@@ -197,156 +197,76 @@ html.light .text-accent-gradient {
 }
 
 /* =========================================================================
-   COLORFUL GLASSY THEMES & CHROMATIC FROSTED CARDS
+   HIGH-FIDELITY DEVELOPER SURFACES (ANTI-SLOP RESTORATION)
    ========================================================================= */
 
-/* Colorful Glass Base with Double Contour & Ambient Rim Light */
-.glass-colorful {
-  position: relative;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%), var(--apple-card-bg);
-  backdrop-filter: blur(24px) saturate(190%);
-  -webkit-backdrop-filter: blur(24px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 1.5rem;
-  box-shadow:
-    0 20px 40px -15px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.25),
-    inset 0 0 20px 0 rgba(255, 255, 255, 0.02);
-  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-html.light .glass-colorful {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.85) 100%);
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  box-shadow:
-    0 16px 36px -10px rgba(15, 23, 42, 0.08),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.95);
-}
-
-/* Violet & Indigo Neon Nebula Glass */
-.glass-violet {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.10) 0%, rgba(99, 102, 241, 0.04) 50%, rgba(15, 23, 42, 0.65) 100%);
-  border: 1px solid rgba(167, 139, 250, 0.28);
-  box-shadow:
-    0 20px 45px -12px rgba(139, 92, 246, 0.25),
-    inset 0 1px 0 0 rgba(216, 180, 254, 0.35),
-    inset 0 0 24px -4px rgba(139, 92, 246, 0.12);
-}
-.glass-violet:hover {
-  border-color: rgba(192, 132, 252, 0.55);
-  box-shadow:
-    0 25px 50px -10px rgba(139, 92, 246, 0.40),
-    0 0 25px 2px rgba(139, 92, 246, 0.20),
-    inset 0 1px 0 0 rgba(233, 213, 255, 0.60);
-}
-html.light .glass-violet {
-  background: linear-gradient(135deg, rgba(245, 243, 255, 0.95) 0%, rgba(238, 242, 255, 0.85) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.25);
-  box-shadow: 0 16px 36px -8px rgba(139, 92, 246, 0.15);
-}
-
-/* Electric Cyan & Sky Ocean Glass */
-.glass-cyan {
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.10) 0%, rgba(59, 130, 246, 0.04) 50%, rgba(15, 23, 42, 0.65) 100%);
-  border: 1px solid rgba(103, 232, 249, 0.28);
-  box-shadow:
-    0 20px 45px -12px rgba(6, 182, 212, 0.25),
-    inset 0 1px 0 0 rgba(165, 243, 252, 0.35),
-    inset 0 0 24px -4px rgba(6, 182, 212, 0.12);
-}
-.glass-cyan:hover {
-  border-color: rgba(103, 232, 249, 0.55);
-  box-shadow:
-    0 25px 50px -10px rgba(6, 182, 212, 0.40),
-    0 0 25px 2px rgba(6, 182, 212, 0.20),
-    inset 0 1px 0 0 rgba(207, 250, 254, 0.60);
-}
-html.light .glass-cyan {
-  background: linear-gradient(135deg, rgba(236, 254, 255, 0.95) 0%, rgba(239, 246, 255, 0.85) 100%);
-  border: 1px solid rgba(6, 182, 212, 0.25);
-  box-shadow: 0 16px 36px -8px rgba(6, 182, 212, 0.15);
-}
-
-/* Emerald & Mint Aurora Glass */
-.glass-emerald {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.10) 0%, rgba(20, 184, 166, 0.04) 50%, rgba(15, 23, 42, 0.65) 100%);
-  border: 1px solid rgba(110, 231, 183, 0.28);
-  box-shadow:
-    0 20px 45px -12px rgba(16, 185, 129, 0.25),
-    inset 0 1px 0 0 rgba(167, 243, 208, 0.35),
-    inset 0 0 24px -4px rgba(16, 185, 129, 0.12);
-}
-.glass-emerald:hover {
-  border-color: rgba(110, 231, 183, 0.55);
-  box-shadow:
-    0 25px 50px -10px rgba(16, 185, 129, 0.40),
-    0 0 25px 2px rgba(16, 185, 129, 0.20),
-    inset 0 1px 0 0 rgba(209, 250, 229, 0.60);
-}
-html.light .glass-emerald {
-  background: linear-gradient(135deg, rgba(236, 253, 245, 0.95) 0%, rgba(240, 253, 250, 0.85) 100%);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  box-shadow: 0 16px 36px -8px rgba(16, 185, 129, 0.15);
-}
-
-/* Warm Amber & Gold Sunrise Glass */
-.glass-amber {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.10) 0%, rgba(234, 88, 12, 0.04) 50%, rgba(15, 23, 42, 0.65) 100%);
-  border: 1px solid rgba(252, 211, 77, 0.28);
-  box-shadow:
-    0 20px 45px -12px rgba(245, 158, 11, 0.25),
-    inset 0 1px 0 0 rgba(253, 230, 138, 0.35),
-    inset 0 0 24px -4px rgba(245, 158, 11, 0.12);
-}
-.glass-amber:hover {
-  border-color: rgba(252, 211, 77, 0.55);
-  box-shadow:
-    0 25px 50px -10px rgba(245, 158, 11, 0.40),
-    0 0 25px 2px rgba(245, 158, 11, 0.20),
-    inset 0 1px 0 0 rgba(254, 243, 199, 0.60);
-}
-html.light .glass-amber {
-  background: linear-gradient(135deg, rgba(254, 243, 199, 0.90) 0%, rgba(255, 247, 237, 0.85) 100%);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  box-shadow: 0 16px 36px -8px rgba(245, 158, 11, 0.15);
-}
-
-/* Rose & Fuchsia Flare Glass */
-.glass-rose {
-  background: linear-gradient(135deg, rgba(244, 63, 94, 0.10) 0%, rgba(217, 70, 239, 0.04) 50%, rgba(15, 23, 42, 0.65) 100%);
-  border: 1px solid rgba(253, 164, 175, 0.28);
-  box-shadow:
-    0 20px 45px -12px rgba(244, 63, 94, 0.25),
-    inset 0 1px 0 0 rgba(254, 205, 211, 0.35),
-    inset 0 0 24px -4px rgba(244, 63, 94, 0.12);
-}
-.glass-rose:hover {
-  border-color: rgba(253, 164, 175, 0.55);
-  box-shadow:
-    0 25px 50px -10px rgba(244, 63, 94, 0.40),
-    0 0 25px 2px rgba(244, 63, 94, 0.20),
-    inset 0 1px 0 0 rgba(255, 228, 230, 0.60);
-}
-html.light .glass-rose {
-  background: linear-gradient(135deg, rgba(255, 241, 242, 0.95) 0%, rgba(253, 242, 248, 0.85) 100%);
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  box-shadow: 0 16px 36px -8px rgba(244, 63, 94, 0.15);
-}
-
-/* Prismatic Chromatic Hover Glow */
+/* High-Fidelity Universal Developer Card Base */
+.glass-colorful,
+.glass-violet,
+.glass-cyan,
+.glass-emerald,
+.glass-amber,
+.glass-rose,
 .glass-chromatic {
   position: relative;
-  background: var(--apple-card-bg);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(11, 17, 30, 0.68);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 1.5rem;
+  box-shadow:
+    0 20px 40px -15px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+  transition:
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+.glass-colorful:hover,
+.glass-violet:hover,
+.glass-cyan:hover,
+.glass-emerald:hover,
+.glass-amber:hover,
+.glass-rose:hover,
 .glass-chromatic:hover {
-  border-color: transparent;
-  background-image: linear-gradient(var(--apple-card-bg), var(--apple-card-bg)), linear-gradient(135deg, #6366F1, #EC4899, #06B6D4, #10B981);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  box-shadow: 0 20px 45px -10px rgba(99, 102, 241, 0.35);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.20);
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
+}
+
+html.light .glass-colorful,
+html.light .glass-violet,
+html.light .glass-cyan,
+html.light .glass-emerald,
+html.light .glass-amber,
+html.light .glass-rose,
+html.light .glass-chromatic {
+  background: rgba(255, 255, 255, 0.90);
+  border: 1px solid rgba(15, 23, 42, 0.09);
+  box-shadow:
+    0 12px 30px -8px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 0 rgba(255, 255, 255, 1);
+}
+
+html.light .glass-colorful:hover,
+html.light .glass-violet:hover,
+html.light .glass-cyan:hover,
+html.light .glass-emerald:hover,
+html.light .glass-amber:hover,
+html.light .glass-rose:hover,
+html.light .glass-chromatic:hover {
+  border-color: rgba(15, 23, 42, 0.18);
+  box-shadow:
+    0 20px 40px -10px rgba(15, 23, 42, 0.10),
+    inset 0 1px 0 0 rgba(255, 255, 255, 1);
+}
+
+.glass-chromatic:hover {
+  border-color: rgba(99, 102, 241, 0.45);
+  box-shadow: 0 20px 45px -10px rgba(99, 102, 241, 0.25);
 }
 
 /* Floating Glassmorphic Pill / Capsule */

@@ -182,7 +182,7 @@ export const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
           {activeTab === 'haptics' && (
             <div className="space-y-6 animate-in fade-in duration-150">
               {/* Feature Hero Description */}
-              <div className="p-4 rounded-2xl glass-violet border border-indigo-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="p-4 rounded-2xl bg-indigo-500/5 dark:bg-indigo-500/10 border border-indigo-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -232,7 +232,7 @@ export const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                     onClick={() => handleLevelSelect('high')}
                     className={`relative p-4 rounded-2xl text-left border cursor-pointer transition-all duration-200 flex flex-col justify-between gap-3 ${
                       intensity === 'high'
-                        ? 'glass-violet border-indigo-500/60 shadow-[0_10px_25px_-5px_rgba(99,102,241,0.35)] ring-2 ring-indigo-500/40'
+                        ? 'bg-indigo-500/10 dark:bg-indigo-500/15 border-indigo-500/60 shadow-[0_8px_20px_rgba(99,102,241,0.25)] ring-1 ring-indigo-500/40'
                         : 'bg-slate-100/80 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20'
                     }`}
                   >
@@ -265,7 +265,7 @@ export const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                     onClick={() => handleLevelSelect('low')}
                     className={`relative p-4 rounded-2xl text-left border cursor-pointer transition-all duration-200 flex flex-col justify-between gap-3 ${
                       intensity === 'low'
-                        ? 'glass-cyan border-cyan-500/60 shadow-[0_10px_25px_-5px_rgba(6,182,212,0.35)] ring-2 ring-cyan-500/40'
+                        ? 'bg-cyan-500/10 dark:bg-cyan-500/15 border-cyan-500/60 shadow-[0_8px_20px_rgba(6,182,212,0.25)] ring-1 ring-cyan-500/40'
                         : 'bg-slate-100/80 dark:bg-white/[0.03] border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20'
                     }`}
                   >

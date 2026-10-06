@@ -80,9 +80,9 @@ export const EcosystemSwitcher: React.FC<EcosystemSwitcherProps> = ({
           </h3>
         </div>
         <div className="text-xs text-slate-500 dark:text-zinc-400 flex items-center gap-2">
-          <span>Continuity Rating</span>
+          <span>Wireless Protocol</span>
           <span aria-hidden="true">·</span>
-          <span className="text-slate-900 dark:text-white font-semibold tabular-nums">{selectedPreset.continuityScore}%</span>
+          <span className="text-emerald-600 dark:text-emerald-400 font-mono font-medium">AWDL 5GHz / Peer-to-Peer</span>
         </div>
       </div>
 

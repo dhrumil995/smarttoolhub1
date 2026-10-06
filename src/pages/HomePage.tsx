@@ -797,38 +797,38 @@ export const HomePage: React.FC<HomePageProps> = ({
           })}
         </div>
 
-        {/* Quantified Proof & Engineering Benchmarks in Colorful Glass Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-          <div className="glass-violet p-5 space-y-1 rounded-2xl">
-            <div className="text-2xl sm:text-3xl font-bold text-violet-600 dark:text-violet-300 font-mono tabular-nums">
+        {/* Quantified Proof & Engineering Benchmarks in Clean High-Fi Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+          <div className="bento-card p-5 space-y-1.5 rounded-2xl border border-white/10 dark:border-white/10 hover:border-indigo-500/30 transition-colors">
+            <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tracking-tight tabular-nums">
               120+
             </div>
-            <p className="text-xs text-slate-600 dark:text-zinc-400">
+            <p className="text-xs text-slate-500 dark:text-zinc-400 leading-snug">
               Verified macOS Sequoia & iOS 18 automation blueprints
             </p>
           </div>
-          <div className="glass-cyan p-5 space-y-1 rounded-2xl">
-            <div className="text-2xl sm:text-3xl font-bold text-cyan-600 dark:text-cyan-300 font-mono tabular-nums">
+          <div className="bento-card p-5 space-y-1.5 rounded-2xl border border-white/10 dark:border-white/10 hover:border-cyan-500/30 transition-colors">
+            <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tracking-tight tabular-nums">
               800 GB/s
             </div>
-            <p className="text-xs text-slate-600 dark:text-zinc-400">
+            <p className="text-xs text-slate-500 dark:text-zinc-400 leading-snug">
               Apple Silicon M1–M4 & Ultra memory specs indexed
             </p>
           </div>
-          <div className="glass-emerald p-5 space-y-1 rounded-2xl">
-            <div className="text-2xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-300 font-mono tabular-nums">
+          <div className="bento-card p-5 space-y-1.5 rounded-2xl border border-white/10 dark:border-white/10 hover:border-emerald-500/30 transition-colors">
+            <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tracking-tight tabular-nums">
               140+ hrs
             </div>
-            <p className="text-xs text-slate-600 dark:text-zinc-400">
+            <p className="text-xs text-slate-500 dark:text-zinc-400 leading-snug">
               Average annual engineering time saved per workspace
             </p>
           </div>
-          <div className="glass-amber p-5 space-y-1 rounded-2xl">
-            <div className="text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-300 font-mono tabular-nums">
+          <div className="bento-card p-5 space-y-1.5 rounded-2xl border border-white/10 dark:border-white/10 hover:border-amber-500/30 transition-colors">
+            <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tracking-tight tabular-nums">
               0 Keys
             </div>
-            <p className="text-xs text-slate-600 dark:text-zinc-400">
-              Zero-Credentials privacy — no Apple IDs ever requested
+            <p className="text-xs text-slate-500 dark:text-zinc-400 leading-snug">
+              Zero-Credentials privacy — 100% client-side execution
             </p>
           </div>
         </div>
