@@ -359,17 +359,21 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {relatedWorkflows.map((rel) => (
-            <div
+            <a
               key={rel.id}
-              onClick={() => onNavigate('workflow-detail', rel.id)}
-              className="glass-card p-4 rounded-xl border border-white/10 hover:border-blue-500/40 cursor-pointer space-y-2 group"
+              href={`/workflows/${rel.slug}`}
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate('workflow-detail', rel.id);
+              }}
+              className="glass-card p-4 rounded-xl border border-white/10 hover:border-blue-500/40 cursor-pointer space-y-2 group block text-left text-decoration-none"
             >
               <span className="text-[10px] text-blue-400 font-semibold uppercase">{rel.category}</span>
               <h4 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors line-clamp-1">
                 {rel.title}
               </h4>
               <p className="text-xs text-[#888888] line-clamp-2">{rel.summary}</p>
-            </div>
+            </a>
           ))}
         </div>
       </div>

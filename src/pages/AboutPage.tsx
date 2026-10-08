@@ -202,54 +202,64 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
       {/* Quick Navigation to Other Trust Hubs */}
       <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200/80 dark:border-white/10">
         <div className="flex flex-wrap gap-4 text-xs font-medium text-slate-600 dark:text-zinc-400">
-          <button
-            onClick={() => {
+          <a
+            href="/guides"
+            onClick={(e) => {
+              e.preventDefault();
               haptics.playTap();
               onNavigate('guides');
             }}
-            className="hover:text-indigo-600 dark:hover:text-white cursor-pointer"
+            className="hover:text-indigo-600 dark:hover:text-white cursor-pointer text-decoration-none"
           >
             Read Engineering Guides →
-          </button>
-          <button
-            onClick={() => {
+          </a>
+          <a
+            href="/privacy"
+            onClick={(e) => {
+              e.preventDefault();
               haptics.playTap();
               onNavigate('privacy');
             }}
-            className="hover:text-indigo-600 dark:hover:text-white cursor-pointer"
+            className="hover:text-indigo-600 dark:hover:text-white cursor-pointer text-decoration-none"
           >
             Privacy Policy
-          </button>
-          <button
-            onClick={() => {
+          </a>
+          <a
+            href="/terms"
+            onClick={(e) => {
+              e.preventDefault();
               haptics.playTap();
               onNavigate('terms');
             }}
-            className="hover:text-indigo-600 dark:hover:text-white cursor-pointer"
+            className="hover:text-indigo-600 dark:hover:text-white cursor-pointer text-decoration-none"
           >
             Terms of Service
-          </button>
-          <button
-            onClick={() => {
+          </a>
+          <a
+            href="/contact"
+            onClick={(e) => {
+              e.preventDefault();
               haptics.playTap();
               onNavigate('contact');
             }}
-            className="hover:text-indigo-600 dark:hover:text-white cursor-pointer"
+            className="hover:text-indigo-600 dark:hover:text-white cursor-pointer text-decoration-none"
           >
             Contact & Support
-          </button>
+          </a>
         </div>
 
-        <button
-          onClick={() => {
+        <a
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
             haptics.playTap();
             onNavigate('home');
           }}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer text-decoration-none"
         >
           <span>Explore Interactive Workbench</span>
           <ArrowRight className="w-3.5 h-3.5" />
-        </button>
+        </a>
       </div>
     </div>
   );

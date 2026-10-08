@@ -339,12 +339,16 @@ export const CompatibilityPage: React.FC<CompatibilityPageProps> = ({ onNavigate
                 </div>
                 <div className="flex items-center gap-3">
                   {feat.troubleshootSlug && (
-                    <button
-                      onClick={() => onNavigate('troubleshooting')}
-                      className="text-amber-400 hover:text-amber-300 font-medium cursor-pointer"
+                    <a
+                      href="/troubleshooting"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onNavigate('troubleshooting');
+                      }}
+                      className="text-amber-400 hover:text-amber-300 font-medium cursor-pointer text-decoration-none"
                     >
                       Troubleshoot this feature →
-                    </button>
+                    </a>
                   )}
                   <a
                     href={feat.officialSupportUrl}

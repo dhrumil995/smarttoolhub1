@@ -43,22 +43,28 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto shrink-0 relative z-10">
-            <button
-              type="button"
-              onClick={() => onNavigate('generator')}
+            <a
+              href="/generator"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate('generator');
+              }}
               className="px-5 py-2.5 min-h-[40px] rounded-xl glass-button-primary text-xs font-semibold text-white flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap"
             >
               <Wand2 className="w-3.5 h-3.5" />
               <span>Launch Generator</span>
               <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => onNavigate('contact')}
+            </a>
+            <a
+              href="/contact"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate('contact');
+              }}
               className="px-5 py-2.5 min-h-[40px] rounded-xl glass-pill text-xs font-semibold text-slate-900 dark:text-white cursor-pointer whitespace-nowrap"
             >
               Contact Engineering
-            </button>
+            </a>
           </div>
         </div>
 
@@ -107,53 +113,66 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('generator')}
+                <a
+                  href="/generator"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('generator');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   AI Shortcut Generator
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('compatibility')}
+                <a
+                  href="/compatibility"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('compatibility');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Compatibility Matrix
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('troubleshooting')}
+                <a
+                  href="/troubleshooting"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('troubleshooting');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Continuity Sync Doctor
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('library')}
+                <a
+                  href="/library"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('library');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   120+ Workflow Library
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => {
+                <a
+                  href="/sitemap.xml"
+                  onClick={(e) => {
                     if (onOpenSitemap) {
+                      e.preventDefault();
                       onOpenSitemap();
                     }
                   }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Sitemap & Search Index
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -165,40 +184,52 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('workflow-detail', 'wf-continuity-camera-desk-view')}
+                <a
+                  href="/workflows/continuity-camera-desk-view"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('workflow-detail', 'wf-continuity-camera-desk-view');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors text-left cursor-pointer"
                 >
                   4K Continuity Desk View
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('workflow-detail', 'wf-universal-control-freelancer-desk')}
+                <a
+                  href="/workflows/universal-control-freelancer-desk"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('workflow-detail', 'wf-universal-control-freelancer-desk');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors text-left cursor-pointer"
                 >
                   Universal Control Setup
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('workflow-detail', 'wf-iphone-mirroring-macos-sequoia')}
+                <a
+                  href="/workflows/iphone-mirroring-macos-sequoia"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('workflow-detail', 'wf-iphone-mirroring-macos-sequoia');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors text-left cursor-pointer"
                 >
                   iPhone Mirroring (macOS 15)
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('workflow-detail', 'wf-student-sidecar-handwritten-math')}
+                <a
+                  href="/workflows/student-sidecar-handwritten-math"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('workflow-detail', 'wf-student-sidecar-handwritten-math');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors text-left cursor-pointer"
                 >
                   Sidecar & Apple Pencil
-                </button>
+                </a>
               </li>
             </ul>
           </div>
@@ -220,49 +251,64 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
                 </button>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('about')}
+                <a
+                  href="/about"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('about');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   About SmartToolHub
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('guides')}
+                <a
+                  href="/guides"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('guides');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Engineering Guides
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('privacy')}
+                <a
+                  href="/privacy"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('privacy');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Privacy Policy
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('terms')}
+                <a
+                  href="/terms"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('terms');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Terms of Service
-                </button>
+                </a>
               </li>
               <li>
-                <button
-                  type="button"
-                  onClick={() => onNavigate('contact')}
+                <a
+                  href="/contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('contact');
+                  }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Contact & Support
-                </button>
+                </a>
               </li>
               <li>
                 <a

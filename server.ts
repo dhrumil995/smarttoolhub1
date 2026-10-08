@@ -14,6 +14,7 @@ import {
   PlanType,
 } from './src/server/billing';
 import { generateSitemapXml, getAllSitemapRoutes } from './src/utils/sitemapGenerator';
+import { injectSeoIntoHtml } from './src/server/seoPrerender';
 
 dotenv.config();
 
@@ -1140,10 +1141,9 @@ app.get('/api/health', (req: Request, res: Response) => {
 // Automated Dynamic Sitemap XML Engine
 app.get('/sitemap.xml', (req: Request, res: Response) => {
   try {
-    const rawHost = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
+    const rawHost = req.headers['x-forwarded-host'] || req.headers.host || 'smarttoolhub.net';
     const host = Array.isArray(rawHost) ? rawHost[0] : rawHost;
-    const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
-    const baseUrl = `${proto}://${host}`;
+    const baseUrl = host.includes('localhost') ? `http://${host}` : 'https://smarttoolhub.net';
 
     const xml = generateSitemapXml(baseUrl);
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
@@ -1162,25 +1162,27 @@ app.get('/sitemap.xml', (req: Request, res: Response) => {
 });
 
 // Dynamic robots.txt with active host reference and AI crawler allowances
-app.get('/robots.txt', (req: Request, res: Response) => {
-  const rawHost = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
-  const host = Array.isArray(rawHost) ? rawHost[0] : rawHost;
-  const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
-  const baseUrl = `${proto}://${host}`;
-
+app.get('/robots.txt', (_req: Request, res: Response) => {
+  const robotsPath = path.join(process.cwd(), 'public', 'robots.txt');
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=86400');
+  if (fs.existsSync(robotsPath)) {
+    return res.sendFile(robotsPath);
+  }
+
   return res.status(200).send(
     [
       'User-agent: *',
       'Allow: /',
       'Disallow: /api/',
       '',
-      '# Google AdSense Crawler & General Google Search',
-      'User-agent: Mediapartners-Google',
+      'User-agent: Googlebot',
       'Allow: /',
       '',
-      'User-agent: Googlebot',
+      'User-agent: Google-InspectionTool',
+      'Allow: /',
+      '',
+      'User-agent: Mediapartners-Google',
       'Allow: /',
       '',
       'User-agent: Bingbot',
@@ -1195,9 +1197,12 @@ app.get('/robots.txt', (req: Request, res: Response) => {
       'User-agent: PerplexityBot',
       'Allow: /',
       '',
+      'User-agent: ClaudeBot',
+      'Allow: /',
+      '',
       '# Dynamic Automated Sitemap & LLM Index',
-      `Sitemap: ${baseUrl}/sitemap.xml`,
-      `# LLMs Structured Index: ${baseUrl}/llms.txt`,
+      'Sitemap: https://smarttoolhub.net/sitemap.xml',
+      '# LLMs Structured Index: https://smarttoolhub.net/llms.txt',
       '',
     ].join('\n')
   );
@@ -1380,9 +1385,31 @@ async function setupServer() {
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },
-      appType: 'spa',
+      appType: 'custom',
     });
     app.use(vite.middlewares);
+
+    app.get('*', async (req: Request, res: Response, next) => {
+      if (/\.(jpg|jpeg|png|webp|gif|svg|ico|woff2?|ttf|eot|css|js|map)$/i.test(req.path)) {
+        return next();
+      }
+      const indexPath = path.join(process.cwd(), 'index.html');
+      if (fs.existsSync(indexPath)) {
+        try {
+          let rawHtml = fs.readFileSync(indexPath, 'utf-8');
+          rawHtml = await vite.transformIndexHtml(req.url, rawHtml);
+          const enrichedHtml = injectSeoIntoHtml(rawHtml, req.path);
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          res.setHeader('X-Robots-Tag', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+          res.setHeader('Link', `<https://smarttoolhub.net${req.path}>; rel="canonical"`);
+          return res.status(200).send(enrichedHtml);
+        } catch (e) {
+          next(e);
+        }
+      } else {
+        next();
+      }
+    });
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     const distAssetsPath = path.join(distPath, 'assets');
@@ -1401,13 +1428,26 @@ async function setupServer() {
       etag: true,
     }));
 
-    // HTML fallback with no-cache so users always receive latest bundle references
+    // HTML fallback with route-specific SEO tags and crawlable semantic HTML
     app.get('*', (req: Request, res: Response) => {
       if (/\.(jpg|jpeg|png|webp|gif|svg|ico|woff2?|ttf|eot|css|js|map)$/i.test(req.path)) {
         return res.status(404).end();
       }
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-      res.sendFile(path.join(distPath, 'index.html'));
+      res.setHeader('X-Robots-Tag', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+      res.setHeader('Link', `<https://smarttoolhub.net${req.path}>; rel="canonical"`);
+
+      const indexPath = path.join(distPath, 'index.html');
+      if (fs.existsSync(indexPath)) {
+        try {
+          const rawHtml = fs.readFileSync(indexPath, 'utf-8');
+          const enrichedHtml = injectSeoIntoHtml(rawHtml, req.path);
+          return res.status(200).send(enrichedHtml);
+        } catch (e) {
+          return res.sendFile(indexPath);
+        }
+      }
+      return res.status(404).send('Not found');
     });
   }
 

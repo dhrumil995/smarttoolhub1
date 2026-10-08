@@ -221,10 +221,14 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
           const isSaved = savedWorkflows.includes(wf.id);
           const theme = getGlassTheme(wf.category);
           return (
-            <div
+            <a
               key={wf.id}
-              onClick={() => onNavigate('workflow-detail', wf.id)}
-              className="bento-card p-6 flex flex-col justify-between cursor-pointer group rounded-2xl transition-all duration-200 hover:-translate-y-1 hover:border-indigo-500/40 shadow-lg"
+              href={`/workflows/${wf.slug}`}
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate('workflow-detail', wf.id);
+              }}
+              className="bento-card p-6 flex flex-col justify-between cursor-pointer group rounded-2xl transition-all duration-200 hover:-translate-y-1 hover:border-indigo-500/40 shadow-lg text-left no-underline"
             >
               <div className="space-y-3.5">
                 {/* Unboxed metadata row */}
@@ -238,7 +242,11 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
                   </div>
                   <button
                     type="button"
-                    onClick={(e) => toggleBookmark(e, wf.id)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      toggleBookmark(e, wf.id);
+                    }}
                     className="p-1.5 rounded-lg hover:bg-slate-900/5 dark:hover:bg-white/10 text-slate-400 hover:text-indigo-400 transition-colors shrink-0 cursor-pointer"
                     title={isSaved ? 'Remove bookmark' : 'Bookmark workflow'}
                   >
@@ -275,7 +283,7 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </div>
-            </div>
+            </a>
           );
         })}
       </div>

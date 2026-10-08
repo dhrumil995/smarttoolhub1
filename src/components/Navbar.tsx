@@ -155,9 +155,13 @@ export const Navbar: React.FC<NavbarProps> = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
         {/* Zone 1: Brand Wordmark & Luxury 3D Emblem */}
-        <button
+        <a
           id="nav-brand-button"
-          onClick={() => handleNav('home')}
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNav('home');
+          }}
           className="flex items-center gap-3 group text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-xl shrink-0 py-1 active:scale-[0.98] transition-transform"
           aria-label="SmartToolHub Home"
         >
@@ -185,7 +189,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               Apple Studio Suite
             </span>
           </div>
-        </button>
+        </a>
 
         {/* Zone 2: Primary Navigation & Category Dropdown */}
         <nav
@@ -194,12 +198,17 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           {navItems.map((item) => {
             const isActive = currentPage === item.id;
+            const itemHref = item.id === 'home' ? '/' : `/${item.id}`;
             return (
-              <button
+              <a
                 key={item.id}
                 id={`nav-link-${item.id}`}
+                href={itemHref}
                 aria-current={isActive ? 'page' : undefined}
-                onClick={() => handleNav(item.id)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNav(item.id);
+                }}
                 className={`relative py-1 transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-md ${
                   isActive
                     ? 'text-slate-900 dark:text-white font-semibold'
@@ -210,7 +219,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {isActive && (
                   <span className="absolute -bottom-[19px] left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 via-indigo-400 to-purple-500 rounded-full" />
                 )}
-              </button>
+              </a>
             );
           })}
 
@@ -246,11 +255,15 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {toolCategories.map((cat) => {
                     const Icon = cat.icon;
                     const isSelected = activeCategory === cat.id;
+                    const catHref = cat.id === 'all' ? '/' : cat.id === 'shortcuts' ? '/generator' : cat.id === 'diagnostics' ? '/troubleshooting' : `/?category=${cat.id}`;
                     return (
-                      <button
+                      <a
                         key={cat.id}
-                        type="button"
-                        onClick={() => handleCategoryPick(cat.id)}
+                        href={catHref}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleCategoryPick(cat.id);
+                        }}
                         className={`w-full flex items-start gap-3 p-2.5 rounded-xl text-left transition-all cursor-pointer border ${
                           isSelected
                             ? 'bg-indigo-500/10 border-indigo-500/35 text-indigo-600 dark:text-indigo-300'
@@ -268,7 +281,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                             {cat.desc}
                           </div>
                         </div>
-                      </button>
+                      </a>
                     );
                   })}
                 </div>
@@ -386,11 +399,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
             {navItems.map((item) => {
               const isActive = currentPage === item.id;
+              const itemHref = item.id === 'home' ? '/' : `/${item.id}`;
               return (
-                <button
+                <a
                   key={item.id}
-                  type="button"
-                  onClick={() => handleNav(item.id)}
+                  href={itemHref}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav(item.id);
+                  }}
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-colors cursor-pointer ${
                     isActive
                       ? 'text-indigo-600 dark:text-white bg-indigo-500/10 dark:bg-white/[0.08] font-semibold'
@@ -399,7 +416,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   <span>{item.label}</span>
                   {isActive && <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />}
-                </button>
+                </a>
               );
             })}
           </div>
@@ -409,16 +426,22 @@ export const Navbar: React.FC<NavbarProps> = ({
               Tool Categories
             </div>
             <div className="grid grid-cols-2 gap-1.5">
-              {toolCategories.map((cat) => (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => handleCategoryPick(cat.id)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-left bg-slate-900/[0.03] dark:bg-white/[0.03] hover:bg-slate-900/[0.06] dark:hover:bg-white/[0.07] border border-slate-900/5 dark:border-white/5 text-slate-700 dark:text-zinc-300 truncate"
-                >
-                  <span className="truncate">{cat.label}</span>
-                </button>
-              ))}
+              {toolCategories.map((cat) => {
+                const catHref = cat.id === 'all' ? '/' : cat.id === 'shortcuts' ? '/generator' : cat.id === 'diagnostics' ? '/troubleshooting' : `/?category=${cat.id}`;
+                return (
+                  <a
+                    key={cat.id}
+                    href={catHref}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCategoryPick(cat.id);
+                    }}
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-left bg-slate-900/[0.03] dark:bg-white/[0.03] hover:bg-slate-900/[0.06] dark:hover:bg-white/[0.07] border border-slate-900/5 dark:border-white/5 text-slate-700 dark:text-zinc-300 truncate"
+                  >
+                    <span className="truncate">{cat.label}</span>
+                  </a>
+                );
+              })}
             </div>
           </div>
 

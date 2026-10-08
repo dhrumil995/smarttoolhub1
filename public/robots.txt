@@ -2,5 +2,30 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-# Sitemaps
-Sitemap: https://ais-dev-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/sitemap.xml
+# Explicit search engine crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-InspectionTool
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Canonical Sitemaps & Feeds
+Sitemap: https://smarttoolhub.net/sitemap.xml

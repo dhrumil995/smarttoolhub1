@@ -15,20 +15,23 @@ export interface SitemapRoute {
   };
 }
 
-export const DEFAULT_PRODUCTION_BASE_URL = 'https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app';
+export const DEFAULT_PRODUCTION_BASE_URL = 'https://smarttoolhub.net';
 
 /**
  * Returns the effective base URL, prioritizing parameter, environment variable, or fallback.
  */
 export function resolveBaseUrl(customBaseUrl?: string): string {
   if (customBaseUrl && customBaseUrl.trim().length > 0) {
-    return customBaseUrl.replace(/\/+$/, '');
+    const clean = customBaseUrl.replace(/\/+$/, '');
+    if (!clean.includes('ais-dev-') && !clean.includes('ais-pre-') && !clean.includes('localhost')) {
+      return clean;
+    }
   }
   if (typeof process !== 'undefined' && process.env?.APP_URL) {
-    return process.env.APP_URL.replace(/\/+$/, '');
-  }
-  if (typeof window !== 'undefined' && window.location?.origin) {
-    return window.location.origin.replace(/\/+$/, '');
+    const envUrl = process.env.APP_URL.replace(/\/+$/, '');
+    if (!envUrl.includes('ais-dev-') && !envUrl.includes('ais-pre-')) {
+      return envUrl;
+    }
   }
   return DEFAULT_PRODUCTION_BASE_URL;
 }

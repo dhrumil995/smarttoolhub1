@@ -73,8 +73,8 @@ function AppContent() {
       const wfParam = params.get('workflow');
       const pathname = window.location.pathname.replace(/^\/+|\/+$/g, '');
 
-      if (pathname.startsWith('workflows/')) {
-        const slug = pathname.replace(/^workflows\//, '');
+      if (pathname.startsWith('workflows/') || pathname.startsWith('workflow/')) {
+        const slug = pathname.replace(/^(workflows|workflow)\//, '');
         const found = WORKFLOWS_DATA.find(w => w.slug === slug || w.id === slug);
         if (found) {
           setSelectedWorkflowId(found.id);

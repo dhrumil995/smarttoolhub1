@@ -36,7 +36,32 @@ const robotsTxt = `User-agent: *
 Allow: /
 Disallow: /api/
 
-# Sitemaps
+# Explicit search engine crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-InspectionTool
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Canonical Sitemaps & Feeds
 Sitemap: ${baseUrl}/sitemap.xml
 `;
 fs.writeFileSync(robotsPath, robotsTxt, 'utf-8');

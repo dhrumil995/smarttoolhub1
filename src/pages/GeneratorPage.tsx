@@ -302,12 +302,16 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onNavigate }) => {
           </div>
           <div className="text-[11px] text-[#86868B] border-t border-amber-500/20 pt-2.5 flex items-center justify-between">
             <span>Or browse 50+ pre-built Continuity guides:</span>
-            <button
-              onClick={() => onNavigate('library')}
-              className="text-amber-400 hover:underline cursor-pointer"
+            <a
+              href="/library"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate('library');
+              }}
+              className="text-amber-400 hover:underline cursor-pointer text-decoration-none"
             >
               View Free Curated Library →
-            </button>
+            </a>
           </div>
         </div>
       ) : (

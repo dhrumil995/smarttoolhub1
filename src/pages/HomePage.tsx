@@ -438,30 +438,32 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* Primary Glowing CTA & Secondary Action */}
         <div className="flex flex-wrap items-center justify-center gap-3.5 pt-1">
-          <button
-            type="button"
-            onClick={() => {
+          <a
+            href="/generator"
+            onClick={(e) => {
+              e.preventDefault();
               haptics.playTap();
               onNavigate('generator');
             }}
-            className="inline-flex items-center gap-2.5 px-6 py-3.5 min-h-[46px] rounded-2xl glass-button-primary text-white text-xs sm:text-sm font-semibold tracking-tight cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-2.5 px-6 py-3.5 min-h-[46px] rounded-2xl glass-button-primary text-white text-xs sm:text-sm font-semibold tracking-tight cursor-pointer whitespace-nowrap text-decoration-none"
           >
             <Wand2 className="w-4 h-4 shrink-0" />
             <span>Generate Custom Shortcut</span>
             <ArrowRight className="w-4 h-4 shrink-0" />
-          </button>
+          </a>
 
-          <button
-            type="button"
-            onClick={() => {
+          <a
+            href="/library"
+            onClick={(e) => {
+              e.preventDefault();
               haptics.playTap();
               onNavigate('library');
             }}
-            className="inline-flex items-center gap-2 px-6 py-3.5 min-h-[46px] rounded-2xl glass-pill text-slate-900 dark:text-white text-xs sm:text-sm font-semibold tracking-tight cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center gap-2 px-6 py-3.5 min-h-[46px] rounded-2xl glass-pill text-slate-900 dark:text-white text-xs sm:text-sm font-semibold tracking-tight cursor-pointer whitespace-nowrap text-decoration-none"
           >
             <BookOpen className="w-4 h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
             <span>Explore 120+ Workflows</span>
-          </button>
+          </a>
         </div>
 
         {/* Interactive Modern Tool Search & Instant Filter Bar */}
@@ -721,11 +723,20 @@ export const HomePage: React.FC<HomePageProps> = ({
           {filteredBentoTools.map((tool) => {
             const Icon = tool.icon;
             const theme = getGlassTheme(tool.category);
+            const toolHref = tool.targetPage
+              ? `/${tool.targetPage}`
+              : tool.workbenchTab
+              ? `/?category=${tool.category}`
+              : '/';
             return (
-              <div
+              <a
                 key={tool.id}
-                onClick={() => handleToolCardClick(tool)}
-                className={`${tool.colSpan} ${theme.cardClass} group relative overflow-hidden p-6 sm:p-8 flex flex-col justify-between cursor-pointer rounded-3xl transition-all duration-300`}
+                href={toolHref}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleToolCardClick(tool);
+                }}
+                className={`${tool.colSpan} ${theme.cardClass} group relative overflow-hidden p-6 sm:p-8 flex flex-col justify-between cursor-pointer rounded-3xl transition-all duration-300 text-left no-underline`}
               >
                 {/* Dynamic colored ambient light glow on hover */}
                 <div
@@ -792,7 +803,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     Interactive
                   </span>
                 </div>
-              </div>
+              </a>
             );
           })}
         </div>
@@ -1454,9 +1465,10 @@ export const HomePage: React.FC<HomePageProps> = ({
               Featured Multi-Device Workflows
             </h2>
           </div>
-          <button
-            type="button"
-            onClick={() => {
+          <a
+            href="/library"
+            onClick={(e) => {
+              e.preventDefault();
               haptics.playTap();
               onNavigate('library');
             }}
@@ -1464,20 +1476,22 @@ export const HomePage: React.FC<HomePageProps> = ({
           >
             <span>Browse all 120+ workflows</span>
             <ChevronRight className="w-3.5 h-3.5" />
-          </button>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {filteredWorkflows.map((wf) => {
             const theme = getGlassTheme(wf.category);
             return (
-              <div
+              <a
                 key={wf.id}
-                onClick={() => {
+                href={`/workflows/${wf.slug}`}
+                onClick={(e) => {
+                  e.preventDefault();
                   haptics.playTap();
                   setSelectedWorkflowForSheet(wf);
                 }}
-                className={`${theme.cardClass} p-6 flex flex-col justify-between group cursor-pointer space-y-5 rounded-3xl transition-all duration-300 hover:scale-[1.02] shadow-lg`}
+                className={`${theme.cardClass} p-6 flex flex-col justify-between group cursor-pointer space-y-5 rounded-3xl transition-all duration-300 hover:scale-[1.02] shadow-lg text-left no-underline`}
               >
                 <div className="space-y-3">
                   {/* Unboxed metadata with middle dot separator */}
@@ -1507,7 +1521,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </div>
-              </div>
+              </a>
             );
           })}
         </div>

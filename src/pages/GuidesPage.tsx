@@ -492,16 +492,18 @@ export const GuidesPage: React.FC<GuidesPageProps> = ({ onNavigate }) => {
               <div className="text-xs text-slate-500 dark:text-zinc-400">
                 Want to test this in practice? Explore our interactive diagnostics.
               </div>
-              <button
-                onClick={() => {
+              <a
+                href="/troubleshooting"
+                onClick={(e) => {
+                  e.preventDefault();
                   haptics.playTap();
                   onNavigate('troubleshooting');
                 }}
-                className="px-4 py-2 rounded-xl glass-button-primary text-xs font-semibold text-white flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2 rounded-xl glass-button-primary text-xs font-semibold text-white flex items-center gap-1.5 cursor-pointer text-decoration-none"
               >
                 <span>Launch Continuity Sync Doctor</span>
                 <ArrowRight className="w-3.5 h-3.5" />
-              </button>
+              </a>
             </div>
           </article>
         </div>
