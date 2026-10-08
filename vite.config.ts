@@ -16,7 +16,7 @@ export default defineConfig(() => {
       },
     },
     build: {
-      target: 'es2022',
+      target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
       minify: 'esbuild',
       cssMinify: true,
       sourcemap: false,

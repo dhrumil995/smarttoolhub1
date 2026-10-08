@@ -3,7 +3,7 @@ import { PageId } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { haptics } from '../utils/haptics';
 import { useHaptics } from '../utils/useHaptics';
-import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.jpg';
+import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.webp';
 import {
   Search,
   Menu,
@@ -171,12 +171,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               onError={(e) => {
                 const target = e.currentTarget;
                 if (!target.src.endsWith('/logo.png')) {
-                  target.src = '/images/smarttoolhub_luxury_logo_1790827199493.jpg';
+                  target.src = '/images/smarttoolhub_luxury_logo_1790827199493.webp';
                 }
               }}
               alt="SmartToolHub Emblem"
               width="32"
               height="32"
+              decoding="async"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-300"
             />

@@ -1,21 +1,29 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense, lazy } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { PageId, WorkflowItem } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
 import { ToolCategoryFilter } from '../components/Navbar';
-import { DiagnosticSimulator } from '../components/DiagnosticSimulator';
-import { EcosystemSwitcher } from '../components/EcosystemSwitcher';
-import { AppleSiliconShowcase } from '../components/AppleSiliconShowcase';
 import { IOSBottomSheet } from '../components/ios/IOSBottomSheet';
 import { IOSToggle } from '../components/ios/IOSToggle';
 import { haptics } from '../utils/haptics';
 import { getGlassTheme } from '../utils/glassTheme';
-import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.jpg';
-import heroStudioImg from '../assets/images/hero_mac_studio_ecosystem_1790827213135.jpg';
-import shortcutsAutomationImg from '../assets/images/feature_shortcuts_automation_1790175491181.jpg';
-import bentoRetinaImg from '../assets/images/bento_retina_image_engine_1790827223139.jpg';
-import bentoSiliconImg from '../assets/images/bento_apple_silicon_neural_1790827235951.jpg';
-import bentoContinuityImg from '../assets/images/bento_continuity_sync_matrix_1790827245735.jpg';
+import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.webp';
+import heroStudioImg from '../assets/images/hero_mac_studio_ecosystem_1790827213135.webp';
+import shortcutsAutomationImg from '../assets/images/feature_shortcuts_automation_1790175491181.webp';
+import bentoRetinaImg from '../assets/images/bento_retina_image_engine_1790827223139.webp';
+import bentoSiliconImg from '../assets/images/bento_apple_silicon_neural_1790827235951.webp';
+import bentoContinuityImg from '../assets/images/bento_continuity_sync_matrix_1790827245735.webp';
+
+// Lazy load heavy workbench tabs only when requested by user
+const DiagnosticSimulator = lazy(() =>
+  import('../components/DiagnosticSimulator').then((m) => ({ default: m.DiagnosticSimulator }))
+);
+const EcosystemSwitcher = lazy(() =>
+  import('../components/EcosystemSwitcher').then((m) => ({ default: m.EcosystemSwitcher }))
+);
+const AppleSiliconShowcase = lazy(() =>
+  import('../components/AppleSiliconShowcase').then((m) => ({ default: m.AppleSiliconShowcase }))
+);
 import {
   Wand2,
   Wrench,
@@ -535,10 +543,14 @@ export const HomePage: React.FC<HomePageProps> = ({
               <img
                 src={heroStudioImg}
                 onError={(e) => {
-                  e.currentTarget.src = '/images/hero_mac_studio_ecosystem_1790827213135.jpg';
+                  e.currentTarget.src = '/images/hero_mac_studio_ecosystem_1790827213135.webp';
                 }}
                 alt="SmartToolHub Apple Ecosystem Hardware and Automation Studio"
                 referrerPolicy="no-referrer"
+                fetchPriority="high"
+                decoding="async"
+                width={1280}
+                height={548}
                 className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700"
               />
               {/* Atmospheric Gradient Overlay */}
@@ -550,10 +562,13 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <img
                   src={luxuryLogoImg}
                   onError={(e) => {
-                    e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.jpg';
+                    e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.webp';
                   }}
                   alt="SmartToolHub Studio Emblem"
                   referrerPolicy="no-referrer"
+                  decoding="async"
+                  width={20}
+                  height={20}
                   className="w-5 h-5 rounded-md object-cover border border-white/20"
                 />
                 <span className="text-[11px] font-semibold tracking-tight text-white">
@@ -774,6 +789,9 @@ export const HomePage: React.FC<HomePageProps> = ({
                         }}
                         alt={tool.title}
                         loading="lazy"
+                        decoding="async"
+                        width={640}
+                        height={280}
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       />
@@ -1438,17 +1456,21 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* WORKBENCH TAB 5: CONTINUITY & SYNC DOCTOR */}
         {activeWorkbench === 'diagnostics' && (
-          <div className="space-y-4">
-            <DiagnosticSimulator />
-          </div>
+          <Suspense fallback={<div className="p-12 text-center text-xs font-mono text-zinc-400">Loading Continuity Sync Doctor...</div>}>
+            <div className="space-y-4">
+              <DiagnosticSimulator />
+            </div>
+          </Suspense>
         )}
 
         {/* WORKBENCH TAB 6: SILICON MATRIX & ECOSYSTEM PRESETS */}
         {activeWorkbench === 'silicon' && (
-          <div className="space-y-8">
-            <AppleSiliconShowcase />
-            <EcosystemSwitcher />
-          </div>
+          <Suspense fallback={<div className="p-12 text-center text-xs font-mono text-zinc-400">Loading Silicon Architecture Matrix...</div>}>
+            <div className="space-y-8">
+              <AppleSiliconShowcase />
+              <EcosystemSwitcher />
+            </div>
+          </Suspense>
         )}
       </section>
 

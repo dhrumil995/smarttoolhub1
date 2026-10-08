@@ -31,22 +31,50 @@ export const ScrollProgressBar: React.FC<ScrollProgressBarProps> = ({
   const [isScrollable, setIsScrollable] = useState<boolean>(true);
 
   useEffect(() => {
-    const updateScrollMetrics = () => {
+    let ticking = false;
+    let lastPercent = -1;
+    let lastScrolledDown = false;
+
+    const calculate = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
       const docHeight =
         document.documentElement.scrollHeight - document.documentElement.clientHeight;
 
       if (docHeight <= 32) {
         setIsScrollable(false);
-        setPercent(0);
-        setIsScrolledDown(false);
+        if (lastPercent !== 0) {
+          lastPercent = 0;
+          setPercent(0);
+        }
+        if (lastScrolledDown) {
+          lastScrolledDown = false;
+          setIsScrolledDown(false);
+        }
+        ticking = false;
         return;
       }
 
       setIsScrollable(true);
       const rawRatio = Math.min(1, Math.max(0, scrollTop / docHeight));
-      setPercent(Math.round(rawRatio * 100));
-      setIsScrolledDown(scrollTop > 180);
+      const newPercent = Math.round(rawRatio * 100);
+      const newScrolledDown = scrollTop > 180;
+
+      if (newPercent !== lastPercent) {
+        lastPercent = newPercent;
+        setPercent(newPercent);
+      }
+      if (newScrolledDown !== lastScrolledDown) {
+        lastScrolledDown = newScrolledDown;
+        setIsScrolledDown(newScrolledDown);
+      }
+      ticking = false;
+    };
+
+    const updateScrollMetrics = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(calculate);
+      }
     };
 
     updateScrollMetrics();

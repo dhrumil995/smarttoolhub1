@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageId } from '../types';
 import { ShieldCheck, ExternalLink, Mail, Wand2, ArrowRight } from 'lucide-react';
-import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.jpg';
+import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.webp';
 
 interface FooterProps {
   onNavigate: (page: PageId, workflowId?: string) => void;
@@ -23,12 +23,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
               <img
                 src={luxuryLogoImg}
                 onError={(e) => {
-                  e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.jpg';
+                  e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.webp';
                 }}
                 alt="SmartToolHub Studio Emblem"
                 width="64"
                 height="64"
                 loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover scale-105"
               />
@@ -77,7 +78,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
                 <img
                   src={luxuryLogoImg}
                   onError={(e) => {
-                    e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.jpg';
+                    e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.webp';
                   }}
                   alt="SmartToolHub"
                   width="32"

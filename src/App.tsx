@@ -2,15 +2,16 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { PageId } from './types';
 import { Navbar, ToolCategoryFilter } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { HomePage } from './pages/HomePage';
 import { ProProvider } from './context/ProContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { SEOHead } from './components/SEOHead';
 import { Breadcrumbs } from './components/Breadcrumbs';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { haptics } from './utils/haptics';
 import { WORKFLOWS_DATA } from './data/workflows';
+import { HomePage } from './pages/HomePage';
 
-// Lazy-load secondary pages and modals
+// Lazy-load secondary pages and modals for optimal code-splitting
 const GeneratorPage = lazy(() => import('./pages/GeneratorPage').then(m => ({ default: m.GeneratorPage })));
 const CompatibilityPage = lazy(() => import('./pages/CompatibilityPage').then(m => ({ default: m.CompatibilityPage })));
 const TroubleshootingPage = lazy(() => import('./pages/TroubleshootingPage').then(m => ({ default: m.TroubleshootingPage })));
@@ -26,20 +27,27 @@ const CommandPalette = lazy(() => import('./components/CommandPalette').then(m =
 const SitemapModal = lazy(() => import('./components/SitemapModal').then(m => ({ default: m.SitemapModal })));
 const UserSettingsModal = lazy(() => import('./components/UserSettingsModal').then(m => ({ default: m.UserSettingsModal })));
 
-const prefetchSecondaryRoutes = () => {
+const prefetchSecondaryRoutesStaggered = () => {
+  // Never prefetch on mobile screens or metered connections to preserve mobile CPU & battery
+  if (typeof window !== 'undefined' && window.innerWidth < 768) {
+    return;
+  }
+  if (typeof navigator !== 'undefined' && (navigator as any).connection?.saveData) {
+    return;
+  }
   const routes = [
     () => import('./pages/GeneratorPage'),
-    () => import('./pages/CompatibilityPage'),
     () => import('./pages/TroubleshootingPage'),
     () => import('./pages/LibraryPage'),
-    () => import('./pages/PricingPage'),
+    () => import('./pages/CompatibilityPage'),
     () => import('./components/CommandPalette'),
-    () => import('./components/UserSettingsModal'),
   ];
-  routes.forEach((load) => {
-    try {
-      load();
-    } catch (_) {}
+  routes.forEach((load, idx) => {
+    setTimeout(() => {
+      try {
+        load();
+      } catch (_) {}
+    }, idx * 2000);
   });
 };
 
@@ -59,11 +67,16 @@ function AppContent() {
   const [activeCategory, setActiveCategory] = useState<ToolCategoryFilter>('all');
 
   useEffect(() => {
-    if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(prefetchSecondaryRoutes, { timeout: 1500 });
-    } else {
-      setTimeout(prefetchSecondaryRoutes, 1000);
-    }
+    // Wait until critical rendering and user interactions are idle before prefetching
+    const timer = setTimeout(() => {
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(prefetchSecondaryRoutesStaggered, { timeout: 3500 });
+      } else {
+        prefetchSecondaryRoutesStaggered();
+      }
+    }, 4000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -324,11 +337,13 @@ function AppContent() {
 
 export function App() {
   return (
-    <ThemeProvider>
-      <ProProvider>
-        <AppContent />
-      </ProProvider>
-    </ThemeProvider>
+    <ErrorBoundary fallbackTitle="SmartToolHub Apple Suite">
+      <ThemeProvider>
+        <ProProvider>
+          <AppContent />
+        </ProProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 

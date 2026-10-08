@@ -679,7 +679,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
 /**
  * Replaces placeholders in index.html with route-specific SEO tags and pre-rendered semantic HTML
  */
-export function injectSeoIntoHtml(html: string, reqPath: string): string {
+export function injectSeoIntoHtml(html: string, reqPath: string, isBot = false): string {
   const seo = getRouteSeo(reqPath);
   const canonicalUrl = `${CANONICAL_HOST}${seo.canonicalPath === '/' ? '/' : seo.canonicalPath}`;
 
@@ -735,8 +735,8 @@ export function injectSeoIntoHtml(html: string, reqPath: string): string {
     `<script id="schema-ld-json" type="application/ld+json">\n${schemaString}\n</script>`
   );
 
-  // Inject prerenderHtml into <div id="root">
-  if (seo.prerenderHtml && result.includes('<div id="root"')) {
+  // Inject prerenderHtml into <div id="root"> for crawlers or if requested
+  if (isBot && seo.prerenderHtml && result.includes('<div id="root"')) {
     result = result.replace(
       /<div id="root"[^>]*>[\s\S]*?<\/div>/i,
       `<div id="root" class="min-h-screen bg-[#030712]">${seo.prerenderHtml}</div>`

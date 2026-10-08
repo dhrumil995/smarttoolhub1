@@ -1398,7 +1398,9 @@ async function setupServer() {
         try {
           let rawHtml = fs.readFileSync(indexPath, 'utf-8');
           rawHtml = await vite.transformIndexHtml(req.url, rawHtml);
-          const enrichedHtml = injectSeoIntoHtml(rawHtml, req.path);
+          const userAgent = (req.headers['user-agent'] as string) || '';
+          const isBot = /bot|googlebot|bingbot|crawler|spider|robot|crawling/i.test(userAgent);
+          const enrichedHtml = injectSeoIntoHtml(rawHtml, req.path, isBot);
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
           res.setHeader('X-Robots-Tag', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
           res.setHeader('Link', `<https://smarttoolhub.net${req.path}>; rel="canonical"`);
@@ -1441,7 +1443,9 @@ async function setupServer() {
       if (fs.existsSync(indexPath)) {
         try {
           const rawHtml = fs.readFileSync(indexPath, 'utf-8');
-          const enrichedHtml = injectSeoIntoHtml(rawHtml, req.path);
+          const userAgent = (req.headers['user-agent'] as string) || '';
+          const isBot = /bot|googlebot|bingbot|crawler|spider|robot|crawling/i.test(userAgent);
+          const enrichedHtml = injectSeoIntoHtml(rawHtml, req.path, isBot);
           return res.status(200).send(enrichedHtml);
         } catch (e) {
           return res.sendFile(indexPath);

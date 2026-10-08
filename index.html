@@ -14,41 +14,6 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4598132123552240"
       crossorigin="anonymous"></script>
     <meta charset="UTF-8" />
-    <script>
-      (function() {
-        try {
-          var originalFetch = window.fetch;
-          var currentFetch = typeof originalFetch === 'function' ? originalFetch.bind(window) : originalFetch;
-          Object.defineProperty(window, 'fetch', {
-            get: function() {
-              return currentFetch;
-            },
-            set: function(fn) {
-              currentFetch = fn;
-            },
-            configurable: true,
-            enumerable: true
-          });
-        } catch (e) {
-          try {
-            if (typeof Window !== 'undefined' && Window.prototype) {
-              var protoFetch = Window.prototype.fetch;
-              var boundProtoFetch = typeof protoFetch === 'function' ? protoFetch.bind(window) : protoFetch;
-              Object.defineProperty(Window.prototype, 'fetch', {
-                get: function() {
-                  return boundProtoFetch;
-                },
-                set: function(fn) {
-                  boundProtoFetch = fn;
-                },
-                configurable: true,
-                enumerable: true
-              });
-            }
-          } catch (e2) {}
-        }
-      })();
-    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>SmartToolHub — Apple Shortcuts & macOS Sequoia Automation</title>
     <meta name="description" content="Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, and troubleshoot Continuity." />
@@ -74,7 +39,11 @@
     <!-- Google Fonts: Plus Jakarta Sans (Apple-grade geometric typography) & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+    </noscript>
 
     <!-- Application Stylesheet (Tailwind CSS v4 & Apple Obsidian Glassmorphism) -->
     <link rel="stylesheet" href="/src/index.css" />
