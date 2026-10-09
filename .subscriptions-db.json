@@ -86,19 +86,19 @@
   {
     "id": "sub_1790066615344_rdgdiur",
     "userId": "usr_idemp_100",
-    "subscriptionId": "sub_idemp_1791471086762",
+    "subscriptionId": "sub_idemp_1791511503894",
     "customerId": "cust_idemp_1",
     "customerEmail": "idemp@example.com",
     "customerName": "Idempotency Tester",
     "plan": "yearly",
     "status": "active",
-    "currentPeriodStart": "2026-10-08T14:51:26.764Z",
-    "currentPeriodEnd": "2027-10-08T14:51:26.763Z",
+    "currentPeriodStart": "2026-10-09T02:05:03.897Z",
+    "currentPeriodEnd": "2027-10-09T02:05:03.896Z",
     "cancelAtPeriodEnd": false,
     "needsPaymentMethodUpdate": false,
-    "lastEventId": "evt_idemp_1791471086762",
+    "lastEventId": "evt_idemp_1791511503894",
     "createdAt": "2026-09-22T08:43:35.344Z",
-    "updatedAt": "2026-10-08T14:51:26.764Z"
+    "updatedAt": "2026-10-09T02:05:03.897Z"
   },
   {
     "id": "sub_1790066615345_eh4y8dq",
@@ -522,5 +522,53 @@
     "updatedAt": "2026-10-08T14:51:26.778Z",
     "failureReason": "Final dunning retry failed. Account cancelled.",
     "lastEventId": "evt_fail_1791471086777"
+  },
+  {
+    "id": "sub_1791511503900_sonp8b5",
+    "userId": "usr_renew_1791511503900",
+    "subscriptionId": "sub_renew_1791511503900",
+    "customerEmail": "renew@example.com",
+    "plan": "yearly",
+    "status": "active",
+    "currentPeriodStart": "2026-10-09T02:05:03.900Z",
+    "currentPeriodEnd": "2027-10-09T02:05:03.901Z",
+    "cancelAtPeriodEnd": false,
+    "needsPaymentMethodUpdate": false,
+    "createdAt": "2026-10-09T02:05:03.900Z",
+    "updatedAt": "2026-10-09T02:05:03.901Z",
+    "lastEventId": "evt_renew_1791511503901",
+    "lastRenewedAt": "2026-10-09T02:05:03.901Z"
+  },
+  {
+    "id": "sub_1791511503903_20cxwf0",
+    "userId": "usr_hold_1791511503903",
+    "subscriptionId": "sub_hold_1791511503903",
+    "customerEmail": "hold@example.com",
+    "plan": "yearly",
+    "status": "on_hold",
+    "currentPeriodStart": "2026-10-09T02:05:03.903Z",
+    "currentPeriodEnd": "2027-10-09T02:05:03.903Z",
+    "cancelAtPeriodEnd": false,
+    "needsPaymentMethodUpdate": true,
+    "createdAt": "2026-10-09T02:05:03.903Z",
+    "updatedAt": "2026-10-09T02:05:03.904Z",
+    "failureReason": "Card expired (insufficient funds on renewal attempt)",
+    "lastEventId": "evt_hold_1791511503904"
+  },
+  {
+    "id": "sub_1791511503906_renjfbq",
+    "userId": "usr_fail_1791511503906",
+    "subscriptionId": "sub_fail_1791511503906",
+    "customerEmail": "failed@example.com",
+    "plan": "yearly",
+    "status": "failed",
+    "currentPeriodStart": "2026-10-09T02:05:03.906Z",
+    "currentPeriodEnd": "2027-10-09T02:05:03.906Z",
+    "cancelAtPeriodEnd": false,
+    "needsPaymentMethodUpdate": true,
+    "createdAt": "2026-10-09T02:05:03.906Z",
+    "updatedAt": "2026-10-09T02:05:03.907Z",
+    "failureReason": "Final dunning retry failed. Account cancelled.",
+    "lastEventId": "evt_fail_1791511503906"
   }
 ]

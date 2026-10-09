@@ -15,9 +15,9 @@
       crossorigin="anonymous"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>SmartToolHub — Apple Shortcuts & macOS Sequoia Automation</title>
-    <meta name="description" content="Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, and troubleshoot Continuity." />
-    <meta name="keywords" content="Apple Shortcut Generator, macOS Sequoia automation, custom Apple Shortcuts, iPhone shortcut generator, Mac shortcuts generator, iOS 18 automation, macOS 15 Sequoia shortcuts, Apple Intelligence shortcuts, Continuity Camera desk view, iPhone Mirroring macOS, Universal Control troubleshooting, Retina image calculator, JSON-LD schema generator, Apple Silicon bandwidth calculator" />
+    <title>Apple Shortcuts Generator — SmartToolHub</title>
+    <meta name="description" content="Free Apple Shortcuts generator: build custom iOS 18 &amp; macOS Sequoia automations, calculate charge times, and pick triggers instantly." />
+    <meta name="keywords" content="Apple Shortcuts generator, Apple Shortcut Generator, macOS Sequoia automation, custom Apple Shortcuts, iPhone shortcut generator, Mac shortcuts generator, iOS 18 automation, macOS 15 Sequoia shortcuts, Apple Intelligence shortcuts, Continuity Camera desk view, iPhone Mirroring macOS, Universal Control troubleshooting, Retina image calculator, JSON-LD schema generator, Apple Silicon bandwidth calculator" />
     <meta name="author" content="SmartToolHub Engineering & Editorial Team" />
     <meta name="creator" content="Mohit Aslaliya" />
     <meta name="publisher" content="SmartToolHub" />
@@ -36,19 +36,20 @@
     <link rel="alternate" hreflang="x-default" href="https://smarttoolhub.net/" />
     <link rel="alternate" hreflang="en" href="https://smarttoolhub.net/" />
 
-    <!-- Google Fonts: Plus Jakarta Sans (Apple-grade geometric typography) & JetBrains Mono -->
+    <!-- Google Fonts: Sora (Headings) & Manrope (Body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'" />
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" />
     </noscript>
 
     <!-- Application Stylesheet (Tailwind CSS v4 & Apple Obsidian Glassmorphism) -->
     <link rel="stylesheet" href="/src/index.css" />
 
-    <!-- Favicon & Icons for All Browsers, Devices & Search Engines -->
+    <!-- Favicon & Icons: Inline SVG Favicon + Vector SVG + Legacy Icons -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='114' fill='%23050713'/%3E%3Cellipse cx='200' cy='220' rx='140' ry='140' fill='%230a84ff' opacity='.4'/%3E%3Cellipse cx='320' cy='290' rx='140' ry='140' fill='%23ff4f9a' opacity='.4'/%3E%3Cg transform='translate(196,150) rotate(45)'%3E%3Crect x='-82' y='-82' width='164' height='164' rx='38' fill='%230a84ff' stroke='rgba(255,255,255,0.5)' stroke-width='3'/%3E%3C/g%3E%3Cg transform='translate(316,270) rotate(45)'%3E%3Crect x='-82' y='-82' width='164' height='164' rx='38' fill='%23ff4f9a' stroke='rgba(255,255,255,0.5)' stroke-width='3'/%3E%3C/g%3E%3Ccircle cx='256' cy='256' r='14' fill='%23ffb840'/%3E%3C/svg%3E" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
@@ -56,7 +57,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="mask-icon" href="/favicon.svg" color="#0071E3" />
+    <link rel="mask-icon" href="/favicon.svg" color="#0a84ff" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="SmartToolHub" />
@@ -68,21 +69,21 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="SmartToolHub" />
     <meta property="og:url" content="https://smarttoolhub.net/" />
-    <meta property="og:title" content="SmartToolHub — Apple Shortcuts & macOS Sequoia Automation" />
-    <meta property="og:description" content="Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, and troubleshoot Continuity." />
+    <meta property="og:title" content="Apple Shortcuts Generator — SmartToolHub" />
+    <meta property="og:description" content="Free Apple Shortcuts generator: build custom iOS 18 &amp; macOS Sequoia automations, calculate charge times, and pick triggers instantly." />
     <meta property="og:image" content="https://smarttoolhub.net/product-cover.jpg" />
     <meta property="og:image:secure_url" content="https://smarttoolhub.net/product-cover.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1024" />
     <meta property="og:image:height" content="1024" />
-    <meta property="og:image:alt" content="SmartToolHub Apple Ecosystem Intelligence Platform" />
+    <meta property="og:image:alt" content="SmartToolHub Apple Shortcuts Generator" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://smarttoolhub.net/" />
-    <meta name="twitter:title" content="SmartToolHub — Apple Shortcuts & macOS Sequoia Automation" />
-    <meta name="twitter:description" content="Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, and troubleshoot Continuity." />
+    <meta name="twitter:title" content="Apple Shortcuts Generator — SmartToolHub" />
+    <meta name="twitter:description" content="Free Apple Shortcuts generator: build custom iOS 18 &amp; macOS Sequoia automations, calculate charge times, and pick triggers instantly." />
     <meta name="twitter:image" content="https://smarttoolhub.net/product-cover.jpg" />
     <meta name="twitter:image:alt" content="SmartToolHub Apple Ecosystem Intelligence Platform" />
 
@@ -168,43 +169,43 @@
         {
           "@type": "ItemList",
           "@id": "https://smarttoolhub.net/#tool-suites",
-          "name": "SmartToolHub Core Utility Suites",
+          "name": "SmartToolHub Free Apple Shortcuts & Automation Tools",
           "itemListElement": [
             {
               "@type": "ListItem",
               "position": 1,
-              "name": "AI Shortcut & Script Generator",
-              "url": "https://smarttoolhub.net/generator"
+              "name": "Apple Shortcut Generator",
+              "url": "https://smarttoolhub.net/#generator"
             },
             {
               "@type": "ListItem",
               "position": 2,
-              "name": "Image & Retina Media Studio",
-              "url": "https://smarttoolhub.net/?category=image"
+              "name": "Shortcut Idea Generator",
+              "url": "https://smarttoolhub.net/#ideas"
             },
             {
               "@type": "ListItem",
               "position": 3,
-              "name": "Text & Prompt Synthesizer",
-              "url": "https://smarttoolhub.net/?category=text"
+              "name": "iOS Automation Trigger Picker",
+              "url": "https://smarttoolhub.net/#triggers"
             },
             {
               "@type": "ListItem",
               "position": 4,
-              "name": "Technical SEO & Schema Builder",
-              "url": "https://smarttoolhub.net/?category=seo"
+              "name": "iPhone Fast Charging Time Calculator",
+              "url": "https://smarttoolhub.net/#charging"
             },
             {
               "@type": "ListItem",
               "position": 5,
-              "name": "Silicon & Automation ROI Calculators",
-              "url": "https://smarttoolhub.net/?category=calculator"
+              "name": "AirDrop & Cable Transfer Time Calculator",
+              "url": "https://smarttoolhub.net/#transfers"
             },
             {
               "@type": "ListItem",
               "position": 6,
-              "name": "Continuity & AWDL Sync Doctor",
-              "url": "https://smarttoolhub.net/troubleshooting"
+              "name": "Retina Photo Print Size Calculator",
+              "url": "https://smarttoolhub.net/#print-size"
             }
           ]
         },
@@ -214,34 +215,50 @@
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "What is SmartToolHub?",
+              "name": "How do I create and run an Apple Shortcut on iPhone, iPad, or Mac?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "SmartToolHub is a dedicated Apple ecosystem intelligence platform providing verified multi-device workflows, an instant AI Shortcuts and shell script generator, macOS Sequoia compatibility checks, and step-by-step Continuity troubleshooting guides."
+                "text": "Open the built-in Shortcuts app on your Apple device. Tap or click the '+' button in the top right to start a new workflow. Browse or search actions from the right-hand action library (such as 'Send Message', 'Open App', 'Get Calendar Events', or 'Set Low Power Mode'), connect variables between steps, name your shortcut, and tap Done. You can run it immediately by tapping its tile, using a Home Screen or Mac Menu Bar widget, or speaking 'Hey Siri, [shortcut name]'."
               }
             },
             {
               "@type": "Question",
-              "name": "How does macOS Sequoia iPhone Mirroring and Continuity Camera work?",
+              "name": "How do I install an untrusted or shared .shortcut file in iOS 18?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "macOS Sequoia introduces wireless iPhone Mirroring and Continuity Camera Desk View. SmartToolHub checks your hardware compatibility and generates step-by-step setup guides to connect iPhone and Mac seamlessly."
+                "text": "In iOS 18 and macOS Sequoia, open any shared iCloud or SmartToolHub shortcut link directly in Safari. Tap 'Get Shortcut' or 'Add Shortcut'. iOS displays a native security preview sheet detailing every action, required permission (such as location or photos), and external network request. Review the actions, configure any personalized variables, and tap 'Add Shortcut'. Modern iOS signs shortcuts with iCloud certificates, so you no longer need the legacy 'Allow Untrusted Shortcuts' toggle in Settings."
               }
             },
             {
               "@type": "Question",
-              "name": "How can I contact SmartToolHub for support or custom workflow requests?",
+              "name": "Why does my Apple Shortcut get stuck or fail to complete in the background?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "You can reach the SmartToolHub team directly by emailing aslaliyamohit9@gmail.com or by visiting our Contact page."
+                "text": "iOS strictly enforces background execution resource limits (typically ~30 seconds for non-interactive routines). If your shortcut processes large batches of images, queries slow external APIs, or runs infinite repeat loops, iOS memory management will terminate the process. To ensure smooth background completion: keep action chains lightweight, optimize images before processing, use native built-in actions rather than repeated webhooks, and test execution with the screen unlocked."
               }
             },
             {
               "@type": "Question",
-              "name": "Does SmartToolHub require my Apple ID or passwords?",
+              "name": "How do Apple Shortcuts automations work without asking for confirmation each time?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. SmartToolHub operates on a strict Zero-Credentials architecture. We never ask for, store, or transmit your Apple ID, passwords, or personal account credentials."
+                "text": "In the Shortcuts app, tap the 'Automation' tab at the bottom and create a personal automation. Choose an event trigger that supports background execution (such as 'Time of Day', 'Alarm Dismissal', 'Connecting to CarPlay', 'NFC Tag Tap', or 'Battery Level'). When configuring the action sequence, toggle OFF 'Ask Before Running' and toggle OFF 'Notify When Run'. This allows the shortcut to run 100% silently in the background without prompting you."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I transfer and run the same Shortcut across Mac and iPhone?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! Apple Shortcuts automatically synchronize in real time across iPhone, iPad, Mac, and Apple Watch through iCloud when signed into the same Apple Account. Cross-platform actions (such as Calendar, Notes, Reminders, and Web requests) run seamlessly everywhere. macOS also supports running native AppleScript and Zsh shell scripts within shortcuts, while platform-specific actions (like toggling cellular data) gracefully adapt on Mac."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do I fix Continuity, iPhone Mirroring, and AirDrop handoff issues?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Make sure both your Mac and iPhone have Wi-Fi and Bluetooth turned on, are signed into the exact same Apple Account with Two-Factor Authentication, and are within 30 feet of each other. In macOS Sequoia System Settings > General > AirDrop & Handoff, ensure 'Allow Handoff' is enabled. If handoff stalls, toggle Bluetooth off and on, reboot the Apple Wireless Direct Link (AWDL) daemon, or use our built-in Continuity Sync Doctor to verify network handshake tokens."
               }
             }
           ]

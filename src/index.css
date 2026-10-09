@@ -4,46 +4,54 @@
   :root {
     color-scheme: dark;
     --apple-bg: #030712;
-    --apple-card-bg: rgba(15, 23, 42, 0.52);
+    --apple-card-bg: rgba(15, 23, 42, 0.60);
     --apple-card-border: rgba(255, 255, 255, 0.15);
     --apple-card-border-hover: rgba(129, 140, 248, 0.55);
-    --apple-specular-top: rgba(255, 255, 255, 0.18);
-    --apple-specular-top-hover: rgba(199, 210, 254, 0.38);
+    --apple-specular-top: rgba(255, 255, 255, 0.20);
+    --apple-specular-top-hover: rgba(199, 210, 254, 0.40);
     --apple-inner-ring: rgba(255, 255, 255, 0.04);
-    --apple-card-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.65), 0 0 24px -4px rgba(99, 102, 241, 0.07);
+    --apple-card-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.65), 0 0 24px -4px rgba(10, 132, 255, 0.12);
     --apple-text-primary: #F8FAFC;
     --apple-text-secondary: #94A3B8;
     --apple-nav-bg: rgba(3, 7, 18, 0.82);
-    --apple-accent: #6366F1;
-    --apple-accent-hover: #818CF8;
-    --apple-accent-tint: rgba(99, 102, 241, 0.16);
-    --apple-pill-secondary: rgba(255, 255, 255, 0.06);
-    --apple-pill-secondary-hover: rgba(255, 255, 255, 0.12);
-    --apple-panel-bg: rgba(255, 255, 255, 0.035);
-    --apple-panel-border: rgba(255, 255, 255, 0.13);
+    --apple-accent: #0a84ff;
+    --apple-accent-hover: #38bdf8;
+    --apple-accent-tint: rgba(10, 132, 255, 0.16);
+    --apple-pill-secondary: rgba(255, 255, 255, 0.07);
+    --apple-pill-secondary-hover: rgba(255, 255, 255, 0.14);
+    --apple-panel-bg: rgba(255, 255, 255, 0.04);
+    --apple-panel-border: rgba(255, 255, 255, 0.14);
+    
+    /* Aurora Gradient Palette */
+    --aurora-blue: #0a84ff;
+    --aurora-pink: #ff4f9a;
+    --aurora-amber: #ffb840;
   }
 
   /* Explicit dark mode class */
   :root.dark, html.dark, body.dark {
     color-scheme: dark;
     --apple-bg: #030712;
-    --apple-card-bg: rgba(15, 23, 42, 0.52);
+    --apple-card-bg: rgba(15, 23, 42, 0.60);
     --apple-card-border: rgba(255, 255, 255, 0.15);
     --apple-card-border-hover: rgba(129, 140, 248, 0.55);
-    --apple-specular-top: rgba(255, 255, 255, 0.18);
-    --apple-specular-top-hover: rgba(199, 210, 254, 0.38);
+    --apple-specular-top: rgba(255, 255, 255, 0.20);
+    --apple-specular-top-hover: rgba(199, 210, 254, 0.40);
     --apple-inner-ring: rgba(255, 255, 255, 0.04);
-    --apple-card-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.65), 0 0 24px -4px rgba(99, 102, 241, 0.07);
+    --apple-card-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.65), 0 0 24px -4px rgba(10, 132, 255, 0.12);
     --apple-text-primary: #F8FAFC;
     --apple-text-secondary: #94A3B8;
     --apple-nav-bg: rgba(3, 7, 18, 0.82);
-    --apple-accent: #6366F1;
-    --apple-accent-hover: #818CF8;
-    --apple-accent-tint: rgba(99, 102, 241, 0.16);
-    --apple-pill-secondary: rgba(255, 255, 255, 0.06);
-    --apple-pill-secondary-hover: rgba(255, 255, 255, 0.12);
-    --apple-panel-bg: rgba(255, 255, 255, 0.035);
-    --apple-panel-border: rgba(255, 255, 255, 0.13);
+    --apple-accent: #0a84ff;
+    --apple-accent-hover: #38bdf8;
+    --apple-accent-tint: rgba(10, 132, 255, 0.16);
+    --apple-pill-secondary: rgba(255, 255, 255, 0.07);
+    --apple-pill-secondary-hover: rgba(255, 255, 255, 0.14);
+    --apple-panel-bg: rgba(255, 255, 255, 0.04);
+    --apple-panel-border: rgba(255, 255, 255, 0.14);
+    --aurora-blue: #0a84ff;
+    --aurora-pink: #ff4f9a;
+    --aurora-amber: #ffb840;
   }
 
   /* Explicit light mode class */
@@ -52,7 +60,7 @@
     --apple-bg: #F8FAFC;
     --apple-card-bg: rgba(255, 255, 255, 0.92);
     --apple-card-border: rgba(15, 23, 42, 0.13);
-    --apple-card-border-hover: rgba(79, 70, 229, 0.48);
+    --apple-card-border-hover: rgba(10, 132, 255, 0.5);
     --apple-specular-top: rgba(255, 255, 255, 0.95);
     --apple-specular-top-hover: rgba(255, 255, 255, 1);
     --apple-inner-ring: rgba(15, 23, 42, 0.03);
@@ -60,19 +68,22 @@
     --apple-text-primary: #0F172A;
     --apple-text-secondary: #64748B;
     --apple-nav-bg: rgba(248, 250, 252, 0.88);
-    --apple-accent: #4F46E5;
-    --apple-accent-hover: #4338CA;
-    --apple-accent-tint: rgba(79, 70, 229, 0.10);
-    --apple-pill-secondary: rgba(15, 23, 42, 0.045);
-    --apple-pill-secondary-hover: rgba(15, 23, 42, 0.09);
+    --apple-accent: #0071E3;
+    --apple-accent-hover: #0077ED;
+    --apple-accent-tint: rgba(0, 113, 227, 0.10);
+    --apple-pill-secondary: rgba(15, 23, 42, 0.05);
+    --apple-pill-secondary-hover: rgba(15, 23, 42, 0.10);
     --apple-panel-bg: rgba(15, 23, 42, 0.025);
     --apple-panel-border: rgba(15, 23, 42, 0.11);
+    --aurora-blue: #0a84ff;
+    --aurora-pink: #ff4f9a;
+    --aurora-amber: #ffb840;
   }
 
   body {
     background-color: var(--apple-bg);
     color: var(--apple-text-primary);
-    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+    font-family: "Manrope", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
@@ -82,14 +93,14 @@
     overflow-x: hidden;
     min-height: 100vh;
     letter-spacing: -0.012em;
-    selection-background-color: #6366F1;
-    selection-color: #ffffff;
     padding-left: env(safe-area-inset-left, 0px);
     padding-right: env(safe-area-inset-right, 0px);
     transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1), color 200ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  h1, h2, h3, h4 {
+  h1, h2, h3, h4, .font-heading {
+    font-family: "Sora", sans-serif;
+    letter-spacing: -0.03em;
     text-wrap: balance;
   }
 
@@ -405,6 +416,32 @@ html.light .apple-key {
   border: 1px solid rgba(15, 23, 42, 0.16);
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 1px 2px rgba(15, 23, 42, 0.06);
   color: #334155;
+}
+
+/* 3D Perspective and Card Tilt Utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.perspective-1200 {
+  perspective: 1200px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Subtle 3D tilt on card hover */
+.tilt-card-3d {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0);
+}
+@media (hover: hover) and (pointer: fine) {
+  .tilt-card-3d:hover {
+    transform: perspective(1000px) translateY(-4px) translateZ(12px);
+    box-shadow: 0 24px 48px -12px rgba(10, 132, 255, 0.28), 0 0 24px -4px rgba(255, 79, 154, 0.15);
+  }
 }
 
 /* Respect prefers-reduced-motion */

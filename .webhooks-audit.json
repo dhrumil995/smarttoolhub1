@@ -166,5 +166,29 @@
     "eventType": "subscription.failed",
     "receivedAt": "2026-10-08T14:51:26.779Z",
     "status": "processed"
+  },
+  {
+    "eventId": "evt_idemp_1791511503894",
+    "eventType": "subscription.active",
+    "receivedAt": "2026-10-09T02:05:03.898Z",
+    "status": "processed"
+  },
+  {
+    "eventId": "evt_renew_1791511503901",
+    "eventType": "subscription.renewed",
+    "receivedAt": "2026-10-09T02:05:03.902Z",
+    "status": "processed"
+  },
+  {
+    "eventId": "evt_hold_1791511503904",
+    "eventType": "subscription.on_hold",
+    "receivedAt": "2026-10-09T02:05:03.905Z",
+    "status": "processed"
+  },
+  {
+    "eventId": "evt_fail_1791511503906",
+    "eventType": "subscription.failed",
+    "receivedAt": "2026-10-09T02:05:03.907Z",
+    "status": "processed"
   }
 ]

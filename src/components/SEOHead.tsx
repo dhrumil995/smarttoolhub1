@@ -28,9 +28,9 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
 
     // Default Home Page Metadata (30-60 char title, 120-160 char actionable description)
     let config: MetaConfig = {
-      title: 'SmartToolHub – Apple Shortcuts & macOS Automation Suite',
+      title: 'Apple Shortcuts Generator — SmartToolHub',
       description:
-        'Generate custom Apple Shortcuts with AI, optimize Retina media, build JSON-LD SEO schema, benchmark M4 Silicon, and fix Continuity sync.',
+        'Free Apple Shortcuts generator: build custom iOS 18 & macOS Sequoia automations, calculate charge times, and pick triggers instantly.',
       canonicalPath: '/',
       ogType: 'website',
       keywords:

@@ -1,6 +1,6 @@
 {
   "name": "SmartToolHub",
-  "description": "Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, and troubleshoot Continuity.",
+  "description": "Free Apple Shortcuts generator: build custom iOS 18 & macOS Sequoia automations, calculate charge times, and pick triggers instantly.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

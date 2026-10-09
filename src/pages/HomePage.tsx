@@ -13,6 +13,10 @@ import shortcutsAutomationImg from '../assets/images/feature_shortcuts_automatio
 import bentoRetinaImg from '../assets/images/bento_retina_image_engine_1790827223139.webp';
 import bentoSiliconImg from '../assets/images/bento_apple_silicon_neural_1790827235951.webp';
 import bentoContinuityImg from '../assets/images/bento_continuity_sync_matrix_1790827245735.webp';
+import { IPhone3DMockup } from '../components/IPhone3DMockup';
+import { HomeShortcutGenerator } from '../components/HomeShortcutGenerator';
+import { FreeAppleTools } from '../components/FreeAppleTools';
+import { SemanticShortcutsFAQ } from '../components/SemanticShortcutsFAQ';
 
 // Lazy load heavy workbench tabs only when requested by user
 const DiagnosticSimulator = lazy(() =>
@@ -88,6 +92,9 @@ export const HomePage: React.FC<HomePageProps> = ({
       onSelectCategory(cat);
     }
   };
+
+  // Main Generator Initial Prompt state (wired to Free Tools quick prompts)
+  const [generatorInitialPrompt, setGeneratorInitialPrompt] = useState<string>('');
 
   // Interactive Workbench active utility tab
   const [activeWorkbench, setActiveWorkbench] = useState<
@@ -370,20 +377,24 @@ export const HomePage: React.FC<HomePageProps> = ({
   ];
 
   return (
-    <div className="relative space-y-20 sm:space-y-28 pb-24">
-      {/* Ambient Obsidian Background Spotlights */}
+    <div className="relative space-y-16 sm:space-y-24 pb-24">
+      {/* Aurora-style gradient background with heavily blurred blue (#0a84ff), pink (#ff4f9a), and amber (#ffb840) blobs */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 overflow-hidden h-[780px]"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 overflow-hidden h-[920px]"
       >
-        <div className="absolute left-1/2 top-[-140px] -translate-x-1/2 w-[920px] h-[480px] rounded-full bg-gradient-to-tr from-indigo-600/20 via-purple-500/12 to-sky-400/10 blur-[130px]" />
-        <div className="absolute left-1/4 top-[220px] w-[420px] h-[320px] rounded-full bg-indigo-500/10 blur-[110px]" />
+        {/* Blue #0a84ff blob */}
+        <div className="absolute left-1/2 top-[-100px] -translate-x-1/2 w-[720px] sm:w-[980px] h-[480px] rounded-full bg-[#0a84ff]/25 blur-[140px]" />
+        {/* Pink #ff4f9a blob */}
+        <div className="absolute right-[5%] top-[140px] w-[380px] sm:w-[540px] h-[420px] rounded-full bg-[#ff4f9a]/20 blur-[130px]" />
+        {/* Amber #ffb840 blob */}
+        <div className="absolute left-[5%] top-[220px] w-[360px] sm:w-[480px] h-[380px] rounded-full bg-[#ffb840]/16 blur-[130px]" />
       </div>
 
       {/* =========================================================================
-          SECTION 1: HERO SECTION WITH METALLIC TYPOGRAPHY & LIVE TOOL SEARCH BAR
+          SECTION 1: HERO SECTION WITH H1, VALUE PROP, PRIMARY CTA & 3D IPHONE MOCKUP
           ========================================================================= */}
-      <section className="relative pt-12 sm:pt-20 md:pt-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center space-y-8">
+      <section className="relative pt-10 sm:pt-16 md:pt-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto text-center space-y-8">
         <motion.div
           initial={shouldReduceMotion ? false : 'hidden'}
           animate="visible"
@@ -399,7 +410,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           }}
           className="space-y-4 max-w-4xl mx-auto"
         >
-          <motion.p
+          <motion.div
             variants={{
               hidden: { opacity: 0, y: 10 },
               visible: {
@@ -408,10 +419,11 @@ export const HomePage: React.FC<HomePageProps> = ({
                 transition: { type: 'spring', stiffness: 280, damping: 28, mass: 0.8 },
               },
             }}
-            className="text-xs sm:text-[13px] font-medium text-indigo-600 dark:text-indigo-400 tracking-tight will-change-transform"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/25 text-blue-400 text-xs font-mono will-change-transform"
           >
-            macOS Sequoia 15 · iOS 18 · Universal Web & Silicon Utilities
-          </motion.p>
+            <Sparkles className="w-3.5 h-3.5 text-[#ff4f9a]" />
+            <span>macOS Sequoia 15 · iOS 18 Siri App Intents Ready</span>
+          </motion.div>
 
           <motion.h1
             variants={{
@@ -423,10 +435,10 @@ export const HomePage: React.FC<HomePageProps> = ({
                 transition: { type: 'spring', stiffness: 240, damping: 26, mass: 0.9 },
               },
             }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-[-0.035em] leading-[1.06] text-metallic will-change-transform"
+            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-[-0.035em] leading-[1.08] text-metallic font-heading will-change-transform"
           >
-            Precision Tools for the{' '}
-            <span className="text-accent-gradient">Modern Apple Ecosystem.</span>
+            Apple Shortcuts Generator{' '}
+            <span className="text-accent-gradient">for iOS 18 &amp; macOS Sequoia</span>
           </motion.h1>
 
           <motion.p
@@ -438,40 +450,51 @@ export const HomePage: React.FC<HomePageProps> = ({
                 transition: { type: 'spring', stiffness: 260, damping: 28, mass: 0.85 },
               },
             }}
-            className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-zinc-400 max-w-2xl mx-auto font-normal leading-relaxed pt-1 will-change-transform"
+            className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-zinc-300 max-w-2xl mx-auto font-normal leading-relaxed pt-1 will-change-transform"
           >
-            Synthesize custom Siri Shortcuts and macOS scripts with AI, run client-side Image, Text, SEO, and Silicon calculators, and resolve Continuity sync in one unified workspace.
+            Generate custom, production-ready Siri Shortcuts and macOS automation workflows in seconds with AI.
           </motion.p>
         </motion.div>
 
-        {/* Primary Glowing CTA & Secondary Action */}
+        {/* Primary Action Button & Secondary Navigation */}
         <div className="flex flex-wrap items-center justify-center gap-3.5 pt-1">
           <a
-            href="/generator"
+            href="#generator"
             onClick={(e) => {
               e.preventDefault();
               haptics.playTap();
-              onNavigate('generator');
+              document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+              const input = document.getElementById('shortcut-prompt-input');
+              if (input) input.focus();
             }}
-            className="inline-flex items-center gap-2.5 px-6 py-3.5 min-h-[46px] rounded-2xl glass-button-primary text-white text-xs sm:text-sm font-semibold tracking-tight cursor-pointer whitespace-nowrap text-decoration-none"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 min-h-[48px] rounded-2xl glass-button-primary text-white text-xs sm:text-sm font-bold tracking-tight cursor-pointer whitespace-nowrap text-decoration-none shadow-[0_12px_28px_rgba(10,132,255,0.4)]"
           >
             <Wand2 className="w-4 h-4 shrink-0" />
-            <span>Generate Custom Shortcut</span>
+            <span>Generate a shortcut</span>
             <ArrowRight className="w-4 h-4 shrink-0" />
           </a>
 
           <a
-            href="/library"
+            href="#ideas"
             onClick={(e) => {
               e.preventDefault();
               haptics.playTap();
-              onNavigate('library');
+              document.getElementById('ideas')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="inline-flex items-center gap-2 px-6 py-3.5 min-h-[46px] rounded-2xl glass-pill text-slate-900 dark:text-white text-xs sm:text-sm font-semibold tracking-tight cursor-pointer whitespace-nowrap text-decoration-none"
+            className="inline-flex items-center gap-2 px-6 py-3.5 min-h-[48px] rounded-2xl glass-pill text-slate-900 dark:text-white text-xs sm:text-sm font-semibold tracking-tight cursor-pointer whitespace-nowrap text-decoration-none"
           >
-            <BookOpen className="w-4 h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
-            <span>Explore 120+ Workflows</span>
+            <Sparkles className="w-4 h-4 text-[#ffb840] shrink-0" />
+            <span>Explore 5 Free Tools</span>
           </a>
+        </div>
+
+        {/* CSS 3D iPhone Mockup with Live Shortcut Preview & Parallax Floating Glass Chips */}
+        <div className="pt-2">
+          <IPhone3DMockup
+            onRunSample={() => {
+              document.getElementById('generator')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
         </div>
 
         {/* Interactive Modern Tool Search & Instant Filter Bar */}
@@ -705,7 +728,169 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* =========================================================================
-          SECTION 2: ASYMMETRIC BENTO-BOX GRID FOR SMARTTOOLHUB SUITES
+          SECTION 2: MAIN POLISHED APPLE SHORTCUT GENERATOR TOOL
+          ========================================================================= */}
+      <HomeShortcutGenerator
+        initialPrompt={generatorInitialPrompt}
+        onOpenFullGenerator={() => onNavigate('generator')}
+      />
+
+      {/* =========================================================================
+          SECTION 3: HOW IT WORKS IN 3 STEPS
+          ========================================================================= */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="text-center space-y-2 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-400 text-xs font-mono">
+            <span>Seamless Workflow</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-heading">
+            How It Works in 3 Simple Steps
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
+            From natural thought to native Siri voice trigger in under sixty seconds.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Step 1 */}
+          <div className="bento-card p-6 sm:p-8 tilt-card-3d relative overflow-hidden flex flex-col justify-between space-y-4">
+            <div className="space-y-3">
+              <span className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0a84ff] to-[#38bdf8] text-white flex items-center justify-center text-sm font-extrabold font-mono shadow-md">
+                01
+              </span>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white font-heading">
+                Describe Your Routine
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
+                Type what you want to automate in everyday English — like &ldquo;Mute notifications when calendar event starts&rdquo; or &ldquo;Batch convert screenshots to WebP.&rdquo;
+              </p>
+            </div>
+            <div className="pt-2 text-[11px] font-mono text-blue-500 dark:text-blue-400 flex items-center gap-1.5">
+              <span>Natural language intent parsing</span>
+            </div>
+          </div>
+
+          {/* Step 2 */}
+          <div className="bento-card p-6 sm:p-8 tilt-card-3d relative overflow-hidden flex flex-col justify-between space-y-4">
+            <div className="space-y-3">
+              <span className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#ff4f9a] to-[#ff75b5] text-white flex items-center justify-center text-sm font-extrabold font-mono shadow-md">
+                02
+              </span>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white font-heading">
+                AI Synthesizes Action Graph
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
+                SmartToolHub constructs validated iOS 18 &amp; macOS Sequoia App Intents, variable links, AppleScript fallbacks, and parameter sanity checks.
+              </p>
+            </div>
+            <div className="pt-2 text-[11px] font-mono text-pink-500 dark:text-pink-400 flex items-center gap-1.5">
+              <span>Zero third-party runtime bloat</span>
+            </div>
+          </div>
+
+          {/* Step 3 */}
+          <div className="bento-card p-6 sm:p-8 tilt-card-3d relative overflow-hidden flex flex-col justify-between space-y-4">
+            <div className="space-y-3">
+              <span className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#ffb840] to-[#ffd166] text-black flex items-center justify-center text-sm font-extrabold font-mono shadow-md">
+                03
+              </span>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white font-heading">
+                Run on iPhone, iPad &amp; Mac
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
+                Import actions into your native Shortcuts app with iCloud sync. Trigger with Siri voice, your Apple Watch, or Action Button.
+              </p>
+            </div>
+            <div className="pt-2 text-[11px] font-mono text-amber-500 dark:text-amber-400 flex items-center gap-1.5">
+              <span>Instant Siri &amp; Widget triggers</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 4: FEATURE GRID
+          ========================================================================= */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="text-center space-y-2 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-400 text-xs font-mono">
+            <span>Engineering Architecture</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-heading">
+            Built for Native Apple Architecture
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
+            Engineered specifically for Darwin 24.x, Apple Silicon unified memory, and Apple Intelligence App Intents.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="bento-card p-6 tilt-card-3d space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-400/30 text-blue-400 flex items-center justify-center">
+              <Zap className="w-5 h-5" />
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white font-heading">
+              Siri Voice &amp; App Intents
+            </h3>
+            <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
+              Full compatibility with iOS 18 Siri Intents, Action Button shortcuts, and Control Center toggle controls.
+            </p>
+          </div>
+
+          <div className="bento-card p-6 tilt-card-3d space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-400/30 text-emerald-400 flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white font-heading">
+              100% Private (No Tracking)
+            </h3>
+            <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
+              Calculators and workflow generators run client-side. No telemetry, user logins, or persistent tracking cookies.
+            </p>
+          </div>
+
+          <div className="bento-card p-6 tilt-card-3d space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-purple-500/15 border border-purple-400/30 text-purple-400 flex items-center justify-center">
+              <Cpu className="w-5 h-5" />
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white font-heading">
+              Apple Silicon Tuned
+            </h3>
+            <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
+              Accurate M1–M4 unified memory bandwidth models, local LLM token speed estimates, and native macOS sips commands.
+            </p>
+          </div>
+
+          <div className="bento-card p-6 tilt-card-3d space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-pink-500/15 border border-pink-400/30 text-pink-400 flex items-center justify-center">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white font-heading">
+              Cross-Device Continuity
+            </h3>
+            <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
+              Diagnose AWDL peer-to-peer handoffs, AirDrop discovery tokens, and iPhone Mirroring without restarting your devices.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 5: 5 SMALL FREE TOOLS (EACH WITH OWN H2, LABELS & INSTANT RESULTS)
+          ========================================================================= */}
+      <FreeAppleTools
+        onLoadPromptIntoGenerator={(promptText) => {
+          setGeneratorInitialPrompt(promptText);
+        }}
+      />
+
+      {/* =========================================================================
+          SECTION 6: SEMANTIC FAQ ACCORDION (<DETAILS> ELEMENTS)
+          ========================================================================= */}
+      <SemanticShortcutsFAQ />
+
+      {/* =========================================================================
+          SECTION 7: ASYMMETRIC BENTO-BOX GRID FOR SMARTTOOLHUB SUITES
           ========================================================================= */}
       <section
         id="bento-tools-section"

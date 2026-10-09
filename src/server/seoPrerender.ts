@@ -641,8 +641,8 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
 
   // Default Home Page (/)
   return {
-    title: 'SmartToolHub — Apple Shortcuts & macOS Sequoia Automation',
-    description: 'Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, and troubleshoot Continuity.',
+    title: 'Apple Shortcuts Generator — SmartToolHub',
+    description: 'Free Apple Shortcuts generator: build custom iOS 18 & macOS Sequoia automations, calculate charge times, and pick triggers instantly.',
     canonicalPath: '/',
     ogType: 'website',
     ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
@@ -654,23 +654,149 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
           '@id': `${CANONICAL_HOST}/#website`,
           url: `${CANONICAL_HOST}/`,
           name: 'SmartToolHub',
-          description: 'Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, and troubleshoot Continuity.',
+          description: 'Free Apple Shortcuts generator: build custom iOS 18 & macOS Sequoia automations, calculate charge times, and pick triggers instantly.',
+        },
+        {
+          '@type': ['WebApplication', 'SoftwareApplication'],
+          '@id': `${CANONICAL_HOST}/#application`,
+          name: 'SmartToolHub Apple Shortcuts Generator',
+          applicationCategory: 'UtilitiesApplication',
+          operatingSystem: 'iOS 18, macOS 15 Sequoia, iPadOS 18, Web',
+          description: 'Free Apple Shortcuts generator: build custom iOS 18 & macOS Sequoia automations, calculate charge times, and pick triggers instantly.',
+          url: `${CANONICAL_HOST}/`,
+        },
+        {
+          '@type': 'ItemList',
+          '@id': `${CANONICAL_HOST}/#tool-suites`,
+          name: 'SmartToolHub Free Apple Shortcuts & Automation Tools',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Apple Shortcut Generator', url: `${CANONICAL_HOST}/#generator` },
+            { '@type': 'ListItem', position: 2, name: 'Shortcut Idea Generator', url: `${CANONICAL_HOST}/#ideas` },
+            { '@type': 'ListItem', position: 3, name: 'iOS Automation Trigger Picker', url: `${CANONICAL_HOST}/#triggers` },
+            { '@type': 'ListItem', position: 4, name: 'iPhone Fast Charging Time Calculator', url: `${CANONICAL_HOST}/#charging` },
+            { '@type': 'ListItem', position: 5, name: 'AirDrop & Cable Transfer Time Calculator', url: `${CANONICAL_HOST}/#transfers` },
+            { '@type': 'ListItem', position: 6, name: 'Retina Photo Print Size Calculator', url: `${CANONICAL_HOST}/#print-size` },
+          ],
+        },
+        {
+          '@type': 'FAQPage',
+          '@id': `${CANONICAL_HOST}/#faq`,
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'How do I create and run an Apple Shortcut on iPhone, iPad, or Mac?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Open the built-in Shortcuts app on your Apple device. Tap or click the + button in the top right to start a new workflow. Browse or search actions from the library, connect variables, name your shortcut, and tap Done. Run it immediately by tapping its tile, using a Home Screen or Mac Menu Bar widget, or speaking Hey Siri, [shortcut name].',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'How do I install an untrusted or shared .shortcut file in iOS 18?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'In iOS 18 and macOS Sequoia, open any shared iCloud or SmartToolHub shortcut link directly in Safari. Tap Get Shortcut or Add Shortcut. iOS displays a native security preview sheet detailing every action, required permission, and network request. Review the actions, configure any variables, and tap Add Shortcut.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Why does my Apple Shortcut get stuck or fail to complete in the background?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'iOS strictly enforces background execution limits (typically ~30 seconds for non-interactive tasks). If your shortcut processes large batches of images, queries slow external APIs, or runs infinite loops, iOS will terminate it. Keep action chains lightweight, optimize images before processing, and test with the screen unlocked.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'How do Apple Shortcuts automations work without asking for confirmation each time?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'In the Shortcuts app, tap the Automation tab and create a personal automation. Choose an event trigger that supports background execution (such as Time of Day, Alarm Dismissal, CarPlay, NFC Tag Tap, or Battery Level). Toggle OFF Ask Before Running and toggle OFF Notify When Run.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Can I transfer and run the same Shortcut across Mac and iPhone?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Yes! Apple Shortcuts automatically synchronize in real time across iPhone, iPad, Mac, and Apple Watch through iCloud when signed into the same Apple Account. Cross-platform actions run seamlessly everywhere, and macOS also supports native AppleScript and Zsh shell scripts.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'How do I fix Continuity, iPhone Mirroring, and AirDrop handoff issues?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ensure both your Mac and iPhone have Wi-Fi and Bluetooth turned on, are signed into the exact same Apple Account with Two-Factor Authentication, and are within 30 feet of each other. In macOS Sequoia System Settings > General > AirDrop & Handoff, ensure Allow Handoff is enabled.',
+              },
+            },
+          ],
         },
       ],
     },
     prerenderHtml: `
-      <div class="prerender-shell" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem; color: #F8FAFC; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+      <div class="prerender-shell" style="max-width: 1000px; margin: 0 auto; padding: 2.5rem 1.25rem; color: #F8FAFC; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
         <header style="margin-bottom: 2.5rem; text-align: center;">
-          <h1 style="font-size: 2.75rem; font-weight: 800; margin: 0 0 1rem 0; line-height: 1.2;">Apple Shortcuts, macOS Sequoia Automation & Continuity Diagnostics</h1>
+          <h1 style="font-size: 2.75rem; font-weight: 800; margin: 0 0 1rem 0; line-height: 1.15;">Apple Shortcuts Generator for iOS 18 &amp; macOS Sequoia</h1>
           <p style="font-size: 1.2rem; color: #94a3b8; max-width: 800px; margin: 0 auto 1.5rem auto; line-height: 1.6;">
-            Client-side Apple utility platform and peer-reviewed systems engineering publication for macOS Sequoia and iOS 18 power users.
+            Generate custom, production-ready Siri Shortcuts and macOS automation workflows in seconds with AI.
           </p>
           <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="/generator" style="background: #4f46e5; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">Launch AI Generator</a>
-            <a href="/library" style="background: rgba(255,255,255,0.1); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">Browse 120+ Workflows</a>
-            <a href="/troubleshooting" style="background: rgba(255,255,255,0.1); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">Continuity Diagnostics</a>
+            <a href="#generator" style="background: #0a84ff; color: white; padding: 0.75rem 1.75rem; border-radius: 12px; text-decoration: none; font-weight: 700;">Generate a shortcut</a>
+            <a href="#ideas" style="background: rgba(255,255,255,0.08); color: white; padding: 0.75rem 1.75rem; border-radius: 12px; text-decoration: none; font-weight: 600;">Explore Free Tools</a>
           </div>
         </header>
+
+        <section style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 2rem; margin-bottom: 2.5rem;">
+          <h2 style="font-size: 1.5rem; margin-top: 0;">How It Works in 3 Simple Steps</h2>
+          <ol style="line-height: 1.9; color: #cbd5e1; padding-left: 1.5rem;">
+            <li><strong>Describe Your Routine:</strong> Type what you want to automate in plain English.</li>
+            <li><strong>AI Synthesizes Action Graph:</strong> SmartToolHub constructs validated iOS 18 &amp; macOS Sequoia App Intents and variable links.</li>
+            <li><strong>Run on iPhone, iPad &amp; Mac:</strong> Import actions into your native Shortcuts app with 1-tap iCloud sync.</li>
+          </ol>
+        </section>
+
+        <section style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 2rem; margin-bottom: 2.5rem;">
+          <h2 style="font-size: 1.5rem; margin-top: 0;">Free Apple Automation Tools</h2>
+          <ul style="line-height: 1.9; color: #cbd5e1; padding-left: 1.5rem;">
+            <li><strong><a href="#generator" style="color: #38bdf8;">Apple Shortcut Generator</a>:</strong> Instant AI Siri action synthesis.</li>
+            <li><strong><a href="#ideas" style="color: #38bdf8;">Shortcut Idea Generator</a>:</strong> Proven recipes across Productivity, Media, Health, Commute, and Smart Home.</li>
+            <li><strong><a href="#triggers" style="color: #38bdf8;">iOS Automation Trigger Picker</a>:</strong> Verify which event triggers run 100% silently without confirmation prompts.</li>
+            <li><strong><a href="#charging" style="color: #38bdf8;">iPhone Fast Charging Time Calculator</a>:</strong> Model lithium fast-charging and trickle curves.</li>
+            <li><strong><a href="#transfers" style="color: #38bdf8;">AirDrop &amp; Cable Transfer Time Calculator</a>:</strong> Benchmark throughput across AirDrop Wi-Fi 6E, USB-C, and Thunderbolt 4.</li>
+            <li><strong><a href="#print-size" style="color: #38bdf8;">Retina Photo Print Size Calculator</a>:</strong> Calculate archival photo prints at 300, 240, and 150 DPI.</li>
+          </ul>
+        </section>
+
+        <section style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 2rem; margin-bottom: 2rem;">
+          <h2 style="font-size: 1.5rem; margin-top: 0;">Frequently Asked Questions</h2>
+          <div style="display: grid; gap: 1.25rem;">
+            <div>
+              <h3 style="font-size: 1.1rem; color: #38bdf8; margin: 0 0 0.5rem 0;">How do I create and run an Apple Shortcut on iPhone, iPad, or Mac?</h3>
+              <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">Open the Shortcuts app, tap +, add actions from the library, connect variables, and tap Done. Run via widgets, Siri voice, or app tiles.</p>
+            </div>
+            <div>
+              <h3 style="font-size: 1.1rem; color: #38bdf8; margin: 0 0 0.5rem 0;">How do I install an untrusted or shared .shortcut file in iOS 18?</h3>
+              <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">Open shared iCloud or SmartToolHub links in Safari, review the native security preview sheet of actions and permissions, and tap Add Shortcut.</p>
+            </div>
+            <div>
+              <h3 style="font-size: 1.1rem; color: #38bdf8; margin: 0 0 0.5rem 0;">Why does my Apple Shortcut get stuck or fail to complete in the background?</h3>
+              <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">iOS enforces background execution limits (~30 seconds). Keep action chains lightweight, optimize large images, and test with the screen unlocked.</p>
+            </div>
+            <div>
+              <h3 style="font-size: 1.1rem; color: #38bdf8; margin: 0 0 0.5rem 0;">How do Apple Shortcuts automations work without asking for confirmation each time?</h3>
+              <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">In the Automation tab, pick background triggers like Time of Day, CarPlay, or NFC, then toggle OFF Ask Before Running and toggle OFF Notify When Run.</p>
+            </div>
+            <div>
+              <h3 style="font-size: 1.1rem; color: #38bdf8; margin: 0 0 0.5rem 0;">Can I transfer and run the same Shortcut across Mac and iPhone?</h3>
+              <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">Yes, shortcuts sync automatically via iCloud across all devices signed into the same Apple Account. macOS also runs native AppleScript and Zsh shell scripts.</p>
+            </div>
+            <div>
+              <h3 style="font-size: 1.1rem; color: #38bdf8; margin: 0 0 0.5rem 0;">How do I fix Continuity, iPhone Mirroring, and AirDrop handoff issues?</h3>
+              <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">Ensure both devices have Wi-Fi and Bluetooth enabled, are signed into the same Apple Account, and have Allow Handoff enabled in System Settings.</p>
+            </div>
+          </div>
+        </section>
       </div>
     `,
   };
