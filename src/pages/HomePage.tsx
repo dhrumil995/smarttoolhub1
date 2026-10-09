@@ -46,7 +46,9 @@ import {
   Sliders,
   Terminal,
   Cpu,
-  X
+  X,
+  Zap,
+  ShieldCheck
 } from 'lucide-react';
 
 interface HomePageProps {
