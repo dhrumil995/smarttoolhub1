@@ -95,10 +95,10 @@ export const TermsPage: React.FC<TermsPageProps> = ({ onNavigate }) => {
           <p>
             For inquiries regarding these Terms of Service, please contact us at{' '}
             <a 
-              href="mailto:aslaliyamohit9@gmail.com?subject=SmartToolHub%20Terms%20Inquiry"
+              href="mailto:contact@smarttoolhub.net?subject=SmartToolHub%20Terms%20Inquiry"
               className="text-blue-400 hover:underline font-mono font-semibold"
             >
-              aslaliyamohit9@gmail.com
+              contact@smarttoolhub.net
             </a>.
           </p>
         </section>

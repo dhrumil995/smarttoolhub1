@@ -158,25 +158,25 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
       };
     } else if (currentPage === 'contact') {
       config = {
-        title: 'Contact Engineering & Support Desk | SmartToolHub',
+        title: 'Contact Dhrumil Aslaliya | SmartToolHub',
         description:
-          'Request a custom multi-device Apple Shortcut, report a macOS Sequoia Continuity bug, or connect directly with the SmartToolHub engineering team.',
+          'Request a custom Apple Shortcut, report an iOS or macOS workflow issue, or contact Dhrumil Aslaliya directly.',
         canonicalPath: '/contact',
         ogType: 'website',
-        keywords: 'Contact SmartToolHub, custom Apple workflow request, macOS support desk',
+        keywords: 'Contact SmartToolHub, Dhrumil Aslaliya, Apple Shortcuts request, iOS automation help',
         breadcrumbs: [
           { name: 'Home', path: '/' },
-          { name: 'Contact Engineering', path: '/contact' },
+          { name: 'Contact', path: '/contact' },
         ],
       };
     } else if (currentPage === 'about') {
       config = {
-        title: 'About SmartToolHub | Systems Engineering & Hardware Lab',
+        title: 'About SmartToolHub | Independent Apple Shortcuts & Automation Guide',
         description:
-          'Learn about SmartToolHub’s mission, lead architect Dhrumil Aslaliya, physical Apple Silicon testing lab, and 5-stage editorial review standard.',
+          'Learn about SmartToolHub’s mission, creator Dhrumil Aslaliya, and independent guides for iOS and macOS automation.',
         canonicalPath: '/about',
         ogType: 'website',
-        keywords: 'About SmartToolHub, Dhrumil Aslaliya, Apple Silicon lab, editorial integrity, macOS engineering',
+        keywords: 'About SmartToolHub, Dhrumil Aslaliya, Apple shortcuts, iOS automation, macOS workflows',
         breadcrumbs: [
           { name: 'Home', path: '/' },
           { name: 'About Us', path: '/about' },
@@ -184,15 +184,15 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
       };
     } else if (currentPage === 'guides') {
       config = {
-        title: 'Apple Systems Engineering & Automation Guides | SmartToolHub',
+        title: 'Apple Shortcuts & Automation Guides | SmartToolHub',
         description:
-          'In-depth architectural guides on macOS 15 AWDL protocol, Apple Silicon unified memory for local LLMs, and native sips media automation.',
+          'Clear, step-by-step guides on Apple Shortcuts, Continuity, and native automation for iPhone, iPad, and Mac.',
         canonicalPath: '/guides',
         ogType: 'website',
-        keywords: 'macOS AWDL protocol guide, Apple Silicon memory bandwidth, sips tutorial, Apple Shortcuts architecture',
+        keywords: 'Apple Shortcuts guides, iOS automation tutorial, macOS Shortcuts setup',
         breadcrumbs: [
           { name: 'Home', path: '/' },
-          { name: 'Engineering Guides', path: '/guides' },
+          { name: 'Guides', path: '/guides' },
         ],
       };
     }
@@ -229,7 +229,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
       'robots',
       'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
     );
-    setMeta('name', 'author', 'SmartToolHub Engineering & Editorial Team');
+    setMeta('name', 'author', 'Dhrumil Aslaliya');
 
     // OpenGraph Social Cards
     setMeta('property', 'og:title', config.title);
@@ -276,7 +276,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
           '@id': `${baseUrl}/#organization`,
           name: 'SmartToolHub',
           url: `${baseUrl}/`,
-          email: 'aslaliyamohit9@gmail.com',
+          email: 'contact@smarttoolhub.net',
           logo: {
             '@type': 'ImageObject',
             url: `${baseUrl}/logo.png`,

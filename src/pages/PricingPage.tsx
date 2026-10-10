@@ -50,15 +50,6 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate }) => {
   } | null>(null);
   const [isOpeningPortal, setIsOpeningPortal] = useState(false);
 
-  // Test Payment Terminal Modal State
-  const [isTestModalOpen, setIsTestModalOpen] = useState(false);
-  const [testCardNumber, setTestCardNumber] = useState('4242 4242 4242 4242');
-  const [testCardExp, setTestCardExp] = useState('12/28');
-  const [testCardCvc, setTestCardCvc] = useState('888');
-  const [testCardName, setTestCardName] = useState('Dhrumil Aslaliya');
-  const [isProcessingTestPayment, setIsProcessingTestPayment] = useState(false);
-  const [testPaymentError, setTestPaymentError] = useState<string | null>(null);
-
   useEffect(() => {
     // 1. Fetch server subscription repository status
     fetch('/api/dodo/subscription-status')
@@ -201,10 +192,9 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate }) => {
           code: 'MERCHANT_NOT_LIVE',
           title: 'Dodo Payments Verification Required (HTTP 403)',
           message:
-            'Your Dodo Payments credentials and product are connected, but Live Payments are pending approval on your Dodo Payments merchant profile. Please complete business verification on app.dodopayments.com before real card transactions can be processed. You can also use the Test Card Payment Terminal below to test the full checkout and activate Pro right now.',
+            'Live Payments are pending business verification on your Dodo Payments merchant profile. Please complete KYC verification on app.dodopayments.com.',
           actionUrl: 'https://app.dodopayments.com',
           actionLabel: 'Open Dodo Dashboard',
-          showTestModal: true,
           showSettingsModal: true,
         });
       } else {
@@ -214,10 +204,9 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate }) => {
           message:
             data?.error_message ||
             data?.message ||
-            'Payment gateway could not initialize checkout session. Please check your credentials or test with the payment terminal below.',
+            'Payment gateway could not initialize checkout session. Please try again.',
           actionUrl: 'https://app.dodopayments.com',
           actionLabel: 'Open Dodo Dashboard',
-          showTestModal: true,
           showSettingsModal: true,
         });
       }
@@ -227,47 +216,11 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate }) => {
         title: 'Connection Notice',
         message:
           err?.message ||
-          'Unable to reach payment gateway. You can use the test payment terminal below to simulate checkout and unlock Pro.',
-        showTestModal: true,
+          'Unable to reach payment gateway. Please check your internet connection or try again later.',
         showSettingsModal: true,
       });
     } finally {
       setIsCheckingOut(false);
-    }
-  };
-
-  const handleProcessTestPayment = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setTestPaymentError(null);
-    setIsProcessingTestPayment(true);
-
-    try {
-      const res = await fetch('/api/dodo/submit-test-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          plan: billingCycle,
-          cardNumber: testCardNumber,
-          customerName: testCardName,
-          customerEmail: 'subscriber@smarttoolhub.com',
-        }),
-      });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.error_message || 'Payment simulation declined.');
-      }
-
-      activatePro();
-      setIsTestModalOpen(false);
-      setCheckoutError(null);
-      setPaymentSuccessNotice(
-        `🎉 Payment of $${billingCycle === 'lifetime' ? '39.00' : '19.00'} verified! SmartToolHub Pro is now active.`
-      );
-    } catch (err: any) {
-      setTestPaymentError(err.message || 'Payment failed. Please try again.');
-    } finally {
-      setIsProcessingTestPayment(false);
     }
   };
 
@@ -333,15 +286,6 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="flex flex-wrap items-center justify-end gap-2 pt-2 border-t border-rose-500/20">
-              {checkoutError.showTestModal && (
-                <button
-                  onClick={() => setIsTestModalOpen(true)}
-                  className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-colors cursor-pointer flex items-center gap-1.5 shadow"
-                >
-                  <CreditCard className="w-3.5 h-3.5" />
-                  <span>Test Card Payment ({billingCycle === 'lifetime' ? '$39.00' : '$19.00'})</span>
-                </button>
-              )}
               {checkoutError.showSettingsModal && (
                 <button
                   onClick={() => setIsConfigModalOpen(true)}
@@ -585,133 +529,6 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate }) => {
         </div>
 
       </div>
-
-      {/* Interactive Test Payment Terminal Modal */}
-      {isTestModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-md p-6 rounded-3xl bg-[#0F1115] border border-white/20 shadow-2xl space-y-5">
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
-                  <CreditCard className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-semibold text-white">Dodo Payments Checkout</h3>
-                  <p className="text-[11px] text-[#86868B]">Interactive Payment Terminal</p>
-                </div>
-              </div>
-              <button
-                onClick={() => setIsTestModalOpen(false)}
-                className="p-1 rounded-lg text-[#86868B] hover:text-white hover:bg-white/10 transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Price Breakdown */}
-            <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-between text-xs">
-              <div>
-                <span className="text-white font-medium">SmartToolHub Pro</span>
-                <span className="text-[#86868B] block text-[11px]">
-                  {billingCycle === 'lifetime' ? 'Lifetime Access License' : 'Annual Pro Subscription'}
-                </span>
-              </div>
-              <span className="text-base font-bold text-white">
-                {billingCycle === 'lifetime' ? '$39.00' : '$79.00'}
-              </span>
-            </div>
-
-            {testPaymentError && (
-              <div className="p-3 rounded-xl bg-rose-500/20 border border-rose-400/40 text-xs text-rose-200">
-                {testPaymentError}
-              </div>
-            )}
-
-            {/* Credit Card Form */}
-            <form onSubmit={handleProcessTestPayment} className="space-y-3.5 text-xs">
-              <div>
-                <label className="block text-[#86868B] mb-1 text-[11px]">Name on Card</label>
-                <input
-                  type="text"
-                  required
-                  value={testCardName}
-                  onChange={(e) => setTestCardName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-white/[0.06] border border-white/10 text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500"
-                  placeholder="Cardholder name"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[#86868B] mb-1 text-[11px]">Card Number</label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    required
-                    value={testCardNumber}
-                    onChange={(e) => setTestCardNumber(e.target.value)}
-                    className="w-full px-3 py-2 pl-9 rounded-xl bg-white/[0.06] border border-white/10 text-white placeholder-zinc-500 font-mono focus:outline-none focus:border-blue-500"
-                    placeholder="4242 4242 4242 4242"
-                  />
-                  <CreditCard className="w-4 h-4 text-zinc-400 absolute left-3 top-2.5 pointer-events-none" />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[#86868B] mb-1 text-[11px]">Expires (MM/YY)</label>
-                  <input
-                    type="text"
-                    required
-                    value={testCardExp}
-                    onChange={(e) => setTestCardExp(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/[0.06] border border-white/10 text-white placeholder-zinc-500 font-mono focus:outline-none focus:border-blue-500"
-                    placeholder="MM/YY"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[#86868B] mb-1 text-[11px]">CVC / CVV</label>
-                  <input
-                    type="text"
-                    required
-                    value={testCardCvc}
-                    onChange={(e) => setTestCardCvc(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/[0.06] border border-white/10 text-white placeholder-zinc-500 font-mono focus:outline-none focus:border-blue-500"
-                    placeholder="123"
-                  />
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  disabled={isProcessingTestPayment}
-                  className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer disabled:opacity-50"
-                >
-                  {isProcessingTestPayment ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Authorizing Payment...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Lock className="w-3.5 h-3.5" />
-                      <span>
-                        Pay {billingCycle === 'lifetime' ? '$39.00' : '$79.00'} & Unlock Pro
-                      </span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
-
-            <div className="text-center text-[10px] text-[#86868B] flex items-center justify-center gap-1.5 pt-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Simulated Dodo Payments checkout for testing payment validation.</span>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Trust & Security Notice */}
       <div className="max-w-3xl mx-auto glass-panel p-5 rounded-2xl border border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs text-[#888888]">

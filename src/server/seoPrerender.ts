@@ -468,9 +468,9 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
           <span style="color: #cbd5e1;">Workflow Library</span>
         </nav>
         <header style="margin-bottom: 2rem;">
-          <h1 style="font-size: 2.25rem; font-weight: 800; margin: 0 0 1rem 0;">Verified Apple Workflow & Shortcut Library</h1>
+          <h1 style="font-size: 2.25rem; font-weight: 800; margin: 0 0 1rem 0;">Verified Apple Workflow &amp; Shortcut Library</h1>
           <p style="font-size: 1.1rem; color: #94a3b8; line-height: 1.6;">
-            Over 120 peer-reviewed blueprints with step-by-step instructions, hardware compatibility, and keyboard shortcut maps.
+            Over 120 verified blueprints with step-by-step instructions, hardware compatibility, and keyboard shortcut maps.
           </p>
         </header>
         <div style="display: grid; gap: 1rem;">
@@ -506,8 +506,8 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
         {
           '@type': 'CollectionPage',
           '@id': `${pageUrl}#collection`,
-          name: 'Apple Systems Engineering & Automation Guides',
-          description: 'Peer-reviewed technical guides covering macOS Sequoia AWDL protocols, Apple Silicon memory bandwidth, and native sips automation.',
+          name: 'Apple Shortcuts & Automation Guides',
+          description: 'Step-by-step technical guides covering Apple Shortcuts, Continuity, and native Apple tools.',
           url: pageUrl,
         },
         {
@@ -515,7 +515,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
           '@id': `${pageUrl}#breadcrumbs`,
           itemListElement: [
             { '@type': 'ListItem', position: 1, name: 'Home', item: CANONICAL_HOST },
-            { '@type': 'ListItem', position: 2, name: 'Engineering Guides', item: pageUrl },
+            { '@type': 'ListItem', position: 2, name: 'Guides', item: pageUrl },
           ],
         },
       ],
@@ -525,20 +525,20 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
       <div class="prerender-shell" style="max-width: 900px; margin: 0 auto; padding: 2rem 1rem; color: #F8FAFC; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
         <nav aria-label="Breadcrumbs" style="font-size: 0.85rem; color: #818cf8; margin-bottom: 1.5rem;">
           <a href="/" style="color: #818cf8; text-decoration: none;">Home</a> &rarr;
-          <span style="color: #cbd5e1;">Engineering Guides</span>
+          <span style="color: #cbd5e1;">Guides</span>
         </nav>
         <header style="margin-bottom: 2rem;">
-          <h1 style="font-size: 2.25rem; font-weight: 800; margin: 0 0 1rem 0;">Apple Systems Engineering & Automation Guides</h1>
+          <h1 style="font-size: 2.25rem; font-weight: 800; margin: 0 0 1rem 0;">Apple Shortcuts &amp; Automation Guides</h1>
           <p style="font-size: 1.1rem; color: #94a3b8; line-height: 1.6;">
-            Deep architectural teardowns of macOS Sequoia Continuity, Apple Silicon unified memory bandwidth for local LLMs, and high-performance sips digital media pipelines.
+            Practical tutorials for iOS 18 and macOS Sequoia automations, Action Button workflows, and cross-device continuity.
           </p>
         </header>
       </div>
     `;
 
     return {
-      title: 'Apple Systems Engineering & Automation Guides | SmartToolHub',
-      description: 'Deep-dive technical guides on macOS Sequoia AWDL wireless protocols, Apple Silicon unified memory bandwidth, and Xcode Retina image optimization.',
+      title: 'Apple Shortcuts & Automation Guides | SmartToolHub',
+      description: 'Practical guides and step-by-step tutorials for building Apple Shortcuts on iPhone, iPad, and Mac.',
       canonicalPath,
       ogType: 'website',
       ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
@@ -559,7 +559,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
           '@type': 'AboutPage',
           '@id': `${pageUrl}#about`,
           name: 'About SmartToolHub',
-          description: 'Systems engineering publication and physical Apple Silicon hardware testing lab founded by Dhrumil Aslaliya.',
+          description: 'Independent Apple Shortcuts toolbox and automation guide founded by Dhrumil Aslaliya.',
           url: pageUrl,
         },
         {
@@ -576,17 +576,17 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
     const prerenderHtml = `
       <div class="prerender-shell" style="max-width: 900px; margin: 0 auto; padding: 2rem 1rem; color: #F8FAFC; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
         <header style="margin-bottom: 2rem;">
-          <h1 style="font-size: 2.25rem; font-weight: 800;">About SmartToolHub — Systems Engineering & Physical Hardware Lab</h1>
+          <h1 style="font-size: 2.25rem; font-weight: 800;">About SmartToolHub — Independent Apple Shortcuts Toolbox</h1>
           <p style="font-size: 1.1rem; color: #94a3b8; line-height: 1.6;">
-            Founded by systems architect Dhrumil Aslaliya in Surat, Gujarat, India. Every blueprint and diagnostic workflow is validated on physical Apple Silicon hardware.
+            Created by Dhrumil Aslaliya in Surat, Gujarat, India. Practical shortcuts and automation guides built for everyday iPhone, iPad, and Mac users.
           </p>
         </header>
       </div>
     `;
 
     return {
-      title: 'About SmartToolHub — Systems Engineering & Physical Hardware Lab',
-      description: 'Discover SmartToolHub editorial standards, physical Apple Silicon testing laboratory, zero-credentials security model, and contact details.',
+      title: 'About SmartToolHub — Independent Apple Shortcuts Toolbox',
+      description: 'Discover SmartToolHub editorial standards, independent Apple shortcuts tools, zero-credentials security, and contact details by Dhrumil Aslaliya.',
       canonicalPath,
       ogType: 'website',
       ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
@@ -622,15 +622,16 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
 
     const prerenderHtml = `
       <div class="prerender-shell" style="max-width: 900px; margin: 0 auto; padding: 2rem 1rem; color: #F8FAFC; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-        <h1>Contact Engineering & Support</h1>
-        <p>Email: <a href="mailto:aslaliyamohit9@gmail.com" style="color: #818cf8;">aslaliyamohit9@gmail.com</a></p>
+        <h1>Contact SmartToolHub</h1>
+        <p>Email: <a href="mailto:contact@smarttoolhub.net" style="color: #818cf8;">contact@smarttoolhub.net</a></p>
+        <p>Creator: Dhrumil Aslaliya</p>
         <p>Location: Surat, Gujarat, India</p>
       </div>
     `;
 
     return {
-      title: 'Contact Engineering & Hardware Lab | SmartToolHub',
-      description: 'Reach SmartToolHub engineering team for custom Apple Shortcut requests, bug reports, and hardware compatibility consultations.',
+      title: 'Contact Dhrumil Aslaliya | SmartToolHub',
+      description: 'Reach out to Dhrumil Aslaliya for custom Apple Shortcut requests, bug reports, and workflow feedback.',
       canonicalPath,
       ogType: 'website',
       ogImage: `${CANONICAL_HOST}/product-cover.jpg`,

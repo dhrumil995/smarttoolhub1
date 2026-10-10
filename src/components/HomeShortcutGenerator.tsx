@@ -266,7 +266,7 @@ export const HomeShortcutGenerator: React.FC<HomeShortcutGeneratorProps> = ({
   return (
     <section id="generator" className="relative max-w-4xl mx-auto px-4 sm:px-6 scroll-mt-24">
       {/* Container with Frosted Glassmorphism & Depth */}
-      <div className="bento-card p-6 sm:p-10 relative overflow-hidden border border-white/20 dark:border-white/10 shadow-[0_30px_70px_rgba(0,0,0,0.5),0_0_30px_rgba(10,132,255,0.15)]">
+      <div className="bento-card p-6 sm:p-10 tilt-card-3d relative overflow-hidden border border-white/20 dark:border-white/10 shadow-[0_30px_70px_rgba(0,0,0,0.5),0_0_30px_rgba(10,132,255,0.15)]">
         {/* Subtle Specular Aurora Blob Background */}
         <div
           aria-hidden="true"
@@ -447,7 +447,7 @@ export const HomeShortcutGenerator: React.FC<HomeShortcutGeneratorProps> = ({
                 <button
                   type="button"
                   onClick={() => setActiveTab('actions')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                  className={`tilt-tab-3d px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                     activeTab === 'actions'
                       ? 'bg-blue-600 text-white'
                       : 'text-zinc-400 hover:text-white'
@@ -459,7 +459,7 @@ export const HomeShortcutGenerator: React.FC<HomeShortcutGeneratorProps> = ({
                   <button
                     type="button"
                     onClick={() => setActiveTab('script')}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                    className={`tilt-tab-3d px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                       activeTab === 'script'
                         ? 'bg-blue-600 text-white'
                         : 'text-zinc-400 hover:text-white'

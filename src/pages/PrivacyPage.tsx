@@ -167,11 +167,11 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ onNavigate }) => {
             7. Contacting Our Data Protection Officer
           </h2>
           <p>
-            If you have questions, feedback, or requests regarding this Privacy Policy or your data rights, please contact our team directly at:
+            If you have questions, feedback, or requests regarding this Privacy Policy or your data rights, please contact Dhrumil directly at:
           </p>
           <div className="p-3 rounded-xl bg-slate-100 dark:bg-white/[0.04] text-xs space-y-1">
-            <div><strong>Publisher:</strong> SmartToolHub Systems Engineering Publication</div>
-            <div><strong>Email:</strong> <a href="mailto:contact@smarttoolhub.net" className="text-indigo-600 dark:text-indigo-400 font-mono">contact@smarttoolhub.net</a> / <a href="mailto:aslaliyamohit9@gmail.com" className="text-indigo-600 dark:text-indigo-400 font-mono">aslaliyamohit9@gmail.com</a></div>
+            <div><strong>Publisher:</strong> SmartToolHub (Dhrumil Aslaliya)</div>
+            <div><strong>Email:</strong> <a href="mailto:contact@smarttoolhub.net" className="text-indigo-600 dark:text-indigo-400 font-mono">contact@smarttoolhub.net</a></div>
             <div><strong>Location:</strong> Surat, Gujarat, India</div>
           </div>
         </section>

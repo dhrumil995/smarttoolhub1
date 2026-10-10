@@ -444,6 +444,18 @@ html.light .apple-key {
   }
 }
 
+/* Subtle 3D tilt on tabs hover */
+.tilt-tab-3d {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: perspective(800px) rotateX(0deg) translateZ(0);
+}
+@media (hover: hover) and (pointer: fine) {
+  .tilt-tab-3d:hover {
+    transform: perspective(800px) translateY(-2px) translateZ(8px);
+    box-shadow: 0 10px 20px -6px rgba(10, 132, 255, 0.25);
+  }
+}
+
 /* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

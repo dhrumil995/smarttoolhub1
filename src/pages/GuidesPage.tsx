@@ -57,7 +57,7 @@ const ARTICLES_DATA: TechnicalArticle[] = [
     readTime: '9 min read',
     lastUpdated: 'September 2026',
     author: 'Dhrumil Aslaliya',
-    authorRole: 'Principal Systems Architect',
+    authorRole: 'Apple Ecosystem Specialist',
     summary: 'A deep-dive technical analysis of Apple Wireless Direct Link (AWDL), Bluetooth Low Energy (BLE) peripheral beacons, and Bonjour multicast DNS (mDNS) resolution in macOS Sequoia and iOS 18.',
     sections: [
       {
@@ -109,7 +109,7 @@ const ARTICLES_DATA: TechnicalArticle[] = [
     readTime: '11 min read',
     lastUpdated: 'September 2026',
     author: 'Dhrumil Aslaliya',
-    authorRole: 'Principal Systems Architect',
+    authorRole: 'Apple Ecosystem Specialist',
     summary: 'A technical exploration of unified memory architecture (UMA), memory bandwidth benchmarks across M1, M2, M3, and M4 processors, and calculating exact RAM overhead for local AI models.',
     sections: [
       {
@@ -169,7 +169,7 @@ const ARTICLES_DATA: TechnicalArticle[] = [
     readTime: '8 min read',
     lastUpdated: 'September 2026',
     author: 'Dhrumil Aslaliya',
-    authorRole: 'Principal Systems Architect',
+    authorRole: 'Apple Ecosystem Specialist',
     summary: 'An architectural guide to the macOS Shortcuts runtime, sandboxed entitlements, compiling Siri action graphs, and executing shell scripts safely from macOS Sequoia.',
     sections: [
       {
@@ -213,7 +213,7 @@ const ARTICLES_DATA: TechnicalArticle[] = [
     readTime: '7 min read',
     lastUpdated: 'September 2026',
     author: 'Dhrumil Aslaliya',
-    authorRole: 'Principal Systems Architect',
+    authorRole: 'Apple Ecosystem Specialist',
     summary: 'A complete developer tutorial on automating Retina @2x/@3x asset generation, HEIC to WebP conversions, and lossless compression using native macOS CLI binaries.',
     sections: [
       {
@@ -280,13 +280,13 @@ export const GuidesPage: React.FC<GuidesPageProps> = ({ onNavigate }) => {
       <div className="text-center space-y-4 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 dark:bg-indigo-400/10 border border-indigo-500/20 text-xs font-semibold text-indigo-600 dark:text-indigo-400">
           <BookOpen className="w-3.5 h-3.5" />
-          <span>Peer-Reviewed Engineering Knowledge Base</span>
+          <span>Independent Automation Knowledge Base</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
           Apple Systems & Automation Guides
         </h1>
         <p className="text-sm sm:text-base text-slate-600 dark:text-zinc-400 leading-relaxed font-normal">
-          In-depth architectural teardowns, protocol breakdowns, and empirical benchmarks for macOS Sequoia, Apple Silicon, and iOS 18 power users.
+          Clear breakdowns, step-by-step instructions, and practical walkthroughs for macOS Sequoia, Apple Silicon, and iOS 18.
         </p>
       </div>
 
@@ -410,7 +410,7 @@ export const GuidesPage: React.FC<GuidesPageProps> = ({ onNavigate }) => {
                     {activeArticle.author}
                   </div>
                   <div className="text-[11px] text-slate-500 dark:text-zinc-400 font-mono">
-                    {activeArticle.authorRole} · SmartToolHub Labs
+                    {activeArticle.authorRole} · SmartToolHub
                   </div>
                 </div>
               </div>

@@ -72,7 +72,7 @@ export const SemanticShortcutsFAQ: React.FC = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
-            Real questions and verified engineering answers on creating, configuring, and troubleshooting Apple Shortcuts in iOS 18 and macOS Sequoia.
+            Clear, practical answers on creating, configuring, and troubleshooting Apple Shortcuts in iOS 18 and macOS Sequoia.
           </p>
         </div>
 

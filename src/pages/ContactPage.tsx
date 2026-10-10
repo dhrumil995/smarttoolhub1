@@ -191,7 +191,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               <span>Direct Support & Editorial Office</span>
             </h3>
             <p className="text-xs text-slate-600 dark:text-[#86868B] leading-relaxed">
-              Have questions, feedback, commercial partnership proposals, DMCA notices, or bug reports? Reach out directly to our engineering editorial team:
+              Have questions, feedback, shortcut requests, or bug reports? Reach out directly to Dhrumil Aslaliya:
             </p>
             <div className="space-y-2">
               <a 
@@ -199,20 +199,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                 className="p-3 rounded-2xl bg-neutral-100 dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.08] text-xs text-[#0A84FF] hover:underline flex items-center justify-between group transition-all"
               >
                 <span className="select-all font-mono font-medium">contact@smarttoolhub.net</span>
-                <span className="text-[11px] group-hover:translate-x-0.5 transition-transform">Primary Email →</span>
-              </a>
-              <a 
-                href="mailto:aslaliyamohit9@gmail.com?subject=SmartToolHub%20Inquiry"
-                className="p-3 rounded-2xl bg-neutral-100 dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.08] text-xs text-[#0A84FF] hover:underline flex items-center justify-between group transition-all"
-              >
-                <span className="select-all font-mono font-medium">aslaliyamohit9@gmail.com</span>
-                <span className="text-[11px] group-hover:translate-x-0.5 transition-transform">Secondary Desk →</span>
+                <span className="text-[11px] group-hover:translate-x-0.5 transition-transform">Send Email →</span>
               </a>
             </div>
             <div className="pt-2 border-t border-slate-200/80 dark:border-white/10 text-[11px] text-slate-500 dark:text-[#86868B] space-y-1">
-              <div><strong>Publisher:</strong> SmartToolHub Systems Engineering Publication</div>
+              <div><strong>Creator:</strong> Dhrumil Aslaliya</div>
               <div><strong>Location:</strong> Surat, Gujarat, India (IST / UTC+5:30)</div>
-              <div><strong>SLA:</strong> Responses are provided within 24 to 48 business hours.</div>
+              <div><strong>SLA:</strong> Responses are typically provided within 24 to 48 hours.</div>
             </div>
           </div>
         </div>

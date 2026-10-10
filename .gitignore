@@ -6,3 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+.subscriptions-db.json
+.webhooks-audit.json
+.dodo-config.json

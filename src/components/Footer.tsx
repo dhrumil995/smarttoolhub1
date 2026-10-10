@@ -39,7 +39,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
                 Ready to automate your Apple workspace?
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
-                Synthesize custom Siri Shortcuts, benchmark Apple Silicon, or reach our engineering team for custom workflow requests.
+                Synthesize custom Siri Shortcuts, calculate battery charging benchmarks, or reach out for custom workflow advice.
               </p>
             </div>
           </div>
@@ -64,7 +64,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
               }}
               className="px-5 py-2.5 min-h-[40px] rounded-xl glass-pill text-xs font-semibold text-slate-900 dark:text-white cursor-pointer whitespace-nowrap"
             >
-              Contact Engineering
+              Contact & Support
             </a>
           </div>
         </div>
@@ -272,7 +272,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
                   }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
-                  Engineering Guides
+                  Automation Guides
                 </a>
               </li>
               <li>
@@ -329,14 +329,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
         {/* Quiet Copyright & Independent Publication Notice */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-slate-500 dark:text-zinc-500">
           <p className="text-center md:text-left leading-relaxed max-w-3xl">
-            SmartToolHub is an independent engineering reference and workflow utility platform. Mac, iPhone, iPad, macOS, iOS, AirDrop, Sidecar, and Apple Intelligence are trademarks of Apple Inc.
+            SmartToolHub is an independent reference and utility platform created by Dhrumil Aslaliya. Not affiliated with, endorsed by, or sponsored by Apple Inc. Mac, iPhone, iPad, macOS, iOS, AirDrop, and Siri Shortcuts are trademarks of Apple Inc.
           </p>
           <div className="flex items-center gap-3 shrink-0">
             <a
-              href="mailto:aslaliyamohit9@gmail.com"
+              href="mailto:contact@smarttoolhub.net"
               className="hover:text-slate-900 dark:hover:text-zinc-300 transition-colors font-mono"
             >
-              aslaliyamohit9@gmail.com
+              contact@smarttoolhub.net
             </a>
             <span aria-hidden="true">·</span>
             <span>© 2026 SmartToolHub</span>

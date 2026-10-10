@@ -547,7 +547,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   aria-selected={isSelected}
                   type="button"
                   onClick={() => handleCategoryChange(btn.id)}
-                  className={`px-3.5 py-1.5 min-h-[34px] rounded-xl text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 border ${
+                  className={`tilt-tab-3d px-3.5 py-1.5 min-h-[34px] rounded-xl text-xs font-medium transition-all cursor-pointer whitespace-nowrap shrink-0 border ${
                     isSelected
                       ? 'bg-indigo-600 border-indigo-400/60 text-white shadow-[0_6px_20px_rgba(99,102,241,0.35),inset_0_1px_0_0_rgba(255,255,255,0.3)]'
                       : 'glass-pill text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'

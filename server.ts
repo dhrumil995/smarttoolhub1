@@ -552,59 +552,41 @@ end run`;
 });
 
 // ==========================================
+// ==========================================
 // DODO PAYMENTS SUBSCRIPTION & CHECKOUT API
 // ==========================================
 
-const DODO_CONFIG_FILE = path.join(process.cwd(), '.dodo-config.json');
+function requireAdminSecret(req: Request, res: Response, next: () => void) {
+  const adminSecret = (process.env.ADMIN_SECRET || '').trim();
+  const provided = (
+    (req.headers['admin_secret'] as string) ||
+    (req.headers['admin-secret'] as string) ||
+    (req.headers['x-admin-secret'] as string) ||
+    (req.headers['authorization']?.replace(/^Bearer\s+/i, '') as string) ||
+    ''
+  ).trim();
 
-interface DodoSettings {
-  apiKey: string;
-  mode: 'test' | 'live';
-  productIdLifetime: string;
-  productIdYearly: string;
-  webhookSecret: string;
+  if (!adminSecret || provided !== adminSecret) {
+    return res.status(401).json({
+      error: 'Unauthorized. A valid ADMIN_SECRET header is required to access administrative endpoints.',
+    });
+  }
+  next();
 }
 
-function loadDodoSettings(): DodoSettings {
-  let fileSettings: Partial<DodoSettings> = {};
-  try {
-    if (fs.existsSync(DODO_CONFIG_FILE)) {
-      const data = fs.readFileSync(DODO_CONFIG_FILE, 'utf-8');
-      fileSettings = JSON.parse(data);
-    }
-  } catch (err) {
-    console.error('Error reading dodo config file:', err);
-  }
-
-  const apiKey = (process.env.DODO_PAYMENTS_API_KEY || fileSettings.apiKey || '').trim();
-  const mode = ((fileSettings.mode || process.env.DODO_PAYMENTS_MODE || 'live').toLowerCase() === 'test' ? 'test' : 'live') as 'test' | 'live';
-  const productIdLifetime = (fileSettings.productIdLifetime || process.env.DODO_PAYMENTS_PRODUCT_ID_LIFETIME || '').trim();
-  const productIdYearly = (fileSettings.productIdYearly || process.env.DODO_PAYMENTS_PRODUCT_ID_YEARLY || '').trim();
-  const webhookSecret = (fileSettings.webhookSecret || process.env.DODO_PAYMENTS_WEBHOOK_SECRET || '').trim();
+function getActiveDodoSettings() {
+  const apiKey = (process.env.DODO_PAYMENTS_API_KEY || '').trim();
+  const mode = ((process.env.DODO_PAYMENTS_MODE || 'live').toLowerCase() === 'test' ? 'test' : 'live') as 'test' | 'live';
+  const productIdLifetime = (process.env.DODO_PAYMENTS_PRODUCT_ID_LIFETIME || '').trim();
+  const productIdYearly = (process.env.DODO_PAYMENTS_PRODUCT_ID_YEARLY || '').trim();
+  const webhookSecret = (process.env.DODO_PAYMENTS_WEBHOOK_SECRET || '').trim();
 
   return { apiKey, mode, productIdLifetime, productIdYearly, webhookSecret };
 }
 
-function saveDodoSettings(settings: Partial<DodoSettings>): DodoSettings {
-  const current = loadDodoSettings();
-  const updated: DodoSettings = {
-    apiKey: settings.apiKey !== undefined ? settings.apiKey.trim() : current.apiKey,
-    mode: settings.mode === 'test' ? 'test' : 'live',
-    productIdLifetime: settings.productIdLifetime !== undefined ? settings.productIdLifetime.trim() : current.productIdLifetime,
-    productIdYearly: settings.productIdYearly !== undefined ? settings.productIdYearly.trim() : current.productIdYearly,
-    webhookSecret: settings.webhookSecret !== undefined ? settings.webhookSecret.trim() : current.webhookSecret,
-  };
-  try {
-    fs.writeFileSync(DODO_CONFIG_FILE, JSON.stringify(updated, null, 2), 'utf-8');
-  } catch (err) {
-    console.error('Failed to write dodo config file:', err);
-  }
-  return updated;
-}
-
-// GET current Dodo Payments status and public settings (key masked)
-app.get('/api/dodo/config', (req: Request, res: Response) => {
-  const settings = loadDodoSettings();
+// GET current Dodo Payments status and settings (Protected by ADMIN_SECRET)
+app.get('/api/dodo/config', requireAdminSecret, (req: Request, res: Response) => {
+  const settings = getActiveDodoSettings();
   const hasKey = Boolean(settings.apiKey);
   const maskedKey = hasKey
     ? settings.apiKey.length > 8
@@ -624,52 +606,32 @@ app.get('/api/dodo/config', (req: Request, res: Response) => {
   });
 });
 
-// POST save Dodo Payments settings from the UI setup form
-app.post('/api/dodo/config', (req: Request, res: Response) => {
-  try {
-    const { apiKey, mode, productIdLifetime, productIdYearly, webhookSecret } = req.body || {};
-    const updated = saveDodoSettings({
-      ...(typeof apiKey === 'string' ? { apiKey: apiKey.trim() } : {}),
-      ...(mode ? { mode } : {}),
-      ...(typeof productIdLifetime === 'string' ? { productIdLifetime: productIdLifetime.trim() } : {}),
-      ...(typeof productIdYearly === 'string' ? { productIdYearly: productIdYearly.trim() } : {}),
-      ...(typeof webhookSecret === 'string' ? { webhookSecret: webhookSecret.trim() } : {}),
-    });
-
-    const maskedKey = updated.apiKey
-      ? updated.apiKey.length > 8
-        ? `${updated.apiKey.slice(0, 4)}••••${updated.apiKey.slice(-4)}`
-        : '••••••••'
-      : '';
-
-    return res.json({
-      success: true,
-      message: 'Dodo Payments configuration saved successfully.',
-      configured: Boolean(updated.apiKey),
-      mode: updated.mode,
-      maskedKey,
-      productIdLifetime: updated.productIdLifetime,
-      productIdYearly: updated.productIdYearly,
-      hasWebhookSecret: Boolean(updated.webhookSecret),
-    });
-  } catch (err: any) {
-    return res.status(500).json({ error: 'Failed to save Dodo Payments settings', details: err?.message });
-  }
+// POST Dodo Payments settings notification (Protected by ADMIN_SECRET)
+// Note: File-based persistence removed per Phase 1 Security guidelines.
+app.post('/api/dodo/config', requireAdminSecret, (req: Request, res: Response) => {
+  const settings = getActiveDodoSettings();
+  return res.json({
+    success: true,
+    message: 'Configuration is managed securely via environment variables (DODO_PAYMENTS_*). File-based writes have been disabled for security.',
+    configured: Boolean(settings.apiKey),
+    mode: settings.mode,
+    productIdLifetime: settings.productIdLifetime,
+    productIdYearly: settings.productIdYearly,
+    hasWebhookSecret: Boolean(settings.webhookSecret),
+  });
 });
 
-// POST test API key connection with Dodo Payments
-app.post('/api/dodo/test-connection', async (req: Request, res: Response) => {
+// POST test API key connection with Dodo Payments (Protected by ADMIN_SECRET)
+app.post('/api/dodo/test-connection', requireAdminSecret, async (req: Request, res: Response) => {
   try {
-    const bodyKey = typeof req.body?.apiKey === 'string' ? req.body.apiKey.trim() : '';
-    const bodyMode = req.body?.mode === 'test' ? 'test' : 'live';
-    const settings = loadDodoSettings();
-    const apiKey = bodyKey || settings.apiKey;
-    const mode = bodyKey ? bodyMode : settings.mode;
+    const settings = getActiveDodoSettings();
+    const apiKey = (typeof req.body?.apiKey === 'string' && req.body.apiKey.trim()) || settings.apiKey;
+    const mode = req.body?.mode === 'test' ? 'test' : settings.mode;
 
     if (!apiKey) {
       return res.status(400).json({
         success: false,
-        message: 'No Dodo Payments API key provided. Please enter your API key to test.',
+        message: 'No Dodo Payments API key provided. Set DODO_PAYMENTS_API_KEY in environment variables.',
       });
     }
 
@@ -688,33 +650,18 @@ app.post('/api/dodo/test-connection', async (req: Request, res: Response) => {
       return res.json({
         success: true,
         message: `Successfully connected to Dodo Payments (${mode.toUpperCase()} mode)! Verified access with ${productList.length} product(s) found in your account.`,
-        productsCount: productList.length,
-        products: productList.slice(0, 5).map((p: any) => ({
-          id: p.product_id || p.id,
-          name: p.name || p.title,
-          price: p.price,
-          type: p.type || p.payment_type,
-        })),
-      });
-    } else {
-      const errorText = await response.text();
-      let errorJson: any = null;
-      try {
-        errorJson = JSON.parse(errorText);
-      } catch {}
-
-      return res.status(response.status).json({
-        success: false,
-        status: response.status,
-        message: errorJson?.message || errorJson?.error || `Dodo Payments responded with status ${response.status}`,
-        details: errorText,
       });
     }
+
+    const errorBody: any = await response.json().catch(() => ({}));
+    return res.status(response.status).json({
+      success: false,
+      message: errorBody?.message || errorBody?.error || `Dodo Payments responded with HTTP ${response.status}`,
+    });
   } catch (err: any) {
     return res.status(500).json({
       success: false,
-      message: 'Network error communicating with Dodo Payments API.',
-      details: err?.message || 'Connection failed',
+      message: 'Failed to test connection: ' + (err?.message || 'Network error'),
     });
   }
 });
@@ -1032,51 +979,8 @@ app.post('/api/dodo/verify-session', async (req: Request, res: Response) => {
   }
 });
 
-// Interactive test card checkout endpoint (requires explicit card submission)
-app.post('/api/dodo/submit-test-payment', async (req: Request, res: Response) => {
-  try {
-    const { plan = 'lifetime', customerEmail, customerName, cardNumber } = req.body || {};
-    const repository = SubscriptionRepository.getInstance();
-    const selectedPlan: PlanType = plan === 'yearly' ? 'yearly' : 'lifetime';
-    const testSessionId = 'dodo_test_pay_' + Date.now().toString(36);
-    const testCustomerId = 'cust_test_' + Date.now().toString(36);
-
-    const cleanCard = String(cardNumber || '').replace(/\s+/g, '');
-    if (cleanCard.length < 12) {
-      return res.status(400).json({
-        success: false,
-        error_message: 'Please enter a valid card number (minimum 12 digits).',
-      });
-    }
-
-    await repository.upsertSubscription({
-      userId: (req.body?.userId as string) || 'default-user',
-      customerId: testCustomerId,
-      customerEmail: customerEmail || 'subscriber@smarttoolhub.com',
-      customerName: customerName || 'SmartToolHub Pro Member',
-      plan: selectedPlan,
-      status: 'active',
-      currentPeriodEnd:
-        selectedPlan === 'yearly'
-          ? new Date(Date.now() + 365 * 86400000).toISOString()
-          : new Date(Date.now() + 100 * 365 * 86400000).toISOString(),
-    });
-
-    return res.json({
-      success: true,
-      session_id: testSessionId,
-      customer_id: testCustomerId,
-      plan: selectedPlan,
-      status: 'active',
-      message: `Test payment of $${selectedPlan === 'yearly' ? '79.00' : '39.00'} successfully approved. SmartToolHub Pro activated.`,
-    });
-  } catch (err: any) {
-    return res.status(500).json({ success: false, error_message: err?.message || 'Payment simulation failed.' });
-  }
-});
-
-// Reset subscription endpoint (allows testing free vs pro states)
-app.post('/api/dodo/reset-subscription', async (req: Request, res: Response) => {
+// Reset subscription endpoint (Protected by ADMIN_SECRET)
+app.post('/api/dodo/reset-subscription', requireAdminSecret, async (req: Request, res: Response) => {
   try {
     const userId = (req.body?.userId as string) || 'default-user';
     const repository = SubscriptionRepository.getInstance();
@@ -1233,7 +1137,7 @@ app.get('/llms.txt', (req: Request, res: Response) => {
     '> Generate custom Apple Shortcuts and macOS Sequoia automation workflows instantly. Verify device compatibility, synthesize scripts, run client-side Retina image, text, SEO, and Apple Silicon calculators, and troubleshoot Continuity.',
     '',
     '## Editorial & Publisher Standards',
-    `- [About Us & Editorial Standards](${baseUrl}/about): Lead architect Dhrumil Aslaliya, physical Apple Silicon testing lab, and 5-stage editorial review standard`,
+    `- [About Us & Editorial Standards](${baseUrl}/about): Creator Dhrumil Aslaliya and independent editorial guidelines`,
     `- [Engineering Guides & Knowledge Base](${baseUrl}/guides): Deep architectural teardowns of macOS 15 AWDL, Apple Silicon memory bandwidth, and native sips automation`,
     `- [Privacy Policy (AdSense Compliant)](${baseUrl}/privacy): Zero-Credentials security charter, advertising cookies, and opt-out transparency`,
     `- [Terms of Service](${baseUrl}/terms): Independent engineering publication terms`,

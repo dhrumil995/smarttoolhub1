@@ -1,24 +1,26 @@
-import fs from 'fs';
-import path from 'path';
 import { SubscriptionRecord, WebhookAuditRecord, SubscriptionStatus, PlanType } from './types';
 
 /**
  * Production Subscription Database Repository
  *
- * Implements a durable, atomic persistence layer that guarantees idempotency
- * and data integrity without placeholders. In production with a relational DB
- * (PostgreSQL/Cloud SQL), replace the atomic file storage engine with Drizzle/Prisma
- * queries following the provided repository interface.
+ * NOTE FOR PRODUCTION DEPLOYMENT:
+ * In a multi-instance production environment, replace this in-memory repository
+ * with a persistent managed datastore such as:
+ * - PostgreSQL / Cloud SQL (using Drizzle ORM or Prisma)
+ * - Google Cloud Firestore (using the Firebase Admin SDK)
+ * - Redis / Key-Value Store (for distributed session cache & idempotency keys)
+ *
+ * In accordance with Phase 1 Security Guidelines, local JSON file storage
+ * (.subscriptions-db.json, .webhooks-audit.json) has been completely removed
+ * to prevent filesystem race conditions, unauthorized git exposure, and data leakage.
  */
 export class SubscriptionRepository {
   private static instance: SubscriptionRepository;
-  private readonly dbFilePath: string;
-  private readonly auditFilePath: string;
+  private readonly subscriptions: Map<string, SubscriptionRecord> = new Map();
+  private readonly webhookAudits: Map<string, WebhookAuditRecord> = new Map();
 
   private constructor() {
-    this.dbFilePath = path.join(process.cwd(), '.subscriptions-db.json');
-    this.auditFilePath = path.join(process.cwd(), '.webhooks-audit.json');
-    this.initStorage();
+    // Memory-backed storage initialized
   }
 
   public static getInstance(): SubscriptionRepository {
@@ -28,60 +30,12 @@ export class SubscriptionRepository {
     return SubscriptionRepository.instance;
   }
 
-  private initStorage(): void {
-    try {
-      if (!fs.existsSync(this.dbFilePath)) {
-        fs.writeFileSync(this.dbFilePath, JSON.stringify([], null, 2), 'utf-8');
-      }
-      if (!fs.existsSync(this.auditFilePath)) {
-        fs.writeFileSync(this.auditFilePath, JSON.stringify([], null, 2), 'utf-8');
-      }
-    } catch (err) {
-      console.error('[SubscriptionRepository] Failed to initialize persistent storage:', err);
-    }
-  }
-
   private readAllSubscriptions(): SubscriptionRecord[] {
-    try {
-      if (!fs.existsSync(this.dbFilePath)) return [];
-      const data = fs.readFileSync(this.dbFilePath, 'utf-8');
-      return JSON.parse(data) as SubscriptionRecord[];
-    } catch (err) {
-      console.error('[SubscriptionRepository] Failed to read subscriptions:', err);
-      return [];
-    }
-  }
-
-  private writeAllSubscriptions(records: SubscriptionRecord[]): void {
-    try {
-      const tempPath = `${this.dbFilePath}.tmp`;
-      fs.writeFileSync(tempPath, JSON.stringify(records, null, 2), 'utf-8');
-      fs.renameSync(tempPath, this.dbFilePath);
-    } catch (err) {
-      console.error('[SubscriptionRepository] Failed to atomic write subscriptions:', err);
-      throw new Error(`Failed to commit subscription database update: ${err instanceof Error ? err.message : String(err)}`);
-    }
+    return Array.from(this.subscriptions.values());
   }
 
   private readAllAuditLogs(): WebhookAuditRecord[] {
-    try {
-      if (!fs.existsSync(this.auditFilePath)) return [];
-      const data = fs.readFileSync(this.auditFilePath, 'utf-8');
-      return JSON.parse(data) as WebhookAuditRecord[];
-    } catch (err) {
-      console.error('[SubscriptionRepository] Failed to read webhook audit logs:', err);
-      return [];
-    }
-  }
-
-  private writeAllAuditLogs(records: WebhookAuditRecord[]): void {
-    try {
-      const tempPath = `${this.auditFilePath}.tmp`;
-      fs.writeFileSync(tempPath, JSON.stringify(records, null, 2), 'utf-8');
-      fs.renameSync(tempPath, this.auditFilePath);
-    } catch (err) {
-      console.error('[SubscriptionRepository] Failed to write webhook audit log:', err);
-    }
+    return Array.from(this.webhookAudits.values());
   }
 
   /**
@@ -89,9 +43,12 @@ export class SubscriptionRepository {
    * SQL Equivalent: SELECT * FROM subscriptions WHERE user_id = $1 LIMIT 1
    */
   public async findByUserId(userId: string): Promise<SubscriptionRecord | null> {
-    const records = this.readAllSubscriptions();
-    const found = records.find((sub) => sub.userId === userId);
-    return found || null;
+    for (const sub of this.subscriptions.values()) {
+      if (sub.userId === userId) {
+        return sub;
+      }
+    }
+    return null;
   }
 
   /**
@@ -99,9 +56,12 @@ export class SubscriptionRepository {
    * SQL Equivalent: SELECT * FROM subscriptions WHERE subscription_id = $1 LIMIT 1
    */
   public async findBySubscriptionId(subscriptionId: string): Promise<SubscriptionRecord | null> {
-    const records = this.readAllSubscriptions();
-    const found = records.find((sub) => sub.subscriptionId === subscriptionId);
-    return found || null;
+    for (const sub of this.subscriptions.values()) {
+      if (sub.subscriptionId === subscriptionId) {
+        return sub;
+      }
+    }
+    return null;
   }
 
   /**
@@ -109,9 +69,12 @@ export class SubscriptionRepository {
    * SQL Equivalent: SELECT * FROM subscriptions WHERE customer_id = $1 LIMIT 1
    */
   public async findByCustomerId(customerId: string): Promise<SubscriptionRecord | null> {
-    const records = this.readAllSubscriptions();
-    const found = records.find((sub) => sub.customerId === customerId);
-    return found || null;
+    for (const sub of this.subscriptions.values()) {
+      if (sub.customerId === customerId) {
+        return sub;
+      }
+    }
+    return null;
   }
 
   /**
@@ -133,7 +96,6 @@ export class SubscriptionRepository {
     needsPaymentMethodUpdate?: boolean;
     lastEventId?: string;
   }): Promise<SubscriptionRecord> {
-    const records = this.readAllSubscriptions();
     const now = new Date().toISOString();
     
     // Default expiration: lifetime = 100 years, yearly = 365 days
@@ -141,14 +103,17 @@ export class SubscriptionRepository {
       ? new Date(Date.now() + 100 * 365 * 24 * 60 * 60 * 1000).toISOString()
       : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString();
 
-    const existingIndex = records.findIndex(
-      (sub) => sub.userId === params.userId || (params.subscriptionId && sub.subscriptionId === params.subscriptionId)
-    );
+    let existing: SubscriptionRecord | undefined;
+    for (const sub of this.subscriptions.values()) {
+      if (sub.userId === params.userId || (params.subscriptionId && sub.subscriptionId === params.subscriptionId)) {
+        existing = sub;
+        break;
+      }
+    }
 
     let updatedRecord: SubscriptionRecord;
 
-    if (existingIndex >= 0) {
-      const existing = records[existingIndex];
+    if (existing) {
       updatedRecord = {
         ...existing,
         tenantId: params.tenantId || existing.tenantId,
@@ -165,7 +130,6 @@ export class SubscriptionRepository {
         lastEventId: params.lastEventId || existing.lastEventId,
         updatedAt: now,
       };
-      records[existingIndex] = updatedRecord;
     } else {
       updatedRecord = {
         id: `sub_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
@@ -185,10 +149,9 @@ export class SubscriptionRepository {
         createdAt: now,
         updatedAt: now,
       };
-      records.push(updatedRecord);
     }
 
-    this.writeAllSubscriptions(records);
+    this.subscriptions.set(updatedRecord.id, updatedRecord);
     return updatedRecord;
   }
 
@@ -201,17 +164,14 @@ export class SubscriptionRepository {
     newPeriodEnd: string;
     eventId?: string;
   }): Promise<SubscriptionRecord | null> {
-    const records = this.readAllSubscriptions();
-    const index = records.findIndex((sub) => sub.subscriptionId === params.subscriptionId);
-    if (index === -1) {
+    const target = await this.findBySubscriptionId(params.subscriptionId);
+    if (!target) {
       console.warn(`[SubscriptionRepository] Cannot extend: subscription ${params.subscriptionId} not found`);
       return null;
     }
 
     const now = new Date().toISOString();
-    const target = records[index];
-
-    records[index] = {
+    const updated: SubscriptionRecord = {
       ...target,
       status: 'active',
       currentPeriodEnd: params.newPeriodEnd,
@@ -222,8 +182,8 @@ export class SubscriptionRepository {
       updatedAt: now,
     };
 
-    this.writeAllSubscriptions(records);
-    return records[index];
+    this.subscriptions.set(updated.id, updated);
+    return updated;
   }
 
   /**
@@ -235,17 +195,14 @@ export class SubscriptionRepository {
     failureReason?: string;
     eventId?: string;
   }): Promise<SubscriptionRecord | null> {
-    const records = this.readAllSubscriptions();
-    const index = records.findIndex((sub) => sub.subscriptionId === params.subscriptionId);
-    if (index === -1) {
+    const target = await this.findBySubscriptionId(params.subscriptionId);
+    if (!target) {
       console.warn(`[SubscriptionRepository] Cannot mark on_hold: subscription ${params.subscriptionId} not found`);
       return null;
     }
 
     const now = new Date().toISOString();
-    const target = records[index];
-
-    records[index] = {
+    const updated: SubscriptionRecord = {
       ...target,
       status: 'on_hold',
       needsPaymentMethodUpdate: true,
@@ -254,8 +211,8 @@ export class SubscriptionRepository {
       updatedAt: now,
     };
 
-    this.writeAllSubscriptions(records);
-    return records[index];
+    this.subscriptions.set(updated.id, updated);
+    return updated;
   }
 
   /**
@@ -267,17 +224,14 @@ export class SubscriptionRepository {
     failureReason?: string;
     eventId?: string;
   }): Promise<SubscriptionRecord | null> {
-    const records = this.readAllSubscriptions();
-    const index = records.findIndex((sub) => sub.subscriptionId === params.subscriptionId);
-    if (index === -1) {
+    const target = await this.findBySubscriptionId(params.subscriptionId);
+    if (!target) {
       console.warn(`[SubscriptionRepository] Cannot revoke: subscription ${params.subscriptionId} not found`);
       return null;
     }
 
     const now = new Date().toISOString();
-    const target = records[index];
-
-    records[index] = {
+    const updated: SubscriptionRecord = {
       ...target,
       status: 'failed',
       needsPaymentMethodUpdate: true,
@@ -286,8 +240,8 @@ export class SubscriptionRepository {
       updatedAt: now,
     };
 
-    this.writeAllSubscriptions(records);
-    return records[index];
+    this.subscriptions.set(updated.id, updated);
+    return updated;
   }
 
   /**
@@ -299,14 +253,11 @@ export class SubscriptionRepository {
     cancelAtPeriodEnd: boolean;
     eventId?: string;
   }): Promise<SubscriptionRecord | null> {
-    const records = this.readAllSubscriptions();
-    const index = records.findIndex((sub) => sub.subscriptionId === params.subscriptionId);
-    if (index === -1) return null;
+    const target = await this.findBySubscriptionId(params.subscriptionId);
+    if (!target) return null;
 
     const now = new Date().toISOString();
-    const target = records[index];
-
-    records[index] = {
+    const updated: SubscriptionRecord = {
       ...target,
       status: params.cancelAtPeriodEnd ? target.status : 'cancelled',
       cancelAtPeriodEnd: params.cancelAtPeriodEnd,
@@ -314,8 +265,8 @@ export class SubscriptionRepository {
       updatedAt: now,
     };
 
-    this.writeAllSubscriptions(records);
-    return records[index];
+    this.subscriptions.set(updated.id, updated);
+    return updated;
   }
 
   /**
@@ -324,8 +275,8 @@ export class SubscriptionRepository {
    */
   public async hasProcessedWebhook(eventId: string): Promise<boolean> {
     if (!eventId) return false;
-    const logs = this.readAllAuditLogs();
-    return logs.some((log) => log.eventId === eventId && log.status === 'processed');
+    const log = this.webhookAudits.get(eventId);
+    return Boolean(log && log.status === 'processed');
   }
 
   /**
@@ -333,17 +284,21 @@ export class SubscriptionRepository {
    * SQL Equivalent: INSERT INTO webhook_audit_logs (event_id, event_type, received_at, status, error_message) VALUES (...)
    */
   public async recordWebhookAudit(record: WebhookAuditRecord): Promise<void> {
-    const logs = this.readAllAuditLogs();
-    const existingIndex = logs.findIndex((log) => log.eventId === record.eventId);
-    if (existingIndex >= 0) {
-      logs[existingIndex] = record;
-    } else {
-      logs.push(record);
-      // Keep audit log capped at latest 1,000 entries
-      if (logs.length > 1000) {
-        logs.splice(0, logs.length - 1000);
+    this.webhookAudits.set(record.eventId, record);
+    // Keep audit log capped at latest 1,000 entries
+    if (this.webhookAudits.size > 1000) {
+      const firstKey = this.webhookAudits.keys().next().value;
+      if (firstKey) {
+        this.webhookAudits.delete(firstKey);
       }
     }
-    this.writeAllAuditLogs(logs);
+  }
+
+  /**
+   * Clear all in-memory subscriptions (for testing or reset under admin secret)
+   */
+  public clearAll(): void {
+    this.subscriptions.clear();
+    this.webhookAudits.clear();
   }
 }

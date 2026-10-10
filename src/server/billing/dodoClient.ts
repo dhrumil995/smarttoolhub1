@@ -42,10 +42,9 @@ export class DodoPaymentsException extends Error {
  */
 export class DodoPaymentsClient {
   private static instance: DodoPaymentsClient;
-  private readonly configFilePath: string;
 
   private constructor() {
-    this.configFilePath = path.join(process.cwd(), '.dodo-config.json');
+    // Configuration is read exclusively from environment variables per Phase 1 security requirements
   }
 
   public static getInstance(): DodoPaymentsClient {
@@ -56,48 +55,16 @@ export class DodoPaymentsClient {
   }
 
   /**
-   * Load active configuration combining environment variables and local config
+   * Load active configuration strictly from environment variables
    */
   public getConfig(): DodoClientConfig {
-    let fileSettings: Partial<DodoClientConfig> = {};
-    try {
-      if (fs.existsSync(this.configFilePath)) {
-        const raw = fs.readFileSync(this.configFilePath, 'utf-8');
-        fileSettings = JSON.parse(raw);
-      }
-    } catch (err) {
-      console.warn('[DodoPaymentsClient] Warning: Failed to read .dodo-config.json:', err);
-    }
-
-    const apiKey = (process.env.DODO_PAYMENTS_API_KEY || fileSettings.apiKey || '').trim();
-    const mode = ((fileSettings.mode || process.env.DODO_PAYMENTS_MODE || 'live').toLowerCase() === 'test' ? 'test' : 'live') as 'test' | 'live';
-    const productIdLifetime = (fileSettings.productIdLifetime || process.env.DODO_PAYMENTS_PRODUCT_ID_LIFETIME || '').trim();
-    const productIdYearly = (fileSettings.productIdYearly || process.env.DODO_PAYMENTS_PRODUCT_ID_YEARLY || '').trim();
-    const webhookSecret = (fileSettings.webhookSecret || process.env.DODO_PAYMENTS_WEBHOOK_SECRET || '').trim();
+    const apiKey = (process.env.DODO_PAYMENTS_API_KEY || '').trim();
+    const mode = ((process.env.DODO_PAYMENTS_MODE || 'live').toLowerCase() === 'test' ? 'test' : 'live') as 'test' | 'live';
+    const productIdLifetime = (process.env.DODO_PAYMENTS_PRODUCT_ID_LIFETIME || '').trim();
+    const productIdYearly = (process.env.DODO_PAYMENTS_PRODUCT_ID_YEARLY || '').trim();
+    const webhookSecret = (process.env.DODO_PAYMENTS_WEBHOOK_SECRET || '').trim();
 
     return { apiKey, mode, productIdLifetime, productIdYearly, webhookSecret };
-  }
-
-  /**
-   * Save configuration to .dodo-config.json
-   */
-  public saveConfig(updates: Partial<DodoClientConfig>): DodoClientConfig {
-    const current = this.getConfig();
-    const merged: DodoClientConfig = {
-      apiKey: updates.apiKey !== undefined ? updates.apiKey.trim() : current.apiKey,
-      mode: updates.mode === 'test' ? 'test' : 'live',
-      productIdLifetime: updates.productIdLifetime !== undefined ? updates.productIdLifetime.trim() : current.productIdLifetime,
-      productIdYearly: updates.productIdYearly !== undefined ? updates.productIdYearly.trim() : current.productIdYearly,
-      webhookSecret: updates.webhookSecret !== undefined ? updates.webhookSecret.trim() : current.webhookSecret,
-    };
-
-    try {
-      fs.writeFileSync(this.configFilePath, JSON.stringify(merged, null, 2), 'utf-8');
-    } catch (err) {
-      console.error('[DodoPaymentsClient] Failed to persist config:', err);
-    }
-
-    return merged;
   }
 
   public getBaseUrl(): string {

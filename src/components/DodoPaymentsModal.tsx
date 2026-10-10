@@ -48,6 +48,8 @@ export const DodoPaymentsModal: React.FC<DodoPaymentsModalProps> = ({
   const [webhookSecret, setWebhookSecret] = useState('');
   const [showWebhookSecret, setShowWebhookSecret] = useState(false);
 
+  const [adminSecret, setAdminSecret] = useState('');
+  const [showAdminSecret, setShowAdminSecret] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isTesting, setIsTesting] = useState(false);
   const [currentConfig, setCurrentConfig] = useState<DodoConfigState | null>(null);
@@ -57,22 +59,34 @@ export const DodoPaymentsModal: React.FC<DodoPaymentsModalProps> = ({
   // Load existing configuration on open
   useEffect(() => {
     if (isOpen) {
-      loadConfig();
+      if (adminSecret) {
+        loadConfig();
+      }
       setStatusMessage(null);
       setTestResult(null);
     }
   }, [isOpen]);
 
-  const loadConfig = async () => {
+  const loadConfig = async (secretOverride?: string) => {
+    const secret = secretOverride !== undefined ? secretOverride : adminSecret;
+    if (!secret) return;
+
     setIsLoading(true);
     try {
-      const res = await fetch('/api/dodo/config');
+      const res = await fetch('/api/dodo/config', {
+        headers: {
+          'x-admin-secret': secret.trim(),
+        },
+      });
       if (res.ok) {
         const data: DodoConfigState = await res.json();
         setCurrentConfig(data);
         setMode(data.mode || 'live');
         setProductIdLifetime(data.productIdLifetime || '');
         setProductIdYearly(data.productIdYearly || '');
+        setStatusMessage({ type: 'success', text: 'Admin secret authenticated.' });
+      } else if (res.status === 401) {
+        setStatusMessage({ type: 'error', text: 'Invalid ADMIN_SECRET. Please check your environment variables.' });
       }
     } catch (err) {
       console.error('Failed to load Dodo Payments config', err);
@@ -83,6 +97,11 @@ export const DodoPaymentsModal: React.FC<DodoPaymentsModalProps> = ({
 
   const handleSave = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
+    if (!adminSecret) {
+      setStatusMessage({ type: 'error', text: 'ADMIN_SECRET required to authenticate admin requests.' });
+      return;
+    }
+
     setIsLoading(true);
     setStatusMessage(null);
 
@@ -99,27 +118,35 @@ export const DodoPaymentsModal: React.FC<DodoPaymentsModalProps> = ({
 
       const res = await fetch('/api/dodo/config', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-admin-secret': adminSecret.trim(),
+        },
         body: JSON.stringify(payload),
       });
 
       const data = await res.json();
       if (res.ok) {
-        setStatusMessage({ type: 'success', text: 'Dodo Payments settings saved successfully!' });
+        setStatusMessage({ type: 'success', text: data.message || 'Settings verified.' });
         setApiKey(''); // Clear entered raw key for security
         await loadConfig();
         if (onConfigSaved) onConfigSaved();
       } else {
-        setStatusMessage({ type: 'error', text: data.message || 'Failed to save settings.' });
+        setStatusMessage({ type: 'error', text: data.error || data.message || 'Unauthorized or failed.' });
       }
     } catch (err: any) {
-      setStatusMessage({ type: 'error', text: err?.message || 'Network error while saving.' });
+      setStatusMessage({ type: 'error', text: err?.message || 'Network error.' });
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleTestConnection = async () => {
+    if (!adminSecret) {
+      setStatusMessage({ type: 'error', text: 'ADMIN_SECRET required to test connection.' });
+      return;
+    }
+
     setIsTesting(true);
     setTestResult(null);
     setStatusMessage(null);
@@ -127,7 +154,10 @@ export const DodoPaymentsModal: React.FC<DodoPaymentsModalProps> = ({
     try {
       const res = await fetch('/api/dodo/test-connection', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-admin-secret': adminSecret.trim(),
+        },
         body: JSON.stringify({
           apiKey: apiKey.trim() || undefined,
           mode,
@@ -144,7 +174,7 @@ export const DodoPaymentsModal: React.FC<DodoPaymentsModalProps> = ({
       } else {
         setTestResult({
           success: false,
-          message: data.message || 'Connection failed. Please check your API key.',
+          message: data.message || data.error || 'Connection failed. Check API key and ADMIN_SECRET.',
         });
       }
     } catch (err: any) {
@@ -220,6 +250,42 @@ export const DodoPaymentsModal: React.FC<DodoPaymentsModalProps> = ({
         {/* Form */}
         <form onSubmit={handleSave} className="mt-6 space-y-5">
           
+          {/* Admin Secret Authentication */}
+          <div className="space-y-1.5 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-400/30">
+            <div className="flex items-center justify-between">
+              <label htmlFor="admin-secret-key" className="text-xs font-semibold text-amber-200 flex items-center gap-1.5">
+                <Lock className="w-3.5 h-3.5 text-amber-400" />
+                <span>Admin Secret (Required to modify or view gateway)</span>
+              </label>
+              <span className="text-[10px] font-mono text-amber-300">ADMIN_SECRET env var</span>
+            </div>
+            <div className="relative">
+              <input
+                id="admin-secret-key"
+                type={showAdminSecret ? 'text' : 'password'}
+                value={adminSecret}
+                onChange={(e) => {
+                  setAdminSecret(e.target.value);
+                  if (e.target.value.length >= 4) {
+                    loadConfig(e.target.value);
+                  }
+                }}
+                placeholder="Enter ADMIN_SECRET to authenticate..."
+                className="w-full px-4 py-2 pr-12 rounded-xl bg-black/60 border border-amber-400/30 text-xs text-white placeholder:text-zinc-500 focus:outline-none focus:border-amber-400 font-mono"
+              />
+              <button
+                type="button"
+                onClick={() => setShowAdminSecret(!showAdminSecret)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white text-xs cursor-pointer"
+              >
+                {showAdminSecret ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+              </button>
+            </div>
+            <p className="text-[10px] text-amber-200/70">
+              Per Phase 1 Security Guidelines, all admin routes require an ADMIN_SECRET header to reject unauthorized requests.
+            </p>
+          </div>
+
           {/* Environment Mode Toggle */}
           <div className="space-y-2">
             <label className="text-xs font-semibold text-white flex items-center justify-between">

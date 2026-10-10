@@ -288,48 +288,79 @@ export const FreeAppleTools: React.FC<FreeAppleToolsProps> = ({ onLoadPromptInto
   }, [phoneModel, currentBattery, targetBattery, chargerWattage]);
 
   // =========================================================================
-  // TOOL 4: FILE TRANSFER TIME CALCULATOR STATE
+  // TOOL 4: FILE SIZE CONVERTER & TRANSFER TIME ESTIMATOR STATE
   // =========================================================================
-  const [fileSizeGb, setFileSizeGb] = useState<number>(10);
+  const [fileSizeValue, setFileSizeValue] = useState<number>(25);
+  const [fileSizeUnit, setFileSizeUnit] = useState<'MB' | 'GB' | 'TB'>('GB');
   const [interfaceType, setInterfaceType] = useState<
-    'airdrop-6e' | 'thunderbolt4' | 'usbc-10g' | 'usbc-480m' | 'lightning' | 'icloud-100m'
+    'airdrop-6e' | 'thunderbolt4' | 'usbc-10g' | 'usbc-480m' | 'lightning' | 'wifi-gigabit' | 'icloud-100m'
   >('airdrop-6e');
 
   const transferInterfaces = {
-    'airdrop-6e': { name: 'AirDrop (Wi-Fi 6E Peer-to-Peer)', mbPerSec: 75, realSpeedText: '~600 Mbps real throughput' },
-    thunderbolt4: { name: 'Thunderbolt 4 / USB4 Cable', mbPerSec: 3200, realSpeedText: '~40 Gbps theoretical / 3.2 GB/s NVMe' },
-    'usbc-10g': { name: 'USB-C 3.2 Gen 2 (iPhone 15/16 Pro)', mbPerSec: 1050, realSpeedText: '~10 Gbps / 1,050 MB/s sustained' },
-    'usbc-480m': { name: 'USB-C 2.0 (iPhone 15/16 Standard)', mbPerSec: 42, realSpeedText: '~480 Mbps / 42 MB/s USB 2.0 limitation' },
-    lightning: { name: 'Lightning Cable (iPhone 14 & older)', mbPerSec: 35, realSpeedText: '~480 Mbps / 35 MB/s Lightning limitation' },
-    'icloud-100m': { name: 'iCloud Sync (100 Mbps Upload)', mbPerSec: 12, realSpeedText: '~100 Mbps home broadband upload' },
+    'airdrop-6e': { name: 'AirDrop (Wi-Fi 6E / AWDL)', mbPerSec: 75, realSpeedText: '~600 Mbps sustained wireless' },
+    thunderbolt4: { name: 'Thunderbolt 4 / USB4 Cable', mbPerSec: 3200, realSpeedText: '~40 Gbps bus / 3.2 GB/s NVMe' },
+    'usbc-10g': { name: 'USB-C 10Gbps (iPhone 15/16 Pro)', mbPerSec: 1050, realSpeedText: '~10 Gbps / 1,050 MB/s sustained' },
+    'usbc-480m': { name: 'USB-C 480Mbps (iPhone 15/16)', mbPerSec: 42, realSpeedText: '~480 Mbps / 42 MB/s USB 2.0 limitation' },
+    lightning: { name: 'Lightning Cable (iPhone 14 & older)', mbPerSec: 35, realSpeedText: '~480 Mbps / 35 MB/s Lightning' },
+    'wifi-gigabit': { name: 'Gigabit Local Wi-Fi (LAN)', mbPerSec: 110, realSpeedText: '~1 Gbps local router transfer' },
+    'icloud-100m': { name: 'iCloud Upload (100 Mbps Broadband)', mbPerSec: 12, realSpeedText: '~100 Mbps home internet upload' },
   };
 
   const transferResults = useMemo(() => {
-    const iface = transferInterfaces[interfaceType];
-    const totalMb = fileSizeGb * 1024;
-    const totalSeconds = Math.max(0.1, Math.round((totalMb / iface.mbPerSec) * 10) / 10);
-    
-    let formattedDuration = '';
-    if (totalSeconds < 60) {
-      formattedDuration = `${totalSeconds.toFixed(1)} seconds`;
-    } else if (totalSeconds < 3600) {
-      const m = Math.floor(totalSeconds / 60);
-      const s = Math.round(totalSeconds % 60);
-      formattedDuration = `${m} min ${s} sec`;
-    } else {
-      const h = Math.floor(totalSeconds / 3600);
-      const m = Math.round((totalSeconds % 3600) / 60);
-      formattedDuration = `${h} hrs ${m} min`;
-    }
+    // Normalize input to Megabytes
+    let normalizedMb = 0;
+    if (fileSizeUnit === 'MB') normalizedMb = Math.max(1, fileSizeValue);
+    else if (fileSizeUnit === 'GB') normalizedMb = Math.max(0.001, fileSizeValue) * 1024;
+    else if (fileSizeUnit === 'TB') normalizedMb = Math.max(0.0001, fileSizeValue) * 1024 * 1024;
+
+    const totalGb = normalizedMb / 1024;
+    const totalTb = totalGb / 1024;
+    const totalMb = normalizedMb;
+    const totalMbits = totalMb * 8;
+
+    const formatSeconds = (sec: number) => {
+      if (sec < 1) return '< 1 second';
+      if (sec < 60) return `${sec.toFixed(1)} seconds`;
+      if (sec < 3600) {
+        const m = Math.floor(sec / 60);
+        const s = Math.round(sec % 60);
+        return `${m}m ${s}s`;
+      }
+      const h = Math.floor(sec / 3600);
+      const m = Math.round((sec % 3600) / 60);
+      return `${h}h ${m}m`;
+    };
+
+    const activeIface = transferInterfaces[interfaceType];
+    const activeSeconds = Math.max(0.1, normalizedMb / activeIface.mbPerSec);
+
+    // Matrix comparison across all interfaces
+    const comparisonMatrix = Object.entries(transferInterfaces).map(([key, iface]) => {
+      const sec = Math.max(0.1, normalizedMb / iface.mbPerSec);
+      return {
+        key,
+        name: iface.name,
+        mbPerSec: iface.mbPerSec,
+        realSpeedText: iface.realSpeedText,
+        duration: formatSeconds(sec),
+        seconds: sec,
+        isCurrent: key === interfaceType,
+      };
+    });
 
     return {
-      totalSeconds,
-      formattedDuration,
-      ifaceName: iface.name,
-      realSpeed: iface.realSpeedText,
-      vsThunderboltSpeedRatio: Math.round((transferInterfaces.thunderbolt4.mbPerSec / iface.mbPerSec) * 10) / 10,
+      totalMb,
+      totalGb,
+      totalTb,
+      totalMbits,
+      activeSeconds,
+      formattedDuration: formatSeconds(activeSeconds),
+      ifaceName: activeIface.name,
+      realSpeed: activeIface.realSpeedText,
+      vsThunderboltSpeedRatio: Math.round((transferInterfaces.thunderbolt4.mbPerSec / activeIface.mbPerSec) * 10) / 10,
+      comparisonMatrix,
     };
-  }, [fileSizeGb, interfaceType]);
+  }, [fileSizeValue, fileSizeUnit, interfaceType]);
 
   // =========================================================================
   // TOOL 5: PHOTO PRINT SIZE CALCULATOR STATE
@@ -412,7 +443,7 @@ export const FreeAppleTools: React.FC<FreeAppleToolsProps> = ({ onLoadPromptInto
                     haptics.playTap();
                     setIdeaCategory(cat.id);
                   }}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                  className={`tilt-tab-3d px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                     ideaCategory === cat.id
                       ? 'bg-amber-500 text-black shadow-md'
                       : 'glass-pill text-slate-700 dark:text-zinc-300 hover:text-white'
@@ -747,59 +778,92 @@ export const FreeAppleTools: React.FC<FreeAppleToolsProps> = ({ onLoadPromptInto
       </section>
 
       {/* =========================================================================
-          TOOL 4: FILE TRANSFER TIME CALCULATOR
+          TOOL 4: FILE SIZE CONVERTER & TRANSFER TIME ESTIMATOR
           ========================================================================= */}
       <section id="transfers" className="scroll-mt-24">
-        <div className="bento-card p-6 sm:p-8 tilt-card-3d">
-          <div className="space-y-1 mb-6">
+        <div className="bento-card p-6 sm:p-8 tilt-card-3d space-y-8">
+          
+          {/* 1. Short Intro */}
+          <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span className="w-6 h-6 rounded-lg bg-indigo-500/20 text-indigo-400 border border-indigo-400/30 flex items-center justify-center text-xs">
                 📡
               </span>
               <span className="text-[11px] font-mono uppercase tracking-wider text-indigo-400">
-                Throughput Estimator
+                Data Transfer &amp; Storage Estimator
               </span>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white font-heading">
-              AirDrop &amp; Cable Transfer Time Calculator
+              File Size Converter &amp; Transfer Time Estimator
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
-              Benchmark transfer times between iPhone, iPad, Mac, and external SSDs across AirDrop, USB-C 10Gbps, Thunderbolt 4, and Lightning.
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed max-w-3xl">
+              Convert any file or backup size across megabytes (MB), gigabytes (GB), and terabytes (TB). Instantly estimate how long moves take across AirDrop, USB-C 10Gbps cables, Thunderbolt 4, Lightning, and home broadband.
             </p>
           </div>
 
+          {/* 2. Calculator Core */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
             {/* Input Controls */}
-            <div className="lg:col-span-6 space-y-4">
-              <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 font-mono">
-                  File or Backup Size: {fileSizeGb} GB
-                </label>
+            <div className="lg:col-span-6 space-y-5">
+              {/* Unit Toggle and Input Field */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <label htmlFor="file-size-number" className="text-xs font-semibold text-slate-700 dark:text-zinc-300 font-mono">
+                    Enter File or Backup Size:
+                  </label>
+                  <div className="inline-flex rounded-lg bg-white/5 border border-white/10 p-0.5">
+                    {(['MB', 'GB', 'TB'] as const).map((unit) => (
+                      <button
+                        key={unit}
+                        type="button"
+                        onClick={() => {
+                          haptics.playTap();
+                          setFileSizeUnit(unit);
+                        }}
+                        className={`px-2.5 py-1 rounded-md text-xs font-bold transition-all cursor-pointer ${
+                          fileSizeUnit === unit
+                            ? 'bg-indigo-600 text-white shadow-sm'
+                            : 'text-zinc-400 hover:text-white'
+                        }`}
+                      >
+                        {unit}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="flex items-center gap-3">
                   <input
-                    type="range"
-                    min={1}
-                    max={128}
-                    value={fileSizeGb}
-                    onChange={(e) => setFileSizeGb(Number(e.target.value))}
-                    className="w-full accent-indigo-500"
+                    id="file-size-number"
+                    type="number"
+                    min={0.1}
+                    step={fileSizeUnit === 'TB' ? '0.1' : '1'}
+                    value={fileSizeValue}
+                    onChange={(e) => setFileSizeValue(Math.max(0.1, Number(e.target.value)))}
+                    className="glass-input w-full p-3 rounded-xl text-base font-bold text-white font-mono"
                   />
-                  <span className="text-xs font-mono font-bold text-white px-3 py-1 rounded bg-white/10 shrink-0">
-                    {fileSizeGb} GB
+                  <span className="text-sm font-mono font-bold text-indigo-300 px-4 py-3 rounded-xl bg-white/10 shrink-0">
+                    {fileSizeUnit}
                   </span>
                 </div>
-                {/* Presets */}
+
+                {/* Quick Presets */}
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {[
-                    { gb: 1, label: '1GB (Album)' },
-                    { gb: 10, label: '10GB (4K Clip)' },
-                    { gb: 32, label: '32GB (Phone Backup)' },
-                    { gb: 64, label: '64GB (ProRes Footage)' },
-                  ].map((p) => (
+                    { val: 500, unit: 'MB' as const, label: '500 MB (Photos / Audio)' },
+                    { val: 5, unit: 'GB' as const, label: '5 GB (HD Video)' },
+                    { val: 25, unit: 'GB' as const, label: '25 GB (4K ProRes)' },
+                    { val: 64, unit: 'GB' as const, label: '64 GB (iOS Backup)' },
+                    { val: 1, unit: 'TB' as const, label: '1 TB (Mac Drive)' },
+                  ].map((p, idx) => (
                     <button
-                      key={p.gb}
+                      key={idx}
                       type="button"
-                      onClick={() => setFileSizeGb(p.gb)}
+                      onClick={() => {
+                        haptics.playTap();
+                        setFileSizeValue(p.val);
+                        setFileSizeUnit(p.unit);
+                      }}
                       className="px-2.5 py-1 rounded-lg text-[10px] glass-pill text-zinc-300 hover:text-white cursor-pointer"
                     >
                       {p.label}
@@ -808,56 +872,186 @@ export const FreeAppleTools: React.FC<FreeAppleToolsProps> = ({ onLoadPromptInto
                 </div>
               </div>
 
+              {/* Converted Units Bar */}
+              <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-1.5">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">
+                  Equivalent Normalized Sizes (Binary 1,024 Base)
+                </span>
+                <div className="grid grid-cols-3 gap-2 text-center font-mono text-xs">
+                  <div className="p-2 rounded-lg bg-black/40">
+                    <div className="text-[10px] text-zinc-400">Megabytes</div>
+                    <div className="font-bold text-indigo-300 truncate">
+                      {transferResults.totalMb >= 1000 ? Math.round(transferResults.totalMb).toLocaleString() : transferResults.totalMb.toFixed(1)} MB
+                    </div>
+                  </div>
+                  <div className="p-2 rounded-lg bg-black/40">
+                    <div className="text-[10px] text-zinc-400">Gigabytes</div>
+                    <div className="font-bold text-white truncate">
+                      {transferResults.totalGb < 0.1 ? transferResults.totalGb.toFixed(3) : transferResults.totalGb.toFixed(2)} GB
+                    </div>
+                  </div>
+                  <div className="p-2 rounded-lg bg-black/40">
+                    <div className="text-[10px] text-zinc-400">Terabytes</div>
+                    <div className="font-bold text-indigo-300 truncate">
+                      {transferResults.totalTb < 0.01 ? transferResults.totalTb.toFixed(4) : transferResults.totalTb.toFixed(3)} TB
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Interface Picker */}
-              <div className="space-y-1">
+              <div className="space-y-1.5">
                 <label className="block text-xs font-semibold text-slate-700 dark:text-zinc-300 font-mono">
-                  Connection Interface:
+                  Select Connection Interface:
                 </label>
                 <select
                   value={interfaceType}
-                  onChange={(e) => setInterfaceType(e.target.value as any)}
-                  className="glass-input w-full p-3 rounded-xl text-xs sm:text-sm"
+                  onChange={(e) => {
+                    haptics.playTap();
+                    setInterfaceType(e.target.value as any);
+                  }}
+                  className="glass-input w-full p-3 rounded-xl text-xs sm:text-sm text-white bg-black/50"
                 >
                   <option value="airdrop-6e">AirDrop (Wi-Fi 6E Peer-to-Peer / ~75 MB/s)</option>
+                  <option value="usbc-10g">USB-C 10Gbps Cable (iPhone 15/16 Pro to SSD / ~1,050 MB/s)</option>
                   <option value="thunderbolt4">Thunderbolt 4 / USB4 (Mac to NVMe SSD / ~3,200 MB/s)</option>
-                  <option value="usbc-10g">USB-C 10Gbps (iPhone 15/16 Pro to SSD / ~1,050 MB/s)</option>
-                  <option value="usbc-480m">USB-C 480Mbps (iPhone 15/16 Standard / ~42 MB/s)</option>
-                  <option value="lightning">Lightning USB 2.0 (iPhone 14 &amp; Older / ~35 MB/s)</option>
-                  <option value="icloud-100m">iCloud Upload (100 Mbps Broadband / ~12 MB/s)</option>
+                  <option value="usbc-480m">USB-C 2.0 (iPhone 15/16 Standard Cable / ~42 MB/s)</option>
+                  <option value="lightning">Lightning Cable (iPhone 14 &amp; Older / ~35 MB/s)</option>
+                  <option value="wifi-gigabit">Gigabit Local Wi-Fi (Home Router / ~110 MB/s)</option>
+                  <option value="icloud-100m">iCloud Backup (100 Mbps Home Broadband / ~12 MB/s)</option>
                 </select>
               </div>
             </div>
 
-            {/* Results Output */}
+            {/* Results Output Card */}
             <div className="lg:col-span-6 p-6 rounded-2xl bg-black/40 border border-white/15 flex flex-col justify-between space-y-4">
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">
-                  Calculated Transfer Time
+                  Estimated Transfer Duration
                 </span>
                 <div className="text-3xl sm:text-4xl font-extrabold text-white font-heading mt-1 text-indigo-400">
                   {transferResults.formattedDuration}
                 </div>
                 <p className="text-xs text-zinc-300 mt-2">
-                  Moving {fileSizeGb} GB via {transferResults.ifaceName}.
+                  Moving {fileSizeValue} {fileSizeUnit} ({Math.round(transferResults.totalMb).toLocaleString()} MB) via {transferResults.ifaceName}.
                 </p>
                 <p className="text-[11px] font-mono text-zinc-400 mt-0.5">
                   Real sustained speed: {transferResults.realSpeed}
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-zinc-300 space-y-1">
-                <div className="flex justify-between font-mono text-[11px]">
-                  <span>vs. Thunderbolt 4 (Max Speed):</span>
-                  <span className="text-indigo-300 font-bold">
-                    {transferResults.vsThunderboltSpeedRatio === 1 ? 'Fastest Possible' : `${transferResults.vsThunderboltSpeedRatio}× slower`}
-                  </span>
+              {/* Comparative Matrix across Speeds */}
+              <div className="space-y-2 pt-2 border-t border-white/10">
+                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider block">
+                  Speed Comparison Across Apple Connections:
+                </span>
+                <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+                  {transferResults.comparisonMatrix.map((item) => (
+                    <div
+                      key={item.key}
+                      className={`flex items-center justify-between p-2 rounded-lg text-xs font-mono transition-colors ${
+                        item.isCurrent
+                          ? 'bg-indigo-600/30 border border-indigo-400/50 text-white'
+                          : 'bg-white/[0.03] text-zinc-400 hover:text-zinc-200'
+                      }`}
+                    >
+                      <span className="truncate pr-2">{item.name}</span>
+                      <span className={`font-bold shrink-0 ${item.isCurrent ? 'text-indigo-300' : 'text-zinc-200'}`}>
+                        {item.duration}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-                <p className="text-[11px] text-zinc-400">
-                  Tip: iPhone Pro users recording 4K ProRes should connect an external USB-C 10Gbps SSD to eliminate sync bottlenecks.
-                </p>
               </div>
             </div>
           </div>
+
+          {/* 3. Worked Example */}
+          <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
+            <div className="flex items-center gap-2">
+              <span className="text-sm">📝</span>
+              <h3 className="text-sm font-bold text-white font-heading">
+                Worked Example: Moving a 25 GB 4K ProRes Video Clip from iPhone to Mac
+              </h3>
+            </div>
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              Suppose you recorded a 25 GB 4K ProRes video on an iPhone 16 Pro and want to know whether you should AirDrop it or plug in a USB-C 10Gbps SSD cable.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1 text-xs">
+              <div className="p-3 rounded-xl bg-black/40 border border-white/10 space-y-1">
+                <span className="text-[10px] font-mono text-indigo-400">Step 1: Convert to MB</span>
+                <p className="text-zinc-300 font-mono text-[11px]">
+                  25 GB × 1,024 = <strong>25,600 MB</strong>
+                </p>
+                <p className="text-[10px] text-zinc-500">Apple file systems use binary 1,024 multipliers for storage calculation.</p>
+              </div>
+
+              <div className="p-3 rounded-xl bg-black/40 border border-white/10 space-y-1">
+                <span className="text-[10px] font-mono text-blue-400">Step 2: AirDrop Wireless</span>
+                <p className="text-zinc-300 font-mono text-[11px]">
+                  25,600 MB ÷ 75 MB/s = <strong>~341 seconds</strong>
+                </p>
+                <p className="text-[10px] text-emerald-400 font-semibold">Total time: ~5 minutes 41 seconds</p>
+              </div>
+
+              <div className="p-3 rounded-xl bg-black/40 border border-white/10 space-y-1">
+                <span className="text-[10px] font-mono text-emerald-400">Step 3: USB-C 10Gbps Cable</span>
+                <p className="text-zinc-300 font-mono text-[11px]">
+                  25,600 MB ÷ 1,050 MB/s = <strong>~24.4 seconds</strong>
+                </p>
+                <p className="text-[10px] text-emerald-400 font-semibold">Result: 14× faster than AirDrop</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 4. FAQ Accordion */}
+          <div className="space-y-3 pt-2">
+            <h3 className="text-sm font-bold text-white font-heading">
+              Frequently Asked Questions About File Sizes &amp; Transfer Speeds
+            </h3>
+            <div className="space-y-2">
+              <details className="group p-3.5 rounded-xl bg-white/[0.02] border border-white/10 text-xs">
+                <summary className="font-semibold text-zinc-200 cursor-pointer list-none flex items-center justify-between">
+                  <span>Why do files appear smaller on Mac than what my drive package says?</span>
+                  <span className="text-zinc-400 group-open:rotate-180 transition-transform">▾</span>
+                </summary>
+                <p className="mt-2 text-zinc-400 leading-relaxed text-[11px]">
+                  Storage drive manufacturers advertise capacity in decimal gigabytes (1 GB = 1,000,000,000 bytes). However, operating systems and memory transfer protocols frequently compute binary gibibytes (1 GiB = 1,073,741,824 bytes). This means a 1 TB drive shows up as approximately 931 GB in binary calculators.
+                </p>
+              </details>
+
+              <details className="group p-3.5 rounded-xl bg-white/[0.02] border border-white/10 text-xs">
+                <summary className="font-semibold text-zinc-200 cursor-pointer list-none flex items-center justify-between">
+                  <span>Why is AirDrop sometimes much slower than the 75 MB/s benchmark?</span>
+                  <span className="text-zinc-400 group-open:rotate-180 transition-transform">▾</span>
+                </summary>
+                <p className="mt-2 text-zinc-400 leading-relaxed text-[11px]">
+                  AirDrop uses Apple Wireless Direct Link (AWDL). When devices are more than 3 meters apart or when 5GHz channels experience wireless congestion, AWDL down-negotiates to 2.4GHz channels, cutting throughput from 75 MB/s down to 15–25 MB/s. Keeping devices side-by-side restores maximum peer-to-peer speed.
+                </p>
+              </details>
+
+              <details className="group p-3.5 rounded-xl bg-white/[0.02] border border-white/10 text-xs">
+                <summary className="font-semibold text-zinc-200 cursor-pointer list-none flex items-center justify-between">
+                  <span>Do all USB-C cables transfer files at 10Gbps?</span>
+                  <span className="text-zinc-400 group-open:rotate-180 transition-transform">▾</span>
+                </summary>
+                <p className="mt-2 text-zinc-400 leading-relaxed text-[11px]">
+                  No. The standard woven USB-C charge cable included in the iPhone box only supports USB 2.0 speeds (up to 480 Mbps or ~42 MB/s). To unlock the full 10Gbps (~1,050 MB/s) speeds supported by iPhone 15 Pro, iPhone 16 Pro, iPad Pro, and Mac, you need a dedicated USB-C 10Gbps or Thunderbolt 4 cable.
+                </p>
+              </details>
+
+              <details className="group p-3.5 rounded-xl bg-white/[0.02] border border-white/10 text-xs">
+                <summary className="font-semibold text-zinc-200 cursor-pointer list-none flex items-center justify-between">
+                  <span>How much storage does 4K ProRes video consume on an iPhone?</span>
+                  <span className="text-zinc-400 group-open:rotate-180 transition-transform">▾</span>
+                </summary>
+                <p className="mt-2 text-zinc-400 leading-relaxed text-[11px]">
+                  Apple ProRes 422 HQ at 4K 60fps requires roughly 750 MB to 1 GB per minute of footage, or approximately 45–60 GB per hour. This is why Apple enables direct recording to external USB-C SSDs on Pro models.
+                </p>
+              </details>
+            </div>
+          </div>
+
         </div>
       </section>
 
