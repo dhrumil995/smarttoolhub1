@@ -300,7 +300,7 @@ export const GuidesPage: React.FC<GuidesPageProps> = ({ onNavigate }) => {
                 haptics.playTap();
                 setFilterCategory(cat);
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
+              className={`tilt-tab-3d px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
                 filterCategory === cat
                   ? 'bg-indigo-600 text-white shadow-sm'
                   : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/[0.04]'
@@ -341,7 +341,7 @@ export const GuidesPage: React.FC<GuidesPageProps> = ({ onNavigate }) => {
                     haptics.playTap();
                     setActiveArticleId(article.id);
                   }}
-                  className={`p-4 rounded-2xl cursor-pointer transition-all border ${
+                  className={`tilt-card-3d p-4 rounded-2xl cursor-pointer transition-all border ${
                     isSelected
                       ? 'bg-white dark:bg-white/[0.08] border-indigo-500/50 shadow-md ring-1 ring-indigo-500/20'
                       : 'glass-panel hover:bg-white/60 dark:hover:bg-white/[0.04] border-slate-200/70 dark:border-white/10'

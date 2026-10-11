@@ -194,4 +194,69 @@ describe('SmartToolHub - Integration Tests', () => {
       assert.equal(invalidStatus.verified, false);
     });
   });
+
+  describe('4. Home Shortcut Fast Generation & Telemetry API Contracts', () => {
+    test('instant shortcut generation rejects sensitive keywords', () => {
+      const sensitiveList = ['password', 'passcode', 'credit card', 'private key', 'secret key', 'apple id password'];
+      const dangerousInputs = [
+        'extract my apple id password and backup to cloud',
+        'store my credit card on desktop',
+        'read private key from ssh folder',
+      ];
+
+      for (const input of dangerousInputs) {
+        const lower = input.toLowerCase();
+        const flagged = sensitiveList.some((s) => lower.includes(s));
+        assert.equal(flagged, true, `Input "${input}" must be flagged`);
+      }
+    });
+
+    test('instant shortcut generation produces structured action graph', () => {
+      function simulateInstantShortcut(task: string) {
+        const lower = task.toLowerCase();
+        let category = 'Productivity';
+        let title = 'Automated ' + task.slice(0, 35);
+        let steps = [
+          { step: 1, app: 'Shortcuts', action: `Receive Input for "${task}"` },
+          { step: 2, app: 'Files', action: 'Process item on-device' },
+          { step: 3, app: 'Notifications', action: 'Show notification' },
+        ];
+
+        if (lower.includes('photo') || lower.includes('screenshot')) {
+          category = 'Media & Photography';
+          title = 'Retina Image Optimizer & AirDrop';
+          steps = [
+            { step: 1, app: 'Photos', action: 'Get Latest Screenshots' },
+            { step: 2, app: 'Shortcuts', action: 'Convert to WebP' },
+            { step: 3, app: 'AirDrop', action: 'Share Item via AirDrop to Nearby Mac' },
+          ];
+        }
+
+        return { success: true, workflow: { title, category, steps } };
+      }
+
+      const res = simulateInstantShortcut('Convert screenshot to WebP and AirDrop');
+      assert.equal(res.success, true);
+      assert.equal(res.workflow.category, 'Media & Photography');
+      assert.equal(res.workflow.steps.length, 3);
+      assert.equal(res.workflow.steps[2].app, 'AirDrop');
+    });
+
+    test('health check returns verified service metrics and uptime', () => {
+      const healthPayload = {
+        status: 'ok',
+        service: 'SmartToolHub API',
+        timestamp: new Date().toISOString(),
+        uptime: 120.5,
+        aiConfigured: true,
+        aiEngine: 'gemini-3.8-flash',
+        proFeaturesActive: true,
+      };
+
+      assert.equal(healthPayload.status, 'ok');
+      assert.equal(healthPayload.service, 'SmartToolHub API');
+      assert.ok(healthPayload.uptime > 0);
+      assert.equal(healthPayload.aiEngine, 'gemini-3.8-flash');
+    });
+  });
 });

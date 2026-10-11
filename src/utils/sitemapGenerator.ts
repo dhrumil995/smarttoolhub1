@@ -6,47 +6,40 @@ export interface SitemapRoute {
   lastmod: string;
   changefreq: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly';
   priority: number;
-  category: 'core' | 'tool' | 'workflow' | 'filter' | 'legal';
+  category: 'core' | 'tool' | 'workflow' | 'legal';
   title: string;
   image?: {
     loc: string;
-    title: string;
-    caption?: string;
   };
 }
 
 export const DEFAULT_PRODUCTION_BASE_URL = 'https://smarttoolhub.net';
 
 /**
- * Returns the effective base URL, prioritizing parameter, environment variable, or fallback.
+ * Returns the effective base URL, dynamically prioritizing custom parameter,
+ * environment variable, or default production hostname.
  */
 export function resolveBaseUrl(customBaseUrl?: string): string {
   if (customBaseUrl && customBaseUrl.trim().length > 0) {
-    const clean = customBaseUrl.replace(/\/+$/, '');
-    if (!clean.includes('ais-dev-') && !clean.includes('ais-pre-') && !clean.includes('localhost')) {
-      return clean;
-    }
+    return customBaseUrl.trim().replace(/\/+$/, '');
   }
-  if (typeof process !== 'undefined' && process.env?.APP_URL) {
-    const envUrl = process.env.APP_URL.replace(/\/+$/, '');
-    if (!envUrl.includes('ais-dev-') && !envUrl.includes('ais-pre-')) {
-      return envUrl;
-    }
+  if (typeof process !== 'undefined' && process.env?.APP_URL && process.env.APP_URL.trim().length > 0) {
+    return process.env.APP_URL.trim().replace(/\/+$/, '');
   }
   return DEFAULT_PRODUCTION_BASE_URL;
 }
 
 /**
- * Automatically identifies all available static pages, dynamic workflows,
- * and high-intent filter routes for search engine indexing.
+ * Automatically discovers all verified, canonical pages and curated workflows.
+ * Excludes query parameter filters (?category=..., ?persona=...) to guarantee
+ * 100% compliance with Google Search Console canonical sitemap requirements.
  */
 export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
   const baseUrl = resolveBaseUrl(rawBaseUrl);
-  // Default to today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split('T')[0];
 
   const routes: SitemapRoute[] = [
-    // 1. Core Landing & Overview
+    // 1. Core Landing & Main Hubs
     {
       path: '/',
       url: `${baseUrl}/`,
@@ -57,12 +50,8 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
       title: 'SmartToolHub — Apple Workflows, Shortcuts & Hardware Diagnostics Hub',
       image: {
         loc: `${baseUrl}/images/hero_apple_ecosystem_studio.webp`,
-        title: 'SmartToolHub Apple Ecosystem Studio Hub',
-        caption: 'Unified Mac, iPhone, and iPad automation workspace on macOS Sequoia',
       },
     },
-
-    // 2. Interactive Tools & Builders
     {
       path: '/generator',
       url: `${baseUrl}/generator`,
@@ -72,9 +61,7 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
       category: 'tool',
       title: 'Apple Shortcut & Multi-Device Workflow Generator',
       image: {
-        loc: `${baseUrl}/images/feature_shortcuts_automation.jpg`,
-        title: 'Apple Shortcuts Visual Builder & Code Synthesizer',
-        caption: 'Generate zero-friction Apple Shortcuts and shell automations',
+        loc: `${baseUrl}/images/feature_shortcuts_automation.webp`,
       },
     },
     {
@@ -86,9 +73,7 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
       category: 'tool',
       title: 'macOS Sequoia & Apple Silicon Hardware Compatibility Matrix',
       image: {
-        loc: `${baseUrl}/images/hero_apple_ecosystem_studio.jpg`,
-        title: 'Apple Silicon Hardware Compatibility Matrix',
-        caption: 'Hardware and OS requirements for iPhone Mirroring and Continuity',
+        loc: `${baseUrl}/images/hero_apple_ecosystem_studio.webp`,
       },
     },
     {
@@ -100,9 +85,7 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
       category: 'tool',
       title: 'Apple Continuity & AirDrop Diagnostic Wizard',
       image: {
-        loc: `${baseUrl}/images/feature_continuity_mirroring.jpg`,
-        title: 'Continuity & iPhone Mirroring Troubleshooting Diagnostics',
-        caption: 'Step-by-step diagnostic trees for AWDL dropouts and clipboard sync',
+        loc: `${baseUrl}/images/feature_continuity_mirroring.webp`,
       },
     },
     {
@@ -114,117 +97,30 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
       category: 'core',
       title: 'Verified Apple Workflows & Shortcuts Blueprint Library',
     },
-
-    // 3. Interactive Workbench Suite Routes (High-Intent Utility Queries)
-    {
-      path: '/?category=image',
-      url: `${baseUrl}/?category=image`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: 0.85,
-      category: 'tool',
-      title: 'Retina Image Scale, Aspect Ratio & macOS sips Batch Optimizer | SmartToolHub',
-    },
-    {
-      path: '/?category=text',
-      url: `${baseUrl}/?category=text`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: 0.85,
-      category: 'tool',
-      title: 'AI Shortcut Prompt Synthesizer, Slugify & LLM Token Counter | SmartToolHub',
-    },
-    {
-      path: '/?category=seo',
-      url: `${baseUrl}/?category=seo`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: 0.85,
-      category: 'tool',
-      title: 'Schema.org JSON-LD & OpenGraph Meta Tag Generator | SmartToolHub',
-    },
-    {
-      path: '/?category=calculator',
-      url: `${baseUrl}/?category=calculator`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: 0.85,
-      category: 'tool',
-      title: 'Apple Silicon Memory Bandwidth & Automation ROI Calculator | SmartToolHub',
-    },
-
-    // 4. High-Value Persona Filter Routes (Long-Tail Search Intent)
-    {
-      path: '/library?persona=creators',
-      url: `${baseUrl}/library?persona=creators`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: 0.8,
-      category: 'filter',
-      title: 'Content Creator Apple Workflows & Desk View Setups',
-    },
-    {
-      path: '/library?persona=developers',
-      url: `${baseUrl}/library?persona=developers`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: 0.8,
-      category: 'filter',
-      title: 'Software Engineer Apple Silicon Workflows & Terminal Scripts',
-    },
-    {
-      path: '/library?persona=freelancers',
-      url: `${baseUrl}/library?persona=freelancers`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: 0.8,
-      category: 'filter',
-      title: 'Freelancer Multi-Device Dual Display & Universal Control Guides',
-    },
-    {
-      path: '/library?persona=students',
-      url: `${baseUrl}/library?persona=students`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: 0.8,
-      category: 'filter',
-      title: 'Student Apple Pencil Sidecar & Note Taking Automations',
-    },
-    {
-      path: '/library?persona=beginners',
-      url: `${baseUrl}/library?persona=beginners`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: 0.8,
-      category: 'filter',
-      title: 'Daily Apple Ecosystem Starter Shortcuts & Instant Hotspot',
-    },
-
-    // 4. Commercial, Editorial & Legal Pages
-    {
-      path: '/about',
-      url: `${baseUrl}/about`,
-      lastmod: today,
-      changefreq: 'weekly',
-      priority: 0.85,
-      category: 'core',
-      title: 'About SmartToolHub — Systems Engineering & Physical Hardware Lab',
-    },
     {
       path: '/guides',
       url: `${baseUrl}/guides`,
       lastmod: today,
       changefreq: 'daily',
-      priority: 0.90,
+      priority: 0.9,
       category: 'core',
       title: 'Apple Systems Engineering & Automation Guides | SmartToolHub',
+    },
+    {
+      path: '/about',
+      url: `${baseUrl}/about`,
+      lastmod: today,
+      changefreq: 'weekly',
+      priority: 0.8,
+      category: 'core',
+      title: 'About SmartToolHub — Independent Apple Shortcuts & Automation Guides',
     },
     {
       path: '/pricing',
       url: `${baseUrl}/pricing`,
       lastmod: today,
       changefreq: 'monthly',
-      priority: 0.7,
+      priority: 0.8,
       category: 'legal',
       title: 'SmartToolHub Pro Pricing & Licensing Plans',
     },
@@ -257,9 +153,8 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
     },
   ];
 
-  // 5. Automatically Discover & Map Every Curated Workflow
+  // 2. Discover & Map Every Curated Workflow Blueprint
   WORKFLOWS_DATA.forEach((workflow) => {
-    // Prefer workflow's lastReviewedDate or fallback to today
     const modDate = workflow.lastReviewedDate && /^\d{4}-\d{2}-\d{2}$/.test(workflow.lastReviewedDate)
       ? workflow.lastReviewedDate
       : today;
@@ -269,13 +164,11 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
       url: `${baseUrl}/workflows/${workflow.slug}`,
       lastmod: modDate,
       changefreq: 'weekly',
-      priority: workflow.featured ? 0.85 : 0.80,
+      priority: workflow.featured ? 0.8 : 0.7,
       category: 'workflow',
       title: `${workflow.title} | SmartToolHub Apple Blueprint`,
       image: {
-        loc: `${baseUrl}/images/hero_apple_ecosystem_studio.jpg`,
-        title: workflow.title,
-        caption: workflow.summary,
+        loc: `${baseUrl}/images/hero_apple_ecosystem_studio.webp`,
       },
     });
   });
@@ -284,48 +177,44 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
 }
 
 /**
- * Generates standards-compliant XML string conforming to
- * sitemaps.org 0.9 schema with Google image extensions.
+ * Generates standards-compliant XML conforming to the official Sitemaps.org 0.9
+ * protocol and current Google Image Sitemap specifications (using only <image:loc>).
  */
 export function generateSitemapXml(rawBaseUrl?: string): string {
   const routes = getAllSitemapRoutes(rawBaseUrl);
 
-  const xmlUrls = routes.map((r) => {
-    const escapedUrl = escapeXml(r.url);
-    const escapedDate = escapeXml(r.lastmod);
+  const xmlUrls = routes
+    .map((r) => {
+      const escapedUrl = escapeXml(r.url);
+      const escapedDate = escapeXml(r.lastmod);
 
-    let imageBlock = '';
-    if (r.image) {
-      imageBlock = `
+      let imageBlock = '';
+      if (r.image?.loc) {
+        imageBlock = `
     <image:image>
       <image:loc>${escapeXml(r.image.loc)}</image:loc>
-      <image:title>${escapeXml(r.image.title)}</image:title>${
-        r.image.caption ? `\n      <image:caption>${escapeXml(r.image.caption)}</image:caption>` : ''
-      }
     </image:image>`;
-    }
+      }
 
-    return `  <url>
+      return `  <url>
     <loc>${escapedUrl}</loc>
     <lastmod>${escapedDate}</lastmod>
     <changefreq>${r.changefreq}</changefreq>
-    <priority>${r.priority.toFixed(2)}</priority>${imageBlock}
+    <priority>${r.priority.toFixed(1)}</priority>${imageBlock}
   </url>`;
-  }).join('\n');
+    })
+    .join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-<!-- Generated automatically by SmartToolHub Automated Sitemap Engine -->
-<!-- Total indexed routes: ${routes.length} -->
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${xmlUrls}
 </urlset>
 `;
 }
 
 /**
- * Escapes XML reserved characters to avoid search crawler XML parsing errors.
+ * Escapes XML reserved characters to prevent parser errors.
  */
 function escapeXml(unsafe: string): string {
   return unsafe

@@ -165,7 +165,7 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
 
         <div className="pt-2 flex items-center gap-2 text-xs text-slate-500 dark:text-zinc-400 print:text-gray-600 print:pt-0 print:text-[9pt]">
           <Calendar className="w-3.5 h-3.5 no-print" />
-          <span>Last technical review: <strong className="text-slate-700 dark:text-zinc-200">{workflow.lastReviewedDate}</strong> by SmartToolHub Systems Lab</span>
+          <span>Last technical review: <strong className="text-slate-700 dark:text-zinc-200">{workflow.lastReviewedDate}</strong> by Dhrumil Aslaliya</span>
         </div>
       </div>
 

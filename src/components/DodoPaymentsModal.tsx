@@ -505,8 +505,8 @@ export const DodoPaymentsModal: React.FC<DodoPaymentsModalProps> = ({
               <span>Dodo Payments Product Image (Ready to Upload)</span>
             </div>
             <a
-              href="/product-cover.jpg"
-              download="smarttoolhub-pro-cover.jpg"
+              href="/product-cover.webp"
+              download="smarttoolhub-pro-cover.webp"
               className="px-3 py-1.5 rounded-lg bg-white/[0.08] hover:bg-white/[0.15] border border-white/15 text-[11px] font-semibold text-emerald-300 hover:text-emerald-200 flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
@@ -526,12 +526,6 @@ export const DodoPaymentsModal: React.FC<DodoPaymentsModalProps> = ({
                 decoding="async"
                 className="w-16 h-16 rounded-lg object-cover border border-white/20 shadow-md shrink-0"
                 referrerPolicy="no-referrer"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  if (!target.src.endsWith('/product-cover.jpg')) {
-                    target.src = '/product-cover.jpg';
-                  }
-                }}
               />
             </picture>
             <div className="text-[11px] text-[#A3A3A3] space-y-1">

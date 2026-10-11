@@ -237,9 +237,9 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
     setMeta('property', 'og:url', fullCanonicalUrl);
     setMeta('property', 'og:type', config.ogType);
     setMeta('property', 'og:site_name', 'SmartToolHub');
-    setMeta('property', 'og:image', `${baseUrl}/product-cover.jpg`);
-    setMeta('property', 'og:image:secure_url', `${baseUrl}/product-cover.jpg`);
-    setMeta('property', 'og:image:type', 'image/jpeg');
+    setMeta('property', 'og:image', `${baseUrl}/product-cover.webp`);
+    setMeta('property', 'og:image:secure_url', `${baseUrl}/product-cover.webp`);
+    setMeta('property', 'og:image:type', 'image/webp');
     setMeta('property', 'og:image:width', '1024');
     setMeta('property', 'og:image:height', '1024');
     setMeta(
@@ -254,7 +254,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
     setMeta('name', 'twitter:url', fullCanonicalUrl);
     setMeta('name', 'twitter:title', config.title);
     setMeta('name', 'twitter:description', config.description);
-    setMeta('name', 'twitter:image', `${baseUrl}/product-cover.jpg`);
+    setMeta('name', 'twitter:image', `${baseUrl}/product-cover.webp`);
     setMeta(
       'name',
       'twitter:image:alt',
@@ -320,7 +320,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
           headline: `${activeWf.title} — Apple Automation Blueprint`,
           description: activeWf.summary,
           url: fullCanonicalUrl,
-          image: [`${baseUrl}/product-cover.jpg`],
+          image: [`${baseUrl}/product-cover.webp`],
           datePublished: '2026-01-15T08:00:00Z',
           dateModified: `${activeWf.lastReviewedDate || '2026-09-18'}T00:00:00Z`,
           inLanguage: 'en-US',
@@ -425,7 +425,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
         headline: 'macOS Sequoia & iOS 18 Continuity & AirDrop Sync Diagnostics Doctor',
         description: config.description,
         url: fullCanonicalUrl,
-        image: [`${baseUrl}/product-cover.jpg`],
+        image: [`${baseUrl}/product-cover.webp`],
         datePublished: '2026-02-01T08:00:00Z',
         dateModified: '2026-09-20T00:00:00Z',
         author: {
@@ -465,7 +465,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
         description:
           'Comprehensive hardware matrix for iPhone Mirroring, Continuity Camera Desk View, Universal Control, Sidecar, and on-device Apple Intelligence.',
         url: fullCanonicalUrl,
-        image: [`${baseUrl}/product-cover.jpg`],
+        image: [`${baseUrl}/product-cover.webp`],
         datePublished: '2026-01-20T08:00:00Z',
         dateModified: '2026-09-15T00:00:00Z',
         author: {
@@ -712,7 +712,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
       schemaGraph.push({
         '@type': 'AboutPage',
         '@id': `${fullCanonicalUrl}#about`,
-        name: 'About SmartToolHub & Physical Apple Silicon Lab',
+        name: 'About SmartToolHub — Independent Apple Shortcuts Toolbox',
         description: config.description,
         url: fullCanonicalUrl,
         mainEntity: {

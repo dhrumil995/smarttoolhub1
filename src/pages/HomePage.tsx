@@ -189,7 +189,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       actionType: 'workbench',
       workbenchTab: 'image',
       featuredImage: bentoRetinaImg,
-      fallbackImage: '/images/bento_retina_image_engine_1790827223139.jpg',
+      fallbackImage: '/images/bento_retina_image_engine_1790827223139.webp',
     },
     {
       id: 'tool-text-generator',
@@ -236,7 +236,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       actionType: 'workbench',
       workbenchTab: 'calculator',
       featuredImage: bentoSiliconImg,
-      fallbackImage: '/images/bento_apple_silicon_neural_1790827235951.jpg',
+      fallbackImage: '/images/bento_apple_silicon_neural_1790827235951.webp',
     },
     {
       id: 'tool-continuity-doctor',
@@ -253,7 +253,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       actionType: 'workbench',
       workbenchTab: 'diagnostics',
       featuredImage: bentoContinuityImg,
-      fallbackImage: '/images/bento_continuity_sync_matrix_1790827245735.jpg',
+      fallbackImage: '/images/bento_continuity_sync_matrix_1790827245735.webp',
     },
   ];
 

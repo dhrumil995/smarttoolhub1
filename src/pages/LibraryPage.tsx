@@ -228,7 +228,7 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
                 e.preventDefault();
                 onNavigate('workflow-detail', wf.id);
               }}
-              className="bento-card p-6 flex flex-col justify-between cursor-pointer group rounded-2xl transition-all duration-200 hover:-translate-y-1 hover:border-indigo-500/40 shadow-lg text-left no-underline"
+              className="bento-card tilt-card-3d p-6 flex flex-col justify-between cursor-pointer group rounded-2xl transition-all duration-200 hover:-translate-y-1 hover:border-indigo-500/40 shadow-lg text-left no-underline"
             >
               <div className="space-y-3.5">
                 {/* Unboxed metadata row */}

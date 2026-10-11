@@ -39,7 +39,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
           headline: `${wf.title} — Apple Automation Blueprint`,
           description: wf.summary,
           url: pageUrl,
-          image: [`${CANONICAL_HOST}/product-cover.jpg`],
+          image: [`${CANONICAL_HOST}/product-cover.webp`],
           datePublished: '2026-01-15T08:00:00Z',
           dateModified: `${wf.lastReviewedDate || '2026-09-18'}T00:00:00Z`,
           inLanguage: 'en-US',
@@ -179,7 +179,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
       description: wf.summary.slice(0, 155),
       canonicalPath,
       ogType: 'article',
-      ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
+      ogImage: `${CANONICAL_HOST}/product-cover.webp`,
       schemaJson,
       prerenderHtml,
     };
@@ -241,7 +241,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
       description: 'Synthesize custom multi-device Siri Shortcuts, AppleScript, and Zsh automations for Mac, iPhone, and iPad in seconds with SmartToolHub.',
       canonicalPath,
       ogType: 'website',
-      ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
+      ogImage: `${CANONICAL_HOST}/product-cover.webp`,
       schemaJson,
       prerenderHtml,
     };
@@ -318,7 +318,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
       description: 'Verify exact Mac, iPhone, and iPad hardware requirements for iPhone Mirroring, Continuity Camera, Universal Control, Sidecar, and Apple Intelligence.',
       canonicalPath,
       ogType: 'website',
-      ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
+      ogImage: `${CANONICAL_HOST}/product-cover.webp`,
       schemaJson,
       prerenderHtml,
     };
@@ -367,7 +367,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
           description:
             'Resolve AirDrop dropouts, iPhone Mirroring timeouts, and Universal Clipboard lag with interactive diagnostics and safe macOS terminal commands.',
           url: pageUrl,
-          image: [`${CANONICAL_HOST}/product-cover.jpg`],
+          image: [`${CANONICAL_HOST}/product-cover.webp`],
           datePublished: '2026-02-01T08:00:00Z',
           dateModified: '2026-09-20T00:00:00Z',
           author: {
@@ -418,7 +418,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
       description: 'Resolve AirDrop dropouts, iPhone Mirroring timeouts, and Universal Clipboard lag with interactive diagnostics and safe macOS terminal commands.',
       canonicalPath,
       ogType: 'website',
-      ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
+      ogImage: `${CANONICAL_HOST}/product-cover.webp`,
       schemaJson,
       prerenderHtml,
     };
@@ -489,7 +489,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
       description: 'Browse 120+ tested macOS Sequoia and iOS 18 automation blueprints for creators, developers, freelancers, and students with zero third-party bloat.',
       canonicalPath,
       ogType: 'website',
-      ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
+      ogImage: `${CANONICAL_HOST}/product-cover.webp`,
       schemaJson,
       prerenderHtml,
     };
@@ -541,7 +541,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
       description: 'Practical guides and step-by-step tutorials for building Apple Shortcuts on iPhone, iPad, and Mac.',
       canonicalPath,
       ogType: 'website',
-      ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
+      ogImage: `${CANONICAL_HOST}/product-cover.webp`,
       schemaJson,
       prerenderHtml,
     };
@@ -589,7 +589,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
       description: 'Discover SmartToolHub editorial standards, independent Apple shortcuts tools, zero-credentials security, and contact details by Dhrumil Aslaliya.',
       canonicalPath,
       ogType: 'website',
-      ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
+      ogImage: `${CANONICAL_HOST}/product-cover.webp`,
       schemaJson,
       prerenderHtml,
     };
@@ -634,7 +634,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
       description: 'Reach out to Dhrumil Aslaliya for custom Apple Shortcut requests, bug reports, and workflow feedback.',
       canonicalPath,
       ogType: 'website',
-      ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
+      ogImage: `${CANONICAL_HOST}/product-cover.webp`,
       schemaJson,
       prerenderHtml,
     };
@@ -646,7 +646,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
     description: 'Free Apple Shortcuts generator: build custom iOS 18 & macOS Sequoia automations, calculate charge times, and pick triggers instantly.',
     canonicalPath: '/',
     ogType: 'website',
-    ogImage: `${CANONICAL_HOST}/product-cover.jpg`,
+    ogImage: `${CANONICAL_HOST}/product-cover.webp`,
     schemaJson: {
       '@context': 'https://schema.org',
       '@graph': [

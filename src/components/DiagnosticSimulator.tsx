@@ -182,7 +182,7 @@ Verified by SmartToolHub 2026`;
         {results.map((r, i) => (
           <div 
             key={i}
-            className="p-4 rounded-xl glass-panel space-y-2"
+            className="p-4 rounded-xl glass-panel space-y-2 tilt-card-3d"
           >
             <div className="flex items-center justify-between gap-2">
               <span className="text-xs font-semibold text-slate-900 dark:text-white tracking-tight">{r.title}</span>

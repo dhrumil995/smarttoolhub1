@@ -2,7 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { generateSitemapXml, getAllSitemapRoutes, resolveBaseUrl } from '../src/utils/sitemapGenerator.ts';
 
-const baseUrl = resolveBaseUrl(process.env.APP_URL);
+const baseUrl = process.env.APP_URL && !process.env.APP_URL.includes('ais-dev-') && !process.env.APP_URL.includes('ais-pre-')
+  ? resolveBaseUrl(process.env.APP_URL)
+  : 'https://smarttoolhub.net';
 const publicDir = path.join(process.cwd(), 'public');
 
 if (!fs.existsSync(publicDir)) {

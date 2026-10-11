@@ -127,7 +127,7 @@ export const AppleSiliconShowcase: React.FC = () => {
               <button
                 key={item.id}
                 onClick={() => handleSelect(item.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium tracking-tight transition-all cursor-pointer border ${
+                className={`tilt-tab-3d px-3 py-1.5 rounded-lg text-xs font-medium tracking-tight transition-all cursor-pointer border ${
                   isSelected
                     ? 'bg-white dark:bg-indigo-600 border-slate-300 dark:border-indigo-400/60 text-slate-950 dark:text-white font-semibold shadow-sm'
                     : 'border-transparent text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
@@ -160,7 +160,7 @@ export const AppleSiliconShowcase: React.FC = () => {
 
           {/* Benchmark Metrics Grid (Tabular Numerals) */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <div className="p-3.5 rounded-xl glass-panel space-y-1">
+            <div className="tilt-card-3d p-3.5 rounded-xl glass-panel space-y-1">
               <span className="text-[11px] text-slate-500 dark:text-zinc-400 block font-medium">
                 Neural Engine
               </span>
@@ -170,7 +170,7 @@ export const AppleSiliconShowcase: React.FC = () => {
               <span className="text-[10px] text-slate-500 dark:text-zinc-500 block font-normal">On-device ML operations</span>
             </div>
 
-            <div className="p-3.5 rounded-xl glass-panel space-y-1">
+            <div className="tilt-card-3d p-3.5 rounded-xl glass-panel space-y-1">
               <span className="text-[11px] text-slate-500 dark:text-zinc-400 block font-medium">
                 Continuity Latency
               </span>
@@ -180,7 +180,7 @@ export const AppleSiliconShowcase: React.FC = () => {
               <span className="text-[10px] text-slate-500 dark:text-zinc-500 block font-normal">AWDL peer-to-peer ping</span>
             </div>
 
-            <div className="p-3.5 rounded-xl glass-panel space-y-1 col-span-2 sm:col-span-1">
+            <div className="tilt-card-3d p-3.5 rounded-xl glass-panel space-y-1 col-span-2 sm:col-span-1">
               <span className="text-[11px] text-slate-500 dark:text-zinc-400 block font-medium">
                 Execution Time
               </span>

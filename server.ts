@@ -104,12 +104,14 @@ async function callGeminiWithTimeout<T>(promise: Promise<T>, timeoutMs = 8000): 
   });
 }
 
-// Health check endpoint
+// Unified Health check & Telemetry endpoint
 app.get('/api/health', (req: Request, res: Response) => {
-  res.json({
+  res.setHeader('Cache-Control', 'no-cache');
+  res.status(200).json({
     status: 'ok',
     service: 'SmartToolHub API',
     timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
     aiConfigured: Boolean(process.env.GEMINI_API_KEY),
     aiEngine: 'gemini-3.8-flash',
     proFeaturesActive: true,
@@ -330,6 +332,144 @@ RESPOND WITH VALID JSON ONLY (no markdown formatting, no code fences):
   } catch (error: any) {
     return res.status(500).json({
       error: 'An unexpected error occurred while generating the workflow. Please try again.',
+      details: error?.message || 'Internal Server Error',
+    });
+  }
+});
+
+// Fast Home Shortcut Generator API (Instant Synthesis with Gemini or Heuristic Engine)
+app.post('/api/generate', rateLimitMiddleware, async (req: Request, res: Response) => {
+  try {
+    const { task, devices = ['iPhone', 'Mac'] } = req.body;
+
+    if (!task || typeof task !== 'string' || task.trim().length < 3 || task.length > 500) {
+      return res.status(400).json({
+        error: 'Task description is required and must be between 3 and 500 characters.',
+      });
+    }
+
+    const sensitiveWords = ['password', 'passcode', 'credit card', 'private key', 'secret key', 'apple id password'];
+    const lowerTask = task.toLowerCase();
+    for (const token of sensitiveWords) {
+      if (lowerTask.includes(token)) {
+        return res.status(400).json({
+          error: 'For your security, SmartToolHub never accepts or handles passwords, passcodes, or private credentials.',
+        });
+      }
+    }
+
+    const ai = getGenAI();
+    if (ai) {
+      const prompt = `You are an expert Apple Shortcuts and macOS automation architect for SmartToolHub.
+Synthesize a realistic, reliable Apple Shortcuts workflow for the following request:
+TASK: "${task}"
+TARGET DEVICES: ${Array.isArray(devices) ? devices.join(', ') : devices}
+
+RESPOND WITH VALID JSON ONLY (no markdown formatting, no code fences):
+{
+  "title": "Concise Apple Shortcut Title",
+  "category": "Productivity",
+  "description": "Clear 1-2 sentence description of what this automation does.",
+  "steps": [
+    { "step": 1, "app": "Shortcuts", "action": "Action name and parameter", "notes": "Helpful tip" }
+  ],
+  "applescript": "tell application ... (or empty string if not applicable)",
+  "zshCommand": "terminal command (or empty string if not applicable)"
+}`;
+
+      try {
+        const response = await callGeminiWithTimeout(
+          ai.models.generateContent({
+            model: 'gemini-3.8-flash',
+            contents: prompt,
+            config: {
+              responseMimeType: 'application/json',
+              temperature: 0.2,
+            },
+          }),
+          5000
+        );
+
+        const responseText = response.text;
+        if (responseText) {
+          const parsed = JSON.parse(responseText);
+          return res.json({
+            success: true,
+            workflow: parsed,
+            aiEngine: 'gemini-3.8-flash',
+          });
+        }
+      } catch (geminiError: any) {
+        console.warn('Gemini shortcut synthesis notice: using instant heuristic engine:', geminiError?.message);
+      }
+    }
+
+    // Dynamic Heuristic Synthesis based on task domain
+    const lower = task.toLowerCase();
+    let category = 'Productivity';
+    let title = 'Automated ' + task.slice(0, 35);
+    let description = `Automated Apple ecosystem workflow designed to ${task}.`;
+    let steps = [
+      { step: 1, app: 'Shortcuts', action: `Receive Input or Trigger for "${task}"`, notes: 'Configured in iOS Shortcuts library' },
+      { step: 2, app: 'Files', action: 'Process item and verify on-device iCloud state', notes: 'Runs entirely on-device' },
+      { step: 3, app: 'Notifications', action: 'Show notification with completion banner', notes: 'Zero-latency feedback' },
+    ];
+    let applescript = `tell application "System Events"\\n  display notification "Task completed: ${task.replace(/"/g, '')}" with title "SmartToolHub"\\nend tell`;
+    let zshCommand = `osascript -e 'display notification "Running: ${task.replace(/'/g, '')}" with title "SmartToolHub"'`;
+
+    if (lower.includes('photo') || lower.includes('screenshot') || lower.includes('webp') || lower.includes('image')) {
+      category = 'Media & Photography';
+      title = 'Retina Image Optimizer & AirDrop';
+      description = 'Pulls the most recent screenshot or photo, converts it to modern WebP with 85% quality, and initiates peer-to-peer AirDrop.';
+      steps = [
+        { step: 1, app: 'Photos', action: 'Get Latest Screenshots (Count: 1)', notes: 'Queries camera roll' },
+        { step: 2, app: 'Shortcuts', action: 'Convert Image to WebP (Quality: 85%, Preserve Metadata)', notes: 'Lossless compression' },
+        { step: 3, app: 'Files', action: 'Save Converted Image to iCloud Drive / ShortCutTemp', notes: 'Temporary cache' },
+        { step: 4, app: 'AirDrop', action: 'Share Item via AirDrop to Nearby Mac', notes: 'Uses AWDL zero-latency peer transfer' },
+      ];
+      applescript = `tell application "Finder"\\n  set latestFile to item 1 of (sort (get files of desktop) by creation date)\\n  display notification "Optimizing image for AirDrop" with title "SmartToolHub"\\nend tell`;
+      zshCommand = `sips -s format webp -s formatOptions 85 ~/Desktop/*.png --out ~/Desktop/Optimized/`;
+    } else if (lower.includes('battery') || lower.includes('power') || lower.includes('dim') || lower.includes('brightness')) {
+      category = 'Hardware & Battery';
+      title = 'Ultra Low Power Eco Mode';
+      description = 'Toggles Low Power Mode, lowers display brightness to 20%, dims white point, and silences non-urgent background push notifications.';
+      steps = [
+        { step: 1, app: 'Settings', action: 'Set Low Power Mode: On', notes: 'Reduces CPU frequency and pauses background refresh' },
+        { step: 2, app: 'Display', action: 'Set Brightness to 20%', notes: 'Saves OLED panel power' },
+        { step: 3, app: 'Accessibility', action: 'Set Reduce White Point: 75%', notes: 'Hardware backlight reduction' },
+        { step: 4, app: 'Focus', action: 'Enable Personal Focus until leaving location', notes: 'Mutes non-essential alerts' },
+      ];
+      applescript = `do shell script "pmset -a displaysleep 2; pmset -a lessbright 1"`;
+      zshCommand = `sudo pmset -a lowpowermode 1`;
+    } else if (lower.includes('meeting') || lower.includes('brief') || lower.includes('calendar') || lower.includes('agenda')) {
+      category = 'Productivity & Focus';
+      title = 'Meeting Silence & Scratchpad Mode';
+      description = 'Checks today calendar events, sets Do Not Disturb for current duration, and pre-creates a dated meeting notes document in Apple Notes.';
+      steps = [
+        { step: 1, app: 'Calendar', action: 'Find Upcoming Calendar Events (Within next 1 hour)', notes: 'Pulls title and attendees' },
+        { step: 2, app: 'Focus', action: 'Turn On Do Not Disturb until event ends', notes: 'Silences incoming calls' },
+        { step: 3, app: 'Notes', action: 'Create Note in "Meetings" folder with Agenda Template', notes: 'Auto-tags date and time' },
+        { step: 4, app: 'Shortcuts', action: 'Copy Attendees List to Universal Clipboard', notes: 'Ready for Mac/iPad pasting' },
+      ];
+      applescript = `tell application "Notes"\\n  tell account "iCloud"\\n    make new note at folder "Notes" with properties {name:"Meeting Notes " & (current date as string), body:"<h1>Agenda</h1><ul><li>Discussion Points</li></ul>"}\\n  end tell\\nend tell`;
+      zshCommand = `open "notes://showNote"`;
+    }
+
+    return res.json({
+      success: true,
+      workflow: {
+        title,
+        category,
+        description,
+        steps,
+        applescript,
+        zshCommand,
+      },
+      aiEngine: 'SmartToolHub Pro Engine (Heuristic Mode)',
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      error: 'An unexpected error occurred while generating shortcut.',
       details: error?.message || 'Internal Server Error',
     });
   }
@@ -1032,22 +1172,15 @@ app.post('/api/dodo/webhook', async (req: Request, res: Response) => {
   }
 });
 
-// Cloud Run Container Health Check & Warmup Endpoint
-app.get('/api/health', (req: Request, res: Response) => {
-  res.setHeader('Cache-Control', 'no-cache');
-  res.status(200).json({ 
-    status: 'ok', 
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime()
-  });
-});
-
 // Automated Dynamic Sitemap XML Engine
 app.get('/sitemap.xml', (req: Request, res: Response) => {
   try {
-    const rawHost = req.headers['x-forwarded-host'] || req.headers.host || 'smarttoolhub.net';
+    const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+    const rawHost = req.headers['x-forwarded-host'] || req.headers.host;
     const host = Array.isArray(rawHost) ? rawHost[0] : rawHost;
-    const baseUrl = host.includes('localhost') ? `http://${host}` : 'https://smarttoolhub.net';
+    const baseUrl = host
+      ? `${proto}://${host}`
+      : (process.env.APP_URL || 'https://smarttoolhub.net');
 
     const xml = generateSitemapXml(baseUrl);
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
@@ -1201,16 +1334,6 @@ app.get('/api/sitemap/inspect', (req: Request, res: Response) => {
   });
 });
 
-// Explicit AdSense ads.txt crawler endpoint with text/plain header
-app.get('/ads.txt', (_req: Request, res: Response) => {
-  const adsTxtPath = path.join(process.cwd(), 'public', 'ads.txt');
-  if (fs.existsSync(adsTxtPath)) {
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-    res.setHeader('Cache-Control', 'public, max-age=86400');
-    return res.sendFile(adsTxtPath);
-  }
-  res.status(404).send('ads.txt not found');
-});
 
 // Global SEO, Performance & Security headers
 app.use((_req: Request, res: Response, next: () => void) => {

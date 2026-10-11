@@ -119,7 +119,7 @@ export const CompatibilityPage: React.FC<CompatibilityPageProps> = ({ onNavigate
       </div>
 
       {/* Interactive Device Selector Bento Card */}
-      <div className="glass-card p-7 sm:p-9 rounded-[28px] border border-white/[0.08] space-y-6">
+      <div className="glass-card tilt-card-3d p-7 sm:p-9 rounded-[28px] border border-white/[0.08] space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-xs font-semibold text-[#F5F5F7] uppercase tracking-wider flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#A259FF]" />
@@ -249,7 +249,7 @@ export const CompatibilityPage: React.FC<CompatibilityPageProps> = ({ onNavigate
           return (
             <div
               key={feat.id}
-              className="glass-card p-5 sm:p-6 rounded-2xl border border-white/10 space-y-4"
+              className="glass-card tilt-card-3d p-5 sm:p-6 rounded-2xl border border-white/10 space-y-4"
             >
               {/* Top Row: Name + Compatibility Badge */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">

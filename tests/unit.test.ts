@@ -137,4 +137,37 @@ describe('SmartToolHub - Unit Tests', () => {
       assert.equal(isValidTask('a'.repeat(501)), false);
     });
   });
+
+  describe('5. Automated XML Sitemap Compliance & Canonical Routing', () => {
+    test('routes contain zero duplicate query parameters and match canonical paths', async () => {
+      const { getAllSitemapRoutes, resolveBaseUrl, generateSitemapXml } = await import('../src/utils/sitemapGenerator.js');
+      
+      const routes = getAllSitemapRoutes('https://smarttoolhub.net');
+      assert.ok(routes.length >= 15, 'Must contain core pages and workflows');
+
+      for (const route of routes) {
+        assert.ok(route.url.startsWith('https://smarttoolhub.net'), `Route must be fully qualified: ${route.url}`);
+        assert.ok(!route.url.includes('?'), `Sitemap must not contain query parameters: ${route.url}`);
+        assert.ok(/^\d{4}-\d{2}-\d{2}$/.test(route.lastmod), `Date must be YYYY-MM-DD: ${route.lastmod}`);
+        assert.ok(route.priority >= 0.1 && route.priority <= 1.0, `Priority must be valid: ${route.priority}`);
+      }
+
+      const xml = generateSitemapXml('https://smarttoolhub.net');
+      assert.ok(xml.startsWith('<?xml version="1.0" encoding="UTF-8"?>'), 'Must have standard XML declaration');
+      assert.ok(xml.includes('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"'), 'Must declare sitemaps.org schema');
+      assert.ok(!xml.includes('image:title'), 'Must not contain deprecated image:title');
+      assert.ok(!xml.includes('image:caption'), 'Must not contain deprecated image:caption');
+      assert.ok(!xml.includes('xmlns:xhtml'), 'Must not include unused xhtml namespace');
+      assert.ok(xml.endsWith('</urlset>\n') || xml.endsWith('</urlset>'), 'Must close urlset properly');
+    });
+
+    test('resolveBaseUrl dynamically handles ports, domains and fallbacks', async () => {
+      const { resolveBaseUrl } = await import('../src/utils/sitemapGenerator.js');
+
+      assert.equal(resolveBaseUrl('https://mycustomdomain.com/'), 'https://mycustomdomain.com');
+      assert.equal(resolveBaseUrl('http://localhost:3000'), 'http://localhost:3000');
+      assert.ok(resolveBaseUrl().length > 0, 'Must resolve to a valid non-empty base URL');
+    });
+  });
 });
+

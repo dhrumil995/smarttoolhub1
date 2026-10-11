@@ -663,11 +663,11 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
                 </div>
               </div>
 
-              {/* Command Safety Guarantee */}
+              {/* Non-Destructive Command Design */}
               <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/25 flex items-start gap-2.5 text-xs text-blue-300">
                 <ShieldAlert className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>System Safety Guarantee:</strong> All commands reset temporary system daemons (Bluetooth, mDNS) without requiring a full computer reboot or modifying user data.
+                  <strong>Non-Destructive Command Design:</strong> All commands reset temporary system daemons (Bluetooth, mDNS) without requiring a full computer reboot or modifying user files.
                 </span>
               </div>
 

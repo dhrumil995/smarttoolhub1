@@ -44,7 +44,7 @@ export const SitemapModal: React.FC<SitemapModalProps> = ({ isOpen, onClose, onN
 
   if (!isOpen) return null;
 
-  const categories = ['all', 'core', 'tool', 'workflow', 'filter', 'legal'];
+  const categories = ['all', 'core', 'tool', 'workflow', 'legal'];
 
   const filteredRoutes = routes.filter((r) => {
     const matchesCategory = filterCategory === 'all' || r.category === filterCategory;
@@ -65,21 +65,22 @@ export const SitemapModal: React.FC<SitemapModalProps> = ({ isOpen, onClose, onN
 
   const handleDownloadXml = () => {
     haptics.playTap();
-    window.open('/sitemap.xml', '_blank');
+    const a = document.createElement('a');
+    a.href = '/sitemap.xml';
+    a.download = 'sitemap.xml';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   const handlePingGoogle = () => {
     haptics.playTap();
-    setPingStatus('Pinging Googlebot...');
-    const pingUrl = `https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}`;
-    
-    // Open ping URL in background or new tab
-    const win = window.open(pingUrl, '_blank');
-    setTimeout(() => {
-      setPingStatus('Ping Signal Dispatched!');
+    setPingStatus('Copying Search Console link...');
+    navigator.clipboard.writeText(sitemapUrl).then(() => {
+      setPingStatus('Sitemap URL copied for Search Console!');
       haptics.playSuccess();
       setTimeout(() => setPingStatus(null), 3000);
-    }, 1200);
+    });
   };
 
   return (
