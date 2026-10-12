@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageId } from '../types';
 import { ShieldCheck, ExternalLink, Mail, Wand2, ArrowRight } from 'lucide-react';
-import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.webp';
+const websiteLogo = '/logo.svg';
 
 interface FooterProps {
   onNavigate: (page: PageId, workflowId?: string) => void;
@@ -19,19 +19,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
         {/* High-End Conversion & Support CTA Banner */}
         <div className="mb-14 p-6 sm:p-8 ios-card-static flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative overflow-hidden">
           <div className="flex items-center gap-5 max-w-2xl relative z-10">
-            <div className="hidden sm:flex w-16 h-16 rounded-2xl overflow-hidden border border-white/20 bg-[#030712] shrink-0 shadow-[0_10px_30px_rgba(99,102,241,0.3)]">
+            <div className="hidden sm:flex w-16 h-16 rounded-2xl overflow-hidden border border-white/20 bg-[#050713] shrink-0 shadow-[0_10px_30px_rgba(99,102,241,0.3)] items-center justify-center p-1.5">
               <img
-                src={luxuryLogoImg}
-                onError={(e) => {
-                  e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.webp';
-                }}
-                alt="SmartToolHub Studio Emblem"
+                src={websiteLogo}
+                alt="SmartToolHub Logo"
                 width="64"
                 height="64"
                 loading="lazy"
                 decoding="async"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover scale-105"
+                className="w-full h-full object-contain"
               />
             </div>
             <div className="space-y-1.5">
@@ -74,36 +70,32 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl overflow-hidden border border-slate-300 dark:border-white/25 bg-[#030712] shadow-[0_4px_14px_rgba(99,102,241,0.25)] shrink-0">
+              <div className="w-8 h-8 rounded-xl overflow-hidden border border-slate-300 dark:border-white/25 bg-[#050713] shadow-[0_4px_14px_rgba(99,102,241,0.25)] shrink-0 flex items-center justify-center p-0.5">
                 <img
-                  src={luxuryLogoImg}
-                  onError={(e) => {
-                    e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.webp';
-                  }}
+                  src={websiteLogo}
                   alt="SmartToolHub"
                   width="32"
                   height="32"
                   loading="lazy"
                   decoding="async"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover scale-105"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-base leading-none text-slate-900 dark:text-white tracking-tight">
                   SmartToolHub
                 </span>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 dark:text-zinc-500 mt-0.5">
-                  Obsidian Pro Ecosystem
+                <span className="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5">
+                  Free Apple &amp; Web Utilities
                 </span>
               </div>
             </div>
             <p className="text-xs text-slate-500 dark:text-zinc-400 max-w-sm leading-relaxed">
-              Precision multi-device automations, client-side media & SEO utilities, and Continuity diagnostics for macOS Sequoia and iOS 18.
+              Helpful shortcuts, photo tools, and troubleshooting guides for iPhone, iPad, and Mac.
             </p>
             <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-zinc-400">
-              <ShieldCheck className="w-4 h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
-              <span>Zero-Credentials Architecture · No passwords required</span>
+              <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
+              <span>Runs 100% in your browser · No login or password needed</span>
             </div>
           </div>
 
@@ -331,7 +323,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
           <p className="text-center md:text-left leading-relaxed max-w-3xl">
             SmartToolHub is an independent reference and utility platform created by Dhrumil Aslaliya. Not affiliated with, endorsed by, or sponsored by Apple Inc. Mac, iPhone, iPad, macOS, iOS, AirDrop, and Siri Shortcuts are trademarks of Apple Inc.
           </p>
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <a
+              href="https://www.flaticon.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Free vector icons and stickers"
+              className="hover:text-slate-900 dark:hover:text-zinc-300 transition-colors inline-flex items-center gap-1"
+            >
+              <span>Icons by Flaticon</span>
+              <ExternalLink className="w-3 h-3 text-slate-400" />
+            </a>
+            <span aria-hidden="true">·</span>
             <a
               href="mailto:contact@smarttoolhub.net"
               className="hover:text-slate-900 dark:hover:text-zinc-300 transition-colors font-mono"

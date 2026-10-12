@@ -1343,53 +1343,12 @@ app.use((_req: Request, res: Response, next: () => void) => {
   next();
 });
 
-// Sync generated images from src/assets/images into public/images so both paths always resolve in production
-const srcAssetsPath = path.join(process.cwd(), 'src', 'assets');
-const srcImagesPath = path.join(srcAssetsPath, 'images');
+// Redirect legacy /favicon.ico, /favicon.svg, and /logo.png requests to the unified /logo.svg
+app.get(['/favicon.ico', '/favicon.svg', '/logo.png'], (_req: Request, res: Response) => {
+  return res.redirect(301, '/logo.svg');
+});
+
 const publicPath = path.join(process.cwd(), 'public');
-const publicImagesPath = path.join(publicPath, 'images');
-
-try {
-  if (fs.existsSync(srcImagesPath)) {
-    if (!fs.existsSync(publicImagesPath)) {
-      fs.mkdirSync(publicImagesPath, { recursive: true });
-    }
-    const imageFiles = fs.readdirSync(srcImagesPath);
-    for (const file of imageFiles) {
-      if (/\.(jpg|jpeg|png|webp|svg)$/i.test(file)) {
-        const srcFile = path.join(srcImagesPath, file);
-        const destFile = path.join(publicImagesPath, file);
-        if (!fs.existsSync(destFile)) {
-          fs.copyFileSync(srcFile, destFile);
-        }
-      }
-    }
-  }
-} catch (err) {
-  console.warn('Warning syncing src/assets/images to public/images:', err);
-}
-
-// Serve /src/assets directly in both dev and production so /src/assets/images/* URLs always work when published
-if (fs.existsSync(srcAssetsPath)) {
-  app.use('/src/assets', express.static(srcAssetsPath, {
-    maxAge: '30d',
-    etag: true,
-    lastModified: true,
-    setHeaders: (res, filePath) => {
-      if (filePath.match(/\.(webp|jpg|jpeg|png|svg|ico|woff2)$/i)) {
-        res.setHeader('Cache-Control', 'public, max-age=2592000, immutable');
-      }
-    },
-  }));
-}
-
-if (fs.existsSync(srcImagesPath)) {
-  app.use('/images', express.static(srcImagesPath, {
-    maxAge: '30d',
-    etag: true,
-    lastModified: true,
-  }));
-}
 
 // Serve public static assets (favicons, manifest, sitemap, robots, webp images) with long-term cache
 if (fs.existsSync(publicPath)) {

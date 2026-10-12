@@ -3,7 +3,7 @@ import { PageId } from '../types';
 import { useTheme } from '../context/ThemeContext';
 import { haptics } from '../utils/haptics';
 import { useHaptics } from '../utils/useHaptics';
-import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.webp';
+const websiteLogo = '/logo.svg';
 import {
   Search,
   Menu,
@@ -72,44 +72,44 @@ export const Navbar: React.FC<NavbarProps> = ({
   }[] = [
     {
       id: 'all',
-      label: 'All Smart Tools',
-      desc: 'Complete suite of Apple & web utilities',
+      label: 'All Tools',
+      desc: 'Helpful utilities for iPhone, iPad, and Mac',
       icon: Wand2,
     },
     {
       id: 'shortcuts',
-      label: 'AI Shortcut Generator',
-      desc: 'Synthesize Siri Shortcuts, AppleScript & Zsh',
+      label: 'Shortcut Generator',
+      desc: 'Create Siri Shortcuts in everyday English',
       icon: Wand2,
     },
     {
       id: 'image',
       label: 'Image & Media Tools',
-      desc: 'Retina scale, aspect ratio & sips batch optimizer',
+      desc: 'Resize photos, calculate ratios, and optimize files',
       icon: Image,
     },
     {
       id: 'text',
-      label: 'Text & Prompt Generators',
-      desc: 'Prompt builder, token counter & text transformer',
+      label: 'Text & Prompt Tools',
+      desc: 'Word counter, text formatter, and prompt ideas',
       icon: FileText,
     },
     {
       id: 'seo',
-      label: 'SEO & Schema Tools',
-      desc: 'JSON-LD schema builder, OpenGraph & sitemap',
+      label: 'SEO & Meta Tools',
+      desc: 'Meta tag generator, social previews, and sitemaps',
       icon: Globe,
     },
     {
       id: 'calculator',
-      label: 'Silicon & ROI Calculators',
-      desc: 'Apple Silicon memory bandwidth & automation ROI',
+      label: 'Speed & Time Calculators',
+      desc: 'Fast charging curves and file transfer estimates',
       icon: Calculator,
     },
     {
       id: 'diagnostics',
-      label: 'Continuity & Sync Doctor',
-      desc: 'AirDrop, Universal Clipboard & Mirroring fixes',
+      label: 'Device Connection Guide',
+      desc: 'Fix AirDrop, Universal Clipboard, and Mirroring',
       icon: Wrench,
     },
   ];
@@ -165,29 +165,22 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="flex items-center gap-3 group text-left cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-xl shrink-0 py-1 active:scale-[0.98] transition-transform"
           aria-label="SmartToolHub Home"
         >
-          <div className="relative w-8 h-8 rounded-xl overflow-hidden border border-slate-300 dark:border-white/25 bg-[#030712] flex items-center justify-center shrink-0 shadow-[0_4px_14px_rgba(99,102,241,0.28),inset_0_1px_0_0_rgba(255,255,255,0.28)] group-hover:border-indigo-400/70 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.45)] transition-all">
+          <div className="relative w-8 h-8 rounded-xl overflow-hidden border border-slate-300 dark:border-white/25 bg-[#050713] flex items-center justify-center shrink-0 shadow-[0_4px_14px_rgba(99,102,241,0.28),inset_0_1px_0_0_rgba(255,255,255,0.28)] group-hover:border-indigo-400/70 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.45)] transition-all">
             <img
-              src={luxuryLogoImg}
-              onError={(e) => {
-                const target = e.currentTarget;
-                if (!target.src.endsWith('/logo.png')) {
-                  target.src = '/images/smarttoolhub_luxury_logo_1790827199493.webp';
-                }
-              }}
-              alt="SmartToolHub Emblem"
+              src={websiteLogo}
+              alt="SmartToolHub Logo"
               width="32"
               height="32"
               decoding="async"
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-300"
+              className="w-full h-full object-contain p-0.5 group-hover:scale-105 transition-transform duration-300"
             />
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-base leading-none tracking-tight text-slate-900 dark:text-white group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors whitespace-nowrap">
               SmartToolHub
             </span>
-            <span className="text-[10px] font-mono tracking-wider uppercase text-slate-400 dark:text-zinc-500 mt-0.5 hidden sm:inline">
-              Apple Studio Suite
+            <span className="text-[11px] text-slate-500 dark:text-zinc-400 mt-0.5 hidden sm:inline">
+              Apple Automation Tools
             </span>
           </div>
         </a>

@@ -13,52 +13,52 @@ interface ReferenceLink {
 
 const AUTHORITATIVE_REFERENCES: ReferenceLink[] = [
   {
-    title: 'App Intents & Shortcuts Framework Specification',
-    source: 'Apple Developer Documentation',
+    title: 'Apple Shortcuts & App Intents Documentation',
+    source: 'Apple Developer',
     url: 'https://developer.apple.com/documentation/appintents',
-    domainAuthority: 'DA 99 · Apple Developer Tier 1',
+    domainAuthority: 'Official Apple Documentation',
     category: 'Apple Official',
-    description: 'Official API documentation for defining automated actions, parameterized Siri voice triggers, and Shortcuts workflows in macOS Sequoia and iOS 18.',
+    description: 'Guidelines and action references for building automated shortcuts and voice commands in iOS and macOS.',
   },
   {
-    title: 'Apple Platform Security Architecture & Enclave Isolation',
-    source: 'Apple Security Research Knowledge Base',
+    title: 'Apple Platform Security Overview',
+    source: 'Apple Support',
     url: 'https://support.apple.com/guide/security/welcome/web',
-    domainAuthority: 'DA 100 · Apple Official',
+    domainAuthority: 'Official Apple Documentation',
     category: 'Architecture',
-    description: 'Hardware security, cryptographic handshakes, and sandbox isolation requirements governing Universal Clipboard, AirDrop, and cross-device continuity.',
+    description: 'Privacy rules and on-device protection governing Universal Clipboard, AirDrop, and wireless sharing.',
   },
   {
-    title: 'macOS Sequoia Continuity & iPhone Mirroring System Requirements',
-    source: 'Apple Support Official Guide',
+    title: 'How to Connect Devices with Apple Continuity',
+    source: 'Apple Support',
     url: 'https://support.apple.com/guide/mac-help/use-continuity-to-connect-apple-devices-mchl407037be/mac',
-    domainAuthority: 'DA 100 · Official Support',
+    domainAuthority: 'Official Apple Support',
     category: 'Apple Official',
-    description: 'Hardware prerequisites, Bluetooth 5.3 and Apple Wireless Direct Link (AWDL) protocols necessary for multi-device macOS and iOS synchrony.',
+    description: 'Requirements and setup steps for iPhone Mirroring, Continuity Camera, and AirDrop.',
   },
   {
-    title: 'Mac Automation Scripting Guide & AppleScript IPC',
+    title: 'Mac Automation & AppleScript Scripting Guide',
     source: 'Apple Developer Archives',
     url: 'https://developer.apple.com/library/archive/documentation/LanguagesUtilities/Conceptual/MacAutomationScriptingGuide/',
-    domainAuthority: 'DA 99 · Apple Developer Portal',
+    domainAuthority: 'Official Apple Archives',
     category: 'Architecture',
-    description: 'Scripting definitions for Apple Events, Open Scripting Architecture (OSA), and shell automation pipelines.',
+    description: 'Scripting basics for Automator, Apple Events, and command-line automation on Mac.',
   },
   {
-    title: 'Apple Shortcuts Open Source Ecosystem & Community Catalog',
-    source: 'GitHub Apple Shortcuts Hub',
+    title: 'Community Apple Shortcuts Catalog',
+    source: 'GitHub Community',
     url: 'https://github.com/topics/apple-shortcuts',
-    domainAuthority: 'DA 96 · GitHub Official',
+    domainAuthority: 'Open Source Community',
     category: 'Open Source',
-    description: 'Verified repository of open-source Apple Shortcuts, Raycast extensions, and macOS automation CLI tools reviewed by independent engineers.',
+    description: 'Popular open-source Apple Shortcuts created and shared by independent developers.',
   },
   {
-    title: 'IETF RFC 6762 / RFC 6763: Multicast DNS & DNS-Based Service Discovery',
-    source: 'Internet Engineering Task Force (IETF)',
+    title: 'Bonjour Wireless Networking Standards',
+    source: 'IETF Standards',
     url: 'https://datatracker.ietf.org/doc/html/rfc6762',
-    domainAuthority: 'DA 94 · Web Standard Body',
+    domainAuthority: 'Internet Standard (RFC 6762)',
     category: 'Standards',
-    description: 'Foundational Internet standards for zero-configuration Bonjour networking powering wireless Apple device discovery.',
+    description: 'Networking standard powering zero-configuration wireless device discovery across local networks.',
   },
 ];
 
@@ -67,8 +67,8 @@ export const AuthoritativeReferences: React.FC = () => {
   const [copiedFormat, setCopiedFormat] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<boolean>(false);
 
-  const markdownSnippet = `[SmartToolHub — Apple Shortcuts & macOS Sequoia Automation](https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/)`;
-  const htmlSnippet = `<a href="https://ais-pre-2g4gbzzp4x73zscaavhv5d-405968822776.asia-southeast1.run.app/" title="SmartToolHub Apple Shortcuts and Continuity Automation Platform" rel="noopener">SmartToolHub Apple Automation Suite</a>`;
+  const markdownSnippet = `[SmartToolHub — Apple Shortcuts & Web Utility Suite](https://smarttoolhub.net/)`;
+  const htmlSnippet = `<a href="https://smarttoolhub.net/" title="SmartToolHub Apple Shortcuts and Web Utility Platform" rel="noopener">SmartToolHub Apple Automation Suite</a>`;
 
   const handleCopy = (text: string, format: string) => {
     haptics.playTap();
@@ -93,16 +93,16 @@ export const AuthoritativeReferences: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs text-[#2997FF] font-medium tracking-wider uppercase">Verified Citations</span>
+            <span className="text-xs text-[#2997FF] font-medium tracking-wider uppercase">Reference Sources</span>
             <span aria-hidden="true" className="text-zinc-600">·</span>
-            <span className="text-xs text-emerald-400 font-medium">Domain Authority 94-100</span>
+            <span className="text-xs text-slate-400 font-medium">Official Documentation</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#F5F5F7] mt-1">
-            Authoritative Standards & Citation Network
+            Documentation &amp; Community Resources
           </h2>
         </div>
         <p className="text-xs text-[#86868B] max-w-md">
-          SmartToolHub automations and diagnostics are grounded in official Apple Developer documentation, IETF networking RFCs, and open-source AppleScript foundations.
+          All shortcuts, guides, and diagnostic steps reference official Apple documentation and open-source standards.
         </p>
       </div>
 

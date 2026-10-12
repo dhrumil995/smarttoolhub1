@@ -7,16 +7,17 @@ import { IOSBottomSheet } from '../components/ios/IOSBottomSheet';
 import { IOSToggle } from '../components/ios/IOSToggle';
 import { haptics } from '../utils/haptics';
 import { getGlassTheme } from '../utils/glassTheme';
-import luxuryLogoImg from '../assets/images/smarttoolhub_luxury_logo_1790827199493.webp';
-import heroStudioImg from '../assets/images/hero_mac_studio_ecosystem_1790827213135.webp';
-import shortcutsAutomationImg from '../assets/images/feature_shortcuts_automation_1790175491181.webp';
-import bentoRetinaImg from '../assets/images/bento_retina_image_engine_1790827223139.webp';
-import bentoSiliconImg from '../assets/images/bento_apple_silicon_neural_1790827235951.webp';
-import bentoContinuityImg from '../assets/images/bento_continuity_sync_matrix_1790827245735.webp';
+const websiteLogo = '/logo.svg';
+const heroStudioImg = '/images/hero_mac_studio_ecosystem_1790827213135.webp';
+const shortcutsAutomationImg = '/images/feature_shortcuts_automation_1790175491181.webp';
+const bentoRetinaImg = '/images/bento_retina_image_engine_1790827223139.webp';
+const bentoSiliconImg = '/images/bento_apple_silicon_neural_1790827235951.webp';
+const bentoContinuityImg = '/images/bento_continuity_sync_matrix_1790827245735.webp';
 import { IPhone3DMockup } from '../components/IPhone3DMockup';
 import { HomeShortcutGenerator } from '../components/HomeShortcutGenerator';
 import { FreeAppleTools } from '../components/FreeAppleTools';
 import { SemanticShortcutsFAQ } from '../components/SemanticShortcutsFAQ';
+import { AuthoritativeReferences } from '../components/AuthoritativeReferences';
 
 // Lazy load heavy workbench tabs only when requested by user
 const DiagnosticSimulator = lazy(() =>
@@ -160,15 +161,15 @@ export const HomePage: React.FC<HomePageProps> = ({
     {
       id: 'tool-ai-shortcuts',
       number: '01',
-      title: 'AI Shortcut & Script Generator',
+      title: 'Shortcut & Script Generator',
       category: 'shortcuts',
-      categoryLabel: 'AI Automation',
-      metadata: 'macOS Sequoia · iOS 18 · AppleScript & Zsh',
+      categoryLabel: 'Shortcuts',
+      metadata: 'iPhone · iPad · Mac',
       description:
-        'Describe any multi-device workflow in plain English. Synthesize native Siri Shortcuts action graphs, AppleScript automation, and POSIX shell scripts.',
+        'Tell us what routine you want to automate in plain English. Get working Siri Shortcuts, AppleScripts, and terminal commands you can copy directly.',
       colSpan: 'md:col-span-6 lg:col-span-7',
       icon: Wand2,
-      ctaLabel: 'Open AI Shortcut Generator',
+      ctaLabel: 'Open Shortcut Generator',
       actionType: 'navigate',
       targetPage: 'generator',
       featuredImage: shortcutsAutomationImg,
@@ -177,15 +178,15 @@ export const HomePage: React.FC<HomePageProps> = ({
     {
       id: 'tool-image-studio',
       number: '02',
-      title: 'Image & Retina Media Studio',
+      title: 'Image & Photo Resizer',
       category: 'image',
-      categoryLabel: 'Image Tools',
-      metadata: 'Aspect Ratio · @2x/@3x Retina · macOS sips CLI',
+      categoryLabel: 'Photo Tools',
+      metadata: 'Aspect Ratios · Retina Scales · WebP & JPEG',
       description:
-        'Calculate exact Retina @2x/@3x asset dimensions, estimate WebP/HEIC compression savings, and generate one-line macOS sips batch image conversion commands.',
+        'Quickly calculate image aspect ratios, scale photos for high-res Retina screens, and get one-line Mac commands to resize batches of pictures.',
       colSpan: 'md:col-span-6 lg:col-span-5',
       icon: Image,
-      ctaLabel: 'Launch Image Studio',
+      ctaLabel: 'Open Photo Resizer',
       actionType: 'workbench',
       workbenchTab: 'image',
       featuredImage: bentoRetinaImg,
@@ -194,45 +195,45 @@ export const HomePage: React.FC<HomePageProps> = ({
     {
       id: 'tool-text-generator',
       number: '03',
-      title: 'Text & Prompt Synthesizer',
+      title: 'Text & Prompt Formatter',
       category: 'text',
-      categoryLabel: 'Text Generators',
-      metadata: 'LLM Token Counter · Case & Slug · Prompt Engine',
+      categoryLabel: 'Text Tools',
+      metadata: 'Word Counter · Slug Generator · Clean Case',
       description:
-        'Transform raw notes into structured Apple Intelligence prompts, convert URL slugs and variable cases, and inspect live token and character metrics.',
+        'Convert text into URL-friendly slugs, change uppercase/lowercase formats, count words and characters, or draft clean prompts for AI tools.',
       colSpan: 'md:col-span-3 lg:col-span-4',
       icon: FileText,
-      ctaLabel: 'Open Text Generator',
+      ctaLabel: 'Open Text Tools',
       actionType: 'workbench',
       workbenchTab: 'text',
     },
     {
       id: 'tool-seo-schema',
       number: '04',
-      title: 'Technical SEO & Schema Builder',
+      title: 'SEO & Meta Tag Builder',
       category: 'seo',
       categoryLabel: 'SEO Tools',
-      metadata: 'JSON-LD Graph · OpenGraph · Sitemap XML',
+      metadata: 'Google Snippets · OpenGraph · Meta Tags',
       description:
-        'Generate validated Schema.org JSON-LD structured data, OpenGraph social cards, and inspect search engine indexability in real time.',
+        'Generate structured meta tags, social sharing previews, and clean Schema markup for your website in seconds.',
       colSpan: 'md:col-span-3 lg:col-span-4',
       icon: Globe,
-      ctaLabel: 'Open SEO Builder',
+      ctaLabel: 'Open Meta Builder',
       actionType: 'workbench',
       workbenchTab: 'seo',
     },
     {
       id: 'tool-calculators',
       number: '05',
-      title: 'Silicon & Automation ROI Calculators',
+      title: 'Time & Charging Calculators',
       category: 'calculator',
       categoryLabel: 'Calculators',
-      metadata: 'M1–M4 Max Bandwidth · Local LLM · Time Saved',
+      metadata: 'Fast Charging · File Transfers · Time Saved',
       description:
-        'Calculate Apple Silicon unified memory bandwidth for local AI models and quantify annual engineering hours and dollar savings from workflow automation.',
+        'Estimate how fast your iPhone reaches 80% charge, calculate wireless AirDrop transfer times, and see hours saved by automating repetitive tasks.',
       colSpan: 'md:col-span-6 lg:col-span-4',
       icon: Calculator,
-      ctaLabel: 'Launch Calculators',
+      ctaLabel: 'Open Calculators',
       actionType: 'workbench',
       workbenchTab: 'calculator',
       featuredImage: bentoSiliconImg,
@@ -241,15 +242,15 @@ export const HomePage: React.FC<HomePageProps> = ({
     {
       id: 'tool-continuity-doctor',
       number: '06',
-      title: 'Continuity & AWDL Sync Doctor',
+      title: 'Device Connection Guide',
       category: 'diagnostics',
-      categoryLabel: 'Sync Diagnostics',
-      metadata: 'iPhone Mirroring · Universal Clipboard · AirDrop',
+      categoryLabel: 'Connection Help',
+      metadata: 'AirDrop · Universal Clipboard · iPhone Mirroring',
       description:
-        'Diagnose peer-to-peer AWDL wireless handshakes, Bluetooth LE discovery tokens, and Continuity Camera Desk View disconnects without rebooting.',
+        'Step-by-step diagnostic checklist to quickly fix AirDrop discovery, Universal Clipboard copy-paste delays, and iPhone screen mirroring issues.',
       colSpan: 'md:col-span-6 lg:col-span-12',
       icon: Wrench,
-      ctaLabel: 'Run Interactive Sync Doctor',
+      ctaLabel: 'Run Connection Guide',
       actionType: 'workbench',
       workbenchTab: 'diagnostics',
       featuredImage: bentoContinuityImg,
@@ -499,15 +500,15 @@ export const HomePage: React.FC<HomePageProps> = ({
           />
         </div>
 
-        {/* Interactive Modern Tool Search & Instant Filter Bar */}
-        <div className="max-w-3xl mx-auto pt-4 space-y-3">
-          <div className="relative flex items-center rounded-2xl bg-white/95 dark:bg-[#0B0F19]/90 backdrop-blur-xl border border-slate-300/90 dark:border-white/20 hover:border-indigo-500/45 dark:hover:border-indigo-400/45 shadow-[0_20px_50px_rgba(99,102,241,0.12),inset_0_1px_0_0_rgba(255,255,255,0.18)] focus-within:!border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/25 transition-all">
+        {/* Clean, Fast Modern Tool Search & Quick Intent Filter Bar */}
+        <div className="max-w-2xl mx-auto pt-3 space-y-3">
+          <div className="relative flex items-center rounded-2xl bg-white/95 dark:bg-[#0B0F19]/90 backdrop-blur-xl border border-slate-300/90 dark:border-white/20 hover:border-indigo-500/45 dark:hover:border-indigo-400/45 shadow-[0_16px_40px_rgba(99,102,241,0.08),inset_0_1px_0_0_rgba(255,255,255,0.18)] focus-within:!border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/25 transition-all">
             <Search className="w-4 h-4 text-indigo-500 dark:text-indigo-400 ml-4 shrink-0" />
             <input
               type="text"
               value={heroSearch}
               onChange={(e) => setHeroSearch(e.target.value)}
-              placeholder="Filter tools & workflows (e.g., Image resizer, JSON-LD SEO, M4 Max calculator, AirDrop fix)..."
+              placeholder="Search tools & workflows (e.g., Image resizer, JSON-LD, M4 Max, AirDrop)..."
               aria-label="Filter tools and workflows"
               className="w-full py-3.5 px-3.5 bg-transparent text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-zinc-500 focus:outline-none"
             />
@@ -532,7 +533,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </button>
           </div>
 
-          {/* Interactive Category Filter Buttons */}
+          {/* Clean Category Filter Badges */}
           <div
             role="tablist"
             aria-label="Filter tools by category"
@@ -559,75 +560,6 @@ export const HomePage: React.FC<HomePageProps> = ({
             })}
           </div>
         </div>
-
-        {/* Luxury Apple Ecosystem Studio Visual Showcase & Architecture Logos */}
-        <div className="max-w-5xl mx-auto pt-8 space-y-8">
-          {/* Framed Obsidian Hardware & Workflow Studio Preview */}
-          <div className="relative rounded-3xl p-2 sm:p-3 bg-gradient-to-b from-slate-200/80 via-slate-100/40 to-transparent dark:from-white/[0.14] dark:via-white/[0.04] dark:to-transparent border border-slate-300/90 dark:border-white/20 shadow-[0_30px_90px_-15px_rgba(79,70,229,0.28),inset_0_1px_0_0_rgba(255,255,255,0.25)] overflow-hidden group">
-            <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-2xl overflow-hidden bg-[#030712] border border-white/15">
-              <img
-                src={heroStudioImg}
-                onError={(e) => {
-                  e.currentTarget.src = '/images/hero_mac_studio_ecosystem_1790827213135.webp';
-                }}
-                alt="SmartToolHub Apple Ecosystem Hardware and Automation Studio"
-                referrerPolicy="no-referrer"
-                fetchPriority="high"
-                decoding="async"
-                width={1280}
-                height={548}
-                className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-700"
-              />
-              {/* Atmospheric Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-[#030712]/35 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#030712]/70 via-transparent to-[#030712]/70" />
-
-              {/* Top-left Luxury Emblem Overlay */}
-              <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5 flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#030712]/80 backdrop-blur-xl border border-white/20 shadow-lg">
-                <img
-                  src={luxuryLogoImg}
-                  onError={(e) => {
-                    e.currentTarget.src = '/images/smarttoolhub_luxury_logo_1790827199493.webp';
-                  }}
-                  alt="SmartToolHub Studio Emblem"
-                  referrerPolicy="no-referrer"
-                  decoding="async"
-                  width={20}
-                  height={20}
-                  className="w-5 h-5 rounded-md object-cover border border-white/20"
-                />
-                <span className="text-[11px] font-semibold tracking-tight text-white">
-                  Obsidian Studio Engine
-                </span>
-                <span className="text-[10px] font-mono text-indigo-300 hidden sm:inline">
-                  · M4 Max Ready
-                </span>
-              </div>
-
-              {/* Bottom Floating Studio Status Strip */}
-              <div className="absolute bottom-3.5 inset-x-3.5 sm:bottom-5 sm:inset-x-5 flex flex-wrap items-center justify-between gap-3 text-left">
-                <div className="space-y-0.5">
-                  <p className="text-[10px] font-mono uppercase tracking-widest text-indigo-300">
-                    Multi-Device Continuity Architecture
-                  </p>
-                  <p className="text-xs sm:text-sm font-semibold text-white">
-                    Native Siri Shortcuts, Retina Media Pipeline & Zero-Latency AWDL Handoff
-                  </p>
-                </div>
-                <div className="hidden md:flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-lg bg-white/[0.08] backdrop-blur-md border border-white/15 text-[11px] font-mono text-zinc-200">
-                    macOS 15 Sequoia
-                  </span>
-                  <span className="px-3 py-1 rounded-lg bg-white/[0.08] backdrop-blur-md border border-white/15 text-[11px] font-mono text-zinc-200">
-                    iOS 18.2
-                  </span>
-                  <span className="px-3 py-1 rounded-lg bg-indigo-500/25 backdrop-blur-md border border-indigo-400/40 text-[11px] font-mono text-indigo-200">
-                    800 GB/s Unified Memory
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Native Apple & Web Standards Partner / Ecosystem Logo Ribbon */}
           <div className="pt-2 space-y-3">
@@ -726,8 +658,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* =========================================================================
           SECTION 2: MAIN POLISHED APPLE SHORTCUT GENERATOR TOOL
@@ -743,13 +674,13 @@ export const HomePage: React.FC<HomePageProps> = ({
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center space-y-2 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-400 text-xs font-mono">
-            <span>Seamless Workflow</span>
+            <span>Simple Setup</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-heading">
-            How It Works in 3 Simple Steps
+            How It Works in 3 Easy Steps
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
-            From natural thought to native Siri voice trigger in under sixty seconds.
+            From a simple idea to a working shortcut on your phone in under a minute.
           </p>
         </div>
 
@@ -761,14 +692,14 @@ export const HomePage: React.FC<HomePageProps> = ({
                 01
               </span>
               <h3 className="text-base font-bold text-slate-900 dark:text-white font-heading">
-                Describe Your Routine
+                Describe What You Want
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
-                Type what you want to automate in everyday English — like &ldquo;Mute notifications when calendar event starts&rdquo; or &ldquo;Batch convert screenshots to WebP.&rdquo;
+                Type what you want to do in regular words — like &ldquo;Turn on Low Power Mode and dim screen&rdquo; or &ldquo;Resize my newest photo to 1080p.&rdquo;
               </p>
             </div>
-            <div className="pt-2 text-[11px] font-mono text-blue-500 dark:text-blue-400 flex items-center gap-1.5">
-              <span>Natural language intent parsing</span>
+            <div className="pt-2 text-[11px] text-blue-500 dark:text-blue-400 flex items-center gap-1.5 font-medium">
+              <span>Plain English input</span>
             </div>
           </div>
 
@@ -779,14 +710,14 @@ export const HomePage: React.FC<HomePageProps> = ({
                 02
               </span>
               <h3 className="text-base font-bold text-slate-900 dark:text-white font-heading">
-                AI Synthesizes Action Graph
+                Get Working Steps &amp; Code
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
-                SmartToolHub constructs validated iOS 18 &amp; macOS Sequoia App Intents, variable links, AppleScript fallbacks, and parameter sanity checks.
+                We generate the exact sequence of actions, variables, and optional Mac scripts ready for you to copy and use.
               </p>
             </div>
-            <div className="pt-2 text-[11px] font-mono text-pink-500 dark:text-pink-400 flex items-center gap-1.5">
-              <span>Zero third-party runtime bloat</span>
+            <div className="pt-2 text-[11px] text-pink-500 dark:text-pink-400 flex items-center gap-1.5 font-medium">
+              <span>Clean, tested actions</span>
             </div>
           </div>
 
@@ -797,14 +728,14 @@ export const HomePage: React.FC<HomePageProps> = ({
                 03
               </span>
               <h3 className="text-base font-bold text-slate-900 dark:text-white font-heading">
-                Run on iPhone, iPad &amp; Mac
+                Run on Your Apple Devices
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400 leading-relaxed">
-                Import actions into your native Shortcuts app with iCloud sync. Trigger with Siri voice, your Apple Watch, or Action Button.
+                Open in your Shortcuts app. Trigger with Siri voice commands, home screen widgets, or your Action Button.
               </p>
             </div>
-            <div className="pt-2 text-[11px] font-mono text-amber-500 dark:text-amber-400 flex items-center gap-1.5">
-              <span>Instant Siri &amp; Widget triggers</span>
+            <div className="pt-2 text-[11px] text-amber-500 dark:text-amber-400 flex items-center gap-1.5 font-medium">
+              <span>Works with Siri &amp; Widgets</span>
             </div>
           </div>
         </div>
@@ -816,13 +747,13 @@ export const HomePage: React.FC<HomePageProps> = ({
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="text-center space-y-2 max-w-2xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/20 text-emerald-400 text-xs font-mono">
-            <span>Engineering Architecture</span>
+            <span>Why SmartToolHub</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-heading">
-            Built for Native Apple Architecture
+            Built for Real Apple Devices
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-zinc-400">
-            Engineered specifically for Darwin 24.x, Apple Silicon unified memory, and Apple Intelligence App Intents.
+            Fast, private, and compatible with the latest iOS and macOS releases.
           </p>
         </div>
 
@@ -832,10 +763,10 @@ export const HomePage: React.FC<HomePageProps> = ({
               <Zap className="w-5 h-5" />
             </div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-white font-heading">
-              Siri Voice &amp; App Intents
+              Siri Voice &amp; Widgets
             </h3>
             <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
-              Full compatibility with iOS 18 Siri Intents, Action Button shortcuts, and Control Center toggle controls.
+              Run actions with your voice, Action Button, Control Center toggles, or Home Screen widgets.
             </p>
           </div>
 
@@ -844,10 +775,10 @@ export const HomePage: React.FC<HomePageProps> = ({
               <ShieldCheck className="w-5 h-5" />
             </div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-white font-heading">
-              100% Private (No Tracking)
+              Private &amp; On-Device
             </h3>
             <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
-              Calculators and workflow generators run client-side. No telemetry, user logins, or persistent tracking cookies.
+              Calculators and image tools run entirely inside your browser. No accounts, signups, or tracking.
             </p>
           </div>
 
@@ -856,10 +787,10 @@ export const HomePage: React.FC<HomePageProps> = ({
               <Cpu className="w-5 h-5" />
             </div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-white font-heading">
-              Apple Silicon Tuned
+              Mac &amp; iPhone Tuned
             </h3>
             <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
-              Accurate M1–M4 unified memory bandwidth models, local LLM token speed estimates, and native macOS sips commands.
+              Optimized for Apple Silicon chips, battery charging curves, and native macOS photo resizing.
             </p>
           </div>
 
@@ -868,10 +799,10 @@ export const HomePage: React.FC<HomePageProps> = ({
               <Sparkles className="w-5 h-5" />
             </div>
             <h3 className="text-sm font-bold text-slate-900 dark:text-white font-heading">
-              Cross-Device Continuity
+              Cross-Device Sharing
             </h3>
             <p className="text-xs text-slate-600 dark:text-zinc-400 leading-relaxed">
-              Diagnose AWDL peer-to-peer handoffs, AirDrop discovery tokens, and iPhone Mirroring without restarting your devices.
+              Troubleshoot AirDrop, Universal Clipboard copy-paste, and iPhone Mirroring in a few quick taps.
             </p>
           </div>
         </div>
@@ -1013,38 +944,38 @@ export const HomePage: React.FC<HomePageProps> = ({
           })}
         </div>
 
-        {/* Quantified Proof & Engineering Benchmarks in Clean High-Fi Cards */}
+        {/* Helpful Key Numbers */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
           <div className="bento-card p-5 space-y-1.5 rounded-2xl border border-white/10 dark:border-white/10 hover:border-indigo-500/30 transition-colors">
             <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tracking-tight tabular-nums">
               120+
             </div>
             <p className="text-xs text-slate-500 dark:text-zinc-400 leading-snug">
-              Verified macOS Sequoia & iOS 18 automation blueprints
+              Step-by-step shortcuts and setup guides for iPhone and Mac
             </p>
           </div>
           <div className="bento-card p-5 space-y-1.5 rounded-2xl border border-white/10 dark:border-white/10 hover:border-cyan-500/30 transition-colors">
             <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tracking-tight tabular-nums">
-              800 GB/s
+              100% Free
             </div>
             <p className="text-xs text-slate-500 dark:text-zinc-400 leading-snug">
-              Apple Silicon M1–M4 & Ultra memory specs indexed
+              Every tool and calculator is completely free with no paywall
             </p>
           </div>
           <div className="bento-card p-5 space-y-1.5 rounded-2xl border border-white/10 dark:border-white/10 hover:border-emerald-500/30 transition-colors">
             <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tracking-tight tabular-nums">
-              140+ hrs
+              0 Login
             </div>
             <p className="text-xs text-slate-500 dark:text-zinc-400 leading-snug">
-              Average annual engineering time saved per workspace
+              Private and on-device — no account, email, or cookies needed
             </p>
           </div>
           <div className="bento-card p-5 space-y-1.5 rounded-2xl border border-white/10 dark:border-white/10 hover:border-amber-500/30 transition-colors">
             <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white font-mono tracking-tight tabular-nums">
-              0 Keys
+              &lt; 60s
             </div>
             <p className="text-xs text-slate-500 dark:text-zinc-400 leading-snug">
-              Zero-Credentials privacy — 100% client-side execution
+              Average time to generate, copy, and test a custom shortcut
             </p>
           </div>
         </div>
@@ -1052,7 +983,6 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* =========================================================================
           SECTION 3: INTERACTIVE SMARTTOOLHUB UTILITY WORKBENCH
-          Real, immediately usable tools for Image, Text, SEO, Calculators & Sync
           ========================================================================= */}
       <section
         id="interactive-workbench"
@@ -1061,10 +991,10 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-slate-900/10 dark:border-white/10 pb-4">
           <div>
             <p className="text-xs font-medium text-indigo-600 dark:text-indigo-400">
-              Live Client-Side Execution
+              Free Online Tools
             </p>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white mt-1">
-              Interactive Utility Workbench
+              Interactive Tools &amp; Utilities
             </h2>
           </div>
 
@@ -1075,12 +1005,12 @@ export const HomePage: React.FC<HomePageProps> = ({
             className="flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/[0.04] dark:bg-white/[0.04] border border-slate-300/80 dark:border-white/15 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] overflow-x-auto"
           >
             {[
-              { id: 'image', label: 'Image Tools', icon: Image },
-              { id: 'text', label: 'Text & Prompts', icon: FileText },
-              { id: 'seo', label: 'SEO & Schema', icon: Globe },
-              { id: 'calculator', label: 'Calculators', icon: Calculator },
-              { id: 'diagnostics', label: 'Sync Doctor', icon: Wrench },
-              { id: 'silicon', label: 'Silicon Matrix', icon: Cpu },
+              { id: 'image', label: 'Photo Resizer', icon: Image },
+              { id: 'text', label: 'Text Tools', icon: FileText },
+              { id: 'seo', label: 'Meta Tags', icon: Globe },
+              { id: 'calculator', label: 'Time Saved', icon: Calculator },
+              { id: 'diagnostics', label: 'Connection Guide', icon: Wrench },
+              { id: 'silicon', label: 'Chip Specs', icon: Cpu },
             ].map((tab) => {
               const Icon = tab.icon;
               const isActive = activeWorkbench === tab.id;
@@ -1108,16 +1038,16 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
 
-        {/* WORKBENCH TAB 1: IMAGE & RETINA MEDIA STUDIO */}
+        {/* WORKBENCH TAB 1: IMAGE & PHOTO RESIZER */}
         {activeWorkbench === 'image' && (
           <div className="glass-cyan p-6 sm:p-8 rounded-3xl grid grid-cols-1 lg:grid-cols-12 gap-8 shadow-2xl">
             <div className="lg:col-span-6 space-y-5">
               <div>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                  Retina Scale, Aspect Ratio & macOS sips Optimizer
+                  Photo Dimensions, Aspect Ratio &amp; Export Preview
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-zinc-400 mt-1">
-                  Enter target pixel dimensions to compute exact aspect ratios, @2x/@3x Retina exports, estimated WebP/HEIC payload sizes, and native macOS batch CLI commands.
+                  Enter target width and height to calculate screen proportions, estimated file savings, and Mac Terminal commands.
                 </p>
               </div>
 
@@ -1735,6 +1665,11 @@ export const HomePage: React.FC<HomePageProps> = ({
           })}
         </div>
       </section>
+
+      {/* =========================================================================
+          SECTION 5: AUTHORITATIVE CITATIONS, SPECIFICATIONS & BACKLINKS
+          ========================================================================= */}
+      <AuthoritativeReferences />
 
       {/* =========================================================================
           WORKFLOW INSPECTOR MODAL (BOTTOM SHEET)

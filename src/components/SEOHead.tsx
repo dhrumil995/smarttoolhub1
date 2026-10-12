@@ -279,7 +279,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
           email: 'contact@smarttoolhub.net',
           logo: {
             '@type': 'ImageObject',
-            url: `${baseUrl}/logo.png`,
+            url: `${baseUrl}/logo.svg`,
             width: 512,
             height: 512,
           },
@@ -337,7 +337,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
             url: `${baseUrl}/`,
             logo: {
               '@type': 'ImageObject',
-              url: `${baseUrl}/logo.png`,
+              url: `${baseUrl}/logo.svg`,
               width: 512,
               height: 512,
             },

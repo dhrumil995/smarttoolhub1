@@ -56,7 +56,7 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
             url: CANONICAL_HOST,
             logo: {
               '@type': 'ImageObject',
-              url: `${CANONICAL_HOST}/logo.png`,
+              url: `${CANONICAL_HOST}/logo.svg`,
               width: 512,
               height: 512,
             },
@@ -797,6 +797,13 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
               <p style="color: #cbd5e1; line-height: 1.6; margin: 0;">Ensure both devices have Wi-Fi and Bluetooth enabled, are signed into the same Apple Account, and have Allow Handoff enabled in System Settings.</p>
             </div>
           </div>
+        </section>
+
+        <section style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 2rem; margin-bottom: 2rem;">
+          <h2 style="font-size: 1.5rem; margin-top: 0;">Authoritative References &amp; Standards</h2>
+          <p style="color: #cbd5e1; line-height: 1.8;">
+            SmartToolHub workflows and automation engines are referenced against <a href="https://developer.apple.com/documentation/appintents" style="color: #38bdf8;" target="_blank" rel="noopener">Apple Developer Documentation</a>, <a href="https://support.apple.com/guide/security/welcome/web" style="color: #38bdf8;" target="_blank" rel="noopener">Apple Platform Security</a>, and open standards. Visual interface iconography provided by <a href="https://www.flaticon.com/" style="color: #38bdf8;" target="_blank" rel="noopener">Flaticon</a>.
+          </p>
         </section>
       </div>
     `,

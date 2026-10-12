@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGlow" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#181a2e"/>
+      <stop offset="100%" stop-color="#050713"/>
+    </radialGradient>
+
+    <!-- Blue Diamond Gradient (Shortcuts Blue) -->
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="45%" stop-color="#0a84ff"/>
+      <stop offset="100%" stop-color="#0055d4"/>
+    </linearGradient>
+
+    <!-- Pink Diamond Gradient (Shortcuts Pink) -->
+    <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff75b5"/>
+      <stop offset="45%" stop-color="#ff4f9a"/>
+      <stop offset="100%" stop-color="#d91b6e"/>
+    </linearGradient>
+
+    <!-- Amber Accent Glow -->
+    <radialGradient id="amberGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffb840" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffb840" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle Canvas Background (Apple Continuity & Shortcuts App Squircle) -->
+  <rect width="512" height="512" rx="114" fill="url(#bgGlow)"/>
+  <rect width="510" height="510" x="1" y="1" rx="113" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+
+  <!-- Ambient Color Glows -->
+  <ellipse cx="196" cy="210" rx="130" ry="130" fill="#0a84ff" opacity="0.32"/>
+  <ellipse cx="320" cy="296" rx="130" ry="130" fill="#ff4f9a" opacity="0.32"/>
+  <ellipse cx="258" cy="256" rx="70" ry="70" fill="url(#amberGlow)" opacity="0.4"/>
+
+  <!-- Top-Left Blue Rhombus (Primary Shortcuts Loop) -->
+  <g transform="translate(196, 154) rotate(45)" filter="url(#softShadow)">
+    <rect x="-82" y="-82" width="164" height="164" rx="38" fill="url(#blueGrad)"/>
+    <rect x="-81" y="-81" width="162" height="162" rx="37" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="2"/>
+    <!-- Glass Specular Highlight -->
+    <path d="M -60 -70 L 60 -70" stroke="rgba(255,255,255,0.55)" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Bottom-Right Pink Rhombus (Secondary Shortcuts Loop) -->
+  <g transform="translate(316, 274) rotate(45)" filter="url(#softShadow)">
+    <rect x="-82" y="-82" width="164" height="164" rx="38" fill="url(#pinkGrad)"/>
+    <rect x="-81" y="-81" width="162" height="162" rx="37" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+    <!-- Glass Specular Highlight -->
+    <path d="M -60 -70 L 60 -70" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Central Blend Energy Node (Amber Spark with white-hot core) -->
+  <circle cx="256" cy="256" r="16" fill="#ffffff" opacity="0.95"/>
+  <circle cx="256" cy="256" r="7" fill="#ffb840"/>
+
+  <!-- Micro lightning / automation spark -->
+  <path d="M 255 248 L 251 256 L 257 256 L 253 264 L 261 254 L 256 254 Z" fill="#050713"/>
+</svg>
