@@ -16,6 +16,7 @@ import {
   FileCode
 } from 'lucide-react';
 import { haptics } from '../utils/haptics';
+import { trackShortcutGenerate } from '../utils/gtm';
 
 interface GeneratedStep {
   step: number;
@@ -193,6 +194,11 @@ export const HomeShortcutGenerator: React.FC<HomeShortcutGeneratorProps> = ({
             applescript: data.workflow.applescript || undefined,
             zshCommand: data.workflow.zshCommand || undefined,
           });
+          trackShortcutGenerate({
+            shortcutName: data.workflow.title || 'Generated Apple Shortcut',
+            category: data.workflow.category || 'Productivity',
+            actionsCount: steps.length,
+          });
           setLoading(false);
           haptics.playSuccess();
           return;
@@ -206,6 +212,11 @@ export const HomeShortcutGenerator: React.FC<HomeShortcutGeneratorProps> = ({
     setTimeout(() => {
       const fallbackData = synthesizeLocally(query);
       setResult(fallbackData);
+      trackShortcutGenerate({
+        shortcutName: fallbackData.title,
+        category: fallbackData.category,
+        actionsCount: fallbackData.steps?.length || 1,
+      });
       setLoading(false);
       haptics.playSuccess();
     }, 1100);

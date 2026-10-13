@@ -21,6 +21,7 @@ import {
   Key
 } from 'lucide-react';
 import { DodoPaymentsModal } from '../components/DodoPaymentsModal';
+import { trackSelectPlan } from '../utils/gtm';
 
 interface PricingPageProps {
   onNavigate: (page: PageId, workflowId?: string) => void;
@@ -137,6 +138,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate }) => {
 
     setCheckoutError(null);
     setIsCheckingOut(true);
+    trackSelectPlan(plan, plan === 'lifetime' ? 49 : 29, plan === 'lifetime' ? 'lifetime' : 'yearly');
     try {
       const res = await fetch('/api/dodo/create-checkout', {
         method: 'POST',

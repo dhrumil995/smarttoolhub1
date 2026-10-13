@@ -123,15 +123,27 @@ function AppContent() {
     return () => window.removeEventListener('popstate', parseUrl);
   }, []);
 
-  // Track SPA pageviews in Google Analytics (G-ZEGS3V0TTE)
+  // Track SPA pageviews in Google Analytics (G-ZEGS3V0TTE) & Google Tag Manager (dataLayer)
   useEffect(() => {
     try {
+      const pagePath = window.location.pathname + window.location.search;
       if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
-        const pagePath = window.location.pathname + window.location.search;
         (window as any).gtag('config', 'G-ZEGS3V0TTE', {
           page_path: pagePath,
           page_title: document.title,
           page_location: window.location.href,
+        });
+      }
+      // Push to GTM dataLayer
+      if (typeof window !== 'undefined') {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'virtual_page_view',
+          page_path: pagePath,
+          page_title: document.title,
+          page_location: window.location.href,
+          page_id: currentPage,
+          workflow_id: selectedWorkflowId || undefined,
         });
       }
     } catch (_) {}
