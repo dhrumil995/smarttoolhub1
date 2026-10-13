@@ -284,8 +284,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </nav>
 
-        {/* Zone 3: Right Action Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {/* Zone 3: Right Action Controls — Perfect Adaptive Fit for All Mobile & Desktop Viewports */}
+        <div className="flex items-center gap-1 min-[360px]:gap-1.5 sm:gap-2 shrink-0">
           {/* Instant Command Search Trigger */}
           <button
             id="nav-search-button"
@@ -294,7 +294,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               haptics.playTap();
               onOpenSearch();
             }}
-            className="flex items-center justify-center gap-2 w-9 h-9 sm:w-auto sm:h-9 px-0 sm:px-3 rounded-xl bg-[rgba(16,28,51,0.65)] hover:bg-[rgba(16,28,51,0.95)] border border-[var(--line)] hover:border-[var(--laser)]/40 text-[var(--mute)] hover:text-[var(--ink)] text-xs cursor-pointer whitespace-nowrap shrink-0 transition-all active:scale-95"
+            className="flex items-center justify-center gap-2 h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:w-auto sm:h-9 px-0 sm:px-3 rounded-xl bg-[rgba(16,28,51,0.65)] hover:bg-[rgba(16,28,51,0.95)] border border-[var(--line)] hover:border-[var(--laser)]/40 text-[var(--mute)] hover:text-[var(--ink)] text-xs cursor-pointer whitespace-nowrap shrink-0 transition-all active:scale-90 touch-manipulation"
             title="Search tools, shortcuts, and workflows (⌘K)"
             aria-label="Search tools and workflows"
           >
@@ -305,7 +305,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </kbd>
           </button>
 
-          {/* Quick Theme Toggle (Kept in DOM with id for test suites, hidden on narrow mobile) */}
+          {/* Quick Theme Toggle (Shown on mobile >= 380px and desktop, tucked into drawer on narrowest screens) */}
           <button
             id="nav-theme-toggle"
             type="button"
@@ -313,7 +313,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               haptics.playTap();
               toggleTheme();
             }}
-            className="hidden sm:flex w-9 h-9 rounded-xl bg-[rgba(16,28,51,0.65)] hover:bg-[rgba(16,28,51,0.95)] border border-[var(--line)] hover:border-[var(--laser)]/40 text-[var(--mute)] hover:text-[var(--ink)] items-center justify-center cursor-pointer shrink-0 transition-all active:scale-95"
+            className="hidden min-[380px]:flex h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:h-9 sm:w-9 rounded-xl bg-[rgba(16,28,51,0.65)] hover:bg-[rgba(16,28,51,0.95)] border border-[var(--line)] hover:border-[var(--laser)]/40 text-[var(--mute)] hover:text-[var(--ink)] items-center justify-center cursor-pointer shrink-0 transition-all active:scale-90 touch-manipulation"
             title={`Switch to ${resolvedTheme === 'dark' ? 'Light' : 'Dark'} mode`}
             aria-label="Toggle theme"
           >
@@ -332,7 +332,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               haptics.playTap();
               onOpenSettings?.();
             }}
-            className="relative flex items-center justify-center gap-1.5 w-9 h-9 sm:w-auto sm:h-9 px-0 sm:px-2.5 rounded-xl bg-[rgba(16,28,51,0.65)] hover:bg-[rgba(16,28,51,0.95)] border border-[var(--line)] hover:border-[var(--laser)]/40 text-[var(--mute)] hover:text-[var(--ink)] text-xs cursor-pointer shrink-0 transition-all active:scale-95"
+            className="relative flex items-center justify-center gap-1.5 h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 sm:w-auto sm:h-9 px-0 sm:px-2.5 rounded-xl bg-[rgba(16,28,51,0.65)] hover:bg-[rgba(16,28,51,0.95)] border border-[var(--line)] hover:border-[var(--laser)]/40 text-[var(--mute)] hover:text-[var(--ink)] text-xs cursor-pointer shrink-0 transition-all active:scale-90 touch-manipulation"
             title={`Haptics: ${intensity.toUpperCase()} · User Profile & Settings`}
             aria-label="User Profile and Haptic Feedback Settings"
           >
@@ -340,7 +340,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="hidden xl:inline text-xs font-medium">Settings</span>
             {/* Mobile indicator dot */}
             <span
-              className={`sm:hidden absolute top-1.5 right-1.5 w-2 h-2 rounded-full ${
+              className={`sm:hidden absolute top-2 right-2 w-2 h-2 rounded-full ${
                 intensity === 'high'
                   ? 'bg-[var(--laser)] shadow-[0_0_6px_var(--laser)]'
                   : intensity === 'low'
@@ -371,24 +371,27 @@ export const Navbar: React.FC<NavbarProps> = ({
             </span>
           </button>
 
-          {/* Primary Action CTA */}
+          {/* Primary Action CTA — Visible on tablet & desktop */}
           <button
             id="nav-generator-cta"
             type="button"
             onClick={() => handleNav('generator')}
-            className="hidden sm:inline-flex items-center gap-1.5 sm:gap-2 h-9 px-3 sm:px-4 rounded-xl bg-[var(--laser)] hover:bg-[var(--laser-dim)] text-[#050a14] font-bold text-xs tracking-tight shadow-[0_4px_14px_rgba(57,255,136,0.3)] transition-all cursor-pointer whitespace-nowrap shrink-0 active:scale-95"
+            className="hidden min-[540px]:inline-flex items-center gap-1.5 sm:gap-2 h-9 px-3 sm:px-4 rounded-xl bg-[var(--laser)] hover:bg-[var(--laser-dim)] text-[#050a14] font-bold text-xs tracking-tight shadow-[0_4px_14px_rgba(57,255,136,0.3)] transition-all cursor-pointer whitespace-nowrap shrink-0 active:scale-95 touch-manipulation"
           >
             <Wand2 className="w-3.5 h-3.5 text-[#050a14] shrink-0" />
             <span className="hidden md:inline">Launch Generator</span>
             <span className="md:hidden">Generator</span>
           </button>
 
-          {/* Mobile Drawer Trigger */}
+          {/* Mobile Drawer Trigger — Generous 40px touch hit-target */}
           <button
             id="nav-mobile-toggle"
             type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden w-9 h-9 rounded-xl bg-[rgba(16,28,51,0.65)] hover:bg-[rgba(16,28,51,0.95)] border border-[var(--line)] hover:border-[var(--laser)]/40 text-[var(--ink)] flex items-center justify-center cursor-pointer shrink-0 transition-all active:scale-95"
+            onClick={() => {
+              haptics.playTap();
+              setMobileMenuOpen(!mobileMenuOpen);
+            }}
+            className="lg:hidden h-9 w-9 min-[360px]:h-10 min-[360px]:w-10 rounded-xl bg-[rgba(16,28,51,0.65)] hover:bg-[rgba(16,28,51,0.95)] border border-[var(--line)] hover:border-[var(--laser)]/40 text-[var(--ink)] flex items-center justify-center cursor-pointer shrink-0 transition-all active:scale-90 touch-manipulation"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
           >
@@ -397,9 +400,59 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
+      {/* Backdrop overlay for Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 top-16 bg-black/65 backdrop-blur-sm z-40 transition-opacity animate-in fade-in duration-150"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       {/* Responsive Mobile Navigation Drawer (Positioned cleanly below header with zero button overlap) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 z-50 border-b border-[var(--line)] bg-[#0a1424]/98 backdrop-blur-2xl px-4 py-4 space-y-4 shadow-[0_24px_60px_rgba(0,0,0,0.85)] max-h-[calc(100vh-4.5rem)] overflow-y-auto">
+        <div className="lg:hidden absolute top-full left-0 right-0 z-50 border-b border-[var(--line)] bg-[#0a1424]/98 backdrop-blur-2xl px-4 py-4 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] space-y-4 shadow-[0_24px_60px_rgba(0,0,0,0.85)] max-h-[calc(100vh-4.5rem)] overflow-y-auto">
+          {/* Mobile Quick Search Bar */}
+          <button
+            type="button"
+            onClick={() => {
+              haptics.playTap();
+              setMobileMenuOpen(false);
+              onOpenSearch();
+            }}
+            className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-[var(--line)] text-xs text-[var(--mute)] cursor-pointer active:scale-[0.98] transition-all"
+          >
+            <div className="flex items-center gap-2">
+              <Search className="w-4 h-4 text-[var(--laser)] shrink-0" />
+              <span>Search shortcuts, tools, & guides...</span>
+            </div>
+            <kbd className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 border border-white/10 font-mono text-[var(--mute)]">
+              ⌘K
+            </kbd>
+          </button>
+
+          {/* Theme Quick Switcher in Mobile Drawer */}
+          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-white/[0.03] border border-[var(--line)]">
+            <div className="flex items-center gap-2 text-xs font-semibold text-[var(--ink)]">
+              {resolvedTheme === 'dark' ? (
+                <Moon className="w-4 h-4 text-[var(--laser)]" />
+              ) : (
+                <Sun className="w-4 h-4 text-amber-400" />
+              )}
+              <span>Theme Appearance</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                haptics.playTap();
+                toggleTheme();
+              }}
+              className="px-3 py-1 rounded-lg text-xs font-semibold bg-[var(--laser)]/10 text-[var(--laser)] border border-[var(--laser)]/30 hover:bg-[var(--laser)]/20 active:scale-95 transition-all cursor-pointer"
+            >
+              {resolvedTheme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+            </button>
+          </div>
+
           <div className="space-y-1">
             <div className="px-3 py-1 text-[11px] font-mono uppercase tracking-wider text-[var(--mute)]">
               Navigation

@@ -18,6 +18,7 @@ import {
   Info
 } from 'lucide-react';
 import { haptics } from '../utils/haptics';
+import { trackToolUse, trackBatteryCalculation, trackCopyCode } from '../utils/gtm';
 
 interface FreeAppleToolsProps {
   onLoadPromptIntoGenerator?: (promptText: string) => void;
@@ -53,6 +54,7 @@ export const FreeAppleTools: React.FC<FreeAppleToolsProps> = ({ onLoadPromptInto
     try {
       await navigator.clipboard.writeText(text);
       setCopiedId(id);
+      trackCopyCode('apple_tool_snippet', id);
       setTimeout(() => setCopiedId(null), 2000);
     } catch (_) {}
   };

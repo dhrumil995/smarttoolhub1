@@ -21,16 +21,7 @@ export const DEFAULT_PRODUCTION_BASE_URL = 'https://smarttoolhub.net';
  */
 export function resolveBaseUrl(customBaseUrl?: string): string {
   if (customBaseUrl && customBaseUrl.trim().length > 0) {
-    const trimmed = customBaseUrl.trim().replace(/\/+$/, '');
-    if (
-      !trimmed.includes('localhost') &&
-      !trimmed.includes('127.0.0.1') &&
-      !trimmed.includes('ais-dev-') &&
-      !trimmed.includes('ais-pre-') &&
-      !trimmed.includes('run.app')
-    ) {
-      return trimmed;
-    }
+    return customBaseUrl.trim().replace(/\/+$/, '');
   }
   if (typeof process !== 'undefined' && process.env?.APP_URL && process.env.APP_URL.trim().length > 0) {
     const envUrl = process.env.APP_URL.trim().replace(/\/+$/, '');

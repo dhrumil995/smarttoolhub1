@@ -51,6 +51,7 @@ import {
   Zap,
   ShieldCheck
 } from 'lucide-react';
+import { trackToolUse } from '../utils/gtm';
 
 interface HomePageProps {
   onNavigate: (page: PageId, workflowId?: string) => void;
@@ -91,6 +92,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   const handleCategoryChange = (cat: ToolCategoryFilter) => {
     haptics.playTap();
     setLocalCategory(cat);
+    trackToolUse(cat, 'homepage_category_filter');
     if (onSelectCategory) {
       onSelectCategory(cat);
     }

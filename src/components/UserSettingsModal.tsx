@@ -19,8 +19,11 @@ import {
   RotateCcw,
   Zap,
   Activity,
-  Palette
+  Palette,
+  BarChart3,
+  Check
 } from 'lucide-react';
+import { getStoredGtmId, setStoredGtmId, pushToDataLayer } from '../utils/gtm';
 
 interface UserSettingsModalProps {
   isOpen: boolean;
@@ -34,7 +37,10 @@ export const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
   const { intensity, setIntensity, playTap, playSuccess } = useHaptics();
   const { resolvedTheme, toggleTheme } = useTheme();
   const [testTriggered, setTestTriggered] = useState(false);
-  const [activeTab, setActiveTab] = useState<'haptics' | 'profile' | 'appearance'>('haptics');
+  const [activeTab, setActiveTab] = useState<'haptics' | 'profile' | 'appearance' | 'analytics'>('haptics');
+  const [gtmContainerId, setGtmContainerId] = useState<string>(getStoredGtmId() || '');
+  const [gtmSavedStatus, setGtmSavedStatus] = useState<boolean>(false);
+  const [lastDispatchedEvent, setLastDispatchedEvent] = useState<string | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -173,6 +179,22 @@ export const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
           >
             <Palette className="w-3.5 h-3.5" />
             <span>Appearance & Glass</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              playTap();
+              setActiveTab('analytics');
+            }}
+            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
+              activeTab === 'analytics'
+                ? 'bg-indigo-500 text-white shadow-md shadow-indigo-500/30'
+                : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
+            }`}
+          >
+            <BarChart3 className="w-3.5 h-3.5" />
+            <span>Tag Manager & GA4</span>
           </button>
         </div>
 
@@ -525,6 +547,146 @@ export const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                     <span className="w-2.5 h-2.5 rounded-full bg-rose-400 mx-auto block mb-1" />
                     <span className="text-[11px] font-semibold text-rose-500 dark:text-rose-300">Rose Flare</span>
                   </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 4: GOOGLE TAG MANAGER & ANALYTICS */}
+          {activeTab === 'analytics' && (
+            <div className="space-y-6 animate-in fade-in duration-150">
+              {/* Feature Hero Description */}
+              <div className="p-4 rounded-2xl bg-indigo-500/5 dark:bg-indigo-500/10 border border-indigo-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                      Tracking & Tag Intelligence
+                    </span>
+                  </div>
+                  <h3 className="text-sm sm:text-base font-semibold text-slate-900 dark:text-white">
+                    Google Tag Manager & GA4 Integration
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-zinc-300 max-w-md">
+                    Connect your custom Google Tag Manager container, test dataLayer triggers, and track user automations and page views in real time.
+                  </p>
+                </div>
+
+                <div className="shrink-0 flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playTap();
+                      pushToDataLayer({
+                        event: 'gtm_test_ping',
+                        trigger: 'settings_modal_test_button',
+                        timestamp: new Date().toISOString(),
+                      });
+                      setLastDispatchedEvent('gtm_test_ping');
+                      playSuccess();
+                      setTestTriggered(true);
+                      setTimeout(() => setTestTriggered(false), 1200);
+                    }}
+                    className="px-4 py-2 rounded-xl text-xs font-semibold glass-button-primary text-white flex items-center gap-2 cursor-pointer transition-all active:scale-95 shadow-md shadow-indigo-500/30"
+                  >
+                    <Zap className={`w-3.5 h-3.5 ${testTriggered ? 'animate-bounce text-emerald-300' : ''}`} />
+                    <span>{testTriggered ? 'Event Dispatched!' : 'Send Test dataLayer Ping'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* GA4 Active Status Card */}
+              <div className="p-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-100/60 dark:bg-white/[0.02] flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                    <BarChart3 className="w-5 h-5 text-emerald-500" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                      <span>Google Analytics 4 (GA4)</span>
+                      <span className="px-1.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[10px] font-mono font-semibold text-emerald-500 uppercase tracking-wider">
+                        Active
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-slate-500 dark:text-zinc-400 font-mono mt-0.5">
+                      Measurement ID: <strong className="text-slate-800 dark:text-zinc-200">G-ZEGS3V0TTE</strong>
+                    </div>
+                  </div>
+                </div>
+                <span className="text-[11px] text-slate-500 dark:text-zinc-400 hidden sm:inline">
+                  Streaming Virtual Page Views &amp; Actions
+                </span>
+              </div>
+
+              {/* Google Tag Manager Container Configuration */}
+              <div className="p-4 rounded-2xl border border-indigo-500/30 bg-indigo-500/5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <label htmlFor="gtm-input-id" className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                    Google Tag Manager Container ID
+                  </label>
+                  <span className="text-[11px] text-slate-500 dark:text-zinc-400 font-mono">
+                    Format: GTM-XXXXXXX
+                  </span>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <input
+                    id="gtm-input-id"
+                    type="text"
+                    value={gtmContainerId}
+                    onChange={(e) => {
+                      setGtmContainerId(e.target.value.toUpperCase());
+                      setGtmSavedStatus(false);
+                    }}
+                    placeholder="e.g. GTM-XXXXXXX"
+                    className="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-white/15 bg-white dark:bg-black/40 text-slate-900 dark:text-white font-mono text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      playTap();
+                      setStoredGtmId(gtmContainerId);
+                      setGtmSavedStatus(true);
+                      playSuccess();
+                      setTimeout(() => setGtmSavedStatus(false), 2500);
+                    }}
+                    className="px-5 py-2.5 rounded-xl glass-button-primary text-xs font-semibold text-white cursor-pointer transition-all active:scale-95 whitespace-nowrap flex items-center justify-center gap-1.5"
+                  >
+                    {gtmSavedStatus ? <Check className="w-4 h-4 text-emerald-300" /> : <BarChart3 className="w-4 h-4" />}
+                    <span>{gtmSavedStatus ? 'Container Saved!' : 'Save & Connect'}</span>
+                  </button>
+                </div>
+
+                <p className="text-[11px] text-slate-500 dark:text-zinc-400 leading-relaxed">
+                  Enter your container ID from Google Tag Manager (e.g. from tagmanager.google.com). SmartToolHub will immediately load your tags and stream rich events like <code className="px-1 py-0.5 rounded bg-black/10 dark:bg-white/10 font-mono">generate_shortcut</code>, <code className="px-1 py-0.5 rounded bg-black/10 dark:bg-white/10 font-mono">tool_interaction</code>, and <code className="px-1 py-0.5 rounded bg-black/10 dark:bg-white/10 font-mono">virtual_page_view</code>.
+                </p>
+              </div>
+
+              {/* Live dataLayer Activity Feed */}
+              <div className="p-4 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-100/50 dark:bg-black/30 space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-900 dark:text-white">
+                  <span>Live dataLayer Event Inspector</span>
+                  <span className="text-[11px] font-mono text-indigo-500 dark:text-indigo-400">
+                    {typeof window !== 'undefined' && window.dataLayer ? `${window.dataLayer.length} events logged` : '0 events'}
+                  </span>
+                </div>
+                <div className="max-h-40 overflow-y-auto space-y-1.5 p-2 rounded-xl bg-slate-900 text-slate-100 font-mono text-[11px]">
+                  {typeof window !== 'undefined' && window.dataLayer && window.dataLayer.length > 0 ? (
+                    window.dataLayer.slice(-4).reverse().map((ev, i) => (
+                      <div key={i} className="p-1.5 rounded bg-slate-800/80 border border-slate-700/60 flex items-center justify-between gap-2">
+                        <span className="text-emerald-400 font-bold truncate">
+                          {ev.event || (ev['gtm.start'] ? 'gtm.js (container load)' : 'custom_data')}
+                        </span>
+                        <span className="text-slate-400 text-[10px] shrink-0">
+                          {ev.timestamp ? new Date(ev.timestamp).toLocaleTimeString() : 'now'}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="text-slate-400 text-center py-2">
+                      No events in dataLayer yet. Click "Send Test dataLayer Ping" above to trigger one.
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

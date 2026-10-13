@@ -4,6 +4,7 @@ import { WORKFLOWS_DATA } from '../data/workflows';
 import { COMPATIBILITY_FEATURES } from '../data/compatibility';
 import { TROUBLESHOOTING_DATA } from '../data/troubleshooting';
 import { useHaptics } from '../utils/useHaptics';
+import { trackSearchQuery } from '../utils/gtm';
 import { Search, X, BookOpen, Cpu, Wrench, ArrowRight, Sliders, Volume2 } from 'lucide-react';
 
 interface CommandPaletteProps {
@@ -25,6 +26,15 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose,
       setQuery('');
     }
   }, [isOpen]);
+
+  // Track search query with debounce to avoid spamming dataLayer
+  useEffect(() => {
+    if (!query.trim() || query.length < 2) return;
+    const timer = setTimeout(() => {
+      trackSearchQuery(query);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [query]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

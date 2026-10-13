@@ -24,14 +24,23 @@
         } catch (e) {}
       })();
     </script>
-    <!-- Google Tag Manager -->
+    <!-- Google Tag Manager (dataLayer initialized, dynamic container support) -->
     <script>
       window.dataLayer = window.dataLayer || [];
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-XXXXXXX');
+      (function(w,d,s,l){
+        try {
+          var storedGtm = '';
+          try { storedGtm = localStorage.getItem('smarttoolhub_gtm_id') || ''; } catch(e){}
+          var gtmId = (w.__GTM_ID__ || storedGtm || '').trim();
+          if (gtmId && !gtmId.includes('XXXXXXX')) {
+            w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+            var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+encodeURIComponent(gtmId)+dl;
+            f.parentNode.insertBefore(j,f);
+          }
+        } catch(e) {}
+      })(window,document,'script','dataLayer');
     </script>
     <!-- End Google Tag Manager -->
     <!-- Google tag (gtag.js) -->
@@ -50,6 +59,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Apple Shortcuts Generator — SmartToolHub</title>
     <meta name="description" content="Free Apple Shortcuts generator: build custom iOS 18 &amp; macOS Sequoia automations, calculate charge times, and pick triggers instantly." />
+    <meta name="keywords" content="Apple Shortcuts generator, Siri shortcuts generator, iOS 18 shortcuts, macOS Sequoia automations, iPhone fast charging calculator, AirDrop troubleshooting, Apple Silicon calculator, AppleScript generator, free Apple tools" />
     <meta name="author" content="Dhrumil Aslaliya" />
     <meta name="publisher" content="SmartToolHub" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -315,9 +325,7 @@
     </script>
   </head>
   <body class="min-h-screen bg-[#030712] text-[#F8FAFC]">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- Google Tag Manager (noscript fallback) -->
     <!-- End Google Tag Manager (noscript) -->
     <div id="root" class="min-h-screen bg-[#030712]"></div>
     <noscript>

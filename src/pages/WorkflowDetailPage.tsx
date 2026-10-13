@@ -25,6 +25,7 @@ import {
   Sparkles,
   FileDown
 } from 'lucide-react';
+import { trackWorkflowAction } from '../utils/gtm';
 
 interface WorkflowDetailPageProps {
   workflowId: string;
@@ -48,6 +49,7 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
       if (navigator?.clipboard?.writeText) {
         await navigator.clipboard.writeText(url);
         setCopied(true);
+        trackWorkflowAction('share', { id: workflow.id, name: workflow.title, category: workflow.category });
         setTimeout(() => setCopied(false), 2000);
       } else {
         const textarea = document.createElement('textarea');
@@ -109,6 +111,7 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
             id="download-as-pdf-btn"
             onClick={() => {
               haptics.playTap();
+              trackWorkflowAction('download', { id: workflow.id, name: workflow.title, category: workflow.category });
               window.print();
             }}
             title="Download complete workflow as clean PDF instruction sheet"
