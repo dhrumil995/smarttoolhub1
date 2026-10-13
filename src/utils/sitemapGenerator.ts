@@ -125,6 +125,15 @@ export function getAllSitemapRoutes(rawBaseUrl?: string): SitemapRoute[] {
       title: 'Apple Systems Engineering & Automation Guides | SmartToolHub',
     },
     {
+      path: '/help',
+      url: `${baseUrl}/help`,
+      lastmod: today,
+      changefreq: 'daily',
+      priority: 0.9,
+      category: 'core',
+      title: 'Apple Shortcuts Help Center & Troubleshooting Guide | SmartToolHub',
+    },
+    {
       path: '/about',
       url: `${baseUrl}/about`,
       lastmod: today,

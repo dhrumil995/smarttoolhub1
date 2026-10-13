@@ -269,6 +269,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
               </li>
               <li>
                 <a
+                  href="/help"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('guides');
+                  }}
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+                >
+                  Help Center &amp; Support
+                </a>
+              </li>
+              <li>
+                <a
                   href="/privacy"
                   onClick={(e) => {
                     e.preventDefault();

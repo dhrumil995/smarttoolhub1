@@ -183,18 +183,32 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ currentPage, workflowId }) => 
         ],
       };
     } else if (currentPage === 'guides') {
-      config = {
-        title: 'Apple Shortcuts & Automation Guides | SmartToolHub',
-        description:
-          'Clear, step-by-step guides on Apple Shortcuts, Continuity, and native automation for iPhone, iPad, and Mac.',
-        canonicalPath: '/guides',
-        ogType: 'website',
-        keywords: 'Apple Shortcuts guides, iOS automation tutorial, macOS Shortcuts setup',
-        breadcrumbs: [
-          { name: 'Home', path: '/' },
-          { name: 'Guides', path: '/guides' },
-        ],
-      };
+      const isHelpPath = typeof window !== 'undefined' && (window.location.pathname === '/help' || window.location.pathname.startsWith('/help') || window.location.pathname.startsWith('/support'));
+      config = isHelpPath
+        ? {
+            title: 'Apple Shortcuts Help Center & Troubleshooting Guide | SmartToolHub',
+            description:
+              'Find quick help for Apple Shortcuts, iOS 18 automations, AirDrop sync issues, and Continuity setup with verified walkthroughs by SmartToolHub.',
+            canonicalPath: '/help',
+            ogType: 'website',
+            keywords: 'Apple Shortcuts help, iOS 18 automations support, AirDrop fix, Continuity troubleshooting, SmartToolHub help',
+            breadcrumbs: [
+              { name: 'Home', path: '/' },
+              { name: 'Help Center', path: '/help' },
+            ],
+          }
+        : {
+            title: 'Apple Shortcuts & Automation Guides | SmartToolHub',
+            description:
+              'Clear, step-by-step guides on Apple Shortcuts, Continuity, and native automation for iPhone, iPad, and Mac.',
+            canonicalPath: '/guides',
+            ogType: 'website',
+            keywords: 'Apple Shortcuts guides, iOS automation tutorial, macOS Shortcuts setup',
+            breadcrumbs: [
+              { name: 'Home', path: '/' },
+              { name: 'Guides', path: '/guides' },
+            ],
+          };
     }
 
     // 1. Update document.title

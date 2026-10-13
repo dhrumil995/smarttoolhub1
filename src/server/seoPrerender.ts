@@ -640,6 +640,108 @@ export function getRouteSeo(rawPath: string): RouteSeoData {
     };
   }
 
+  // 9. Help Center & Troubleshooting FAQ Hub (/help)
+  if (cleanPath === '/help' || cleanPath === '/support') {
+    const canonicalPath = '/help';
+    const pageUrl = `${CANONICAL_HOST}${canonicalPath}`;
+
+    const schemaJson = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'HelpPage',
+          '@id': `${pageUrl}#help`,
+          name: 'SmartToolHub Apple Shortcuts & Automation Help Center',
+          description: 'Step-by-step troubleshooting, setup guides, and answers for Apple Shortcuts and macOS Continuity automations.',
+          url: pageUrl,
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'How do I download and install Apple Shortcuts on iPhone and Mac?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Open the Shortcuts app pre-installed on iOS or macOS, choose a verified workflow from SmartToolHub, tap Get Shortcut, and review the requested permissions before running.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Why is AirDrop or Continuity Camera not working?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Ensure both devices are signed into the same Apple Account with two-factor authentication enabled, Wi-Fi and Bluetooth turned on, and AWDL interference minimized. Use our Diagnostics Wizard for terminal reset commands.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Does SmartToolHub require my Apple ID or iCloud password?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'No. SmartToolHub operates on a strict Zero-Credentials model. We never ask for, collect, or store Apple IDs, iCloud credentials, or personal device data.',
+              },
+            },
+          ],
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${pageUrl}#breadcrumbs`,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: CANONICAL_HOST },
+            { '@type': 'ListItem', position: 2, name: 'Help Center', item: pageUrl },
+          ],
+        },
+      ],
+    };
+
+    const prerenderHtml = `
+      <div class="prerender-shell" style="max-width: 900px; margin: 0 auto; padding: 2rem 1rem; color: #F8FAFC; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <header style="margin-bottom: 2rem;">
+          <h1 style="font-size: 2.25rem; font-weight: 800; color: #39ff88;">Apple Shortcuts Help Center &amp; Support</h1>
+          <p style="font-size: 1.1rem; color: #8fa3c0; line-height: 1.6;">
+            Get quick answers, troubleshooting steps, and tutorials for Apple Shortcuts, macOS Sequoia Continuity, AirDrop, and iPhone automation tools.
+          </p>
+        </header>
+        <section style="margin-bottom: 2.5rem;">
+          <h2 style="font-size: 1.5rem; color: #f2f7ff; margin-bottom: 1rem;">Frequent Help Topics &amp; Quick Links</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+            <div style="background: rgba(16,28,51,0.6); border: 1px solid rgba(143,163,192,0.16); padding: 1.25rem; border-radius: 16px;">
+              <h3 style="margin-top: 0; color: #39ff88;"><a href="/guides" style="color: #39ff88; text-decoration: none;">Step-by-Step Guides &rarr;</a></h3>
+              <p style="color: #8fa3c0; font-size: 0.95rem;">Master Siri triggers, custom menus, and native automations without complex code.</p>
+            </div>
+            <div style="background: rgba(16,28,51,0.6); border: 1px solid rgba(143,163,192,0.16); padding: 1.25rem; border-radius: 16px;">
+              <h3 style="margin-top: 0; color: #39ff88;"><a href="/troubleshooting" style="color: #39ff88; text-decoration: none;">Diagnostics &amp; Fixes &rarr;</a></h3>
+              <p style="color: #8fa3c0; font-size: 0.95rem;">Diagnose AirDrop drops, Universal Clipboard sync delays, and iPhone Mirroring timeouts.</p>
+            </div>
+            <div style="background: rgba(16,28,51,0.6); border: 1px solid rgba(143,163,192,0.16); padding: 1.25rem; border-radius: 16px;">
+              <h3 style="margin-top: 0; color: #39ff88;"><a href="/compatibility" style="color: #39ff88; text-decoration: none;">Compatibility Matrix &rarr;</a></h3>
+              <p style="color: #8fa3c0; font-size: 0.95rem;">Check exact Apple Silicon (M1&ndash;M4) and iOS 18 hardware requirements.</p>
+            </div>
+          </div>
+        </section>
+        <section style="margin-bottom: 2.5rem;">
+          <h2 style="font-size: 1.5rem; color: #f2f7ff; margin-bottom: 1rem;">Frequently Asked Questions</h2>
+          <div style="background: rgba(16,28,51,0.6); border: 1px solid rgba(143,163,192,0.16); padding: 1.5rem; border-radius: 16px; margin-bottom: 1rem;">
+            <h3 style="margin-top: 0; color: #f2f7ff;">How do I run Apple Shortcuts on iPhone, iPad, and Mac?</h3>
+            <p style="color: #8fa3c0; line-height: 1.6;">Open the Apple Shortcuts app, import any verified workflow blueprint from SmartToolHub, and trigger via Siri voice commands, Home Screen widgets, Action Button, or menu bar shortcuts.</p>
+          </div>
+          <div style="background: rgba(16,28,51,0.6); border: 1px solid rgba(143,163,192,0.16); padding: 1.5rem; border-radius: 16px;">
+            <h3 style="margin-top: 0; color: #f2f7ff;">Need personalized assistance or custom shortcuts?</h3>
+            <p style="color: #8fa3c0; line-height: 1.6;">Reach out directly to creator Dhrumil Aslaliya at <a href="/contact" style="color: #39ff88;">contact@smarttoolhub.net</a> or request custom automations through our generator workbench.</p>
+          </div>
+        </section>
+      </div>
+    `;
+
+    return {
+      title: 'Apple Shortcuts Help Center & Troubleshooting Guide | SmartToolHub',
+      description: 'Find quick help for Apple Shortcuts, iOS 18 automations, AirDrop sync issues, and Continuity setup with verified walkthroughs by SmartToolHub.',
+      canonicalPath,
+      ogType: 'website',
+      ogImage: `${CANONICAL_HOST}/product-cover.webp`,
+      schemaJson,
+      prerenderHtml,
+    };
+  }
+
   // Default Home Page (/)
   return {
     title: 'Apple Shortcuts Generator — SmartToolHub',

@@ -103,6 +103,10 @@ function AppContent() {
       if (pageParam) {
         setCurrentPage(pageParam);
       } else if (pathname) {
+        if (pathname === 'help' || pathname === 'support') {
+          setCurrentPage('guides');
+          return;
+        }
         const validPages: PageId[] = [
           'home', 'generator', 'compatibility', 'troubleshooting', 
           'library', 'workflow-detail', 'pricing', 'privacy', 'terms', 'contact',

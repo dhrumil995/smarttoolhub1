@@ -261,9 +261,15 @@
   transform: scale(0.97);
 }
 
+/* Navigation Bar Surface */
+.ios-glass-nav {
+  background: rgba(5, 10, 20, 0.88);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid var(--line);
+}
+
 /* Secondary Button: Glass with 1px border */
-.glass-pill,
-.glass-pill-vibrant,
 .btn-secondary-glass {
   display: inline-flex;
   align-items: center;
@@ -278,6 +284,25 @@
   font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 600;
   font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.glass-pill,
+.glass-pill-vibrant,
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 12px;
+  background: rgba(16, 28, 51, 0.65);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
   cursor: pointer;
   white-space: nowrap;
   transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
