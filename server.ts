@@ -1335,12 +1335,32 @@ app.get('/api/sitemap/inspect', (req: Request, res: Response) => {
 });
 
 
-// Global SEO, Performance & Security headers
+// Global SEO, Performance & Security headers (Strict-Transport-Security, CSP, Permissions-Policy, HSTS)
 app.use((_req: Request, res: Response, next: () => void) => {
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
   res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('X-XSS-Protection', '1; mode=block');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(self), microphone=(self), geolocation=()');
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self' https://*.run.app https://*.google.com https://seoscore.tools;"
+  );
+  res.setHeader('Last-Modified', new Date('2026-10-14T00:00:00Z').toUTCString());
   next();
+});
+
+// Serve RSS / Atom Discovery Feed
+app.get(['/feed.xml', '/rss.xml'], (_req: Request, res: Response) => {
+  const feedPath = path.join(process.cwd(), 'public', 'feed.xml');
+  res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  res.setHeader('Last-Modified', new Date('2026-10-14T00:00:00Z').toUTCString());
+  if (fs.existsSync(feedPath)) {
+    return res.sendFile(feedPath);
+  }
+  return res.status(404).send('Feed not found');
 });
 
 // Redirect legacy /favicon.ico, /favicon.svg, and /logo.png requests to the unified /logo.svg
@@ -1384,12 +1404,11 @@ async function setupServer() {
         try {
           let rawHtml = fs.readFileSync(indexPath, 'utf-8');
           rawHtml = await vite.transformIndexHtml(req.url, rawHtml);
-          const userAgent = (req.headers['user-agent'] as string) || '';
-          const isBot = /bot|googlebot|bingbot|crawler|spider|robot|crawling/i.test(userAgent);
-          const enrichedHtml = injectSeoIntoHtml(rawHtml, req.path, isBot);
+          const enrichedHtml = injectSeoIntoHtml(rawHtml, req.path, true);
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
           res.setHeader('X-Robots-Tag', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
           res.setHeader('Link', `<https://smarttoolhub.net${req.path}>; rel="canonical"`);
+          res.setHeader('Last-Modified', new Date('2026-10-14T00:00:00Z').toUTCString());
           return res.status(200).send(enrichedHtml);
         } catch (e) {
           next(e);
@@ -1429,9 +1448,9 @@ async function setupServer() {
       if (fs.existsSync(indexPath)) {
         try {
           const rawHtml = fs.readFileSync(indexPath, 'utf-8');
-          const userAgent = (req.headers['user-agent'] as string) || '';
-          const isBot = /bot|googlebot|bingbot|crawler|spider|robot|crawling/i.test(userAgent);
-          const enrichedHtml = injectSeoIntoHtml(rawHtml, req.path, isBot);
+          const enrichedHtml = injectSeoIntoHtml(rawHtml, req.path, true);
+          res.setHeader('Content-Type', 'text/html; charset=utf-8');
+          res.setHeader('Last-Modified', new Date('2026-10-14T00:00:00Z').toUTCString());
           return res.status(200).send(enrichedHtml);
         } catch (e) {
           return res.sendFile(indexPath);
