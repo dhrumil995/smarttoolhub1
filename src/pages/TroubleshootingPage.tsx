@@ -3,6 +3,7 @@ import { PageId, AIDiagnosticResult } from '../types';
 import { TROUBLESHOOTING_DATA } from '../data/troubleshooting';
 import { ScrollProgressBar } from '../components/ScrollProgressBar';
 import { usePro } from '../context/ProContext';
+import { InternalLinkingWidget } from '../components/InternalLinkingWidget';
 import { haptics } from '../utils/haptics';
 import { 
   Wrench, 
@@ -697,6 +698,14 @@ export const TroubleshootingPage: React.FC<TroubleshootingPageProps> = ({ onNavi
         </div>
       )}
 
+      {/* Contextual Link Equity Transfer */}
+      <div className="pt-8 border-t border-slate-900/10 dark:border-white/10 no-print">
+        <InternalLinkingWidget
+          currentPath="/troubleshooting"
+          onNavigate={onNavigate}
+          title="Related Continuity & System Repair Blueprints"
+        />
+      </div>
     </div>
   );
 };

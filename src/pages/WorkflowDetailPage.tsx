@@ -4,6 +4,7 @@ import { WORKFLOWS_DATA } from '../data/workflows';
 import { ScrollProgressBar } from '../components/ScrollProgressBar';
 import { WorkflowFAQSection } from '../components/WorkflowFAQSection';
 import { Breadcrumbs } from '../components/Breadcrumbs';
+import { InternalLinkingWidget } from '../components/InternalLinkingWidget';
 import { getGlassTheme } from '../utils/glassTheme';
 import { haptics } from '../utils/haptics';
 import { 
@@ -355,30 +356,12 @@ export const WorkflowDetailPage: React.FC<WorkflowDetailPageProps> = ({ workflow
         <div>Verified Reference • Doc Ref #{workflow.id}</div>
       </div>
 
-      {/* Related Workflows (Hidden in Print) */}
-      <div className="space-y-4 pt-4 no-print">
-        <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
-          Related Ecosystem Workflows
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {relatedWorkflows.map((rel) => (
-            <a
-              key={rel.id}
-              href={`/workflows/${rel.slug}`}
-              onClick={(e) => {
-                e.preventDefault();
-                onNavigate('workflow-detail', rel.id);
-              }}
-              className="glass-card p-4 rounded-xl border border-white/10 hover:border-blue-500/40 cursor-pointer space-y-2 group block text-left text-decoration-none"
-            >
-              <span className="text-[10px] text-blue-400 font-semibold uppercase">{rel.category}</span>
-              <h4 className="text-sm font-bold text-white group-hover:text-blue-300 transition-colors line-clamp-1">
-                {rel.title}
-              </h4>
-              <p className="text-xs text-[#888888] line-clamp-2">{rel.summary}</p>
-            </a>
-          ))}
-        </div>
+      {/* Contextual Internal Link Equity Distribution Widget (Hidden in Print) */}
+      <div className="no-print pt-6">
+        <InternalLinkingWidget
+          currentPath={`/workflows/${workflow.slug}`}
+          onNavigate={onNavigate}
+        />
       </div>
     </div>
   );

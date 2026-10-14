@@ -26,6 +26,7 @@ const GuidesPage = lazy(() => import('./pages/GuidesPage').then(m => ({ default:
 const CommandPalette = lazy(() => import('./components/CommandPalette').then(m => ({ default: m.CommandPalette })));
 const SitemapModal = lazy(() => import('./components/SitemapModal').then(m => ({ default: m.SitemapModal })));
 const UserSettingsModal = lazy(() => import('./components/UserSettingsModal').then(m => ({ default: m.UserSettingsModal })));
+const SEOLinkJuiceModal = lazy(() => import('./components/SEOLinkJuiceModal').then(m => ({ default: m.SEOLinkJuiceModal })));
 
 const prefetchSecondaryRoutesStaggered = () => {
   // Never prefetch on mobile screens or metered connections to preserve mobile CPU & battery
@@ -64,6 +65,7 @@ function AppContent() {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const [isSitemapOpen, setIsSitemapOpen] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+  const [isSEOMapOpen, setIsSEOMapOpen] = useState<boolean>(false);
   const [activeCategory, setActiveCategory] = useState<ToolCategoryFilter>('all');
 
   useEffect(() => {
@@ -342,10 +344,21 @@ function AppContent() {
         </Suspense>
       )}
 
+      {isSEOMapOpen && (
+        <Suspense fallback={null}>
+          <SEOLinkJuiceModal
+            isOpen={isSEOMapOpen}
+            onClose={() => setIsSEOMapOpen(false)}
+            onNavigate={handleNavigate}
+          />
+        </Suspense>
+      )}
+
       <Footer
         onNavigate={handleNavigate}
         onOpenSitemap={() => setIsSitemapOpen(true)}
         onOpenSettings={() => setIsSettingsOpen(true)}
+        onOpenSEOMap={() => setIsSEOMapOpen(true)}
       />
     </div>
   );

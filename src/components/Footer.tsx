@@ -7,9 +7,15 @@ interface FooterProps {
   onNavigate: (page: PageId, workflowId?: string) => void;
   onOpenSitemap?: () => void;
   onOpenSettings?: () => void;
+  onOpenSEOMap?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpenSettings }) => {
+export const Footer: React.FC<FooterProps> = ({ 
+  onNavigate, 
+  onOpenSitemap, 
+  onOpenSettings,
+  onOpenSEOMap 
+}) => {
   return (
     <footer
       role="contentinfo"
@@ -170,15 +176,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
             </ul>
           </div>
 
-          {/* Featured Blueprints */}
+          {/* Featured & High-Authority Blueprints */}
           <div>
             <h4 className="text-xs font-semibold text-slate-900 dark:text-white mb-4">
-              Popular Blueprints
+              Featured Blueprints
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
                 <a
-                  href="/workflows/continuity-camera-desk-view"
+                  href="/workflows/continuity-camera-desk-view-streaming"
                   onClick={(e) => {
                     e.preventDefault();
                     onNavigate('workflow-detail', 'wf-continuity-camera-desk-view');
@@ -190,7 +196,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
               </li>
               <li>
                 <a
-                  href="/workflows/universal-control-freelancer-desk"
+                  href="/workflows/seamless-dual-display-universal-control"
                   onClick={(e) => {
                     e.preventDefault();
                     onNavigate('workflow-detail', 'wf-universal-control-freelancer-desk');
@@ -202,7 +208,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
               </li>
               <li>
                 <a
-                  href="/workflows/iphone-mirroring-macos-sequoia"
+                  href="/workflows/iphone-mirroring-sequoia-remote-access"
                   onClick={(e) => {
                     e.preventDefault();
                     onNavigate('workflow-detail', 'wf-iphone-mirroring-macos-sequoia');
@@ -214,14 +220,26 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
               </li>
               <li>
                 <a
-                  href="/workflows/student-sidecar-handwritten-math"
+                  href="/workflows/run-local-llm-apple-silicon-unified-memory-ollama"
                   onClick={(e) => {
                     e.preventDefault();
-                    onNavigate('workflow-detail', 'wf-student-sidecar-handwritten-math');
+                    onNavigate('workflow-detail', 'wf-local-llama-ollama-apple-silicon');
                   }}
                   className="hover:text-slate-900 dark:hover:text-white transition-colors text-left cursor-pointer"
                 >
-                  Sidecar & Apple Pencil
+                  Local LLMs on Apple Silicon
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/workflows/iphone-fast-charging-optimization-battery-health"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('workflow-detail', 'wf-iphone-fast-charge-battery-health');
+                  }}
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors text-left cursor-pointer text-indigo-600 dark:text-indigo-400 font-medium"
+                >
+                  iPhone 16 Fast Charging Guide
                 </a>
               </li>
             </ul>
@@ -233,6 +251,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap, onOpe
               Editorial & Legal
             </h4>
             <ul className="space-y-2.5 text-xs">
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onOpenSEOMap?.()}
+                  className="hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1.5"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>SEO Link Juice Architecture</span>
+                </button>
+              </li>
               <li>
                 <button
                   type="button"

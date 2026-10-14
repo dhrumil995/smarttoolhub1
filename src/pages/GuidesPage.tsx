@@ -19,6 +19,7 @@ import {
   Share2
 } from 'lucide-react';
 import { haptics } from '../utils/haptics';
+import { InternalLinkingWidget } from '../components/InternalLinkingWidget';
 
 interface GuidesPageProps {
   onNavigate: (page: PageId, workflowId?: string) => void;
@@ -504,6 +505,15 @@ export const GuidesPage: React.FC<GuidesPageProps> = ({ onNavigate }) => {
                 <span>Launch Continuity Sync Doctor</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </a>
+            </div>
+
+            {/* Contextual Link Equity Transfer */}
+            <div className="pt-8 border-t border-slate-200/80 dark:border-white/10">
+              <InternalLinkingWidget
+                currentPath="/guides"
+                onNavigate={onNavigate}
+                title="Related Apple Silicon & System Engineering Blueprints"
+              />
             </div>
           </article>
         </div>

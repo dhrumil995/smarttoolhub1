@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { PageId } from '../types';
 import { COMPATIBILITY_FEATURES, APPLE_DEVICES_CATALOG, AppleDeviceCatalogItem } from '../data/compatibility';
+import { InternalLinkingWidget } from '../components/InternalLinkingWidget';
 import { 
   Cpu, 
   Check, 
@@ -365,6 +366,15 @@ export const CompatibilityPage: React.FC<CompatibilityPageProps> = ({ onNavigate
           );
         })
         )}
+      </div>
+
+      {/* Contextual Link Equity Transfer */}
+      <div className="pt-8 border-t border-slate-900/10 dark:border-white/10">
+        <InternalLinkingWidget
+          currentPath="/compatibility"
+          onNavigate={onNavigate}
+          title="Hardware-Optimized Automation Blueprints & Display Configurations"
+        />
       </div>
     </div>
   );

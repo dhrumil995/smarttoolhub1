@@ -169,5 +169,34 @@ describe('SmartToolHub - Unit Tests', () => {
       assert.ok(resolveBaseUrl().length > 0, 'Must resolve to a valid non-empty base URL');
     });
   });
+
+  describe('6. 50-Page Link Juice & Internal Linking Architecture Logic', () => {
+    test('internal linking plan maps exactly 50 canonical pages', async () => {
+      const { INTERNAL_LINKING_PLAN_50_PAGES, getLinkJuiceAuditMetrics } = await import('../src/data/internalLinking.js');
+      assert.equal(INTERNAL_LINKING_PLAN_50_PAGES.length, 50, 'Plan must map exactly 50 canonical pages');
+
+      const metrics = getLinkJuiceAuditMetrics();
+      assert.equal(metrics.totalPages, 50);
+      assert.ok(metrics.powerPages >= 9, 'Must have high-click authority power hubs');
+      assert.ok(metrics.growthTargetPages >= 20, 'Must have growth target pages receiving equity');
+      assert.ok(metrics.totalConnections >= 80, 'Must have at least 80 active internal linking connections');
+    });
+
+    test('every internal linking target path resolves to a valid route', async () => {
+      const { INTERNAL_LINKING_PLAN_50_PAGES } = await import('../src/data/internalLinking.js');
+      const validPaths = new Set(INTERNAL_LINKING_PLAN_50_PAGES.map((p) => p.path));
+
+      for (const page of INTERNAL_LINKING_PLAN_50_PAGES) {
+        assert.ok(page.outboundEquityTargets.length > 0, `Page ${page.path} must have outbound targets`);
+        for (const target of page.outboundEquityTargets) {
+          assert.ok(
+            validPaths.has(target.targetPath),
+            `Outbound target ${target.targetPath} from ${page.path} must exist in the 50 canonical pages`
+          );
+          assert.ok(target.anchorText.trim().length > 0, 'Anchor text must not be empty');
+        }
+      }
+    });
+  });
 });
 

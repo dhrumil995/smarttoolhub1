@@ -1,6 +1,7 @@
 import { WorkflowItem } from '../types';
+import { SUPPLEMENTARY_WORKFLOWS } from './supplementaryWorkflows';
 
-export const WORKFLOWS_DATA: WorkflowItem[] = [
+const BASE_WORKFLOWS: WorkflowItem[] = [
   {
     id: 'wf-continuity-camera-desk-view',
     slug: 'continuity-camera-desk-view-streaming',
@@ -701,3 +702,9 @@ export const WORKFLOWS_DATA: WorkflowItem[] = [
     featured: true
   }
 ];
+
+export const WORKFLOWS_DATA: WorkflowItem[] = [
+  ...BASE_WORKFLOWS,
+  ...SUPPLEMENTARY_WORKFLOWS
+];
+

@@ -18,6 +18,7 @@ import { HomeShortcutGenerator } from '../components/HomeShortcutGenerator';
 import { FreeAppleTools } from '../components/FreeAppleTools';
 import { SemanticShortcutsFAQ } from '../components/SemanticShortcutsFAQ';
 import { AuthoritativeReferences } from '../components/AuthoritativeReferences';
+import { InternalLinkingWidget } from '../components/InternalLinkingWidget';
 
 // Lazy load heavy workbench tabs only when requested by user
 const DiagnosticSimulator = lazy(() =>
@@ -1666,6 +1667,17 @@ export const HomePage: React.FC<HomePageProps> = ({
             );
           })}
         </div>
+      </section>
+
+      {/* =========================================================================
+          ECOSYSTEM LINK JUICE DISTRIBUTION & ARCHITECTURE
+          ========================================================================= */}
+      <section className="space-y-6 pt-4 border-t border-slate-900/10 dark:border-white/10">
+        <InternalLinkingWidget
+          currentPath="/"
+          onNavigate={onNavigate}
+          title="Explore High-Impact Automation Blueprints & Hardware Specifications"
+        />
       </section>
 
       {/* =========================================================================

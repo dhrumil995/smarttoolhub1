@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PageId } from '../types';
 import { WORKFLOWS_DATA } from '../data/workflows';
 import { Breadcrumbs } from '../components/Breadcrumbs';
+import { InternalLinkingWidget } from '../components/InternalLinkingWidget';
 import { getGlassTheme } from '../utils/glassTheme';
 import {
   Search,
@@ -310,6 +311,15 @@ export const LibraryPage: React.FC<LibraryPageProps> = ({ onNavigate }) => {
           </button>
         </div>
       )}
+
+      {/* Contextual Link Equity Transfer */}
+      <div className="pt-8 border-t border-slate-900/10 dark:border-white/10">
+        <InternalLinkingWidget
+          currentPath="/library"
+          onNavigate={onNavigate}
+          title="Recommended High-Impact Blueprints & Cross-Device Utilities"
+        />
+      </div>
     </div>
   );
 };

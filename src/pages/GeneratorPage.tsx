@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageId, GeneratorFormData, GeneratedWorkflowOutput, AIAutomationScriptResult } from '../types';
 import { usePro } from '../context/ProContext';
+import { InternalLinkingWidget } from '../components/InternalLinkingWidget';
 import { 
   Wand2, 
   Sparkles, 
@@ -785,6 +786,15 @@ export const GeneratorPage: React.FC<GeneratorPageProps> = ({ onNavigate }) => {
 
         </div>
       )}
+
+      {/* Contextual Link Equity Transfer */}
+      <div className="pt-8 border-t border-slate-900/10 dark:border-white/10">
+        <InternalLinkingWidget
+          currentPath="/generator"
+          onNavigate={onNavigate}
+          title="Pre-Engineered Shortcuts & Automation Blueprints"
+        />
+      </div>
     </div>
   );
 };
