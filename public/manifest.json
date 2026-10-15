@@ -1,0 +1,17 @@
+{
+  "name": "SmartToolHub",
+  "short_name": "SmartToolHub",
+  "description": "Free AI tools that just work. No sign-up. Results in seconds.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050a14",
+  "theme_color": "#050a14",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

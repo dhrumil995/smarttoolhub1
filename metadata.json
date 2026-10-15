@@ -1,0 +1,8 @@
+{
+  "name": "SmartToolHub - Free Everyday AI Tools",
+  "description": "Free AI tools that just work. No sign-up. Results in seconds. Apple Shortcuts generator, prompt improver, formula helper, and everyday utilities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
