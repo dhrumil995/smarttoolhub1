@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Sigma, Copy, Check, FileSpreadsheet, Lightbulb } from 'lucide-react';
 import { ToolPageTemplate } from '../../components/tools/ToolPageTemplate.tsx';
 import { LAUNCH_TOOLS } from '../../data/tools.ts';
 import { POPULAR_GUIDES } from '../../data/guides.ts';
@@ -8,82 +9,221 @@ interface FormulaHelperPageProps {
 }
 
 export const FormulaHelperPage: React.FC<FormulaHelperPageProps> = ({ navigate }) => {
-  const tool = LAUNCH_TOOLS.find((t) => t.slug === 'formula-helper') || LAUNCH_TOOLS[6];
-  const relatedTools = LAUNCH_TOOLS.filter((t) => t.slug === 'quick-calculators' || t.slug === 'apple-shortcuts-generator');
+  const [app, setApp] = useState<'Excel' | 'Sheets'>('Excel');
+  const [copiedFormulaOnly, setCopiedFormulaOnly] = useState(false);
+
+  const tool = LAUNCH_TOOLS.find((t) => t.slug === 'formula-helper') || LAUNCH_TOOLS[7];
+  const relatedTools = LAUNCH_TOOLS.filter((t) => t.slug === 'ai-prompt-improver' || t.slug === 'meeting-notes-action-items');
   const relatedGuide = POPULAR_GUIDES.find((g) => g.slug === 'spreadsheet-formulas-plain-english') || POPULAR_GUIDES[2];
+
+  const appOptions: Array<{ id: 'Excel' | 'Sheets'; label: string; desc: string }> = [
+    { id: 'Excel', label: 'Microsoft Excel', desc: 'Excel 365, 2021, and modern desktop' },
+    { id: 'Sheets', label: 'Google Sheets', desc: 'Browser-based Google Drive spreadsheets' },
+  ];
+
+  const exampleChips = [
+    'Sum values in column D only if column E equals "Completed" and column B date is in 2026.',
+    'Lookup customer email in column C by matching Customer ID in column A with cell F2 using XLOOKUP.',
+    'Calculate percentage change between baseline cost in column B and new cost in column C, showing negative values in brackets.',
+  ];
 
   return (
     <ToolPageTemplate
       tool={tool}
-      heading="Excel &amp; Sheets Formula Helper"
-      subheading="Describe what you want to calculate, lookup, sum, or extract in plain English. Get the exact formula with syntax breakdown, cell references, and error tips."
+      heading="Excel & Google Sheets Formula Helper"
+      subheading="Describe what you want to calculate, lookup, or extract in plain English. Get the exact spreadsheet formula with a clear breakdown and a practical example."
       inputLabel="Describe your spreadsheet calculation"
       inputPlaceholder="e.g. Find employee email in column C by matching their Employee ID in column A with cell F2..."
-      examplePrompt="Sum the sales values in column D only if the status in column E is 'Completed' and the date in column B is in year 2026."
+      examplePrompt={exampleChips[0]}
+      exampleChips={exampleChips}
       generateButtonText="Generate Spreadsheet Formula"
       lastUpdated="October 2026"
       navigate={navigate}
+      apiEndpoint="/api/formula-helper"
+      requestPayload={(task) => ({
+        task,
+        app,
+      })}
+      extraControls={
+        <div className="space-y-4 pt-1">
+          {/* App Selector */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0]">
+              Spreadsheet Application
+            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {appOptions.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setApp(item.id)}
+                  className={`p-3 rounded-xl border text-left transition-colors focus-laser ${
+                    app === item.id
+                      ? 'bg-[#101c33] border-[#39ff88] shadow-[0_0_12px_rgba(57,255,136,0.2)]'
+                      : 'bg-[#0a1424] border-[rgba(143,163,192,0.16)] hover:border-[rgba(143,163,192,0.3)]'
+                  }`}
+                >
+                  <div className={`text-xs font-bold ${app === item.id ? 'text-[#39ff88]' : 'text-[#f2f7ff]'}`}>
+                    {item.label}
+                  </div>
+                  <div className="text-[11px] text-[#8fa3c0] mt-0.5">
+                    {item.desc}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      }
+      customResultRenderer={({ result, rawData, onCopy, copied }) => {
+        const formula: string = rawData?.formula || '';
+        const explanation: string = rawData?.explanation || '';
+        const example: string = rawData?.example || '';
+
+        const copyFormulaOnly = async () => {
+          try {
+            await navigator.clipboard.writeText(formula);
+            setCopiedFormulaOnly(true);
+            setTimeout(() => setCopiedFormulaOnly(false), 2000);
+          } catch {
+            // Handled
+          }
+        };
+
+        return (
+          <div className="space-y-6">
+            {/* Top Toolbar */}
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+                <FileSpreadsheet className="w-3.5 h-3.5" />
+                <span>Generated Formula for {app}</span>
+              </span>
+
+              <div className="flex flex-wrap items-center gap-2">
+                {formula && (
+                  <button
+                    type="button"
+                    onClick={copyFormulaOnly}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.25)] text-xs font-semibold text-[#39ff88] hover:border-[#39ff88] transition-colors focus-laser"
+                  >
+                    {copiedFormulaOnly ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copiedFormulaOnly ? 'Copied Formula' : 'Copy Formula'}</span>
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => onCopy(result)}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copied ? 'Copied All' : 'Copy All'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Formula Code Box */}
+            <div className="space-y-2">
+              <label className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold">
+                Ready-to-Paste Formula
+              </label>
+              <div className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(57,255,136,0.3)] flex items-center justify-between gap-3 overflow-x-auto">
+                <code className="text-sm font-mono text-[#39ff88] font-semibold select-all">
+                  {formula || result.split('\n')[0] || result}
+                </code>
+              </div>
+            </div>
+
+            {/* Plain Explanation */}
+            {explanation && (
+              <div className="space-y-2 pt-2 border-t border-[rgba(143,163,192,0.12)]">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold flex items-center gap-1.5">
+                  <Lightbulb className="w-3.5 h-3.5 text-[#5aa9ff]" />
+                  <span>Plain English Explanation</span>
+                </span>
+                <p className="text-sm text-[#f2f7ff] leading-relaxed bg-[#0a1424] p-4 rounded-2xl border border-[rgba(143,163,192,0.14)]">
+                  {explanation}
+                </p>
+              </div>
+            )}
+
+            {/* Example Scenario */}
+            {example && (
+              <div className="space-y-2 pt-2 border-t border-[rgba(143,163,192,0.12)]">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold flex items-center gap-1.5">
+                  <Sigma className="w-3.5 h-3.5 text-[#39ff88]" aria-hidden="true" />
+                  <span>Example Scenario</span>
+                </span>
+                <div className="text-xs font-mono text-[#8fa3c0] bg-[#0a1424] p-4 rounded-2xl border border-[rgba(143,163,192,0.14)] leading-relaxed">
+                  {example}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      }}
       whatItDoesContent={
-        <>
+        <div className="space-y-3">
           <p>
-            The Excel and Google Sheets Formula Helper translates natural language questions into working spreadsheet functions.
+            The Excel and Google Sheets Formula Helper translates everyday plain-English questions into robust spreadsheet formulas. It eliminates the frustration of searching through dozens of obscure syntax forums or getting stuck with #N/A and #VALUE errors.
           </p>
           <p>
-            Whether you need modern functions like XLOOKUP, FILTER, and UNIQUE, or classic formulas like INDEX/MATCH, SUMIFS, and REGEXEXTRACT, this tool provides the ready-to-paste formula along with an explanation of every argument so you understand how it works.
+            Whether you need modern tools like XLOOKUP, FILTER, and UNIQUE, or multi-condition calculations like SUMIFS and INDEX/MATCH, this tool writes the formula for your exact columns and explains each argument in simple terms. A practical dummy example shows you how your data looks before you paste it into your live sheet.
           </p>
-        </>
+        </div>
       }
       howToUseSteps={[
         {
-          step: 'Describe your data layout',
-          text: 'Mention the columns and rows holding your data (e.g. "Column A has product names, Column B has prices").',
+          step: 'Describe your columns and calculation',
+          text: 'Mention which columns hold your values and what you want to calculate (e.g. "Sum sales in column D if status in column E is Completed").',
         },
         {
-          step: 'Specify your goal',
-          text: 'State what you want to calculate (e.g. "Sum prices if category is Electronics").',
+          step: 'Select your spreadsheet app',
+          text: 'Choose Microsoft Excel or Google Sheets to ensure function compatibility and proper array syntax.',
         },
         {
           step: 'Copy and paste into your sheet',
-          text: 'Copy the formula, paste it into cell F2 (or your target cell), and press Enter.',
+          text: 'Tap Copy Formula, click your destination cell in your spreadsheet, and hit Enter.',
         },
       ]}
       workedExample={{
         title: 'Example: Two-Condition Sum with Date and Status',
-        scenario: 'Sum column D where column E equals "Completed" and column B year is 2026.',
-        output: `### Formula (Google Sheets & Excel):
+        scenario: 'Sum revenue in column D where status in column E is "Completed" and the transaction date in column B is in year 2026.',
+        output: `### Formula (Excel & Google Sheets):
 =SUMIFS(D:D, E:E, "Completed", B:B, ">=2026-01-01", B:B, "<=2026-12-31")
 
-### How It Works:
-1. **D:D (Sum Range):** The numbers you want to add up (sales/revenue).
-2. **E:E, "Completed" (Condition 1):** Only include rows where column E matches "Completed" exactly.
-3. **B:B, ">=2026-01-01" (Condition 2):** Only include rows where date is on or after January 1, 2026.
-4. **B:B, "<=2026-12-31" (Condition 3):** Only include rows where date is on or before December 31, 2026.
+### Plain Explanation:
+1. D:D (Sum Range): The numbers being added together (total revenue).
+2. E:E, "Completed" (Condition 1): Only rows where the status in column E exactly matches "Completed".
+3. B:B, ">=2026-01-01" (Condition 2): Only rows where the date is on or after January 1, 2026.
+4. B:B, "<=2026-12-31" (Condition 3): Only rows where the date is on or before December 31, 2026.
 
-### Pro-Tip:
-If you are using Google Sheets and your dates are stored as text, wrap the date condition in DATE(2026,1,1) for 100% reliable evaluation.`,
+### Example Scenario:
+Row 2 has $150 (Col D), "Completed" (Col E), and 2026-03-15 (Col B). It is included.
+Row 3 has $200 (Col D), "Pending" (Col E), and 2026-03-15 (Col B). It is excluded because status is not Completed.`,
       }}
       tips={[
-        'Mention Excel vs Google Sheets: If you use Google Sheets specifically, mention it to unlock Sheets-native functions like ARRAYFORMULA and QUERY.',
-        'Always specify column letters: Stating "Column A" and "Column B" gives you exact formulas without needing to replace dummy variables.',
-        'Watch for date formats: Make sure your dates are formatted as Date types in your spreadsheet so greater-than / less-than comparisons work.',
-        'Use commas or semicolons: If your country uses comma for decimals, replace formula commas with semicolons.',
+        'Prefer XLOOKUP over VLOOKUP: XLOOKUP does not break when you add new columns, and it searches left without needing helper columns.',
+        'Wrap lookups in IFERROR: Wrapping your formula in =IFERROR(..., "Not Found") prevents ugly error flags from ruining your dashboard.',
+        'Use commas or semicolons based on region: In the US and UK, formulas use commas between arguments; in many European countries, use semicolons instead.',
+        'Lock ranges with dollar signs: If you plan to drag the formula down a column, use absolute references like $A$2:$A$100 so the lookup table stays fixed.',
       ]}
       faq={[
         {
           question: 'Does this formula work in both Google Sheets and Microsoft Excel?',
-          answer: 'Yes. Unless specified otherwise, formulas are designed for universal compatibility across Google Sheets, Excel 365, and Excel 2021+.',
+          answer: 'Yes. Unless specified otherwise, formulas are written using universal modern spreadsheet syntax compatible with Excel 365, Excel 2021+, and Google Sheets.',
         },
         {
-          question: 'Can it help with nested IF statements or VLOOKUP?',
-          answer: 'Yes. It will often recommend modern alternatives like IFS or XLOOKUP which are much easier to read and less prone to breaking.',
+          question: 'Why should I use XLOOKUP instead of VLOOKUP?',
+          answer: 'XLOOKUP is faster, searches in any direction (including looking to the left of the lookup key), and does not require counting column numbers, making your spreadsheets far less prone to breaking.',
         },
         {
-          question: 'What if I get a #N/A or #VALUE error?',
-          answer: 'The explanation explains how to wrap the formula in =IFERROR(..., "Not found") to handle missing records gracefully.',
+          question: 'What should I do if my formula returns a #VALUE! error?',
+          answer: 'Check that your numbers are not stored as text, and verify that all range sizes match (for example, using D2:D100 with E2:E100 rather than different lengths).',
         },
         {
-          question: 'Can it write Google Sheets Apps Script or Excel VBA?',
-          answer: 'Yes, if you ask for automation scripts or macros, it will provide the script with instructions on where to paste it.',
+          question: 'Is my spreadsheet data sent to your server?',
+          answer: 'No spreadsheet files or actual personal row data are ever uploaded. You only enter the description of the columns and the calculation you want.',
         },
       ]}
       relatedTools={relatedTools}

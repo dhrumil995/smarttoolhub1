@@ -15,6 +15,16 @@
   --color-error: #ff5c7a;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  /* Phase 4: Consistent Radius Scale (12, 20, 28) */
+  --radius-xl: 12px;
+  --radius-2xl: 20px;
+  --radius-3xl: 28px;
+
+  /* Phase 4: Consistent Shadow Scale (sm, md, lg) */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.65);
 }
 
 :root {
@@ -30,6 +40,14 @@
   --info: #5aa9ff;
   --warn: #ffb840;
   --error: #ff5c7a;
+
+  /* Phase 4 Design Tokens */
+  --radius-12: 12px;
+  --radius-20: 20px;
+  --radius-28: 28px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.65);
 }
 
 html {
@@ -84,7 +102,7 @@ body {
   line-height: 1.6;
 }
 
-/* Background grid with 4% faint opacity and soft top glow */
+/* Subtle background grid (4% faint opacity, no extra noisy gradients) */
 .bg-ambient-grid {
   background-image: 
     linear-gradient(to right, rgba(143, 163, 192, 0.04) 1px, transparent 1px),
@@ -96,30 +114,35 @@ body {
   background: radial-gradient(circle 600px at 50% -120px, rgba(57, 255, 136, 0.12), transparent 70%);
 }
 
-/* 3D Glassmorphic Surface */
+/* 3D Glassmorphic Surface: 1px var(--line) border, consistent shadow-lg */
 .glass-surface {
-  background: rgba(16, 28, 51, 0.72);
+  background: rgba(16, 28, 51, 0.75);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid var(--line);
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(242, 247, 255, 0.08);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(242, 247, 255, 0.08);
 }
 
-/* Desktop Hover Lift */
+/* Phase 4: Hover & Press States:
+   - 200ms transitions
+   - translateY(-2px) lift on cards (hover devices only)
+   - scale(0.97) on press (all devices)
+   - visible focus ring in laser green with offset 3px
+*/
 @media (hover: hover) and (pointer: fine) {
   .interactive-hover {
-    transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 220ms ease, border-color 220ms ease;
+    transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease, border-color 200ms ease;
   }
   .interactive-hover:hover {
-    transform: translateY(-4px);
-    border-color: rgba(57, 255, 136, 0.3);
-    box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.7), 0 0 24px rgba(57, 255, 136, 0.08), inset 0 1px 0 rgba(242, 247, 255, 0.15);
+    transform: translateY(-2px);
+    border-color: rgba(57, 255, 136, 0.35);
+    box-shadow: var(--shadow-md), 0 0 20px rgba(57, 255, 136, 0.08);
   }
 }
 
 /* Touch active tactile response */
 .touch-press {
-  transition: transform 120ms ease;
+  transition: transform 200ms ease;
 }
 .touch-press:active {
   transform: scale(0.97);
@@ -138,7 +161,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 180ms ease;
+  transition: all 200ms ease;
   white-space: nowrap;
 }
 
@@ -172,7 +195,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 180ms ease;
+  transition: all 200ms ease;
   white-space: nowrap;
 }
 
@@ -187,16 +210,18 @@ body {
 }
 
 .btn-glass:focus-visible {
-  outline: 2px solid var(--mute);
+  outline: 2px solid var(--laser);
   outline-offset: 3px;
 }
 
-/* Accessibility & Safe Areas */
-.focus-laser:focus-visible {
-  outline: 2px solid var(--laser);
-  outline-offset: 2px;
+/* Universal Accessibility Focus Ring: laser green with offset 3px */
+.focus-laser:focus-visible,
+:focus-visible {
+  outline: 2px solid var(--laser) !important;
+  outline-offset: 3px !important;
 }
 
+/* Safe Areas */
 .safe-bottom {
   padding-bottom: env(safe-area-inset-bottom, 16px);
 }
@@ -205,12 +230,51 @@ body {
   padding-top: env(safe-area-inset-top, 0px);
 }
 
-/* Motion Accessibility */
+/* Phase 4 Page Transitions: 150ms quick fade */
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.page-transition {
+  animation: pageFadeIn 150ms ease-out forwards;
+}
+
+/* Phase 2 Feedback Keyframes */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes indeterminate {
+  0% {
+    left: -40%;
+    width: 40%;
+  }
+  50% {
+    left: 25%;
+    width: 60%;
+  }
+  100% {
+    left: 100%;
+    width: 40%;
+  }
+}
+
+/* Motion Accessibility: disable animations and page transitions under prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .page-transition {
+    animation: none !important;
   }
 }

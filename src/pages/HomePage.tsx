@@ -1,5 +1,6 @@
 import React from 'react';
 import { HeroSection } from '../components/home/HeroSection.tsx';
+import { TrustRow } from '../components/ui/TrustRow.tsx';
 import { BentoGrid } from '../components/home/BentoGrid.tsx';
 import { HowItWorks } from '../components/home/HowItWorks.tsx';
 import { PopularTools } from '../components/home/PopularTools.tsx';
@@ -18,22 +19,25 @@ export const HomePage: React.FC<HomePageProps> = ({ navigate, onOpenSearch }) =>
       {/* 1. Hero with live mini-tool demo */}
       <HeroSection onExploreClick={onOpenSearch} />
 
-      {/* 2. Tool Bento Grid (12-column with flagship Apple Shortcuts) */}
+      {/* 2. Honest Trust Row (Zero fake metrics) */}
+      <TrustRow />
+
+      {/* 3. Tool Bento Grid (12-column with flagship Apple Shortcuts) */}
       <BentoGrid navigate={navigate} />
 
-      {/* 3. "How it works" in 3 steps */}
+      {/* 4. "How it works" in 3 steps */}
       <HowItWorks />
 
-      {/* 4. Popular Tools */}
+      {/* 5. Popular Tools */}
       <PopularTools navigate={navigate} />
 
-      {/* 5. Latest Guides */}
+      {/* 6. Latest Guides */}
       <LatestGuides navigate={navigate} />
 
-      {/* 6. FAQ (6 real questions) */}
+      {/* 7. FAQ (6 real questions with rotating plus icon) */}
       <FaqSection />
 
-      {/* 7. Closing Call-to-Action */}
+      {/* 8. Closing Call-to-Action */}
       <ClosingCta navigate={navigate} />
     </div>
   );

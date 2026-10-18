@@ -7,6 +7,9 @@ import { SearchModal } from './components/layout/SearchModal.tsx';
 import { Footer } from './components/layout/Footer.tsx';
 import { ScrollProgress } from './components/layout/ScrollProgress.tsx';
 import { MetaManager } from './components/seo/MetaManager.tsx';
+import { OfflineIndicator } from './components/layout/OfflineIndicator.tsx';
+import { ToastProvider } from './components/ui/Toast.tsx';
+import { ScrollToTop } from './components/ui/ScrollToTop.tsx';
 
 // Eager load HomePage for instantaneous First Contentful Paint
 import { HomePage } from './pages/HomePage.tsx';
@@ -31,8 +34,14 @@ const PromptImproverPage = lazy(() => import('./pages/tools/PromptImproverPage.t
 const EmailWriterPage = lazy(() => import('./pages/tools/EmailWriterPage.tsx').then(m => ({ default: m.EmailWriterPage })));
 const SummarizerPage = lazy(() => import('./pages/tools/SummarizerPage.tsx').then(m => ({ default: m.SummarizerPage })));
 const CaptionHashtagPage = lazy(() => import('./pages/tools/CaptionHashtagPage.tsx').then(m => ({ default: m.CaptionHashtagPage })));
+const BioGeneratorPage = lazy(() => import('./pages/tools/BioGeneratorPage.tsx').then(m => ({ default: m.BioGeneratorPage })));
+const TitleHeadlinePage = lazy(() => import('./pages/tools/TitleHeadlinePage.tsx').then(m => ({ default: m.TitleHeadlinePage })));
 const RewriteTonePage = lazy(() => import('./pages/tools/RewriteTonePage.tsx').then(m => ({ default: m.RewriteTonePage })));
 const FormulaHelperPage = lazy(() => import('./pages/tools/FormulaHelperPage.tsx').then(m => ({ default: m.FormulaHelperPage })));
+const MeetingNotesPage = lazy(() => import('./pages/tools/MeetingNotesPage.tsx').then(m => ({ default: m.MeetingNotesPage })));
+const RetinaCalculatorPage = lazy(() => import('./pages/tools/RetinaCalculatorPage.tsx').then(m => ({ default: m.RetinaCalculatorPage })));
+const IPhoneChargePage = lazy(() => import('./pages/tools/IPhoneChargePage.tsx').then(m => ({ default: m.IPhoneChargePage })));
+const FileTransferPage = lazy(() => import('./pages/tools/FileTransferPage.tsx').then(m => ({ default: m.FileTransferPage })));
 const QuickCalculatorsPage = lazy(() => import('./pages/tools/QuickCalculatorsPage.tsx').then(m => ({ default: m.QuickCalculatorsPage })));
 
 // Lightweight zero-layout-shift loading fallback
@@ -97,11 +106,29 @@ export default function App() {
           if (currentPath === '/tools/caption-hashtag-generator') {
             return <CaptionHashtagPage navigate={navigate} />;
           }
+          if (currentPath === '/tools/social-bio-generator') {
+            return <BioGeneratorPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/title-headline-generator') {
+            return <TitleHeadlinePage navigate={navigate} />;
+          }
           if (currentPath === '/tools/rewrite-tone-changer') {
             return <RewriteTonePage navigate={navigate} />;
           }
           if (currentPath === '/tools/formula-helper') {
             return <FormulaHelperPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/meeting-notes-action-items') {
+            return <MeetingNotesPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/retina-image-size-calculator') {
+            return <RetinaCalculatorPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/iphone-charging-time-calculator') {
+            return <IPhoneChargePage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/file-transfer-time-calculator') {
+            return <FileTransferPage navigate={navigate} />;
           }
           if (currentPath === '/tools/quick-calculators') {
             return <QuickCalculatorsPage navigate={navigate} />;
@@ -146,7 +173,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-[100dvh] flex flex-col bg-[#050a14] text-[#f2f7ff] bg-ambient-grid relative selection:bg-[#39ff88] selection:text-[#050a14] overflow-x-hidden">
+    <ToastProvider>
+      <div className="min-h-[100dvh] flex flex-col bg-[#050a14] text-[#f2f7ff] bg-ambient-grid relative selection:bg-[#39ff88] selection:text-[#050a14] overflow-x-hidden">
       {/* Dynamic SEO Meta & Schema.org JSON-LD Manager */}
       <MetaManager currentPath={currentPath} />
 
@@ -173,11 +201,16 @@ export default function App() {
       />
 
       {/* Main Content Area */}
-      <main id="main-content" className="flex-1 relative z-10">
+      <main id="main-content" className="flex-1 relative z-10 pb-24 md:pb-12">
         <div className="max-w-[1200px] mx-auto px-5">
-          {renderContent()}
+          <div key={currentPath} className="page-transition">
+            {renderContent()}
+          </div>
         </div>
       </main>
+
+      {/* Offline Status Connectivity Banner */}
+      <OfflineIndicator />
 
       {/* Semantic Footer with Independent Disclaimer */}
       <Footer navigate={navigate} />
@@ -203,6 +236,10 @@ export default function App() {
         onClose={() => setIsSearchOpen(false)}
         navigate={navigate}
       />
+
+      {/* Floating Scroll to Top Button */}
+      <ScrollToTop />
     </div>
+    </ToastProvider>
   );
 }

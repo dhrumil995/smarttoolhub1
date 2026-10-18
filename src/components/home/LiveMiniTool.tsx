@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Sparkles, Copy, Check, Share2, AlertCircle } from 'lucide-react';
+import { shareWithFallback } from '../../utils/share.ts';
 
 export const LiveMiniTool: React.FC = () => {
   const [input, setInput] = useState('');
@@ -7,8 +8,14 @@ export const LiveMiniTool: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
 
   const samplePrompt = 'write email to client saying deliverable delayed by 2 days';
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2500);
+  };
 
   const handleExample = () => {
     setInput(samplePrompt);
@@ -41,33 +48,45 @@ export const LiveMiniTool: React.FC = () => {
     try {
       await navigator.clipboard.writeText(result);
       setCopied(true);
+      showToast('Copied to clipboard!');
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
+      showToast('Please select text manually');
     }
   };
 
   const handleShare = async () => {
     if (!result) return;
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'SmartToolHub Result',
-          text: result,
-          url: window.location.href,
-        });
+    const res = await shareWithFallback({
+      title: 'SmartToolHub Email Result',
+      text: result,
+      url: typeof window !== 'undefined' ? window.location.href : '',
+    });
+
+    if (res.success) {
+      if (res.mode === 'native') {
         setShared(true);
+        showToast('Shared successfully!');
         setTimeout(() => setShared(false), 2000);
-      } catch {
-        // User cancelled share
+      } else {
+        setCopied(true);
+        showToast('Copied to clipboard! (Share sheet not supported)');
+        setTimeout(() => setCopied(false), 2000);
       }
-    } else {
-      handleCopy();
+    } else if (res.message !== 'Share dismissed') {
+      showToast(res.message);
     }
   };
 
   return (
     <div className="w-full glass-surface rounded-3xl p-5 sm:p-6 border border-[rgba(143,163,192,0.18)] shadow-2xl relative overflow-hidden">
+      {toast && (
+        <div className="absolute top-3 right-3 z-20 px-3 py-1.5 rounded-xl bg-[#0a1424] border border-[#39ff88] text-[11px] font-semibold text-[#39ff88] shadow-lg flex items-center gap-1.5 animate-fade-in">
+          <Check className="w-3.5 h-3.5" />
+          <span>{toast}</span>
+        </div>
+      )}
+
       {/* Mini Tool Header */}
       <div className="flex items-center justify-between pb-4 border-b border-[rgba(143,163,192,0.12)]">
         <div className="flex items-center gap-2.5">

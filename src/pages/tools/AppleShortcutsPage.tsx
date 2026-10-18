@@ -1,7 +1,9 @@
 import React from 'react';
+import { Download } from 'lucide-react';
 import { ToolPageTemplate } from '../../components/tools/ToolPageTemplate.tsx';
 import { LAUNCH_TOOLS } from '../../data/tools.ts';
 import { POPULAR_GUIDES } from '../../data/guides.ts';
+import { downloadShortcutFile } from '../../utils/shortcutGenerator.ts';
 
 interface AppleShortcutsPageProps {
   navigate: (path: string) => void;
@@ -16,20 +18,32 @@ export const AppleShortcutsPage: React.FC<AppleShortcutsPageProps> = ({ navigate
     <ToolPageTemplate
       tool={tool}
       heading="Apple Shortcuts Generator"
-      subheading="Describe any automation you want in plain words. Get exact, numbered step-by-step instructions to configure it directly inside your iPhone or iPad Shortcuts app."
+      subheading="Describe any automation you want in plain words. Get exact, numbered step-by-step instructions and download a ready-to-import .shortcut file directly for your iPhone or iPad."
       inputLabel="Describe your automation idea"
       inputPlaceholder="e.g. Send my partner a text with my current location and driving ETA whenever I leave work..."
       examplePrompt="When I connect my phone to CarPlay, start playing my Favorites playlist on Apple Music and ask for directions home."
       generateButtonText="Generate Apple Shortcut Steps"
       lastUpdated="October 2026"
       navigate={navigate}
+      extraResultActions={(result, input) => (
+        <button
+          type="button"
+          onClick={() => downloadShortcutFile(result, input)}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#39ff88]/15 border border-[#39ff88]/40 text-xs font-semibold text-[#39ff88] hover:bg-[#39ff88]/25 transition-colors focus-laser"
+          title="Download ready-to-import iOS .shortcut file"
+        >
+          <Download className="w-3.5 h-3.5" />
+          <span className="hidden sm:inline">Download .shortcut</span>
+          <span className="sm:hidden">.shortcut</span>
+        </button>
+      )}
       whatItDoesContent={
         <>
           <p>
             The Apple Shortcuts Generator turns your everyday phone routine ideas into clear, numbered recipes that you can build inside the native Apple Shortcuts app on iOS 16, 17, and 18.
           </p>
           <p>
-            Instead of searching through hundreds of confusing nested actions, you simply describe what you want your phone to do — such as batch-resizing photos, calculating commute times, muting notifications at night, or logging water intake to Apple Health. The generator analyzes your request and maps it to the exact actions available in iOS.
+            Instead of searching through hundreds of confusing nested actions, you simply describe what you want your phone to do — such as batch-resizing photos, calculating commute times, muting notifications at night, or logging water intake to Apple Health. The generator analyzes your request, maps it to native iOS actions, and provides a 1-click downloadable <code>.shortcut</code> file.
           </p>
         </>
       }
@@ -39,12 +53,12 @@ export const AppleShortcutsPage: React.FC<AppleShortcutsPageProps> = ({ navigate
           text: 'Type what you want to happen in simple language. Mention any apps you want to connect, like Messages, Maps, Calendar, or Spotify.',
         },
         {
-          step: 'Get the exact actions',
-          text: 'Tap the generate button to receive a numbered step-by-step recipe with action names and settings.',
+          step: 'Get steps & .shortcut file',
+          text: 'Tap generate to receive numbered instructions and download the ready .shortcut file directly to your device.',
         },
         {
-          step: 'Build it in iOS',
-          text: 'Open the Shortcuts app on your iPhone or iPad, tap the plus sign (+), and add each action in order. Test it with one tap.',
+          step: 'Import or build in iOS',
+          text: 'Tap the downloaded file or open the Shortcuts app to import the automation in seconds with zero manual typing.',
         },
       ]}
       workedExample={{
@@ -67,15 +81,19 @@ export const AppleShortcutsPage: React.FC<AppleShortcutsPageProps> = ({ navigate
 - Add to your Lock Screen widget or trigger automatically with an iOS Sleep Automation.`,
       }}
       tips={[
+        'Use the "Download .shortcut" button: Tap to save a native file you can import directly into iOS Shortcuts.',
         'Name your apps clearly: If you want to use Spotify instead of Apple Music, mention "Spotify" in your description.',
         'Include your trigger: Mention whether you want to run it by tapping a button, using Siri, or automatically (like when arriving at a location).',
         'Keep multi-step automations simple: Start with 3 to 5 core actions first, test them, and then add extras like sound alerts.',
-        'Use the built-in search in Shortcuts: The action names in your result match the exact search terms in Apple\'s action library.',
       ]}
       faq={[
         {
+          question: 'What is the downloaded .shortcut file?',
+          answer: 'The .shortcut file is Apple\'s native property list format. When opened on an iPhone, iPad, or Mac, the Shortcuts app immediately asks to add the shortcut to your library.',
+        },
+        {
           question: 'Do I need a Mac or a computer to use this?',
-          answer: 'No. Everything runs directly on your iPhone or iPad. The generated steps are designed for the native iOS Shortcuts app that is already installed on your device.',
+          answer: 'No. Everything runs directly on your iPhone or iPad. The generated steps and downloadable .shortcut file are designed for the native iOS Shortcuts app.',
         },
         {
           question: 'Can this shortcut run automatically without me tapping it?',
@@ -84,10 +102,6 @@ export const AppleShortcutsPage: React.FC<AppleShortcutsPageProps> = ({ navigate
         {
           question: 'Are there any security risks with these shortcuts?',
           answer: 'Shortcuts created through the Apple Shortcuts app run within Apple\'s secure sandbox. The app asks for your explicit permission the first time a shortcut accesses your Location, Contacts, or Photos.',
-        },
-        {
-          question: 'What versions of iOS are supported?',
-          answer: 'The action recipes provided work on iOS 15, iOS 16, iOS 17, iOS 18, and iPadOS. If an action name differs slightly between iOS versions, the app suggests the closest match.',
         },
       ]}
       relatedTools={relatedTools}

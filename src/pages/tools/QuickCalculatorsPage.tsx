@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ToolPageTemplate } from '../../components/tools/ToolPageTemplate.tsx';
 import { LAUNCH_TOOLS } from '../../data/tools.ts';
 import { POPULAR_GUIDES } from '../../data/guides.ts';
-import { Calculator, Zap, Download, Image as ImageIcon, BatteryCharging } from 'lucide-react';
+import { ScanLine, ArrowLeftRight, BatteryCharging } from 'lucide-react';
 
 interface QuickCalculatorsPageProps {
   navigate: (path: string) => void;
@@ -60,7 +60,7 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
               : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
           }`}
         >
-          <ImageIcon className="w-3.5 h-3.5" />
+          <ScanLine className="w-3.5 h-3.5" aria-hidden="true" />
           <span>Retina Image Sizes</span>
         </button>
 
@@ -73,7 +73,7 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
               : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
           }`}
         >
-          <Download className="w-3.5 h-3.5" />
+          <ArrowLeftRight className="w-3.5 h-3.5" aria-hidden="true" />
           <span>Transfer Time</span>
         </button>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Search, Menu, Zap } from 'lucide-react';
 import { Link } from '../../hooks/useRouter.tsx';
+import { PWAInstallButton } from './PWAInstallButton.tsx';
 
 interface NavbarProps {
   currentPath: string;
@@ -64,8 +65,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        {/* Zone 3: Actions (Desktop Search + Pro CTA, Mobile Search + Menu) */}
+        {/* Zone 3: Actions (PWA Install + Search + Pro CTA + Mobile Menu) */}
         <div className="flex items-center gap-2.5 shrink-0">
+          {/* PWA In-App Install Trigger */}
+          <PWAInstallButton />
+
           {/* Quick Search Trigger */}
           <button
             type="button"
@@ -89,14 +93,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             Pro
           </Link>
 
-          {/* Mobile Sheet Menu Toggle */}
+          {/* Mobile Sheet Menu Toggle - 44x44px minimum tap target */}
           <button
             type="button"
             onClick={onOpenMenu}
-            className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-laser"
+            className="md:hidden flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-laser"
             aria-label="Open navigation menu"
           >
-            <Menu className="w-5 h-5" />
+            <Menu className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
       </div>

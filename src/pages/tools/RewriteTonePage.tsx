@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PenLine, ArrowRight, Check, Copy } from 'lucide-react';
 import { ToolPageTemplate } from '../../components/tools/ToolPageTemplate.tsx';
 import { LAUNCH_TOOLS } from '../../data/tools.ts';
 import { POPULAR_GUIDES } from '../../data/guides.ts';
@@ -8,109 +9,204 @@ interface RewriteTonePageProps {
 }
 
 export const RewriteTonePage: React.FC<RewriteTonePageProps> = ({ navigate }) => {
-  const [targetTone, setTargetTone] = useState('Shorter & Punchier');
-  const tool = LAUNCH_TOOLS.find((t) => t.slug === 'rewrite-tone-changer') || LAUNCH_TOOLS[5];
-  const relatedTools = LAUNCH_TOOLS.filter((t) => t.slug === 'ai-email-writer' || t.slug === 'ai-prompt-improver');
+  const [tone, setTone] = useState<'friendlier' | 'more formal' | 'shorter' | 'simpler'>('friendlier');
+  const [copiedRewritten, setCopiedRewritten] = useState(false);
+
+  const tool = LAUNCH_TOOLS.find((t) => t.slug === 'rewrite-tone-changer') || LAUNCH_TOOLS[3];
+  const relatedTools = LAUNCH_TOOLS.filter((t) => t.slug === 'ai-email-writer' || t.slug === 'ai-summarizer');
   const relatedGuide = POPULAR_GUIDES.find((g) => g.slug === 'better-prompts-simple-rules') || POPULAR_GUIDES[1];
 
-  const toneChoices = [
-    'Shorter & Punchier',
-    'Friendlier & Warmer',
-    'More Formal & Executive',
-    'Persuasive & Confident',
+  const toneChoices: Array<{ id: 'friendlier' | 'more formal' | 'shorter' | 'simpler'; label: string }> = [
+    { id: 'friendlier', label: 'Friendlier' },
+    { id: 'more formal', label: 'More Formal' },
+    { id: 'shorter', label: 'Shorter' },
+    { id: 'simpler', label: 'Simpler' },
+  ];
+
+  const exampleChips = [
+    'You did not send the project files on time so I cannot do my work today. Please send them immediately.',
+    'I think we should probably reschedule our meeting because I have too much other stuff going on right now and won\'t be able to prepare properly.',
+    'In accordance with our contractual stipulations, failure to remit remuneration within thirty days initiates delinquency protocols.',
   ];
 
   return (
     <ToolPageTemplate
       tool={tool}
-      heading="Rewrite &amp; Tone Changer"
-      subheading="Transform rough drafts or awkward messages into shorter, friendlier, more formal, or persuasive text while keeping your exact meaning intact."
+      heading="Rewrite and Tone Changer"
+      subheading="Change how your words feel without changing what they mean. Choose friendlier, more formal, shorter, or simpler to get an instant before-and-after view."
       inputLabel="Paste text to rewrite"
-      inputPlaceholder="Paste an email, message, bio, proposal, or paragraph you want to polish..."
-      examplePrompt="I think we should probably reschedule our meeting because I have too much other stuff going on right now and won't be able to prepare properly."
-      generateButtonText="Rewrite in Selected Tone"
+      inputPlaceholder="Paste a draft message, email sentence, bio, or memo..."
+      examplePrompt={exampleChips[0]}
+      exampleChips={exampleChips}
+      generateButtonText="Rewrite Text"
       lastUpdated="October 2026"
       navigate={navigate}
+      apiEndpoint="/api/rewrite-tone"
+      requestPayload={(text) => ({
+        text,
+        tone,
+      })}
       extraControls={
         <div className="space-y-1.5 pt-1">
           <label className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0]">
-            Target Tone: {targetTone}
+            Target Tone
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {toneChoices.map((tone) => (
+            {toneChoices.map((item) => (
               <button
-                key={tone}
+                key={item.id}
                 type="button"
-                onClick={() => setTargetTone(tone)}
-                className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center ${
-                  targetTone === tone
-                    ? 'bg-[#39ff88] text-[#050a14] border-[#39ff88] font-bold'
+                onClick={() => setTone(item.id)}
+                className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-laser ${
+                  tone === item.id
+                    ? 'bg-[#39ff88] text-[#050a14] border-[#39ff88] font-bold shadow-[0_0_12px_rgba(57,255,136,0.3)]'
                     : 'bg-[#0a1424] text-[#8fa3c0] border-[rgba(143,163,192,0.16)] hover:text-[#f2f7ff]'
                 }`}
               >
-                {tone}
+                {item.label}
               </button>
             ))}
           </div>
         </div>
       }
+      customResultRenderer={({ result, rawData, input, onCopy, onShare, copied, shared }) => {
+        const rewritten = rawData?.rewritten || result;
+        const original = rawData?.original || input;
+        const changes = rawData?.changes || '';
+
+        const copyOnlyRewritten = async () => {
+          try {
+            await navigator.clipboard.writeText(rewritten);
+            setCopiedRewritten(true);
+            setTimeout(() => setCopiedRewritten(false), 2000);
+          } catch {
+            // Handled
+          }
+        };
+
+        return (
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+                <PenLine className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Before &amp; After Comparison</span>
+              </span>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={copyOnlyRewritten}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#39ff88] text-[#050a14] text-xs font-bold hover:bg-[#39ff88]/90 transition-colors focus-laser shadow-[0_0_12px_rgba(57,255,136,0.25)]"
+                >
+                  {copiedRewritten ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copiedRewritten ? 'Copied Rewrite' : 'Copy Rewrite'}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onShare(rewritten)}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-laser"
+                >
+                  <span className="text-xs">{shared ? 'Shared' : 'Share'}</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Before and After Side-by-Side (or stacked on mobile) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              {/* Before Card */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424]/80 border border-[rgba(143,163,192,0.14)] space-y-2">
+                <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider text-[#8fa3c0]">
+                  <span>Original Draft (Before)</span>
+                  <span>{original.length} chars</span>
+                </div>
+                <p className="text-sm text-[#8fa3c0] leading-relaxed whitespace-pre-wrap">
+                  {original}
+                </p>
+              </div>
+
+              {/* After Card */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[#39ff88]/30 space-y-2 shadow-[0_0_15px_rgba(57,255,136,0.08)]">
+                <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider text-[#39ff88] font-bold">
+                  <span className="flex items-center gap-1">
+                    <span>Rewritten ({tone})</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </span>
+                  <span>{rewritten.length} chars</span>
+                </div>
+                <p className="text-sm text-[#f2f7ff] leading-relaxed whitespace-pre-wrap font-medium selection:bg-[#39ff88] selection:text-[#050a14]">
+                  {rewritten}
+                </p>
+              </div>
+            </div>
+
+            {/* What Changed Summary Card */}
+            {changes && (
+              <div className="p-3.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.14)] flex items-start gap-2.5 text-xs text-[#8fa3c0]">
+                <div className="font-mono text-[#39ff88] font-bold uppercase shrink-0">Note:</div>
+                <div className="leading-relaxed text-[#f2f7ff]">{changes}</div>
+              </div>
+            )}
+          </div>
+        );
+      }}
       whatItDoesContent={
         <>
           <p>
-            The Rewrite and Tone Changer adjusts the personality, length, and authority of your writing without changing the facts or original intent.
+            The Rewrite and Tone Changer adjusts how your sentences sound without altering their meaning. If a sentence you wrote sounds a little too blunt, too complicated, or too long, this tool reformats the phrasing into clean, modern language.
           </p>
           <p>
-            Whether you wrote an email that sounds too blunt, a memo that is far too long, or a proposal that lacks punch, this tool rephrases your sentences with clean syntax, active verbs, and natural human flow.
+            You get an instant Before and After view that places your original text next to the rewritten version. You can see the exact character difference and read a quick note on why the new version works better. Pick from four tailored tones: Friendlier for warmer teamwork, More Formal for senior managers, Shorter to remove clutter, or Simpler for crystal-clear readability.
           </p>
         </>
       }
       howToUseSteps={[
         {
-          step: 'Paste your draft text',
-          text: 'Paste the rough paragraph or sentence you want to improve.',
+          step: 'Paste your draft sentence or message',
+          text: 'Type or paste the sentence that feels awkward, wordy, or difficult to phrase comfortably.',
         },
         {
-          step: 'Choose your tone goal',
-          text: 'Select whether you need it shorter, friendlier, more formal, or more persuasive.',
+          step: 'Select your target tone',
+          text: 'Choose Friendlier, More Formal, Shorter, or Simpler depending on who will read the message.',
         },
         {
-          step: 'Review and copy',
-          text: 'Get the rewritten copy alongside an explanation of the stylistic changes made.',
+          step: 'Compare and copy the result',
+          text: 'Review the side-by-side Before and After boxes, then tap Copy Rewrite to paste it directly into your chat or email.',
         },
       ]}
       workedExample={{
-        title: 'Example: Shifting from Blunt to Warm & Professional',
-        scenario: 'Original: "You did not send the files so I cannot start work. Send them today."',
-        output: `### Rewritten (Friendlier & Warmer):
-"Hi [Name], just checking in on the project files. Once you have a moment to send those over, I will dive right in and get started. Let me know if you run into any trouble with the transfer!"
+        title: 'Example: Shifting from Harsh to Professional & Friendly',
+        scenario: 'Draft: "You did not send the project files on time so I cannot do my work today. Please send them immediately."',
+        output: `### Original (Before):
+"You did not send the project files on time so I cannot do my work today. Please send them immediately."
 
-### Changes Made:
-- Removed accusatory phrasing ("You did not send").
-- Reframed the delay around ready-to-help enthusiasm.
-- Kept the underlying message and urgency without creating friction.`,
+### Rewritten (Friendlier):
+"Hi [Name], just checking in on the project files. As soon as you have a chance to send those over, I will jump right in and get started. Let me know if you run into any trouble with the transfer!"
+
+### Why this works:
+It removes the blame-focused phrasing while keeping the exact same urgency and making sure the project moves forward without friction.`,
       }}
       tips={[
-        'Pick one clear goal: If you need extreme brevity, choose "Shorter & Punchier" to eliminate filler words.',
-        'Preserve your voice: If the suggestion feels too polished, blend your favorite phrases from the rewrite with your original draft.',
-        'Use for difficult messages: It is ideal for saying "no" politely to invitations or scope creep.',
-        'Check names and pronouns: Ensure the pronouns match your relationship with the recipient.',
+        'Use "Simpler" mode when explaining technical ideas or contracts to clients who prefer plain English.',
+        'Use "Shorter" mode to cut fluff from LinkedIn updates, resume bullet points, or Slack messages.',
+        'The tool never replaces important dates, times, prices, or names.',
+        'You can tap different tones on the same text to see which style best fits your personal voice.',
       ]}
       faq={[
         {
-          question: 'Does this change the meaning of my text?',
-          answer: 'No. The AI is instructed to retain 100% of the facts, dates, and core intent while only altering sentence structure, vocabulary, and rhythm.',
+          question: 'Does this change what my message actually means?',
+          answer: 'No. The AI is instructed to preserve 100% of your facts, dates, commitments, and core intent. Only the vocabulary, rhythm, and sentence structure are refined.',
         },
         {
-          question: 'Can I use this for resumes and cover letters?',
-          answer: 'Yes. Selecting "Persuasive & Confident" or "More Formal & Executive" works well for resume bullet points and LinkedIn bios.',
+          question: 'How does the Before and After view help me?',
+          answer: 'It lets you compare your original draft side-by-side with the new phrasing and review the character count so you can be confident your message strikes the right chord.',
         },
         {
-          question: 'How is this different from a grammar checker?',
-          answer: 'Grammar checkers fix punctuation and spelling errors. This tool alters tone, cadence, and psychological impact so your writing achieves its goal.',
+          question: 'Which tone should I use for asking for a favor?',
+          answer: 'The Friendlier tone works best. It softens direct commands into helpful requests, which makes people far more willing to help you quickly.',
         },
         {
-          question: 'Is there a limit on how many times I can rewrite?',
-          answer: 'No. Feel free to try multiple tones on the same sentence to find the perfect phrasing.',
+          question: 'Are my private messages or emails stored on your server?',
+          answer: 'No. SmartToolHub operates with an ephemeral architecture. Your text is processed in memory to generate the rewrite and is immediately discarded.',
         },
       ]}
       relatedTools={relatedTools}

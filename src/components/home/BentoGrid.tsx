@@ -1,6 +1,7 @@
 import React from 'react';
-import { Smartphone, Sparkles, Mail, FileText, Hash, RefreshCw, Table, Calculator, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { Link } from '../../hooks/useRouter.tsx';
+import { IconTile } from '../ui/IconTile.tsx';
 
 interface BentoGridProps {
   navigate: (path: string) => void;
@@ -8,33 +9,38 @@ interface BentoGridProps {
 
 export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
   return (
-    <section id="tools-grid" className="py-12 sm:py-16 scroll-mt-20">
-      <div className="space-y-4 mb-8">
-        <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#39ff88]">
-          <span>Launch Suite · 8 Free AI Tools</span>
+    <section className="py-12 sm:py-16">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div>
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#39ff88]">
+            <span>Featured Suite · 6 Flagship Tools</span>
+          </div>
+          <h2 className="h2-fluid font-display text-[#f2f7ff] mt-2">
+            Engineered for clarity and speed<span className="text-[#39ff88]">.</span>
+          </h2>
         </div>
-        <h2 className="h2-fluid font-display text-[#f2f7ff]">
-          Built for daily tasks.
-        </h2>
-        <p className="text-sm sm:text-base text-[#8fa3c0] max-w-xl">
-          Tap any tool below to start immediately. No registration, no waitlists, and no paywalls.
+        <p className="body-fluid text-[#8fa3c0] max-w-md">
+          Zero login barriers. High-signal outputs formatted for immediate use.
         </p>
       </div>
 
-      {/* 12-Column Asymmetric Bento Grid */}
+      {/* Exactly 6 Most Important Tools Bento Layout */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
-        {/* Item 1: Flagship Tool - Apple Shortcuts Generator (8 cols on lg) */}
-        <div className="md:col-span-12 lg:col-span-8 glass-surface rounded-3xl p-6 sm:p-8 interactive-hover relative flex flex-col justify-between overflow-hidden border border-[rgba(57,255,136,0.25)]">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-radial from-[rgba(57,255,136,0.12)] to-transparent pointer-events-none" />
-          
+        {/* Item 1: Apple Shortcuts Generator (Featured Hero - 8 cols on lg) */}
+        <div className="md:col-span-12 lg:col-span-8 glass-surface rounded-3xl p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between group interactive-hover border border-[rgba(143,163,192,0.16)]">
           <div className="space-y-4 relative z-10">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-xs font-semibold text-[#39ff88] uppercase tracking-wider">
-                  Flagship Tool
-                </span>
-                <span className="text-[#8fa3c0] text-xs">·</span>
-                <span className="text-xs text-[#8fa3c0]">iOS &amp; iPadOS Automation</span>
+              <div className="flex items-center gap-3">
+                <IconTile icon="Workflow" />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xs font-semibold text-[#39ff88] uppercase tracking-wider">
+                      Flagship Tool
+                    </span>
+                    <span className="text-[#8fa3c0] text-xs">·</span>
+                    <span className="text-xs text-[#8fa3c0]">iOS &amp; iPadOS Automation</span>
+                  </div>
+                </div>
               </div>
               <span className="font-mono text-xs text-[#39ff88] bg-[#0a1424] px-2.5 py-1 rounded-md border border-[rgba(57,255,136,0.2)]">
                 Featured
@@ -65,23 +71,21 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
               className="btn-laser text-sm"
             >
               <span>Build an Apple Shortcut</span>
-              <ArrowUpRight className="w-4 h-4" />
+              <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           </div>
         </div>
 
         {/* Item 2: AI Prompt Improver (4 cols on lg) */}
-        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between">
+        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between group border border-[rgba(143,163,192,0.16)]">
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-              <span className="font-mono uppercase text-[#5aa9ff]">Prompting</span>
-              <span>·</span>
-              <span>Everyday AI</span>
+            <div className="flex items-center justify-between">
+              <IconTile icon="Wand2" />
+              <div className="flex items-center gap-1.5 text-xs text-[#8fa3c0]">
+                <span className="font-mono uppercase text-[#39ff88]">Productivity</span>
+              </div>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.2)] flex items-center justify-center text-[#5aa9ff]">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff]">
+            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">
               AI Prompt Improver
             </h3>
             <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
@@ -95,23 +99,21 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
               className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
             >
               <span>Open Prompt Improver</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
             </Link>
           </div>
         </div>
 
         {/* Item 3: AI Email Writer (4 cols on lg) */}
-        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between">
+        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between group border border-[rgba(143,163,192,0.16)]">
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-              <span className="font-mono uppercase text-[#39ff88]">Writing</span>
-              <span>·</span>
-              <span>Work &amp; Personal</span>
+            <div className="flex items-center justify-between">
+              <IconTile icon="Mail" />
+              <div className="flex items-center gap-1.5 text-xs text-[#8fa3c0]">
+                <span className="font-mono uppercase text-[#39ff88]">Writing</span>
+              </div>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.2)] flex items-center justify-center text-[#39ff88]">
-              <Mail className="w-5 h-5" />
-            </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff]">
+            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">
               AI Email Writer
             </h3>
             <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
@@ -125,23 +127,21 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
               className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
             >
               <span>Open Email Writer</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
             </Link>
           </div>
         </div>
 
         {/* Item 4: AI Summarizer (4 cols on lg) */}
-        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between">
+        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between group border border-[rgba(143,163,192,0.16)]">
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-              <span className="font-mono uppercase text-[#ffb840]">Reading</span>
-              <span>·</span>
-              <span>Instant Notes</span>
+            <div className="flex items-center justify-between">
+              <IconTile icon="FileText" />
+              <div className="flex items-center gap-1.5 text-xs text-[#8fa3c0]">
+                <span className="font-mono uppercase text-[#39ff88]">Writing</span>
+              </div>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.2)] flex items-center justify-center text-[#ffb840]">
-              <FileText className="w-5 h-5" />
-            </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff]">
+            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">
               AI Summarizer
             </h3>
             <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
@@ -155,23 +155,21 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
               className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
             >
               <span>Open Summarizer</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
             </Link>
           </div>
         </div>
 
         {/* Item 5: Excel & Google Sheets Formula Helper (4 cols on lg) */}
-        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between">
+        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between group border border-[rgba(143,163,192,0.16)]">
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-              <span className="font-mono uppercase text-[#39ff88]">Spreadsheets</span>
-              <span>·</span>
-              <span>Excel &amp; Sheets</span>
+            <div className="flex items-center justify-between">
+              <IconTile icon="Sigma" />
+              <div className="flex items-center gap-1.5 text-xs text-[#8fa3c0]">
+                <span className="font-mono uppercase text-[#39ff88]">Productivity</span>
+              </div>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.2)] flex items-center justify-center text-[#39ff88]">
-              <Table className="w-5 h-5" />
-            </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff]">
+            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">
               Formula Helper
             </h3>
             <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
@@ -185,23 +183,21 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
               className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
             >
               <span>Open Formula Helper</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
             </Link>
           </div>
         </div>
 
         {/* Item 6: Caption & Hashtag Generator (4 cols on lg) */}
-        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between">
+        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between group border border-[rgba(143,163,192,0.16)]">
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-              <span className="font-mono uppercase text-[#5aa9ff]">Social</span>
-              <span>·</span>
-              <span>Instagram &amp; TikTok</span>
+            <div className="flex items-center justify-between">
+              <IconTile icon="Hash" />
+              <div className="flex items-center gap-1.5 text-xs text-[#8fa3c0]">
+                <span className="font-mono uppercase text-[#39ff88]">Social</span>
+              </div>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.2)] flex items-center justify-center text-[#5aa9ff]">
-              <Hash className="w-5 h-5" />
-            </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff]">
+            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">
               Caption &amp; Hashtags
             </h3>
             <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
@@ -215,70 +211,22 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
               className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
             >
               <span>Open Caption Tool</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
             </Link>
           </div>
         </div>
+      </div>
 
-        {/* Item 7: Rewrite & Tone Changer (4 cols on lg) */}
-        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-              <span className="font-mono uppercase text-[#ffb840]">Tone</span>
-              <span>·</span>
-              <span>Clarity &amp; Style</span>
-            </div>
-            <div className="w-10 h-10 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.2)] flex items-center justify-center text-[#ffb840]">
-              <RefreshCw className="w-5 h-5" />
-            </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff]">
-              Rewrite &amp; Tone Changer
-            </h3>
-            <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
-              Make draft copy shorter, more professional, friendlier, or direct while preserving the core message.
-            </p>
-          </div>
-          <div className="pt-6">
-            <Link
-              href="/tools/rewrite-tone-changer"
-              navigate={navigate}
-              className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
-            >
-              <span>Open Tone Changer</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Item 8: Quick Calculators (4 cols on lg) */}
-        <div className="md:col-span-6 lg:col-span-4 glass-surface rounded-3xl p-6 interactive-hover flex flex-col justify-between">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-              <span className="font-mono uppercase text-[#39ff88]">Utilities</span>
-              <span>·</span>
-              <span>Instant Offline Math</span>
-            </div>
-            <div className="w-10 h-10 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.2)] flex items-center justify-center text-[#39ff88]">
-              <Calculator className="w-5 h-5" />
-            </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff]">
-              Quick Calculators
-            </h3>
-            <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
-              Instant Retina @2x/@3x image dimensions, file download/transfer time, and battery charge estimates.
-            </p>
-          </div>
-          <div className="pt-6">
-            <Link
-              href="/tools/quick-calculators"
-              navigate={navigate}
-              className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
-            >
-              <span>Open Calculators</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-        </div>
+      {/* Hub Redirection Link */}
+      <div className="mt-8 text-center">
+        <Link
+          href="/tools"
+          navigate={navigate}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[#39ff88] text-xs font-semibold text-[#f2f7ff] hover:text-[#39ff88] transition-all focus-laser"
+        >
+          <span>Explore All Tools in the Directory</span>
+          <ArrowUpRight className="w-4 h-4 text-[#39ff88]" aria-hidden="true" />
+        </Link>
       </div>
     </section>
   );

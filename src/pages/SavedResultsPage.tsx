@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Bookmark, Copy, Check, Trash2, ArrowUpRight, Zap } from 'lucide-react';
+import { Trash2, ArrowUpRight, Share2 } from 'lucide-react';
 import { getToolHistory, clearToolHistory, SavedItem } from '../utils/storage.ts';
 import { Link } from '../hooks/useRouter.tsx';
+import { shareWithFallback } from '../utils/share.ts';
+import { Icon } from '../components/ui/Icon.tsx';
+import { TOOL_ICON_MAP } from '../data/tools.ts';
+import { useToast } from '../components/ui/Toast.tsx';
+import { CopyButton, Button } from '../components/ui/Button.tsx';
+import { EmptyState } from '../components/ui/EmptyState.tsx';
 
 interface SavedResultsPageProps {
   navigate: (path: string) => void;
@@ -9,19 +15,27 @@ interface SavedResultsPageProps {
 
 export const SavedResultsPage: React.FC<SavedResultsPageProps> = ({ navigate }) => {
   const [history, setHistory] = useState<SavedItem[]>([]);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   useEffect(() => {
     setHistory(getToolHistory());
   }, []);
 
-  const handleCopy = async (id: string, text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(null), 2000);
-    } catch {
-      // Fallback
+  const handleShare = async (item: SavedItem) => {
+    const res = await shareWithFallback({
+      title: `${item.toolName} Result · SmartToolHub`,
+      text: item.result,
+      url: typeof window !== 'undefined' ? `${window.location.origin}/tools/${item.toolSlug}` : '',
+    });
+
+    if (res.success) {
+      if (res.mode === 'native') {
+        showToast('Shared successfully!');
+      } else {
+        showToast('Copied link to clipboard!');
+      }
+    } else if (res.message !== 'Share dismissed') {
+      showToast(res.message, 'error');
     }
   };
 
@@ -29,11 +43,12 @@ export const SavedResultsPage: React.FC<SavedResultsPageProps> = ({ navigate }) 
     if (window.confirm('Clear all locally saved results?')) {
       clearToolHistory();
       setHistory([]);
+      showToast('All saved history cleared', 'info');
     }
   };
 
   return (
-    <div className="py-6 sm:py-12 max-w-4xl mx-auto space-y-8">
+    <div className="py-6 sm:py-12 max-w-4xl mx-auto space-y-8 relative">
       <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[rgba(143,163,192,0.14)] pb-6">
         <div className="space-y-2">
           <div className="text-xs font-mono uppercase tracking-wider text-[#39ff88]">
@@ -48,14 +63,15 @@ export const SavedResultsPage: React.FC<SavedResultsPageProps> = ({ navigate }) 
         </div>
 
         {history.length > 0 && (
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={handleClear}
-            className="btn-glass text-xs text-[#ff5c7a] border-[#ff5c7a]/30 hover:border-[#ff5c7a] self-start sm:self-auto"
+            className="text-xs text-[#ff5c7a] border border-[#ff5c7a]/30 hover:border-[#ff5c7a] hover:bg-[#ff5c7a]/10 self-start sm:self-auto"
           >
-            <Trash2 className="w-3.5 h-3.5" />
+            <Trash2 size={14} className="mr-1.5" aria-hidden="true" />
             <span>Clear History</span>
-          </button>
+          </Button>
         )}
       </header>
 
@@ -67,7 +83,10 @@ export const SavedResultsPage: React.FC<SavedResultsPageProps> = ({ navigate }) 
               className="glass-surface p-5 sm:p-6 rounded-3xl border border-[rgba(143,163,192,0.14)] space-y-3"
             >
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-7 h-7 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.18)] flex items-center justify-center text-[#39ff88] shrink-0">
+                    <Icon name={TOOL_ICON_MAP[item.toolSlug] || 'Bookmark'} size="sm" strokeWidth={1.75} aria-hidden={true} />
+                  </div>
                   <span className="font-semibold text-sm text-[#f2f7ff]">
                     {item.toolName}
                   </span>
@@ -78,26 +97,29 @@ export const SavedResultsPage: React.FC<SavedResultsPageProps> = ({ navigate }) 
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleCopy(item.id, item.result)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                  <CopyButton
+                    textToCopy={item.result}
+                    size="sm"
+                    onCopySuccess={() => showToast('Copied to clipboard!')}
+                  />
+
+                  <Button
+                    variant="icon-only"
+                    size="sm"
+                    onClick={() => handleShare(item)}
+                    aria-label="Share result"
+                    className="w-11 h-11"
                   >
-                    {copiedId === item.id ? (
-                      <Check className="w-3.5 h-3.5 text-[#39ff88]" />
-                    ) : (
-                      <Copy className="w-3.5 h-3.5" />
-                    )}
-                    <span>{copiedId === item.id ? 'Copied' : 'Copy'}</span>
-                  </button>
+                    <Share2 size={16} aria-hidden="true" />
+                  </Button>
 
                   <Link
                     href={`/tools/${item.toolSlug}`}
                     navigate={navigate}
-                    className="p-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-[#8fa3c0] hover:text-[#39ff88] transition-colors focus-laser"
-                    title="Open tool"
+                    className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] flex items-center justify-center text-[#8fa3c0] hover:text-[#39ff88] hover:border-[#39ff88] transition-colors focus-laser"
+                    aria-label={`Open ${item.toolName}`}
                   >
-                    <ArrowUpRight className="w-4 h-4" />
+                    <ArrowUpRight size={16} aria-hidden="true" />
                   </Link>
                 </div>
               </div>
@@ -113,25 +135,13 @@ export const SavedResultsPage: React.FC<SavedResultsPageProps> = ({ navigate }) 
           ))}
         </div>
       ) : (
-        <div className="glass-surface p-12 rounded-3xl border border-[rgba(143,163,192,0.14)] text-center space-y-4 max-w-md mx-auto">
-          <div className="w-12 h-12 rounded-2xl bg-[#0a1424] border border-[rgba(57,255,136,0.3)] flex items-center justify-center text-[#39ff88] mx-auto">
-            <Bookmark className="w-6 h-6" />
-          </div>
-          <h2 className="text-xl font-bold font-display text-[#f2f7ff]">
-            No saved results yet
-          </h2>
-          <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
-            When you generate an Apple Shortcut, email, or prompt, your results will appear here automatically for easy reference.
-          </p>
-          <Link
-            href="/tools"
-            navigate={navigate}
-            className="btn-laser text-xs inline-flex items-center gap-2 mt-2"
-          >
-            <Zap className="w-4 h-4 fill-current" />
-            <span>Explore Tools</span>
-          </Link>
-        </div>
+        <EmptyState
+          icon="History"
+          message="Nothing here yet. Try an example."
+          actionLabel="Explore Tools"
+          onAction={() => navigate('/tools')}
+          className="my-12"
+        />
       )}
     </div>
   );

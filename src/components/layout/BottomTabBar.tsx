@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Grid, Search, Bookmark, MoreHorizontal } from 'lucide-react';
+import { Home, LayoutGrid, Search, Bookmark, Menu } from 'lucide-react';
 import { TabKey } from '../../types/navigation.ts';
 
 interface BottomTabBarProps {
@@ -32,74 +32,87 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
     else if (key === 'more') onOpenMore();
   };
 
+  const tabs: Array<{
+    key: TabKey;
+    label: string;
+    icon: React.ComponentType<{ className?: string; size?: number; strokeWidth?: number }>;
+    ariaLabel: string;
+    onClick: () => void;
+  }> = [
+    {
+      key: 'home',
+      label: 'Home',
+      icon: Home,
+      ariaLabel: 'Home page',
+      onClick: () => handleTabClick('home'),
+    },
+    {
+      key: 'tools',
+      label: 'Tools',
+      icon: LayoutGrid,
+      ariaLabel: 'All Tools',
+      onClick: () => handleTabClick('tools'),
+    },
+    {
+      key: 'search',
+      label: 'Search',
+      icon: Search,
+      ariaLabel: 'Search tools and guides',
+      onClick: () => handleTabClick('search'),
+    },
+    {
+      key: 'saved',
+      label: 'Saved',
+      icon: Bookmark,
+      ariaLabel: 'Saved results and history',
+      onClick: () => handleTabClick('saved'),
+    },
+    {
+      key: 'more',
+      label: 'Menu',
+      icon: Menu,
+      ariaLabel: 'More options and menu',
+      onClick: () => handleTabClick('more'),
+    },
+  ];
+
   return (
     <nav
       aria-label="Mobile Bottom Navigation"
       className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#050a14]/90 backdrop-blur-[20px] border-t border-[rgba(143,163,192,0.16)] safe-bottom"
     >
-      <div className="grid grid-cols-5 items-center h-14 max-w-md mx-auto px-2">
-        {/* Home */}
-        <button
-          type="button"
-          onClick={() => handleTabClick('home')}
-          className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 transition-colors focus-laser rounded-lg ${
-            activeTab === 'home' ? 'text-[#39ff88]' : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
-          }`}
-          aria-label="Home page"
-        >
-          <Home className="w-5 h-5" />
-          <span className="text-[10px] font-medium tracking-tight mt-1">Home</span>
-        </button>
+      <div className="grid grid-cols-5 items-center h-16 max-w-md mx-auto px-2">
+        {tabs.map((tab) => {
+          const isActive = activeTab === tab.key;
+          const IconComp = tab.icon;
 
-        {/* Tools */}
-        <button
-          type="button"
-          onClick={() => handleTabClick('tools')}
-          className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 transition-colors focus-laser rounded-lg ${
-            activeTab === 'tools' ? 'text-[#39ff88]' : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
-          }`}
-          aria-label="All Tools"
-        >
-          <Grid className="w-5 h-5" />
-          <span className="text-[10px] font-medium tracking-tight mt-1">Tools</span>
-        </button>
-
-        {/* Search */}
-        <button
-          type="button"
-          onClick={() => handleTabClick('search')}
-          className="flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-laser rounded-lg"
-          aria-label="Search tools"
-        >
-          <Search className="w-5 h-5" />
-          <span className="text-[10px] font-medium tracking-tight mt-1">Search</span>
-        </button>
-
-        {/* Saved */}
-        <button
-          type="button"
-          onClick={() => handleTabClick('saved')}
-          className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 transition-colors focus-laser rounded-lg ${
-            activeTab === 'saved' ? 'text-[#39ff88]' : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
-          }`}
-          aria-label="Saved results and history"
-        >
-          <Bookmark className="w-5 h-5" />
-          <span className="text-[10px] font-medium tracking-tight mt-1">Saved</span>
-        </button>
-
-        {/* More */}
-        <button
-          type="button"
-          onClick={() => handleTabClick('more')}
-          className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 transition-colors focus-laser rounded-lg ${
-            activeTab === 'more' ? 'text-[#39ff88]' : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
-          }`}
-          aria-label="More options and menu"
-        >
-          <MoreHorizontal className="w-5 h-5" />
-          <span className="text-[10px] font-medium tracking-tight mt-1">More</span>
-        </button>
+          return (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={tab.onClick}
+              className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 transition-all focus-laser rounded-xl relative ${
+                isActive ? 'text-[#39ff88]' : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
+              }`}
+              aria-label={tab.ariaLabel}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              <IconComp size={20} strokeWidth={1.75} aria-hidden="true" />
+              <span className="text-[10px] font-medium tracking-tight mt-0.5 leading-none">
+                {tab.label}
+              </span>
+              {/* Small green dot indicator under active tab */}
+              {isActive ? (
+                <span
+                  className="w-1 h-1 rounded-full bg-[#39ff88] mt-1 shrink-0 animate-in fade-in"
+                  aria-hidden="true"
+                />
+              ) : (
+                <span className="w-1 h-1 mt-1 opacity-0 shrink-0" aria-hidden="true" />
+              )}
+            </button>
+          );
+        })}
       </div>
     </nav>
   );

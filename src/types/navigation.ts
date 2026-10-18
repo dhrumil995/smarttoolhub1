@@ -6,13 +6,31 @@ export interface NavItem {
   badge?: string;
 }
 
+export type ToolCategory =
+  | 'Writing'
+  | 'Social'
+  | 'Productivity'
+  | 'Apple'
+  | 'Calculators'
+  | 'Text'
+  | 'Developer'
+  | 'Images'
+  | 'automation'
+  | 'writing'
+  | 'utilities'
+  | 'coding';
+
 export interface ToolMeta {
   id: string;
   name: string;
   slug: string;
   description: string;
-  category: 'automation' | 'writing' | 'utilities' | 'coding';
+  category: ToolCategory;
   icon: string;
+  type?: 'ai' | 'client';
+  keywords?: string[];
+  relatedToolSlugs?: string[];
+  guideSlug?: string;
   isFlagship?: boolean;
 }
 

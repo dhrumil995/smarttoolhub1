@@ -38,8 +38,8 @@ export const ClosingCta: React.FC<ClosingCtaProps> = ({ navigate }) => {
             navigate={navigate}
             className="btn-glass"
           >
-            <span>Explore All 8 Tools</span>
-            <ArrowRight className="w-4 h-4 text-[#8fa3c0]" />
+            <span>Explore All Tools</span>
+            <ArrowRight className="w-4 h-4 text-[#8fa3c0]" aria-hidden="true" />
           </Link>
         </div>
       </div>

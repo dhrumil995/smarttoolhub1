@@ -1,25 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
-  Sparkles,
   Copy,
   Check,
   Share2,
   AlertCircle,
   ChevronRight,
   ChevronDown,
-  ArrowRight,
   BookOpen,
   RotateCcw,
   Zap,
+  Clock,
+  Trash2,
+  ArrowLeft,
 } from 'lucide-react';
 import { ToolMeta, GuideMeta } from '../../types/navigation.ts';
 import { Link } from '../../hooks/useRouter.tsx';
-import { saveToolResult } from '../../utils/storage.ts';
+import { saveToolResult, getToolHistoryBySlug, clearToolHistoryBySlug, SavedItem } from '../../utils/storage.ts';
 import { AdSlot } from '../ads/AdSlot.tsx';
+import { shareWithFallback } from '../../utils/share.ts';
+import { IconTile } from '../ui/IconTile.tsx';
+import { TOOL_ICON_MAP } from '../../data/tools.ts';
+import { Button, CopyButton } from '../ui/Button.tsx';
+import { useToast } from '../ui/Toast.tsx';
+import { AiLoadingState } from '../ui/AiLoadingState.tsx';
+import { ErrorState } from '../ui/ErrorState.tsx';
+import { FormField, CharacterCounter } from '../ui/FormField.tsx';
+import { Breadcrumbs } from '../ui/Breadcrumbs.tsx';
+import { ToolTabs } from '../ui/ToolTabs.tsx';
+import { ResultCard } from '../ui/ResultCard.tsx';
+import { Accordion } from '../ui/Accordion.tsx';
+import { StickyActionBar } from '../ui/StickyActionBar.tsx';
+import { ToolCard } from '../ui/ToolCard.tsx';
 
 export interface ToolFaqItem {
   question: string;
   answer: string;
+}
+
+export interface CustomResultRenderProps {
+  result: string;
+  rawData: any;
+  input: string;
+  onCopy: (textToCopy?: string) => void;
+  onShare: (textToShare?: string) => void;
+  copied: boolean;
+  shared: boolean;
+  isRefining: boolean;
+  onRefine?: (action: string) => void;
 }
 
 export interface ToolPageTemplateProps {
@@ -29,6 +56,7 @@ export interface ToolPageTemplateProps {
   inputLabel: string;
   inputPlaceholder: string;
   examplePrompt: string;
+  exampleChips?: string[];
   generateButtonText?: string;
   whatItDoesContent: React.ReactNode;
   howToUseSteps: Array<{ step: string; text: string }>;
@@ -40,6 +68,12 @@ export interface ToolPageTemplateProps {
   lastUpdated: string;
   navigate: (path: string) => void;
   extraControls?: React.ReactNode;
+  extraResultActions?: (result: string, input: string) => React.ReactNode;
+  apiEndpoint?: string;
+  requestPayload?: (input: string) => Record<string, any>;
+  customResultRenderer?: (props: CustomResultRenderProps) => React.ReactNode;
+  onRefineRequest?: (action: string, currentResult: string, rawData: any, setRawData: (d: any) => void, setResult: (r: string) => void) => Promise<void>;
+  onClientCompute?: (input: string) => { result: string; rawData?: any };
 }
 
 export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
@@ -49,6 +83,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
   inputLabel,
   inputPlaceholder,
   examplePrompt,
+  exampleChips,
   generateButtonText = 'Generate Result',
   whatItDoesContent,
   howToUseSteps,
@@ -60,43 +95,104 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
   lastUpdated,
   navigate,
   extraControls,
+  extraResultActions,
+  apiEndpoint = '/api/generate',
+  requestPayload,
+  customResultRenderer,
+  onRefineRequest,
+  onClientCompute,
 }) => {
   const [input, setInput] = useState('');
   const [result, setResult] = useState('');
+  const [rawData, setRawData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefining, setIsRefining] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [activeToolTab, setActiveToolTab] = useState<'result' | 'examples' | 'history'>('result');
+  const [recentItems, setRecentItems] = useState<SavedItem[]>([]);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  const handleExampleClick = () => {
-    setInput(examplePrompt);
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    setRecentItems(getToolHistoryBySlug(tool.slug));
+  }, [tool.slug, result]);
+
+  const handleExampleClick = (text: string) => {
+    setInput(text);
     setError(null);
+    setValidationError(null);
   };
 
   const handleClear = () => {
     setInput('');
     setResult('');
+    setRawData(null);
     setError(null);
+    setValidationError(null);
   };
 
-  const handleGenerate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
+  const handleCancel = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsLoading(false);
+    showToast('Generation cancelled', 'info');
+  };
+
+  const handleClearRecent = () => {
+    clearToolHistoryBySlug(tool.slug);
+    setRecentItems([]);
+    showToast('Recent history cleared', 'info');
+  };
+
+  const handleGenerate = async (e?: React.FormEvent) => {
+    if (e && e.preventDefault) e.preventDefault();
+
+    if (!input.trim()) {
+      setValidationError('Please enter what you need before generating.');
+      return;
+    }
+    setValidationError(null);
+
+    if (isLoading) return;
 
     setIsLoading(true);
     setError(null);
     setCopied(false);
     setShared(false);
 
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     try {
-      const response = await fetch('/api/generate', {
+      if (onClientCompute) {
+        const computed = onClientCompute(input.trim());
+        setResult(computed.result);
+        setRawData(computed.rawData || computed);
+        saveToolResult(tool.slug, tool.name, input.trim(), computed.result);
+        setRecentItems(getToolHistoryBySlug(tool.slug));
+        setIsLoading(false);
+        return;
+      }
+
+      const payload = requestPayload
+        ? requestPayload(input.trim())
+        : { tool: tool.slug, input: input.trim() };
+
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          tool: tool.slug,
-          input: input.trim(),
-        }),
+        body: JSON.stringify(payload),
+        signal: controller.signal,
       });
 
       const data = await response.json();
@@ -105,74 +201,119 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
         throw new Error(data.error || "That didn't work. Try again in a moment.");
       }
 
-      setResult(data.result);
-      // Save result to localStorage
-      saveToolResult(tool.slug, tool.name, input.trim(), data.result);
+      const generatedResult = data.result || (typeof data === 'string' ? data : JSON.stringify(data));
+      setResult(generatedResult);
+      setRawData(data);
+      saveToolResult(tool.slug, tool.name, input.trim(), generatedResult);
+      setRecentItems(getToolHistoryBySlug(tool.slug));
     } catch (err: any) {
-      setError(err?.message || "That didn't work. Try again in a moment.");
+      if (err.name === 'AbortError') {
+        return;
+      }
+      setError("That didn't work. Try again in a moment.");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleCopy = async () => {
-    if (!result) return;
+  const handleRefine = async (action: string) => {
+    if (!onRefineRequest || !result || isRefining) return;
+    setIsRefining(true);
     try {
-      await navigator.clipboard.writeText(result);
+      await onRefineRequest(action, result, rawData, setRawData, setResult);
+      setRecentItems(getToolHistoryBySlug(tool.slug));
+      showToast('Updated result successfully!');
+    } catch (err: any) {
+      showToast(err?.message || "Could not refine. Please try again.");
+    } finally {
+      setIsRefining(false);
+    }
+  };
+
+  const handleCopy = async (textToCopy?: string) => {
+    const text = textToCopy || result;
+    if (!text) return;
+    try {
+      await navigator.clipboard.writeText(text);
       setCopied(true);
+      showToast('Copied to clipboard!');
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
+      showToast('Please select and copy manually');
     }
   };
 
-  const handleShare = async () => {
-    if (!result) return;
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: `${tool.name} Result · SmartToolHub`,
-          text: result,
-          url: window.location.href,
-        });
+  const handleShare = async (textToShare?: string) => {
+    const text = textToShare || result;
+    if (!text) return;
+    const res = await shareWithFallback({
+      title: `${tool.name} Result · SmartToolHub`,
+      text: text,
+      url: typeof window !== 'undefined' ? window.location.href : '',
+    });
+
+    if (res.success) {
+      if (res.mode === 'native') {
         setShared(true);
+        showToast('Shared successfully!');
         setTimeout(() => setShared(false), 2000);
-      } catch {
-        // User cancelled
+      } else {
+        setCopied(true);
+        showToast('Copied to clipboard! (Share sheet not supported)');
+        setTimeout(() => setCopied(false), 2000);
       }
-    } else {
-      handleCopy();
+    } else if (res.message !== 'Share dismissed') {
+      showToast(res.message);
     }
   };
+
+  // Determine the 3 example chips
+  const chips = exampleChips && exampleChips.length > 0 ? exampleChips.slice(0, 3) : [examplePrompt];
 
   return (
-    <article className="py-6 sm:py-10 max-w-4xl mx-auto space-y-10">
-      {/* 1. Breadcrumbs Landmark */}
-      <nav aria-label="Breadcrumbs" className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-        <Link href="/" navigate={navigate} className="hover:text-[#39ff88] transition-colors focus-laser rounded">
-          Home
+    <article className="py-6 sm:py-10 max-w-4xl mx-auto space-y-10 relative">
+      {/* Mobile in-page "Back to tools" link (Phase 4 requirement) */}
+      <div className="sm:hidden -mb-6">
+        <Link
+          href="/tools"
+          navigate={navigate}
+          className="inline-flex items-center gap-2 text-sm font-semibold text-[#8fa3c0] hover:text-[#39ff88] transition-colors py-2 px-1 focus-laser rounded-lg min-h-[44px]"
+          aria-label="Back to tools"
+        >
+          <ArrowLeft size={16} aria-hidden="true" className="text-[#39ff88]" />
+          <span>Back to tools</span>
         </Link>
-        <ChevronRight className="w-3.5 h-3.5 text-[#8fa3c0]/60" />
-        <Link href="/tools" navigate={navigate} className="hover:text-[#39ff88] transition-colors focus-laser rounded">
-          Tools
-        </Link>
-        <ChevronRight className="w-3.5 h-3.5 text-[#8fa3c0]/60" />
-        <span className="text-[#f2f7ff] truncate">{tool.name}</span>
-      </nav>
+      </div>
 
-      {/* 2. Tool Header & Kicker */}
+      {/* 1. Breadcrumbs Landmark with Mobile Truncation */}
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Tools', href: '/tools' },
+          { label: tool.name },
+        ]}
+        navigate={navigate}
+      />
+
+      {/* 2. Tool Header & Kicker with IconTile */}
       <header className="space-y-4">
-        <div className="flex flex-wrap items-center gap-2 text-xs text-[#8fa3c0]">
-          <span className="font-mono uppercase text-[#39ff88] font-semibold">{tool.category}</span>
-          <span aria-hidden="true">·</span>
-          <span>Updated {lastUpdated}</span>
-          <span aria-hidden="true">·</span>
-          <span>
-            By{' '}
-            <Link href="/about" navigate={navigate} className="text-[#f2f7ff] hover:underline focus-laser rounded">
-              Dhrumil Aslaliya
-            </Link>
-          </span>
+        <div className="flex items-center gap-4">
+          <IconTile icon={TOOL_ICON_MAP[tool.slug] || tool.icon} />
+          <div>
+            <div className="flex flex-wrap items-center gap-2 text-xs text-[#8fa3c0]">
+              <span className="font-mono uppercase text-[#39ff88] font-semibold">{tool.category}</span>
+              <span aria-hidden="true">·</span>
+              <span>Updated {lastUpdated}</span>
+              <span aria-hidden="true">·</span>
+              <span>
+                By{' '}
+                <Link href="/about" navigate={navigate} className="text-[#f2f7ff] hover:underline focus-laser rounded">
+                  Dhrumil Aslaliya
+                </Link>
+              </span>
+            </div>
+            <div className="text-xs text-[#8fa3c0] mt-0.5">Free tool · No sign-up · Results in seconds</div>
+          </div>
         </div>
 
         <h1 className="h1-fluid font-display text-[#f2f7ff]">
@@ -184,129 +325,197 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
         </p>
       </header>
 
-      {/* 3. Primary Tool Interactive Card (Mobile-First: Input first, big button, result directly below) */}
+      {/* 3. Primary Tool Interactive Card */}
       <section aria-label="Tool input and generator" className="glass-surface rounded-3xl p-5 sm:p-7 border border-[rgba(143,163,192,0.18)] shadow-2xl space-y-5">
         <form onSubmit={handleGenerate} className="space-y-4">
-          <div className="flex items-center justify-between">
-            <label htmlFor="tool-input" className="text-xs font-mono uppercase tracking-wider text-[#f2f7ff] font-semibold">
-              {inputLabel}
-            </label>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={handleExampleClick}
-                className="text-xs font-mono text-[#39ff88] hover:underline focus-laser rounded uppercase tracking-wider"
-              >
-                Try an example
-              </button>
-              {input && (
+          <FormField
+            id="tool-input"
+            label={inputLabel}
+            error={validationError}
+            action={
+              input ? (
                 <button
                   type="button"
                   onClick={handleClear}
                   className="text-xs text-[#8fa3c0] hover:text-[#f2f7ff] focus-laser rounded inline-flex items-center gap-1"
                 >
-                  <RotateCcw className="w-3 h-3" />
+                  <RotateCcw className="w-3 h-3" aria-hidden="true" />
                   <span>Clear</span>
                 </button>
-              )}
+              ) : null
+            }
+          >
+            {({ id, 'aria-invalid': ariaInvalid, 'aria-describedby': ariaDescribedBy, className: borderClass }) => (
+              <div>
+                <textarea
+                  id={id}
+                  rows={4}
+                  value={input}
+                  onChange={(e) => {
+                    setInput(e.target.value);
+                    if (validationError) setValidationError(null);
+                  }}
+                  placeholder={inputPlaceholder}
+                  maxLength={2500}
+                  aria-invalid={ariaInvalid}
+                  aria-describedby={ariaDescribedBy}
+                  className={`w-full bg-[#0a1424] border ${borderClass} rounded-2xl p-4 text-base text-[#f2f7ff] placeholder-[#8fa3c0] focus-laser resize-y min-h-[110px] transition-colors`}
+                  style={{ fontSize: '16px' }}
+                />
+                <div className="flex justify-between items-center text-[11px] text-[#8fa3c0] mt-1.5 px-1">
+                  <span>Plain English description · No tech jargon required</span>
+                  <CharacterCounter current={input.length} max={2500} />
+                </div>
+              </div>
+            )}
+          </FormField>
+
+          {/* Try an Example Chips (3 Examples) */}
+          <div className="space-y-1.5 pt-1">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold">
+              Try an example:
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {chips.map((chip, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleExampleClick(chip)}
+                  className="px-3 py-1.5 text-xs rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#39ff88] hover:border-[#39ff88]/40 transition-colors text-left max-w-full truncate focus-laser"
+                >
+                  {chip.length > 55 ? `${chip.slice(0, 55)}...` : chip}
+                </button>
+              ))}
             </div>
           </div>
 
-          <div>
-            <textarea
-              id="tool-input"
-              rows={4}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder={inputPlaceholder}
-              maxLength={2000}
-              className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-2xl p-4 text-base text-[#f2f7ff] placeholder-[#8fa3c0] focus-laser resize-y min-h-[110px]"
-              style={{ fontSize: '16px' }} // Prevent iOS zoom
-            />
-            <div className="flex justify-between items-center text-[11px] text-[#8fa3c0] mt-1.5 px-1">
-              <span>Plain English description · No tech jargon required</span>
-              <span>{input.length}/2,000</span>
-            </div>
-          </div>
-
-          {/* Optional Extra Controls (e.g. Tone, Platform selector) */}
+          {/* Optional Extra Controls (Tone, Platform selectors) */}
           {extraControls}
 
-          {/* Big Full-Width Primary Action Button */}
-          <button
+          {/* Big Full-Width Primary Action Button (48px height) with Loading State */}
+          <Button
             type="submit"
-            disabled={!input.trim() || isLoading}
-            className="w-full btn-laser disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(57,255,136,0.25)]"
+            variant="primary"
+            size="lg"
+            isLoading={isLoading}
+            loadingLabel="Generating in seconds..."
+            leadingIcon="Zap"
+            className="w-full h-12 shadow-[0_0_20px_rgba(57,255,136,0.25)] text-sm font-bold"
           >
-            {isLoading ? (
-              <span className="flex items-center gap-2">
-                <span className="w-4 h-4 border-2 border-[#050a14] border-t-transparent rounded-full animate-spin" />
-                <span>Generating in seconds...</span>
-              </span>
-            ) : (
-              <span className="flex items-center gap-2">
-                <Zap className="w-4 h-4 fill-current" />
-                <span>{generateButtonText}</span>
-              </span>
-            )}
-          </button>
+            {generateButtonText}
+          </Button>
         </form>
 
-        {/* Error State */}
+        {/* AI Loading State with Rotating Statuses and Cancel Button */}
+        {isLoading && (
+          <AiLoadingState onCancel={handleCancel} />
+        )}
+
+        {/* Standard Error State with Try Again Button */}
         {error && (
-          <div className="p-4 rounded-xl bg-[#ff5c7a]/10 border border-[#ff5c7a]/30 text-xs text-[#ff5c7a] flex items-center gap-2" role="alert">
-            <AlertCircle className="w-4 h-4 shrink-0" />
-            <span>{error}</span>
-          </div>
+          <ErrorState message={error} onRetry={() => handleGenerate()} />
         )}
 
         {/* Result Area Directly Below */}
-        {result && (
+        {result && !isLoading && (
           <div className="pt-5 border-t border-[rgba(143,163,192,0.14)] space-y-3" aria-live="polite">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold">
-                Your Result
-              </span>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleCopy}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
-                >
-                  {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copied ? 'Copied' : 'Copy'}</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={handleShare}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-laser"
-                >
-                  {shared ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Share2 className="w-3.5 h-3.5" />}
-                  <span>Share</span>
-                </button>
-              </div>
-            </div>
+            {customResultRenderer ? (
+              customResultRenderer({
+                result,
+                rawData,
+                input,
+                onCopy: handleCopy,
+                onShare: handleShare,
+                copied,
+                shared,
+                isRefining,
+                onRefine: handleRefine,
+              })
+            ) : (
+              <>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold">
+                    Your Result
+                  </span>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {extraResultActions?.(result, input)}
+                    <CopyButton
+                      textToCopy={result}
+                      onCopySuccess={() => showToast('Copied to clipboard!')}
+                    />
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => handleShare()}
+                      leadingIcon="Share2"
+                    >
+                      <span>Share</span>
+                    </Button>
+                  </div>
+                </div>
 
-            {/* Output Container with Internal Scroll */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-sm text-[#f2f7ff] leading-relaxed whitespace-pre-wrap max-h-[500px] overflow-y-auto selection:bg-[#39ff88] selection:text-[#050a14]">
-              {result}
-            </div>
+                {/* Output Container with Internal Scroll */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-sm text-[#f2f7ff] leading-relaxed whitespace-pre-wrap max-h-[500px] overflow-y-auto selection:bg-[#39ff88] selection:text-[#050a14]">
+                  {result}
+                </div>
+              </>
+            )}
 
             {/* Honest Disclaimer */}
             <div className="flex items-center gap-2 text-xs text-[#8fa3c0]/90 pt-1">
               <AlertCircle className="w-4 h-4 text-[#ffb840] shrink-0" />
-              <span>AI can make mistakes. Always check important names, commands, and formulas before implementing.</span>
+              <span>AI can make mistakes. Always check important names, commands, and facts before sending.</span>
+            </div>
+          </div>
+        )}
+
+        {/* Recent Results (Last 5 per tool) */}
+        {recentItems.length > 0 && (
+          <div className="pt-5 border-t border-[rgba(143,163,192,0.14)] space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold">
+                <Clock className="w-3.5 h-3.5 text-[#39ff88]" />
+                <span>Recent Results ({recentItems.length})</span>
+              </div>
+              <button
+                type="button"
+                onClick={handleClearRecent}
+                className="text-[11px] text-[#ff5c7a] hover:underline inline-flex items-center gap-1 focus-laser rounded"
+              >
+                <Trash2 className="w-3 h-3" />
+                <span>Clear</span>
+              </button>
+            </div>
+            <div className="space-y-2">
+              {recentItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="p-3 rounded-xl bg-[#0a1424]/80 border border-[rgba(143,163,192,0.12)] flex items-center justify-between gap-3 text-xs"
+                >
+                  <div className="truncate flex-1">
+                    <span className="font-semibold text-[#f2f7ff]">{item.prompt}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(item.result)}
+                    className="shrink-0 px-2.5 py-1 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-[#8fa3c0] hover:text-[#39ff88] hover:border-[#39ff88] transition-colors focus-laser inline-flex items-center gap-1"
+                  >
+                    <Copy className="w-3 h-3" />
+                    <span>Copy</span>
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         )}
 
         {/* Privacy Note */}
         <div className="pt-2 text-[11px] text-[#8fa3c0]/80">
-          Privacy: Text you enter is sent securely to the AI service to produce your result and is not stored or shared by us.
+          Privacy: Text you enter is processed securely by the AI service to produce your result and is not stored on our servers.
         </div>
       </section>
 
-      {/* 4. Editorial Content (400+ Words: What it does, How to use, Worked example, Tips) */}
+      {/* 4. Editorial Content */}
       <section className="space-y-8 pt-4">
         {/* What It Does */}
         <div className="space-y-3">
@@ -397,7 +606,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
           </div>
         </div>
 
-        {/* Reserved Ad Slot (Zero CLS, below FAQ and above related links) */}
+        {/* Reserved Ad Slot (Zero CLS) */}
         <AdSlot format="banner" />
 
         {/* Internal Linking: 2 Related Tools & 1 Related Guide */}
@@ -406,16 +615,21 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
             Related Tools &amp; Guides
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {relatedTools.map((relTool) => (
+            {relatedTools.slice(0, 2).map((relTool) => (
               <Link
                 key={relTool.id}
                 href={`/tools/${relTool.slug}`}
                 navigate={navigate}
-                className="glass-surface p-4 rounded-2xl border border-[rgba(143,163,192,0.12)] hover:border-[#39ff88] transition-colors focus-laser"
+                className="glass-surface p-4 rounded-2xl border border-[rgba(143,163,192,0.12)] hover:border-[#39ff88] transition-colors focus-laser group flex flex-col justify-between"
               >
-                <div className="text-[10px] font-mono uppercase text-[#39ff88]">{relTool.category}</div>
-                <div className="font-semibold text-sm text-[#f2f7ff] mt-1">{relTool.name}</div>
-                <p className="text-xs text-[#8fa3c0] line-clamp-2 mt-1">{relTool.description}</p>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <IconTile icon={TOOL_ICON_MAP[relTool.slug] || relTool.icon} size="md" />
+                    <span className="text-[10px] font-mono uppercase text-[#39ff88]">{relTool.category}</span>
+                  </div>
+                  <div className="font-semibold text-sm text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">{relTool.name}</div>
+                  <p className="text-xs text-[#8fa3c0] line-clamp-2 mt-1">{relTool.description}</p>
+                </div>
               </Link>
             ))}
 
@@ -437,19 +651,21 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
 
       {/* Mobile Sticky Bottom Action Bar (Appears when result exists) */}
       {result && (
-        <div className="md:hidden fixed bottom-14 left-0 right-0 p-3 bg-[#050a14]/95 backdrop-blur-[20px] border-t border-[rgba(143,163,192,0.2)] z-30 flex items-center gap-3">
+        <div className="md:hidden fixed bottom-14 left-0 right-0 p-3 bg-[#050a14]/95 backdrop-blur-[20px] border-t border-[rgba(143,163,192,0.2)] z-30 flex items-center gap-2">
+          {extraResultActions?.(result, input)}
           <button
             type="button"
-            onClick={handleCopy}
+            onClick={() => handleCopy()}
             className="flex-1 btn-laser h-11 text-xs"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-            <span>{copied ? 'Copied to Clipboard' : 'Copy Result'}</span>
+            <span>{copied ? 'Copied' : 'Copy Result'}</span>
           </button>
           <button
             type="button"
-            onClick={handleShare}
-            className="btn-glass h-11 px-4 text-xs"
+            onClick={() => handleShare()}
+            aria-label="Share result"
+            className="btn-glass h-11 px-3.5 text-xs shrink-0"
           >
             <Share2 className="w-4 h-4 text-[#8fa3c0]" />
           </button>
