@@ -19,7 +19,7 @@ import { saveToolResult, getToolHistoryBySlug, clearToolHistoryBySlug, SavedItem
 import { AdSlot } from '../ads/AdSlot.tsx';
 import { shareWithFallback } from '../../utils/share.ts';
 import { IconTile } from '../ui/IconTile.tsx';
-import { TOOL_ICON_MAP } from '../../data/tools.ts';
+import { TOOL_ICON_MAP, getCategoryTheme } from '../../data/tools.ts';
 import { Button, CopyButton } from '../ui/Button.tsx';
 import { useToast } from '../ui/Toast.tsx';
 import { AiLoadingState } from '../ui/AiLoadingState.tsx';
@@ -102,6 +102,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
   onRefineRequest,
   onClientCompute,
 }) => {
+  const theme = getCategoryTheme(tool.category);
   const [input, setInput] = useState('');
   const [result, setResult] = useState('');
   const [rawData, setRawData] = useState<any>(null);
@@ -277,10 +278,10 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
         <Link
           href="/tools"
           navigate={navigate}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-[#8fa3c0] hover:text-[#39ff88] transition-colors py-2 px-1 focus-laser rounded-lg min-h-[44px]"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-[#8fa3c0] hover:text-[#7db8ff] transition-colors py-2 px-1 focus-ring rounded-lg min-h-[44px]"
           aria-label="Back to tools"
         >
-          <ArrowLeft size={16} aria-hidden="true" className="text-[#39ff88]" />
+          <ArrowLeft size={16} aria-hidden="true" className="text-[#7db8ff]" />
           <span>Back to tools</span>
         </Link>
       </div>
@@ -301,13 +302,13 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
           <IconTile icon={TOOL_ICON_MAP[tool.slug] || tool.icon} />
           <div>
             <div className="flex flex-wrap items-center gap-2 text-xs text-[#8fa3c0]">
-              <span className="font-mono uppercase text-[#39ff88] font-semibold">{tool.category}</span>
+              <span style={{ color: theme.color }} className="font-mono uppercase font-semibold">{tool.category}</span>
               <span aria-hidden="true">·</span>
               <span>Updated {lastUpdated}</span>
               <span aria-hidden="true">·</span>
               <span>
                 By{' '}
-                <Link href="/about" navigate={navigate} className="text-[#f2f7ff] hover:underline focus-laser rounded">
+                <Link href="/about" navigate={navigate} className="text-[#f2f7ff] hover:underline focus-ring rounded">
                   Dhrumil Aslaliya
                 </Link>
               </span>
@@ -337,7 +338,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
                 <button
                   type="button"
                   onClick={handleClear}
-                  className="text-xs text-[#8fa3c0] hover:text-[#f2f7ff] focus-laser rounded inline-flex items-center gap-1"
+                  className="text-xs text-[#8fa3c0] hover:text-[#f2f7ff] focus-ring rounded inline-flex items-center gap-1"
                 >
                   <RotateCcw className="w-3 h-3" aria-hidden="true" />
                   <span>Clear</span>
@@ -359,7 +360,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
                   maxLength={2500}
                   aria-invalid={ariaInvalid}
                   aria-describedby={ariaDescribedBy}
-                  className={`w-full bg-[#0a1424] border ${borderClass} rounded-2xl p-4 text-base text-[#f2f7ff] placeholder-[#8fa3c0] focus-laser resize-y min-h-[110px] transition-colors`}
+                  className={`w-full bg-[#0a1424] border ${borderClass} rounded-2xl p-4 text-base text-[#f2f7ff] placeholder-[#8fa3c0] focus-ring resize-y min-h-[110px] transition-colors`}
                   style={{ fontSize: '16px' }}
                 />
                 <div className="flex justify-between items-center text-[11px] text-[#8fa3c0] mt-1.5 px-1">
@@ -381,7 +382,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
                   key={idx}
                   type="button"
                   onClick={() => handleExampleClick(chip)}
-                  className="px-3 py-1.5 text-xs rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#39ff88] hover:border-[#39ff88]/40 transition-colors text-left max-w-full truncate focus-laser"
+                  className="px-3 py-1.5 text-xs rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#7db8ff] hover:border-[rgba(143,163,192,0.3)] transition-colors text-left max-w-full truncate focus-ring"
                 >
                   {chip.length > 55 ? `${chip.slice(0, 55)}...` : chip}
                 </button>
@@ -400,7 +401,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
             isLoading={isLoading}
             loadingLabel="Generating in seconds..."
             leadingIcon="Zap"
-            className="w-full h-12 shadow-[0_0_20px_rgba(57,255,136,0.25)] text-sm font-bold"
+            className="w-full h-12 shadow-[0_4px_16px_rgba(11,107,240,0.28)] text-sm font-bold"
           >
             {generateButtonText}
           </Button>
@@ -434,7 +435,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
             ) : (
               <>
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold">
+                  <span style={{ color: theme.color }} className="font-mono text-xs uppercase tracking-wider font-semibold">
                     Your Result
                   </span>
                   <div className="flex flex-wrap items-center gap-2">
@@ -455,7 +456,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
                 </div>
 
                 {/* Output Container with Internal Scroll */}
-                <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-sm text-[#f2f7ff] leading-relaxed whitespace-pre-wrap max-h-[500px] overflow-y-auto selection:bg-[#39ff88] selection:text-[#050a14]">
+                <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-sm text-[#f2f7ff] leading-relaxed whitespace-pre-wrap max-h-[500px] overflow-y-auto selection:bg-[rgba(10,132,255,0.3)] selection:text-[#f2f7ff]">
                   {result}
                 </div>
               </>
@@ -474,13 +475,13 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
           <div className="pt-5 border-t border-[rgba(143,163,192,0.14)] space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold">
-                <Clock className="w-3.5 h-3.5 text-[#39ff88]" />
+                <Clock className="w-3.5 h-3.5 text-[#7db8ff]" />
                 <span>Recent Results ({recentItems.length})</span>
               </div>
               <button
                 type="button"
                 onClick={handleClearRecent}
-                className="text-[11px] text-[#ff5c7a] hover:underline inline-flex items-center gap-1 focus-laser rounded"
+                className="text-[11px] text-[#ff5c7a] hover:underline inline-flex items-center gap-1 focus-ring rounded"
               >
                 <Trash2 className="w-3 h-3" />
                 <span>Clear</span>
@@ -498,7 +499,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
                   <button
                     type="button"
                     onClick={() => handleCopy(item.result)}
-                    className="shrink-0 px-2.5 py-1 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-[#8fa3c0] hover:text-[#39ff88] hover:border-[#39ff88] transition-colors focus-laser inline-flex items-center gap-1"
+                    className="shrink-0 px-2.5 py-1 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-[#8fa3c0] hover:text-[#7db8ff] hover:border-[rgba(10,132,255,0.4)] transition-colors focus-ring inline-flex items-center gap-1"
                   >
                     <Copy className="w-3 h-3" />
                     <span>Copy</span>
@@ -535,7 +536,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {howToUseSteps.map((step, idx) => (
               <div key={step.step} className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
-                <div className="font-mono text-xs text-[#39ff88] uppercase tracking-wider font-bold">
+                <div style={{ color: theme.color }} className="font-mono text-xs uppercase tracking-wider font-bold">
                   Step 0{idx + 1}
                 </div>
                 <div className="font-semibold text-sm text-[#f2f7ff]">{step.step}</div>
@@ -547,14 +548,14 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
 
         {/* Worked Example */}
         <div className="glass-surface p-6 rounded-3xl border border-[rgba(143,163,192,0.14)] space-y-3">
-          <div className="text-xs font-mono uppercase text-[#39ff88] tracking-wider font-semibold">
+          <div style={{ color: theme.color }} className="text-xs font-mono uppercase tracking-wider font-semibold">
             Worked Example
           </div>
           <h3 className="text-lg font-bold font-display text-[#f2f7ff]">
             {workedExample.title}
           </h3>
           <div className="text-xs text-[#8fa3c0] font-mono p-3 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.12)]">
-            <span className="text-[#39ff88]">&gt; Input: </span>{workedExample.scenario}
+            <span className="text-[#7db8ff]">&gt; Input: </span>{workedExample.scenario}
           </div>
           <div className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed whitespace-pre-wrap p-3.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.12)]">
             {workedExample.output}
@@ -569,7 +570,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
           <ul className="space-y-2 text-sm text-[#8fa3c0]">
             {tips.map((tip, idx) => (
               <li key={idx} className="flex items-start gap-2.5">
-                <span className="text-[#39ff88] font-bold">✓</span>
+                <span style={{ color: theme.color }} className="font-bold">✓</span>
                 <span>{tip}</span>
               </li>
             ))}
@@ -590,10 +591,10 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
                     type="button"
                     onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
                     aria-expanded={isOpen}
-                    className="w-full p-4 text-left flex items-center justify-between gap-4 focus-laser"
+                    className="w-full p-4 text-left flex items-center justify-between gap-4 focus-ring"
                   >
                     <span className="font-semibold text-sm text-[#f2f7ff]">{item.question}</span>
-                    <ChevronDown className={`w-4 h-4 text-[#8fa3c0] transition-transform ${isOpen ? 'rotate-180 text-[#39ff88]' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-[#8fa3c0] transition-transform ${isOpen ? 'rotate-180 text-[#5aa9ff]' : ''}`} />
                   </button>
                   {isOpen && (
                     <div className="px-4 pb-4 pt-1 text-xs sm:text-sm text-[#8fa3c0] leading-relaxed border-t border-[rgba(143,163,192,0.08)]">
@@ -611,7 +612,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
 
         {/* Internal Linking: 2 Related Tools & 1 Related Guide */}
         <div className="pt-8 border-t border-[rgba(143,163,192,0.12)] space-y-6">
-          <div className="text-xs font-mono uppercase tracking-wider text-[#39ff88]">
+          <div className="text-xs font-mono uppercase tracking-wider text-[#7db8ff]">
             Related Tools &amp; Guides
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -620,14 +621,14 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
                 key={relTool.id}
                 href={`/tools/${relTool.slug}`}
                 navigate={navigate}
-                className="glass-surface p-4 rounded-2xl border border-[rgba(143,163,192,0.12)] hover:border-[#39ff88] transition-colors focus-laser group flex flex-col justify-between"
+                className="glass-surface p-4 rounded-2xl border border-[rgba(143,163,192,0.12)] hover:border-[rgba(10,132,255,0.4)] transition-colors focus-ring group flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <IconTile icon={TOOL_ICON_MAP[relTool.slug] || relTool.icon} size="md" />
-                    <span className="text-[10px] font-mono uppercase text-[#39ff88]">{relTool.category}</span>
+                    <span className="text-[10px] font-mono uppercase text-[#7db8ff]">{relTool.category}</span>
                   </div>
-                  <div className="font-semibold text-sm text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">{relTool.name}</div>
+                  <div className="font-semibold text-sm text-[#f2f7ff] group-hover:text-[#7db8ff] transition-colors">{relTool.name}</div>
                   <p className="text-xs text-[#8fa3c0] line-clamp-2 mt-1">{relTool.description}</p>
                 </div>
               </Link>
@@ -636,7 +637,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
             <Link
               href={`/guides/${relatedGuide.slug}`}
               navigate={navigate}
-              className="glass-surface p-4 rounded-2xl border border-[rgba(143,163,192,0.12)] hover:border-[#39ff88] transition-colors focus-laser"
+              className="glass-surface p-4 rounded-2xl border border-[rgba(143,163,192,0.12)] hover:border-[rgba(10,132,255,0.4)] transition-colors focus-ring"
             >
               <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase text-[#5aa9ff]">
                 <BookOpen className="w-3 h-3" />
@@ -656,7 +657,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
           <button
             type="button"
             onClick={() => handleCopy()}
-            className="flex-1 btn-laser h-11 text-xs"
+            className="flex-1 btn-primary h-11 text-xs"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             <span>{copied ? 'Copied' : 'Copy Result'}</span>

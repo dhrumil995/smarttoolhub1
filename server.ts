@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import http from 'http';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
@@ -799,6 +800,583 @@ Return ONLY valid JSON matching this schema:
   }
 });
 
+// Dedicated Endpoint: Task Breaker (H1)
+app.post('/api/task-breaker', rateLimiter, async (req: Request, res: Response) => {
+  try {
+    const { task = '', detailLevel = 'normal' } = req.body;
+    if (!task.trim()) {
+      return res.status(400).json({ error: 'Please enter a task or goal to break down.' });
+    }
+    if (task.length > 5000) {
+      return res.status(400).json({ error: 'Input is too long. Please keep it under 5,000 characters.' });
+    }
+
+    let steps = [
+      { id: 1, text: `Define the outcome for: ${task.slice(0, 40)}`, duration: '5 mins', completed: false },
+      { id: 2, text: 'Gather all required materials and clear your workspace', duration: '10 mins', completed: false },
+      { id: 3, text: 'Draft the initial outline or first draft', duration: '20 mins', completed: false },
+      { id: 4, text: 'Review and refine the draft', duration: '15 mins', completed: false },
+      { id: 5, text: 'Final check and completion', duration: '10 mins', completed: false },
+    ];
+    let encouragement = 'Breathe. You do not need to finish everything at once—just do step 1.';
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const stepCountInstruction =
+          detailLevel === 'tiny'
+            ? 'Generate 8-12 extremely small, low-friction micro-steps (2 to 15 mins each) designed to beat procrastination.'
+            : detailLevel === 'few'
+            ? 'Generate 3-5 high-level milestones (20 to 45 mins each).'
+            : 'Generate 5-7 clear, manageable steps (10 to 30 mins each).';
+
+        const prompt = `You are a calm, supportive productivity coach. Break down the user's task or goal into manageable steps.
+Goal: "${task}"
+Detail level: ${detailLevel}
+Requirement: ${stepCountInstruction}
+Tone: Calm, encouraging, gentle, non-judgmental, zero pressure.
+
+Respond ONLY with valid JSON in this exact structure:
+{
+  "steps": [
+    { "id": 1, "text": "Specific micro-step description", "duration": "10 mins" }
+  ],
+  "encouragement": "A short 1-2 sentence warm, reassuring thought."
+}`;
+
+        const aiRes = await generateWithTimeout({
+          model: 'gemini-3.1-flash-lite',
+          contents: prompt,
+          generationConfig: { responseMimeType: 'application/json' },
+        });
+
+        const raw = aiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed.steps) && parsed.steps.length > 0) {
+            steps = parsed.steps.map((s: any, idx: number) => ({
+              id: idx + 1,
+              text: s.text || `Step ${idx + 1}`,
+              duration: s.duration || '15 mins',
+              completed: false,
+            }));
+          }
+          if (parsed.encouragement) encouragement = parsed.encouragement;
+        }
+      } catch (err) {
+        console.warn('Task breaker AI fallback:', err);
+      }
+    }
+
+    const formattedResult = `### Action Plan: ${task}\n*${encouragement}*\n\n` +
+      steps.map(s => `${s.id}. [${s.duration}] ${s.text}`).join('\n');
+
+    return res.json({ steps, encouragement, result: formattedResult });
+  } catch (error) {
+    console.error('Task breaker error:', error);
+    return res.status(500).json({ error: "That didn't work. Try again in a moment." });
+  }
+});
+
+// Dedicated Endpoint: Explain It Simply (H2)
+app.post('/api/explain-simply', rateLimiter, async (req: Request, res: Response) => {
+  try {
+    const { topic = '', level = 'age10' } = req.body;
+    if (!topic.trim()) {
+      return res.status(400).json({ error: 'Please enter a topic or concept to explain.' });
+    }
+    if (topic.length > 5000) {
+      return res.status(400).json({ error: 'Input is too long. Please keep it under 5,000 characters.' });
+    }
+
+    let explanation = `${topic} is a concept that can be understood by breaking it into everyday parts.`;
+    let everydayExample = 'Imagine baking a cake: each ingredient has a specific purpose, just like each part of this concept.';
+    let quiz = [
+      { question: `What is the main purpose of ${topic.slice(0, 25)}?`, answer: 'To solve a specific problem step by step.', explanation: 'It organizes how things interact.' },
+      { question: 'Why does this matter in everyday life?', answer: 'It helps explain how systems work together.', explanation: 'Observing the inputs and outputs makes it predictable.' },
+      { question: 'What is one common mistake people make?', answer: 'Assuming it is too complicated without breaking it down.', explanation: 'Simplicity comes from identifying core rules.' },
+    ];
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const levelGuide =
+          level === 'age10'
+            ? 'Explain like teaching an inquisitive 10-year-old: simple words, playful imagery, no jargon.'
+            : level === 'college'
+            ? 'Explain at early college undergraduate level: rigorous principles, core trade-offs, and key mechanics.'
+            : 'Explain at high school level: clear intuition, relatable everyday terms, minimal academic fluff.';
+
+        const prompt = `You are a world-class tutor using the Feynman technique. Explain the following concept clearly.
+Topic: "${topic}"
+Audience Level: ${level} (${levelGuide})
+
+Respond ONLY with valid JSON in this exact structure:
+{
+  "explanation": "Clear, intuitive 2-3 paragraph explanation avoiding unnecessary jargon.",
+  "everydayExample": "A vivid, relatable real-world analogy or example that cements the concept.",
+  "quiz": [
+    {
+      "question": "Question 1 testing core understanding",
+      "answer": "Concise correct answer",
+      "explanation": "Why this answer is correct"
+    },
+    {
+      "question": "Question 2",
+      "answer": "Answer",
+      "explanation": "Explanation"
+    },
+    {
+      "question": "Question 3",
+      "answer": "Answer",
+      "explanation": "Explanation"
+    }
+  ]
+}`;
+
+        const aiRes = await generateWithTimeout({
+          model: 'gemini-3.1-flash-lite',
+          contents: prompt,
+          generationConfig: { responseMimeType: 'application/json' },
+        });
+
+        const raw = aiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed.explanation) explanation = parsed.explanation;
+          if (parsed.everydayExample) everydayExample = parsed.everydayExample;
+          if (Array.isArray(parsed.quiz) && parsed.quiz.length > 0) quiz = parsed.quiz;
+        }
+      } catch (err) {
+        console.warn('Explain simply AI fallback:', err);
+      }
+    }
+
+    const formattedResult = `### Simple Explanation (${level.toUpperCase()})\n${explanation}\n\n### Everyday Analogy\n${everydayExample}\n\n### Check Your Understanding\n` +
+      quiz.map((q, i) => `**Q${i + 1}: ${q.question}**\n*Answer:* ${q.answer}\n*Why:* ${q.explanation}\n`).join('\n');
+
+    return res.json({ explanation, everydayExample, quiz, result: formattedResult });
+  } catch (error) {
+    console.error('Explain simply error:', error);
+    return res.status(500).json({ error: "That didn't work. Try again in a moment." });
+  }
+});
+
+// Dedicated Endpoint: Flashcard & Quiz Maker (H3)
+app.post('/api/flashcards-quiz', rateLimiter, async (req: Request, res: Response) => {
+  try {
+    const { notes = '' } = req.body;
+    if (!notes.trim()) {
+      return res.status(400).json({ error: 'Please paste your study notes or summary.' });
+    }
+    if (notes.length > 6000) {
+      return res.status(400).json({ error: 'Notes are too long. Please keep them under 6,000 characters.' });
+    }
+
+    let flashcards = [
+      { front: 'Key Concept 1', back: 'Core definition derived from your study material.' },
+      { front: 'Key Concept 2', back: 'Important formula, date, or causal relationship.' },
+      { front: 'Key Concept 3', back: 'Essential contrast or differentiating factor.' },
+      { front: 'Key Concept 4', back: 'Crucial application or real-world example.' },
+      { front: 'Key Concept 5', back: 'Common pitfall or test trap to remember.' },
+    ];
+    let quiz = [
+      {
+        question: 'Which of the following best summarizes the main idea in your notes?',
+        options: ['The foundational principle', 'An unrelated exception', 'A historical footnote', 'None of the above'],
+        correctIndex: 0,
+        explanation: 'The primary concept anchors all supporting details.',
+      },
+    ];
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const prompt = `You are an expert cognitive learning specialist. Extract high-yield study flashcards and a multiple-choice quiz from these study notes.
+Notes:
+"${notes.slice(0, 4500)}"
+
+Requirements:
+1. Generate exactly 8 to 10 distinct, atomic flashcards (Front: prompt/question/term, Back: concise answer/definition).
+2. Generate 4 multiple-choice quiz questions with 4 options each, indicating the 0-based correctIndex and a 1-line explanation.
+
+Respond ONLY with valid JSON in this exact structure:
+{
+  "flashcards": [
+    { "front": "Term or concept", "back": "Clear concise definition or explanation" }
+  ],
+  "quiz": [
+    {
+      "question": "Question text?",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correctIndex": 0,
+      "explanation": "Why Option A is correct."
+    }
+  ]
+}`;
+
+        const aiRes = await generateWithTimeout({
+          model: 'gemini-3.1-flash-lite',
+          contents: prompt,
+          generationConfig: { responseMimeType: 'application/json' },
+        });
+
+        const raw = aiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed.flashcards) && parsed.flashcards.length > 0) flashcards = parsed.flashcards;
+          if (Array.isArray(parsed.quiz) && parsed.quiz.length > 0) quiz = parsed.quiz;
+        }
+      } catch (err) {
+        console.warn('Flashcards AI fallback:', err);
+      }
+    }
+
+    const formattedResult = `### 10 Study Flashcards\n` +
+      flashcards.map((f, i) => `**Card ${i + 1}**\nFront: ${f.front}\nBack: ${f.back}\n`).join('\n') +
+      `\n### Self-Test Quiz\n` +
+      quiz.map((q, i) => `**Q${i + 1}: ${q.question}**\n${q.options.map((opt, oIdx) => `  [${String.fromCharCode(65 + oIdx)}] ${opt}`).join('\n')}\n*Correct:* ${q.options[q.correctIndex]} (${q.explanation})\n`).join('\n');
+
+    return res.json({ flashcards, quiz, result: formattedResult });
+  } catch (error) {
+    console.error('Flashcards quiz error:', error);
+    return res.status(500).json({ error: "That didn't work. Try again in a moment." });
+  }
+});
+
+// Dedicated Endpoint: Study Plan Maker (H4)
+app.post('/api/study-plan', rateLimiter, async (req: Request, res: Response) => {
+  try {
+    const { subject = '', examDate = '', hoursPerDay = 2, totalDays = 7 } = req.body;
+    if (!subject.trim()) {
+      return res.status(400).json({ error: 'Please enter your subject or exam topic.' });
+    }
+
+    let planDays = Math.max(3, Math.min(30, totalDays || 7));
+    let schedule = Array.from({ length: planDays }).map((_, idx) => ({
+      day: `Day ${idx + 1}`,
+      topic: idx === planDays - 1 ? 'Full Mock Exam & Final Review' : `Core Module ${idx + 1}: Key Topics`,
+      focus: idx === planDays - 1 ? 'Timed practice under exam conditions and review missed questions' : 'Active recall note-taking and practice problems',
+      duration: `${hoursPerDay} hrs`,
+    }));
+    let strategy = 'Use the Pomodoro technique (25 min study, 5 min rest). Spend 60% of your time solving problems rather than passively re-reading.';
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const prompt = `You are an academic advisor. Create a realistic, high-efficiency day-by-day study schedule.
+Subject/Exam: "${subject}"
+Exam Date / Horizon: "${examDate || `${planDays} days from now`}"
+Daily Study Time: ${hoursPerDay} hours/day
+Total Days: ${planDays} days
+
+Requirements:
+- Plan exactly ${planDays} days.
+- Ensure the final 1-2 days focus on mock testing, high-yield cheat sheets, and active review.
+- Distribute foundational topics first, followed by application and spaced practice.
+
+Respond ONLY with valid JSON in this exact structure:
+{
+  "strategy": "1-2 sentence core cognitive retention tip.",
+  "schedule": [
+    { "day": "Day 1", "topic": "Module Name", "focus": "Exact study tasks", "duration": "${hoursPerDay} hrs" }
+  ]
+}`;
+
+        const aiRes = await generateWithTimeout({
+          model: 'gemini-3.1-flash-lite',
+          contents: prompt,
+          generationConfig: { responseMimeType: 'application/json' },
+        });
+
+        const raw = aiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed.schedule) && parsed.schedule.length > 0) schedule = parsed.schedule;
+          if (parsed.strategy) strategy = parsed.strategy;
+        }
+      } catch (err) {
+        console.warn('Study plan AI fallback:', err);
+      }
+    }
+
+    const formattedResult = `### Study Plan for ${subject}\n*Target: ${hoursPerDay} hrs/day · Horizon: ${planDays} days*\n\nStrategy: ${strategy}\n\n` +
+      `| Day | Topic | Key Focus | Duration |\n|---|---|---|---|\n` +
+      schedule.map(s => `| ${s.day} | ${s.topic} | ${s.focus} | ${s.duration} |`).join('\n');
+
+    return res.json({ schedule, strategy, result: formattedResult });
+  } catch (error) {
+    console.error('Study plan error:', error);
+    return res.status(500).json({ error: "That didn't work. Try again in a moment." });
+  }
+});
+
+// Dedicated Endpoint: Cover Letter & Resume Bullets (I2)
+app.post('/api/cover-letter-resume', rateLimiter, async (req: Request, res: Response) => {
+  try {
+    const { mode = 'cover-letter', role = '', company = '', background = '' } = req.body;
+    if (!role.trim() && !background.trim()) {
+      return res.status(400).json({ error: 'Please enter a target role or your background details.' });
+    }
+    if ((role + company + background).length > 5000) {
+      return res.status(400).json({ error: 'Input is too long. Please keep it under 5,000 characters.' });
+    }
+
+    let outputText = '';
+    let bullets: string[] = [];
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const prompt = mode === 'bullets'
+          ? `You are an executive resume coach. Improve the user's rough experience bullet or background into 3 stronger, high-impact resume bullets.
+Target Role: "${role}"
+Company (if any): "${company}"
+User's Background / Rough Bullet:
+"${background}"
+
+STRICT RULES:
+1. Start each bullet with a powerful past-tense action verb (e.g. Spearheaded, Engineered, Streamlined, Reduced).
+2. ONLY use numbers, metrics, percentages, or achievements if the user explicitly provided them. NEVER invent false metrics or achievements.
+3. Keep bullets concise (1 to 2 lines each).
+4. Return valid JSON: { "bullets": ["Bullet 1", "Bullet 2", "Bullet 3"] }`
+          : `You are an executive career advisor. Write a short, persuasive, authentic cover letter for this job application.
+Role: "${role}"
+Company: "${company || 'the hiring team'}"
+Candidate Background: "${background}"
+
+STRICT RULES:
+1. 3 concise paragraphs max: Hook/Introduction, Concrete Value/Fit, Confident Closing.
+2. Tone: Confident, professional, human, direct. Avoid cheesy openings like "I was thrilled to see..." or "I am writing to express my eager interest...".
+3. ONLY mention skills and experiences the user provided; NEVER fabricate past roles or achievements.
+4. Return valid JSON: { "letter": "Full letter text with paragraphs separated by newlines." }`;
+
+        const aiRes = await generateWithTimeout({
+          model: 'gemini-3.1-flash-lite',
+          contents: prompt,
+          generationConfig: { responseMimeType: 'application/json' },
+        });
+
+        const raw = aiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (mode === 'bullets' && Array.isArray(parsed.bullets)) {
+            bullets = parsed.bullets;
+            outputText = bullets.map(b => `• ${b}`).join('\n\n');
+          } else if (parsed.letter) {
+            outputText = parsed.letter;
+          }
+        }
+      } catch (err) {
+        console.warn('Cover letter AI fallback:', err);
+      }
+    }
+
+    if (!outputText) {
+      if (mode === 'bullets') {
+        bullets = [
+          `Spearheaded ${role || 'key initiatives'} by standardizing workflows and collaborating cross-functionally to achieve strategic delivery milestones.`,
+          `Engineered scalable solutions for ${company || 'the team'}, translating requirements into actionable project deliverables.`,
+          `Streamlined day-to-day operations and resolved blockers to maintain consistent project velocity and high execution standards.`,
+        ];
+        outputText = bullets.map(b => `• ${b}`).join('\n\n');
+      } else {
+        outputText = `Dear Hiring Team at ${company || 'your organization'},\n\nI am writing to apply for the ${role || 'open'} position. With my background in ${background.slice(0, 80) || 'industry operations'}, I have developed a track record of executing strategic priorities and delivering dependable results.\n\nThroughout my career, I have focused on solving complex challenges through cross-functional collaboration and meticulous attention to detail. I am confident that my practical skills and proactive approach will bring immediate value to your team.\n\nThank you for your time and consideration. I welcome the opportunity to discuss how my qualifications align with your current objectives.\n\nSincerely,\n[Your Name]`;
+      }
+    }
+
+    return res.json({ result: outputText, bullets, mode });
+  } catch (error) {
+    console.error('Cover letter error:', error);
+    return res.status(500).json({ error: "That didn't work. Try again in a moment." });
+  }
+});
+
+// Dedicated Endpoint: Product Description Generator (I3)
+app.post('/api/product-description', rateLimiter, async (req: Request, res: Response) => {
+  try {
+    const { product = '', features = '', audience = '', tone = 'persuasive' } = req.body;
+    if (!product.trim()) {
+      return res.status(400).json({ error: 'Please enter your product name or category.' });
+    }
+    if ((product + features + audience).length > 5000) {
+      return res.status(400).json({ error: 'Input is too long. Please keep it under 5,000 characters.' });
+    }
+
+    let shortDesc = `${product} delivers exceptional reliability and intuitive performance designed specifically for ${audience || 'modern users'}.`;
+    let longDesc = `${product} combines premium craft with everyday practicality. Built to streamline your workflow and elevate your daily routine, it solves key challenges through thoughtful engineering and durable design. Whether you are looking for peak efficiency or effortless reliability, this product stands ready to exceed expectations.`;
+    let bulletPoints = [
+      'Engineered for premium performance and everyday durability',
+      'Thoughtful design that integrates seamlessly into your routine',
+      'Optimized to save time and eliminate friction',
+      'High-grade materials built for long-lasting use',
+      'Backed by customer-first support and satisfaction guarantee',
+    ];
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const prompt = `You are an elite e-commerce copywriter. Write a high-converting product description suite.
+Product: "${product}"
+Key Features / Specs: "${features}"
+Target Audience: "${audience || 'General consumers'}"
+Tone: "${tone}"
+
+Requirements:
+1. shortDescription: 1-2 punchy sentences ideal for search snippets and quick above-the-fold cards (under 40 words).
+2. longDescription: 2 engaging paragraphs highlighting benefits, emotional transformation, and practical utility.
+3. bulletPoints: exactly 5 benefit-driven bullet points (Feature + Benefit structure).
+
+Respond ONLY with valid JSON in this exact structure:
+{
+  "shortDescription": "...",
+  "longDescription": "...",
+  "bulletPoints": ["...", "...", "...", "...", "..."]
+}`;
+
+        const aiRes = await generateWithTimeout({
+          model: 'gemini-3.1-flash-lite',
+          contents: prompt,
+          generationConfig: { responseMimeType: 'application/json' },
+        });
+
+        const raw = aiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed.shortDescription) shortDesc = parsed.shortDescription;
+          if (parsed.longDescription) longDesc = parsed.longDescription;
+          if (Array.isArray(parsed.bulletPoints) && parsed.bulletPoints.length === 5) {
+            bulletPoints = parsed.bulletPoints;
+          }
+        }
+      } catch (err) {
+        console.warn('Product description AI fallback:', err);
+      }
+    }
+
+    const formattedResult = `### Summary\n${shortDesc}\n\n### Overview\n${longDesc}\n\n### Key Highlights\n${bulletPoints.map(b => `• ${b}`).join('\n')}`;
+
+    return res.json({ shortDescription: shortDesc, longDescription: longDesc, bulletPoints, result: formattedResult });
+  } catch (error) {
+    console.error('Product description error:', error);
+    return res.status(500).json({ error: "That didn't work. Try again in a moment." });
+  }
+});
+
+// Dedicated Endpoint: AI Translator with Tone (I4)
+app.post('/api/translator-tone', rateLimiter, async (req: Request, res: Response) => {
+  try {
+    const { text = '', sourceLang = 'English', targetLang = 'Spanish', tone = 'polite' } = req.body;
+    if (!text.trim()) {
+      return res.status(400).json({ error: 'Please enter text to translate.' });
+    }
+    if (text.length > 5000) {
+      return res.status(400).json({ error: 'Text is too long. Please keep it under 5,000 characters.' });
+    }
+
+    let translation = `[${targetLang} translation of: ${text.slice(0, 60)}...]`;
+    let toneNote = `Adapted with a ${tone} register natural for native ${targetLang} speakers.`;
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const prompt = `You are a native bilingual translator and linguist. Translate the text with nuanced tonal awareness.
+Source Language: ${sourceLang}
+Target Language: ${targetLang}
+Desired Tone: ${tone} (e.g. casual: conversational idioms; polite: respectful and courteous; business: professional, crisp executive tone).
+
+Input Text:
+"${text}"
+
+Respond ONLY with valid JSON in this exact structure:
+{
+  "translation": "Natural, culturally fluent translation reflecting the requested tone.",
+  "toneNote": "One-line honest note explaining key vocabulary or formality choices made."
+}`;
+
+        const aiRes = await generateWithTimeout({
+          model: 'gemini-3.1-flash-lite',
+          contents: prompt,
+          generationConfig: { responseMimeType: 'application/json' },
+        });
+
+        const raw = aiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed.translation) translation = parsed.translation;
+          if (parsed.toneNote) toneNote = parsed.toneNote;
+        }
+      } catch (err) {
+        console.warn('Translator AI fallback:', err);
+      }
+    }
+
+    const formattedResult = `${translation}\n\n---\n*Linguistic Note:* ${toneNote}`;
+
+    return res.json({ translation, toneNote, sourceLang, targetLang, result: formattedResult });
+  } catch (error) {
+    console.error('Translator error:', error);
+    return res.status(500).json({ error: "That didn't work. Try again in a moment." });
+  }
+});
+
+// Dedicated Endpoint: Natural Rewrite (I5)
+app.post('/api/natural-rewrite', rateLimiter, async (req: Request, res: Response) => {
+  try {
+    const { text = '' } = req.body;
+    if (!text.trim()) {
+      return res.status(400).json({ error: 'Please paste your AI-assisted draft to rewrite.' });
+    }
+    if (text.length > 6000) {
+      return res.status(400).json({ error: 'Text is too long. Please keep it under 6,000 characters.' });
+    }
+
+    const disclaimer = 'Always review and make the text your own.';
+    let rewritten = text;
+    let improvements = [
+      'Removed repetitive transitional phrases',
+      'Varied sentence lengths for natural rhythm',
+      'Replaced stiff vocabulary with conversational clarity',
+    ];
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const prompt = `You are an expert human editor. Rewrite this AI-generated draft so it sounds natural, authentic, and human.
+Text to edit:
+"${text}"
+
+STRICT GUIDELINES:
+1. Eliminate robotic AI clichés: ban words like "delve", "tapestry", "testament to", "furthermore", "in summary", "moreover", "beacon", "game-changer", "plethora".
+2. Vary sentence cadence: mix short punchy sentences with natural compound clauses.
+3. Sound like an experienced human practitioner writing directly to a colleague.
+4. DO NOT make any claims about bypassing AI detectors or beating plagiarism scanners.
+5. Return valid JSON in this exact structure:
+{
+  "rewritten": "Natural human rewrite of the text.",
+  "improvements": ["Specific edit 1", "Specific edit 2", "Specific edit 3"]
+}`;
+
+        const aiRes = await generateWithTimeout({
+          model: 'gemini-3.1-flash-lite',
+          contents: prompt,
+          generationConfig: { responseMimeType: 'application/json' },
+        });
+
+        const raw = aiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed.rewritten) rewritten = parsed.rewritten;
+          if (Array.isArray(parsed.improvements) && parsed.improvements.length > 0) {
+            improvements = parsed.improvements;
+          }
+        }
+      } catch (err) {
+        console.warn('Natural rewrite AI fallback:', err);
+      }
+    }
+
+    const formattedResult = `${rewritten}\n\n---\n*Editorial Note:* ${disclaimer}\n\nKey Edits:\n${improvements.map(i => `• ${i}`).join('\n')}`;
+
+    return res.json({ rewritten, improvements, disclaimer, result: formattedResult });
+  } catch (error) {
+    console.error('Natural rewrite error:', error);
+    return res.status(500).json({ error: "That didn't work. Try again in a moment." });
+  }
+});
+
 // Hosted Checkout Webhook with cryptographic HMAC-SHA256 signature verification
 app.post('/api/webhooks/checkout', (req: Request, res: Response) => {
   try {
@@ -935,9 +1513,15 @@ app.get('/ads.txt', (_req: Request, res: Response) => {
 
 // Start Server and Mount Vite in dev mode
 async function startServer() {
+  const httpServer = http.createServer(app);
+
   if (process.env.NODE_ENV !== 'production') {
+    const isHmrDisabled = process.env.DISABLE_HMR === 'true';
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        hmr: isHmrDisabled ? false : { server: httpServer },
+      },
       appType: 'spa',
     });
     app.use(vite.middlewares);
@@ -948,7 +1532,7 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
+  httpServer.listen(PORT, '0.0.0.0', () => {
     console.log(`SmartToolHub server running on http://0.0.0.0:${PORT}`);
   });
 }

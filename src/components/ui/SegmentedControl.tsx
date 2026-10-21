@@ -18,7 +18,7 @@ export interface SegmentedControlProps<T extends string = string> {
 /**
  * Segmented Control conforming to Phase 3:
  * - Pill group with 44px height
- * - Sliding/active laser green highlight (green background + navy text)
+ * - Sliding/active brand gradient highlight (green background + navy text)
  * - Icon plus label
  * - ARIA role="radiogroup" with role="radio" and aria-checked
  */
@@ -45,10 +45,10 @@ export function SegmentedControl<T extends string = string>({
             type="button"
             aria-checked={isSelected}
             onClick={() => onChange(opt.value)}
-            className={`flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 select-none focus-laser ${
+            className={`flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 select-none focus-ring ${
               isSelected
-                ? 'bg-[#39ff88] text-[#050a14] font-bold shadow-[0_0_12px_rgba(57,255,136,0.3)]'
-                : 'text-[#8fa3c0] hover:text-[#f2f7ff] hover:bg-[rgba(143,163,192,0.06)]'
+                ? 'bg-gradient-to-r from-[#0b6bf0] via-[#7a45f5] to-[#d6347f] text-white font-bold shadow-[0_2px_12px_rgba(11,107,240,0.35)]'
+                : 'text-[#9aaccb] hover:text-[#f2f7ff] hover:bg-[rgba(143,163,192,0.06)]'
             }`}
           >
             {opt.icon && (
@@ -56,7 +56,7 @@ export function SegmentedControl<T extends string = string>({
                 name={opt.icon}
                 size="sm"
                 strokeWidth={1.75}
-                className={isSelected ? 'text-[#050a14]' : 'text-[#8fa3c0]'}
+                className={isSelected ? 'text-white' : 'text-[#9aaccb]'}
                 aria-hidden={true}
               />
             )}

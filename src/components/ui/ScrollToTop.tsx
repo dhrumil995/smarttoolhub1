@@ -46,7 +46,7 @@ export const ScrollToTop: React.FC<ScrollToTopProps> = ({
       type="button"
       onClick={scrollToTop}
       aria-label="Scroll back to top of page"
-      className={`fixed z-30 bottom-20 md:bottom-8 right-4 md:right-8 w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-[#0a1424]/90 backdrop-blur-[16px] border border-[rgba(57,255,136,0.3)] text-[#39ff88] hover:bg-[#39ff88] hover:text-[#050a14] shadow-[0_4px_24px_rgba(0,0,0,0.5)] flex items-center justify-center transition-all duration-200 focus-laser animate-in fade-in zoom-in-90 ${className}`}
+      className={`fixed z-30 bottom-20 md:bottom-8 right-4 md:right-8 w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-[#0a1424]/90 backdrop-blur-[16px] border border-[rgba(10,132,255,0.35)] text-[#0a84ff] hover:bg-[#0a84ff] hover:text-white shadow-[0_4px_24px_rgba(10,132,255,0.25)] flex items-center justify-center transition-all duration-200 focus-ring animate-in fade-in zoom-in-90 ${className}`}
     >
       <ArrowUp size={20} strokeWidth={2} aria-hidden="true" />
     </button>

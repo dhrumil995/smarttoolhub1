@@ -31,11 +31,11 @@ export const StickyActionBar: React.FC<StickyActionBarProps> = ({
       <div className="flex items-center gap-2 min-w-0 pr-2">
         <span
           className={`w-2 h-2 rounded-full shrink-0 ${
-            isLoading ? 'bg-[#ffb840] animate-ping' : 'bg-[#39ff88]'
+            isLoading ? 'bg-[#ffb840] animate-ping' : 'bg-[#34e0a1]'
           }`}
           aria-hidden="true"
         />
-        <span className="font-mono text-[11px] uppercase tracking-wider text-[#8fa3c0] truncate">
+        <span className="font-mono text-[11px] uppercase tracking-wider text-[#9aaccb] truncate">
           {isLoading ? 'Generating...' : 'Result ready'}
         </span>
       </div>

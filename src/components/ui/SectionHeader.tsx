@@ -37,20 +37,20 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
     <div className={`flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 ${className}`}>
       <div className="space-y-2 max-w-xl">
         {/* Eyebrow Label with Small Icon */}
-        <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#39ff88]">
-          <Icon name={eyebrowIcon} size="sm" strokeWidth={2} className="text-[#39ff88]" aria-hidden={true} />
+        <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#0a84ff] font-semibold">
+          <Icon name={eyebrowIcon} size="sm" strokeWidth={2} className="text-[#0a84ff]" aria-hidden={true} />
           <span>{eyebrow}</span>
         </div>
 
         {/* Big Headline */}
         <h2 className="h2-fluid font-display text-[#f2f7ff]">
           {title}
-          {highlightDot && <span className="text-[#39ff88]">.</span>}
+          {highlightDot && <span className="text-[#0a84ff]">.</span>}
         </h2>
 
         {/* One-Line Subtext */}
         {subtext && (
-          <p className="body-fluid text-[#8fa3c0] leading-relaxed">
+          <p className="body-fluid text-[#9aaccb] leading-relaxed">
             {subtext}
           </p>
         )}
@@ -61,7 +61,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         <Link
           href={viewAllHref}
           navigate={navigate}
-          className="text-xs font-mono uppercase tracking-wider text-[#39ff88] hover:underline focus-laser rounded py-1 inline-flex items-center gap-1.5 shrink-0 group self-start sm:self-end"
+          className="text-xs font-mono uppercase tracking-wider text-[#7db8ff] hover:underline focus-ring rounded py-1 inline-flex items-center gap-1.5 shrink-0 group self-start sm:self-end font-semibold"
         >
           <span>{viewAllLabel}</span>
           <ArrowRight

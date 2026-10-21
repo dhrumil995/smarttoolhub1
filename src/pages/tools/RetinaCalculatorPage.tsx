@@ -110,7 +110,7 @@ export const RetinaCalculatorPage: React.FC<RetinaCalculatorPageProps> = ({ navi
                 max="10000"
                 value={widthPoints}
                 onChange={(e) => setWidthPoints(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl px-3.5 py-2.5 text-sm text-[#f2f7ff] focus-laser font-mono"
+                className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl px-3.5 py-2.5 text-sm text-[#f2f7ff] focus-ring font-mono"
               />
             </div>
 
@@ -125,7 +125,7 @@ export const RetinaCalculatorPage: React.FC<RetinaCalculatorPageProps> = ({ navi
                 max="10000"
                 value={heightPoints}
                 onChange={(e) => setHeightPoints(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl px-3.5 py-2.5 text-sm text-[#f2f7ff] focus-laser font-mono"
+                className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl px-3.5 py-2.5 text-sm text-[#f2f7ff] focus-ring font-mono"
               />
             </div>
           </div>
@@ -144,7 +144,7 @@ export const RetinaCalculatorPage: React.FC<RetinaCalculatorPageProps> = ({ navi
                     setWidthPoints(p.w);
                     setHeightPoints(p.h);
                   }}
-                  className="px-3 py-1.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] hover:border-[#39ff88] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-laser"
+                  className="px-3 py-1.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] hover:border-[#8b5cf6] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-ring"
                 >
                   {p.label}
                 </button>
@@ -158,7 +158,7 @@ export const RetinaCalculatorPage: React.FC<RetinaCalculatorPageProps> = ({ navi
           <div className="space-y-6">
             {/* Top Toolbar */}
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#8b5cf6] font-semibold flex items-center gap-1.5">
                 <Layers className="w-3.5 h-3.5" />
                 <span>Computed Pixel Resolutions ({widthPoints} × {heightPoints} pt)</span>
               </span>
@@ -166,9 +166,9 @@ export const RetinaCalculatorPage: React.FC<RetinaCalculatorPageProps> = ({ navi
               <button
                 type="button"
                 onClick={() => onCopy(result)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#8b5cf6] transition-colors focus-ring"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copied Specs' : 'Copy All Specs'}</span>
               </button>
             </div>
@@ -184,10 +184,10 @@ export const RetinaCalculatorPage: React.FC<RetinaCalculatorPageProps> = ({ navi
                   <button
                     type="button"
                     onClick={() => copyText(`${w1x}x${h1x}`, '@1x')}
-                    className="text-[#8fa3c0] hover:text-[#39ff88] transition-colors focus-laser p-1 rounded"
+                    className="text-[#8fa3c0] hover:text-[#8b5cf6] transition-colors focus-ring p-1 rounded"
                     title="Copy @1x pixels"
                   >
-                    {copiedScale === '@1x' ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedScale === '@1x' ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
                 </div>
                 <div className="text-xl font-bold font-mono text-[#f2f7ff]">
@@ -199,21 +199,21 @@ export const RetinaCalculatorPage: React.FC<RetinaCalculatorPageProps> = ({ navi
               </div>
 
               {/* @2x */}
-              <div className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(57,255,136,0.3)] shadow-[0_0_12px_rgba(57,255,136,0.1)] space-y-2">
+              <div className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(139, 92, 246,0.3)] shadow-[0_0_12px_rgba(139, 92, 246,0.1)] space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#101c33] text-[#39ff88] border border-[rgba(57,255,136,0.2)]">
+                  <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#101c33] text-[#8b5cf6] border border-[rgba(139, 92, 246,0.2)]">
                     @2x Retina
                   </span>
                   <button
                     type="button"
                     onClick={() => copyText(`${w2x}x${h2x}`, '@2x')}
-                    className="text-[#8fa3c0] hover:text-[#39ff88] transition-colors focus-laser p-1 rounded"
+                    className="text-[#8fa3c0] hover:text-[#8b5cf6] transition-colors focus-ring p-1 rounded"
                     title="Copy @2x pixels"
                   >
-                    {copiedScale === '@2x' ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedScale === '@2x' ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
                 </div>
-                <div className="text-xl font-bold font-mono text-[#39ff88]">
+                <div className="text-xl font-bold font-mono text-[#8b5cf6]">
                   {w2x} × {h2x} <span className="text-xs text-[#8fa3c0] font-sans font-normal">px</span>
                 </div>
                 <div className="text-[11px] text-[#8fa3c0]">
@@ -230,7 +230,7 @@ export const RetinaCalculatorPage: React.FC<RetinaCalculatorPageProps> = ({ navi
                   <button
                     type="button"
                     onClick={() => copyText(`${w3x}x${h3x}`, '@3x')}
-                    className="text-[#8fa3c0] hover:text-[#5aa9ff] transition-colors focus-laser p-1 rounded"
+                    className="text-[#8fa3c0] hover:text-[#5aa9ff] transition-colors focus-ring p-1 rounded"
                     title="Copy @3x pixels"
                   >
                     {copiedScale === '@3x' ? <Check className="w-3.5 h-3.5 text-[#5aa9ff]" /> : <Copy className="w-3.5 h-3.5" />}
@@ -249,13 +249,13 @@ export const RetinaCalculatorPage: React.FC<RetinaCalculatorPageProps> = ({ navi
             <div className="space-y-2 pt-2 border-t border-[rgba(143,163,192,0.12)]">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold flex items-center gap-1.5">
-                  <Code className="w-3.5 h-3.5 text-[#39ff88]" />
+                  <Code className="w-3.5 h-3.5 text-[#8b5cf6]" />
                   <span>HTML srcset Export</span>
                 </span>
                 <button
                   type="button"
                   onClick={() => copyText(srcsetSnippet, 'srcset')}
-                  className="text-xs text-[#39ff88] font-semibold hover:underline flex items-center gap-1 focus-laser"
+                  className="text-xs text-[#8b5cf6] font-semibold hover:underline flex items-center gap-1 focus-ring"
                 >
                   {copiedScale === 'srcset' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copiedScale === 'srcset' ? 'Copied Snippet' : 'Copy Snippet'}</span>

@@ -83,7 +83,7 @@ export const EmailWriterPage: React.FC<EmailWriterPageProps> = ({ navigate }) =>
               value={keyPoints}
               onChange={(e) => setKeyPoints(e.target.value)}
               placeholder="e.g. Deadline is Friday 5 PM, attach PDF report, link is in calendar invite"
-              className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl px-3.5 py-2.5 text-sm text-[#f2f7ff] placeholder-[#8fa3c0] focus-laser"
+              className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl px-3.5 py-2.5 text-sm text-[#f2f7ff] placeholder-[#8fa3c0] focus-ring"
             />
           </div>
 
@@ -98,9 +98,9 @@ export const EmailWriterPage: React.FC<EmailWriterPageProps> = ({ navigate }) =>
                   key={item.id}
                   type="button"
                   onClick={() => setTone(item.id)}
-                  className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-laser ${
+                  className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-ring ${
                     tone === item.id
-                      ? 'bg-[#39ff88] text-[#050a14] border-[#39ff88] font-bold shadow-[0_0_12px_rgba(57,255,136,0.3)]'
+                      ? 'bg-[#0a84ff] text-[#050a14] border-[#0a84ff] font-bold shadow-[0_0_12px_rgba(10, 132, 255,0.3)]'
                       : 'bg-[#0a1424] text-[#8fa3c0] border-[rgba(143,163,192,0.16)] hover:text-[#f2f7ff]'
                   }`}
                 >
@@ -134,7 +134,7 @@ export const EmailWriterPage: React.FC<EmailWriterPageProps> = ({ navigate }) =>
           <div className="space-y-4">
             {/* Top Toolbar */}
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#0a84ff] font-semibold flex items-center gap-1.5">
                 <Mail className="w-3.5 h-3.5" />
                 <span>Generated Email</span>
               </span>
@@ -145,7 +145,7 @@ export const EmailWriterPage: React.FC<EmailWriterPageProps> = ({ navigate }) =>
                   type="button"
                   disabled={isRefining}
                   onClick={() => onRefine?.('make-shorter')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.25)] text-xs font-semibold text-[#39ff88] hover:border-[#39ff88] transition-colors focus-laser disabled:opacity-50"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.25)] text-xs font-semibold text-[#0a84ff] hover:border-[#0a84ff] transition-colors focus-ring disabled:opacity-50"
                 >
                   <Minimize2 className="w-3.5 h-3.5" />
                   <span>{isRefining ? 'Shortening...' : 'Make it shorter'}</span>
@@ -154,16 +154,16 @@ export const EmailWriterPage: React.FC<EmailWriterPageProps> = ({ navigate }) =>
                 <button
                   type="button"
                   onClick={() => onCopy(result)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#0a84ff] transition-colors focus-ring"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copied ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'Copied All' : 'Copy All'}</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => onShare(result)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-laser"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-ring"
                 >
                   <span className="text-xs">{shared ? 'Shared' : 'Share'}</span>
                 </button>
@@ -180,9 +180,9 @@ export const EmailWriterPage: React.FC<EmailWriterPageProps> = ({ navigate }) =>
                 <button
                   type="button"
                   onClick={() => copySpecific(subject, 'subject')}
-                  className="px-2.5 py-1 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#39ff88] hover:border-[#39ff88] transition-colors shrink-0 focus-laser flex items-center gap-1"
+                  className="px-2.5 py-1 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#0a84ff] hover:border-[#0a84ff] transition-colors shrink-0 focus-ring flex items-center gap-1"
                 >
-                  {copiedSubject ? <Check className="w-3 h-3 text-[#39ff88]" /> : <Copy className="w-3 h-3" />}
+                  {copiedSubject ? <Check className="w-3 h-3 text-[#34e0a1]" /> : <Copy className="w-3 h-3" />}
                   <span>{copiedSubject ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>
@@ -195,13 +195,13 @@ export const EmailWriterPage: React.FC<EmailWriterPageProps> = ({ navigate }) =>
                 <button
                   type="button"
                   onClick={() => copySpecific(body, 'body')}
-                  className="px-2.5 py-1 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#39ff88] hover:border-[#39ff88] transition-colors shrink-0 focus-laser flex items-center gap-1"
+                  className="px-2.5 py-1 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#0a84ff] hover:border-[#0a84ff] transition-colors shrink-0 focus-ring flex items-center gap-1"
                 >
-                  {copiedBody ? <Check className="w-3 h-3 text-[#39ff88]" /> : <Copy className="w-3 h-3" />}
+                  {copiedBody ? <Check className="w-3 h-3 text-[#34e0a1]" /> : <Copy className="w-3 h-3" />}
                   <span>{copiedBody ? 'Copied' : 'Copy Body'}</span>
                 </button>
               </div>
-              <div className="text-sm text-[#f2f7ff] leading-relaxed whitespace-pre-wrap selection:bg-[#39ff88] selection:text-[#050a14]">
+              <div className="text-sm text-[#f2f7ff] leading-relaxed whitespace-pre-wrap selection:bg-[#0a84ff] selection:text-[#050a14]">
                 {body}
               </div>
             </div>

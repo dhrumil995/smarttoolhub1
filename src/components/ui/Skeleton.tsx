@@ -13,7 +13,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({ className = '', style, ...re
   return (
     <div
       aria-hidden="true"
-      className={`rounded-xl bg-[#0a1424] relative overflow-hidden border border-[rgba(143,163,192,0.08)] before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2.5s_infinite] before:bg-gradient-to-r before:from-transparent before:via-[rgba(57,255,136,0.08)] before:to-transparent motion-reduce:before:animate-none ${className}`}
+      className={`rounded-xl bg-[#0a1424] relative overflow-hidden border border-[rgba(143,163,192,0.08)] before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2.5s_infinite] before:bg-gradient-to-r before:from-transparent before:via-[rgba(122,69,245,0.12)] before:to-transparent motion-reduce:before:animate-none ${className}`}
       style={style}
       {...rest}
     />

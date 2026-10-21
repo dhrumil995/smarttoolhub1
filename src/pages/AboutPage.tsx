@@ -11,7 +11,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate }) => {
     <article className="py-6 sm:py-12 max-w-3xl mx-auto space-y-10">
       {/* Breadcrumbs Landmark */}
       <nav aria-label="Breadcrumbs" className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-        <Link href="/" navigate={navigate} className="hover:text-[#39ff88] transition-colors focus-laser rounded">
+        <Link href="/" navigate={navigate} className="hover:text-[#7db8ff] transition-colors focus-ring rounded">
           Home
         </Link>
         <ChevronRight className="w-3.5 h-3.5 text-[#8fa3c0]/60" />
@@ -20,11 +20,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate }) => {
 
       {/* Header Landmark */}
       <header className="space-y-4">
-        <div className="text-xs font-mono uppercase tracking-wider text-[#39ff88]">
+        <div className="text-xs font-mono uppercase tracking-wider text-[#0a84ff]">
           Our Mission &amp; Story
         </div>
         <h1 className="h1-fluid font-display text-[#f2f7ff]">
-          About SmartToolHub<span className="text-[#39ff88]">.</span>
+          About SmartToolHub<span className="text-[#0a84ff]">.</span>
         </h1>
         <p className="body-fluid text-[#8fa3c0] leading-relaxed">
           Free AI tools that just work. No sign-up. Results in seconds. Created by Dhrumil Aslaliya as an independent web utility.
@@ -45,9 +45,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate }) => {
       </section>
 
       {/* Creator Profile */}
-      <section className="glass-surface p-6 sm:p-7 rounded-3xl border border-[rgba(57,255,136,0.25)] space-y-4">
+      <section className="glass-surface p-6 sm:p-7 rounded-3xl border border-[rgba(143,163,192,0.16)] space-y-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-[#0a1424] border border-[rgba(57,255,136,0.4)] flex items-center justify-center text-[#39ff88]">
+          <div className="w-12 h-12 rounded-2xl bg-[#0a1424] border border-[rgba(10,132,255,0.3)] flex items-center justify-center text-[#0a84ff]">
             <User className="w-6 h-6" />
           </div>
           <div>
@@ -71,7 +71,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate }) => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
-            <div className="font-mono text-xs text-[#39ff88] uppercase">01. Zero Sign-Up</div>
+            <div className="font-mono text-xs text-[#0a84ff] uppercase">01. Zero Sign-Up</div>
             <div className="font-semibold text-sm text-[#f2f7ff]">No Account Walls</div>
             <p className="text-xs text-[#8fa3c0] leading-relaxed">
               You will never be asked for an email or password to use our tools. Your history is stored locally in your own browser.
@@ -79,7 +79,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate }) => {
           </div>
 
           <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
-            <div className="font-mono text-xs text-[#39ff88] uppercase">02. Results in Seconds</div>
+            <div className="font-mono text-xs text-[#0a84ff] uppercase">02. Results in Seconds</div>
             <div className="font-semibold text-sm text-[#f2f7ff]">Sub-30-Second Utility</div>
             <p className="text-xs text-[#8fa3c0] leading-relaxed">
               Every page is optimized for rapid mobile entry, quick processing, and instant clipboard copying.
@@ -87,7 +87,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate }) => {
           </div>
 
           <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
-            <div className="font-mono text-xs text-[#39ff88] uppercase">03. Real Privacy</div>
+            <div className="font-mono text-xs text-[#0a84ff] uppercase">03. Real Privacy</div>
             <div className="font-semibold text-sm text-[#f2f7ff]">Ephemeral Processing</div>
             <p className="text-xs text-[#8fa3c0] leading-relaxed">
               Your prompts are sent securely to generate your output and are never saved or stored on our servers.
@@ -95,7 +95,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate }) => {
           </div>
 
           <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
-            <div className="font-mono text-xs text-[#39ff88] uppercase">04. Honest Guidance</div>
+            <div className="font-mono text-xs text-[#0a84ff] uppercase">04. Honest Guidance</div>
             <div className="font-semibold text-sm text-[#f2f7ff]">Zero Fake Proof</div>
             <p className="text-xs text-[#8fa3c0] leading-relaxed">
               We never invent testimonials, user counts, or awards. We remind you openly that AI can make mistakes.
@@ -116,7 +116,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ navigate }) => {
 
       {/* Call to action */}
       <div className="pt-4 flex flex-wrap items-center gap-4">
-        <Link href="/tools" navigate={navigate} className="btn-laser text-xs">
+        <Link href="/tools" navigate={navigate} className="btn-primary text-xs">
           <span>Explore All 8 Tools</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>

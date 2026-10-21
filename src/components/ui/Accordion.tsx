@@ -52,7 +52,7 @@ export const Accordion: React.FC<AccordionProps> = ({
             key={idx}
             className={`rounded-2xl transition-all duration-200 border ${
               isOpen
-                ? 'bg-[#0a1424] border-[rgba(57,255,136,0.3)] shadow-[0_4px_20px_rgba(0,0,0,0.3)]'
+                ? 'bg-[#0a1424] border-[rgba(10,132,255,0.35)] shadow-[0_4px_20px_rgba(10,132,255,0.12)]'
                 : 'glass-surface border-[rgba(143,163,192,0.12)] hover:border-[rgba(143,163,192,0.24)]'
             }`}
           >
@@ -63,14 +63,14 @@ export const Accordion: React.FC<AccordionProps> = ({
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => toggleIndex(idx)}
-                className="w-full p-4 sm:p-5 flex items-center justify-between gap-4 text-left font-semibold text-sm sm:text-base text-[#f2f7ff] focus-laser rounded-2xl transition-colors"
+                className="w-full p-4 sm:p-5 flex items-center justify-between gap-4 text-left font-semibold text-sm sm:text-base text-[#f2f7ff] focus-ring rounded-2xl transition-colors"
               >
                 <span className="leading-snug">{item.question}</span>
 
                 {/* Plus icon rotates 45 degrees to become an X when open */}
                 <div
                   className={`w-7 h-7 rounded-lg bg-[#050a14] border border-[rgba(143,163,192,0.16)] flex items-center justify-center shrink-0 transition-transform duration-200 ${
-                    isOpen ? 'rotate-45 text-[#ff5c7a] border-[#ff5c7a]/30' : 'text-[#8fa3c0] hover:text-[#39ff88]'
+                    isOpen ? 'rotate-45 text-[#ff5c7a] border-[#ff5c7a]/30' : 'text-[#9aaccb] hover:text-[#0a84ff]'
                   }`}
                   aria-hidden="true"
                 >

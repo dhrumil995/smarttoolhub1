@@ -36,7 +36,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
     <article className="py-6 sm:py-12 max-w-4xl mx-auto space-y-12">
       {/* Breadcrumbs Landmark */}
       <nav aria-label="Breadcrumbs" className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-        <Link href="/" navigate={navigate} className="hover:text-[#39ff88] transition-colors focus-laser rounded">
+        <Link href="/" navigate={navigate} className="hover:text-[#7db8ff] transition-colors focus-ring rounded">
           Home
         </Link>
         <ChevronRight className="w-3.5 h-3.5 text-[#8fa3c0]/60" />
@@ -45,11 +45,11 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
 
       {/* Header Landmark */}
       <header className="space-y-4 text-center max-w-xl mx-auto">
-        <div className="text-xs font-mono uppercase tracking-wider text-[#39ff88]">
+        <div className="text-xs font-mono uppercase tracking-wider text-[#0a84ff]">
           Simple &amp; Honest Pricing
         </div>
         <h1 className="h1-fluid font-display text-[#f2f7ff]">
-          Always free. Optional Pro<span className="text-[#39ff88]">.</span>
+          Always free. Optional Pro<span className="text-[#0a84ff]">.</span>
         </h1>
         <p className="body-fluid text-[#8fa3c0] leading-relaxed">
           Every tool on SmartToolHub is free for everyday use without an account. An optional Pro upgrade is available for power users who want higher daily limits and zero ads.
@@ -73,7 +73,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
             onClick={() => setBillingCycle('annual')}
             className={`px-4 py-2 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 ${
               billingCycle === 'annual'
-                ? 'bg-[#39ff88] text-[#050a14] shadow-sm'
+                ? 'bg-[#0a84ff] text-white shadow-sm'
                 : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
             }`}
           >
@@ -84,7 +84,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
 
       {/* Active Pro Banner if enabled */}
       {isProActive && (
-        <div className="p-4 rounded-2xl bg-[#39ff88]/10 border border-[#39ff88]/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#39ff88]">
+        <div className="p-4 rounded-2xl bg-[rgba(10,132,255,0.08)] border border-[rgba(10,132,255,0.25)] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#0a84ff]">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 fill-current shrink-0" />
             <span className="font-semibold">Pro Experience Active: All ads are suppressed site-wide.</span>
@@ -106,7 +106,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs text-[#8fa3c0] uppercase">Free Plan</span>
-              <span className="text-xs text-[#39ff88] font-mono">No Sign-up Needed</span>
+              <span className="text-xs text-[#0a84ff] font-mono">No Sign-up Needed</span>
             </div>
             <div>
               <div className="text-4xl font-extrabold font-display text-[#f2f7ff]">$0</div>
@@ -114,23 +114,23 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
             </div>
             <ul className="space-y-3 text-sm text-[#8fa3c0] pt-2">
               <li className="flex items-center gap-2.5">
-                <Check className="w-4 h-4 text-[#39ff88] shrink-0" />
+                <Check className="w-4 h-4 text-[#34e0a1] shrink-0" />
                 <span>All 8 everyday AI utility tools</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Check className="w-4 h-4 text-[#39ff88] shrink-0" />
+                <Check className="w-4 h-4 text-[#34e0a1] shrink-0" />
                 <span>Zero registration, passwords, or emails</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Check className="w-4 h-4 text-[#39ff88] shrink-0" />
+                <Check className="w-4 h-4 text-[#34e0a1] shrink-0" />
                 <span>Sub-30-second generations</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Check className="w-4 h-4 text-[#39ff88] shrink-0" />
+                <Check className="w-4 h-4 text-[#34e0a1] shrink-0" />
                 <span>Local browser history storage</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Check className="w-4 h-4 text-[#39ff88] shrink-0" />
+                <Check className="w-4 h-4 text-[#34e0a1] shrink-0" />
                 <span>Supported by minimal non-intrusive ads</span>
               </li>
             </ul>
@@ -146,13 +146,13 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
         </div>
 
         {/* Pro Plan Card */}
-        <div className="glass-surface p-7 sm:p-8 rounded-3xl border border-[rgba(57,255,136,0.35)] flex flex-col justify-between space-y-6 relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-36 h-36 bg-radial from-[rgba(57,255,136,0.15)] to-transparent pointer-events-none" />
+        <div className="glass-surface p-7 sm:p-8 rounded-3xl border border-[rgba(139,92,246,0.35)] flex flex-col justify-between space-y-6 relative overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-36 h-36 bg-radial from-[rgba(139,92,246,0.15)] to-transparent pointer-events-none" />
           
           <div className="space-y-4 relative z-10">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs text-[#39ff88] uppercase font-bold">Pro Plan</span>
-              <span className="text-[11px] font-mono text-[#050a14] bg-[#39ff88] px-2.5 py-0.5 rounded-md font-bold">
+              <span className="font-mono text-xs text-[#0a84ff] uppercase font-bold">Pro Plan</span>
+              <span className="text-[11px] font-mono text-white bg-[#8b5cf6] px-2.5 py-0.5 rounded-md font-bold">
                 Optional
               </span>
             </div>
@@ -171,23 +171,23 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
             </div>
             <ul className="space-y-3 text-sm text-[#8fa3c0] pt-2">
               <li className="flex items-center gap-2.5">
-                <Check className="w-4 h-4 text-[#39ff88] shrink-0" />
+                <Check className="w-4 h-4 text-[#34e0a1] shrink-0" />
                 <span className="text-[#f2f7ff] font-medium">100% Ad-free experience</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Check className="w-4 h-4 text-[#39ff88] shrink-0" />
+                <Check className="w-4 h-4 text-[#34e0a1] shrink-0" />
                 <span>10&times; Higher daily generation limits</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Check className="w-4 h-4 text-[#39ff88] shrink-0" />
+                <Check className="w-4 h-4 text-[#34e0a1] shrink-0" />
                 <span>Priority server queue during peak hours</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Check className="w-4 h-4 text-[#39ff88] shrink-0" />
+                <Check className="w-4 h-4 text-[#34e0a1] shrink-0" />
                 <span>Saved tool history cloud backup</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Check className="w-4 h-4 text-[#39ff88] shrink-0" />
+                <Check className="w-4 h-4 text-[#34e0a1] shrink-0" />
                 <span>Direct email support from Dhrumil</span>
               </li>
             </ul>
@@ -197,7 +197,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
             <button
               type="button"
               onClick={() => setShowCheckoutModal(true)}
-              className="w-full btn-laser text-xs justify-center shadow-[0_0_24px_rgba(57,255,136,0.3)]"
+              className="w-full btn-primary text-xs justify-center shadow-[0_4px_16px_rgba(11,107,240,0.28)]"
             >
               <Sparkles className="w-4 h-4 fill-current" />
               <span>Upgrade to Pro ({billingCycle === 'annual' ? '$49/yr' : '$5/mo'})</span>
@@ -205,7 +205,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
             <button
               type="button"
               onClick={toggleProPreview}
-              className="w-full text-center text-[11px] text-[#8fa3c0] hover:text-[#39ff88] transition-colors py-1"
+              className="w-full text-center text-[11px] text-[#8fa3c0] hover:text-[#7db8ff] transition-colors py-1"
             >
               {isProActive ? 'Deactivate Pro Preview' : 'Preview Ad-Free Mode on this device'}
             </button>
@@ -216,7 +216,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
       {/* Security & Hosted Checkout Notice */}
       <section className="p-6 rounded-3xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] max-w-3xl mx-auto space-y-3">
         <div className="flex items-center gap-2 text-sm font-semibold text-[#f2f7ff]">
-          <ShieldCheck className="w-5 h-5 text-[#39ff88]" />
+          <ShieldCheck className="w-5 h-5 text-[#34e0a1]" />
           <span>Zero Server-Side Card Storage Guarantee</span>
         </div>
         <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
@@ -254,11 +254,11 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
           onClick={() => setShowCheckoutModal(false)}
         >
           <div
-            className="w-full max-w-md glass-surface rounded-3xl border border-[rgba(57,255,136,0.3)] p-6 space-y-5 text-left shadow-2xl"
+            className="w-full max-w-md glass-surface rounded-3xl border border-[rgba(10,132,255,0.3)] p-6 space-y-5 text-left shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#0a1424] border border-[rgba(57,255,136,0.3)] flex items-center justify-center text-[#39ff88]">
+              <div className="w-10 h-10 rounded-xl bg-[#0a1424] border border-[rgba(10,132,255,0.3)] flex items-center justify-center text-[#0a84ff]">
                 <Lock className="w-5 h-5" />
               </div>
               <div>
@@ -284,7 +284,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
               </div>
               <div className="flex justify-between">
                 <span className="text-[#8fa3c0]">Ads:</span>
-                <span className="text-[#39ff88] font-bold">100% Removed</span>
+                <span className="text-[#0a84ff] font-bold">100% Removed</span>
               </div>
             </div>
 
@@ -295,7 +295,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ navigate }) => {
                   toggleProPreview();
                   setShowCheckoutModal(false);
                 }}
-                className="flex-1 btn-laser text-xs"
+                className="flex-1 btn-primary text-xs"
               >
                 <span>Activate Pro Experience</span>
                 <Check className="w-4 h-4" />

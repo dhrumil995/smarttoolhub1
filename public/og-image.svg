@@ -1,21 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
   <defs>
-    <radialGradient id="topGlow" cx="50%" cy="0%" r="70%">
-      <stop offset="0%" stop-color="#39ff88" stop-opacity="0.18"/>
+    <!-- Soft Aurora radial glows -->
+    <radialGradient id="auroraBlue" cx="20%" cy="10%" r="50%">
+      <stop offset="0%" stop-color="#0b6bf0" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#050a14" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="auroraPink" cx="80%" cy="10%" r="50%">
+      <stop offset="0%" stop-color="#d6347f" stop-opacity="0.2"/>
       <stop offset="100%" stop-color="#050a14" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#101c33" stop-opacity="0.9"/>
       <stop offset="100%" stop-color="#0a1424" stop-opacity="0.9"/>
     </linearGradient>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0b6bf0"/>
+      <stop offset="40%" stop-color="#7a45f5"/>
+      <stop offset="75%" stop-color="#d6347f"/>
+      <stop offset="100%" stop-color="#ffb840"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5aa9ff"/>
+      <stop offset="40%" stop-color="#b794ff"/>
+      <stop offset="75%" stop-color="#ff7ab5"/>
+      <stop offset="100%" stop-color="#ffc866"/>
+    </linearGradient>
   </defs>
 
-  <!-- Background -->
+  <!-- Background Base -->
   <rect width="1200" height="630" fill="#050a14"/>
-  <rect width="1200" height="630" fill="url(#topGlow)"/>
+  <rect width="1200" height="630" fill="url(#auroraBlue)"/>
+  <rect width="1200" height="630" fill="url(#auroraPink)"/>
 
   <!-- Ambient Grid (4% opacity) -->
-  <g opacity="0.04" stroke="#8fa3c0" stroke-width="1">
+  <g opacity="0.04" stroke="#9aaccb" stroke-width="1">
     <line x1="0" y1="70" x2="1200" y2="70"/>
     <line x1="0" y1="140" x2="1200" y2="140"/>
     <line x1="0" y1="210" x2="1200" y2="210"/>
@@ -38,15 +56,15 @@
 
   <!-- Logo Brand Lockup -->
   <g transform="translate(140, 135)">
-    <rect width="48" height="48" rx="14" fill="#0a1424" stroke="rgba(57,255,136,0.4)" stroke-width="2"/>
-    <path d="M26 12 L16 28 L23 28 L20 38 L32 22 L25 22 Z" fill="#39ff88"/>
+    <rect width="48" height="48" rx="14" fill="#0a1424" stroke="rgba(10,132,255,0.4)" stroke-width="2"/>
+    <path d="M26 12 L16 28 L23 28 L20 38 L32 22 L25 22 Z" fill="url(#brandGrad)"/>
     <text x="64" y="34" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="28" fill="#f2f7ff">
-      SmartToolHub<tspan fill="#39ff88">.</tspan>
+      SmartToolHub<tspan fill="#0a84ff">.</tspan>
     </text>
   </g>
 
   <!-- Tagline / Eyebrow -->
-  <text x="140" y="240" font-family="'Geist Mono', monospace" font-size="16" letter-spacing="3" fill="#39ff88" text-transform="uppercase">
+  <text x="140" y="240" font-family="'Geist Mono', monospace" font-size="16" letter-spacing="3" fill="#5aa9ff" text-transform="uppercase">
     FREE EVERYDAY AI TOOLS · SUB-30 SECONDS
   </text>
 
@@ -56,29 +74,25 @@
   </text>
 
   <!-- Subheadline -->
-  <text x="140" y="380" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="24" fill="#8fa3c0">
+  <text x="140" y="380" font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="24" fill="#9aaccb">
     No sign-up. Results in seconds. Designed for everyday phone &amp; desktop utility.
   </text>
 
-  <!-- 3 Feature Chips -->
+  <!-- Feature Badge Chips -->
   <g transform="translate(140, 440)">
-    <rect width="210" height="44" rx="12" fill="#050a14" stroke="rgba(57,255,136,0.3)" stroke-width="1.5"/>
-    <text x="105" y="27" font-family="'Geist Mono', monospace" font-size="13" fill="#f2f7ff" text-anchor="middle">
-      Apple Shortcuts
+    <rect width="180" height="44" rx="22" fill="#0a1424" stroke="rgba(10,132,255,0.3)" stroke-width="1.5"/>
+    <text x="90" y="27" font-family="'Geist Mono', monospace" font-size="14" fill="#0a84ff" text-anchor="middle" font-weight="600">
+      Zero Registration
     </text>
 
-    <g transform="translate(230, 0)">
-      <rect width="210" height="44" rx="12" fill="#050a14" stroke="rgba(143,163,192,0.2)" stroke-width="1.5"/>
-      <text x="105" y="27" font-family="'Geist Mono', monospace" font-size="13" fill="#8fa3c0" text-anchor="middle">
-        AI Prompt Improver
-      </text>
-    </g>
+    <rect x="200" width="180" height="44" rx="22" fill="#0a1424" stroke="rgba(139,92,246,0.3)" stroke-width="1.5"/>
+    <text x="290" y="27" font-family="'Geist Mono', monospace" font-size="14" fill="#8b5cf6" text-anchor="middle" font-weight="600">
+      Sub-30s Latency
+    </text>
 
-    <g transform="translate(460, 0)">
-      <rect width="210" height="44" rx="12" fill="#050a14" stroke="rgba(143,163,192,0.2)" stroke-width="1.5"/>
-      <text x="105" y="27" font-family="'Geist Mono', monospace" font-size="13" fill="#8fa3c0" text-anchor="middle">
-        Formula Helper
-      </text>
-    </g>
+    <rect x="400" width="180" height="44" rx="22" fill="#0a1424" stroke="rgba(255,79,154,0.3)" stroke-width="1.5"/>
+    <text x="490" y="27" font-family="'Geist Mono', monospace" font-size="14" fill="#ff4f9a" text-anchor="middle" font-weight="600">
+      100% Private
+    </text>
   </g>
 </svg>

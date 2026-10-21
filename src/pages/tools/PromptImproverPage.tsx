@@ -59,13 +59,13 @@ export const PromptImproverPage: React.FC<PromptImproverPageProps> = ({ navigate
                   key={g.id}
                   type="button"
                   onClick={() => setGoal(g.id)}
-                  className={`p-2.5 rounded-xl border text-left transition-colors focus-laser ${
+                  className={`p-2.5 rounded-xl border text-left transition-colors focus-ring ${
                     goal === g.id
-                      ? 'bg-[#101c33] border-[#39ff88] shadow-[0_0_12px_rgba(57,255,136,0.2)]'
+                      ? 'bg-[#101c33] border-[#ffb840] shadow-[0_0_12px_rgba(255, 184, 64,0.2)]'
                       : 'bg-[#0a1424] border-[rgba(143,163,192,0.16)] hover:border-[rgba(143,163,192,0.3)]'
                   }`}
                 >
-                  <div className={`text-xs font-bold ${goal === g.id ? 'text-[#39ff88]' : 'text-[#f2f7ff]'}`}>
+                  <div className={`text-xs font-bold ${goal === g.id ? 'text-[#ffb840]' : 'text-[#f2f7ff]'}`}>
                     {g.label}
                   </div>
                   <div className="text-[10px] text-[#8fa3c0] mt-0.5 line-clamp-1">
@@ -95,7 +95,7 @@ export const PromptImproverPage: React.FC<PromptImproverPageProps> = ({ navigate
           <div className="space-y-6">
             {/* Top Toolbar */}
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#ffb840] font-semibold flex items-center gap-1.5">
                 <Wand2 className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Optimized Prompt ({goal})</span>
               </span>
@@ -105,9 +105,9 @@ export const PromptImproverPage: React.FC<PromptImproverPageProps> = ({ navigate
                   <button
                     type="button"
                     onClick={copyPromptOnly}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.25)] text-xs font-semibold text-[#39ff88] hover:border-[#39ff88] transition-colors focus-laser"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.25)] text-xs font-semibold text-[#ffb840] hover:border-[#ffb840] transition-colors focus-ring"
                   >
-                    {copiedPromptOnly ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedPromptOnly ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedPromptOnly ? 'Copied Prompt' : 'Copy Prompt Only'}</span>
                   </button>
                 )}
@@ -115,9 +115,9 @@ export const PromptImproverPage: React.FC<PromptImproverPageProps> = ({ navigate
                 <button
                   type="button"
                   onClick={() => onCopy(result)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#ffb840] transition-colors focus-ring"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copied ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'Copied All' : 'Copy All'}</span>
                 </button>
               </div>
@@ -128,7 +128,7 @@ export const PromptImproverPage: React.FC<PromptImproverPageProps> = ({ navigate
               <label className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold">
                 Ready-to-Paste Prompt
               </label>
-              <div className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(57,255,136,0.25)] text-sm text-[#f2f7ff] font-mono leading-relaxed whitespace-pre-wrap select-all">
+              <div className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(255, 184, 64,0.25)] text-sm text-[#f2f7ff] font-mono leading-relaxed whitespace-pre-wrap select-all">
                 {improvedPrompt || result}
               </div>
             </div>
@@ -145,7 +145,7 @@ export const PromptImproverPage: React.FC<PromptImproverPageProps> = ({ navigate
                       key={idx}
                       className="p-3 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.14)] flex items-start gap-2.5 text-xs text-[#8fa3c0]"
                     >
-                      <CheckCircle2 className="w-4 h-4 text-[#39ff88] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-[#34e0a1] shrink-0 mt-0.5" />
                       <span className="text-[#f2f7ff] leading-relaxed">{change}</span>
                     </div>
                   ))}

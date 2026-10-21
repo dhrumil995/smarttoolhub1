@@ -12,11 +12,11 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
     <section className="py-12 sm:py-16">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#39ff88]">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#0a84ff]">
             <span>Featured Suite · 6 Flagship Tools</span>
           </div>
           <h2 className="h2-fluid font-display text-[#f2f7ff] mt-2">
-            Engineered for clarity and speed<span className="text-[#39ff88]">.</span>
+            Engineered for clarity and speed<span className="text-[#0a84ff]">.</span>
           </h2>
         </div>
         <p className="body-fluid text-[#8fa3c0] max-w-md">
@@ -34,7 +34,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
                 <IconTile icon="Workflow" />
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-semibold text-[#39ff88] uppercase tracking-wider">
+                    <span className="font-mono text-xs font-semibold text-[#0a84ff] uppercase tracking-wider">
                       Flagship Tool
                     </span>
                     <span className="text-[#8fa3c0] text-xs">·</span>
@@ -42,7 +42,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
                   </div>
                 </div>
               </div>
-              <span className="font-mono text-xs text-[#39ff88] bg-[#0a1424] px-2.5 py-1 rounded-md border border-[rgba(57,255,136,0.2)]">
+              <span className="font-mono text-xs text-[#0a84ff] bg-[#0a1424] px-2.5 py-1 rounded-md border border-[rgba(10,132,255,0.2)]">
                 Featured
               </span>
             </div>
@@ -57,7 +57,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
 
             {/* Quick Demo Preview */}
             <div className="p-3.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.14)] text-xs text-[#8fa3c0] font-mono space-y-1">
-              <div className="text-[#39ff88]">&gt; Input: &ldquo;Send ETA to partner when I leave work&rdquo;</div>
+              <div className="text-[#0a84ff]">&gt; Input: &ldquo;Send ETA to partner when I leave work&rdquo;</div>
               <div className="text-[#f2f7ff]">
                 &rarr; Action 1: Get Current Location · Action 2: Calculate Travel Time · Action 3: Send Message
               </div>
@@ -68,7 +68,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <Link
               href="/tools/apple-shortcuts-generator"
               navigate={navigate}
-              className="btn-laser text-sm"
+              className="btn-primary text-sm"
             >
               <span>Build an Apple Shortcut</span>
               <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
@@ -82,10 +82,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <div className="flex items-center justify-between">
               <IconTile icon="Wand2" />
               <div className="flex items-center gap-1.5 text-xs text-[#8fa3c0]">
-                <span className="font-mono uppercase text-[#39ff88]">Productivity</span>
+                <span className="font-mono uppercase text-[#0a84ff]">Productivity</span>
               </div>
             </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">
+            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#0a84ff] transition-colors">
               AI Prompt Improver
             </h3>
             <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
@@ -96,7 +96,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <Link
               href="/tools/ai-prompt-improver"
               navigate={navigate}
-              className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
+              className="text-xs font-semibold text-[#0a84ff] hover:underline flex items-center gap-1.5 focus-ring rounded"
             >
               <span>Open Prompt Improver</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -110,10 +110,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <div className="flex items-center justify-between">
               <IconTile icon="Mail" />
               <div className="flex items-center gap-1.5 text-xs text-[#8fa3c0]">
-                <span className="font-mono uppercase text-[#39ff88]">Writing</span>
+                <span className="font-mono uppercase text-[#0a84ff]">Writing</span>
               </div>
             </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">
+            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#0a84ff] transition-colors">
               AI Email Writer
             </h3>
             <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
@@ -124,7 +124,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <Link
               href="/tools/ai-email-writer"
               navigate={navigate}
-              className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
+              className="text-xs font-semibold text-[#0a84ff] hover:underline flex items-center gap-1.5 focus-ring rounded"
             >
               <span>Open Email Writer</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -138,10 +138,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <div className="flex items-center justify-between">
               <IconTile icon="FileText" />
               <div className="flex items-center gap-1.5 text-xs text-[#8fa3c0]">
-                <span className="font-mono uppercase text-[#39ff88]">Writing</span>
+                <span className="font-mono uppercase text-[#0a84ff]">Writing</span>
               </div>
             </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">
+            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#0a84ff] transition-colors">
               AI Summarizer
             </h3>
             <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
@@ -152,7 +152,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <Link
               href="/tools/ai-summarizer"
               navigate={navigate}
-              className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
+              className="text-xs font-semibold text-[#0a84ff] hover:underline flex items-center gap-1.5 focus-ring rounded"
             >
               <span>Open Summarizer</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -166,10 +166,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <div className="flex items-center justify-between">
               <IconTile icon="Sigma" />
               <div className="flex items-center gap-1.5 text-xs text-[#8fa3c0]">
-                <span className="font-mono uppercase text-[#39ff88]">Productivity</span>
+                <span className="font-mono uppercase text-[#0a84ff]">Productivity</span>
               </div>
             </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">
+            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#0a84ff] transition-colors">
               Formula Helper
             </h3>
             <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
@@ -180,7 +180,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <Link
               href="/tools/formula-helper"
               navigate={navigate}
-              className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
+              className="text-xs font-semibold text-[#0a84ff] hover:underline flex items-center gap-1.5 focus-ring rounded"
             >
               <span>Open Formula Helper</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -194,10 +194,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <div className="flex items-center justify-between">
               <IconTile icon="Hash" />
               <div className="flex items-center gap-1.5 text-xs text-[#8fa3c0]">
-                <span className="font-mono uppercase text-[#39ff88]">Social</span>
+                <span className="font-mono uppercase text-[#0a84ff]">Social</span>
               </div>
             </div>
-            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#39ff88] transition-colors">
+            <h3 className="text-xl font-bold font-display text-[#f2f7ff] group-hover:text-[#0a84ff] transition-colors">
               Caption &amp; Hashtags
             </h3>
             <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
@@ -208,7 +208,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <Link
               href="/tools/caption-hashtag-generator"
               navigate={navigate}
-              className="text-xs font-semibold text-[#39ff88] hover:underline flex items-center gap-1.5 focus-laser rounded"
+              className="text-xs font-semibold text-[#0a84ff] hover:underline flex items-center gap-1.5 focus-ring rounded"
             >
               <span>Open Caption Tool</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -222,10 +222,10 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
         <Link
           href="/tools"
           navigate={navigate}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[#39ff88] text-xs font-semibold text-[#f2f7ff] hover:text-[#39ff88] transition-all focus-laser"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[#0a84ff] text-xs font-semibold text-[#f2f7ff] hover:text-[#0a84ff] transition-all focus-ring"
         >
           <span>Explore All Tools in the Directory</span>
-          <ArrowUpRight className="w-4 h-4 text-[#39ff88]" aria-hidden="true" />
+          <ArrowUpRight className="w-4 h-4 text-[#0a84ff]" aria-hidden="true" />
         </Link>
       </div>
     </section>

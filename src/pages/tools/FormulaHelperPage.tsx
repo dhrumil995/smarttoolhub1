@@ -57,13 +57,13 @@ export const FormulaHelperPage: React.FC<FormulaHelperPageProps> = ({ navigate }
                   key={item.id}
                   type="button"
                   onClick={() => setApp(item.id)}
-                  className={`p-3 rounded-xl border text-left transition-colors focus-laser ${
+                  className={`p-3 rounded-xl border text-left transition-colors focus-ring ${
                     app === item.id
-                      ? 'bg-[#101c33] border-[#39ff88] shadow-[0_0_12px_rgba(57,255,136,0.2)]'
+                      ? 'bg-[#101c33] border-[#ffb840] shadow-[0_0_12px_rgba(255, 184, 64,0.2)]'
                       : 'bg-[#0a1424] border-[rgba(143,163,192,0.16)] hover:border-[rgba(143,163,192,0.3)]'
                   }`}
                 >
-                  <div className={`text-xs font-bold ${app === item.id ? 'text-[#39ff88]' : 'text-[#f2f7ff]'}`}>
+                  <div className={`text-xs font-bold ${app === item.id ? 'text-[#ffb840]' : 'text-[#f2f7ff]'}`}>
                     {item.label}
                   </div>
                   <div className="text-[11px] text-[#8fa3c0] mt-0.5">
@@ -94,7 +94,7 @@ export const FormulaHelperPage: React.FC<FormulaHelperPageProps> = ({ navigate }
           <div className="space-y-6">
             {/* Top Toolbar */}
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#ffb840] font-semibold flex items-center gap-1.5">
                 <FileSpreadsheet className="w-3.5 h-3.5" />
                 <span>Generated Formula for {app}</span>
               </span>
@@ -104,9 +104,9 @@ export const FormulaHelperPage: React.FC<FormulaHelperPageProps> = ({ navigate }
                   <button
                     type="button"
                     onClick={copyFormulaOnly}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.25)] text-xs font-semibold text-[#39ff88] hover:border-[#39ff88] transition-colors focus-laser"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.25)] text-xs font-semibold text-[#ffb840] hover:border-[#ffb840] transition-colors focus-ring"
                   >
-                    {copiedFormulaOnly ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                    {copiedFormulaOnly ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedFormulaOnly ? 'Copied Formula' : 'Copy Formula'}</span>
                   </button>
                 )}
@@ -114,9 +114,9 @@ export const FormulaHelperPage: React.FC<FormulaHelperPageProps> = ({ navigate }
                 <button
                   type="button"
                   onClick={() => onCopy(result)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#ffb840] transition-colors focus-ring"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copied ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'Copied All' : 'Copy All'}</span>
                 </button>
               </div>
@@ -127,8 +127,8 @@ export const FormulaHelperPage: React.FC<FormulaHelperPageProps> = ({ navigate }
               <label className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold">
                 Ready-to-Paste Formula
               </label>
-              <div className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(57,255,136,0.3)] flex items-center justify-between gap-3 overflow-x-auto">
-                <code className="text-sm font-mono text-[#39ff88] font-semibold select-all">
+              <div className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(255, 184, 64,0.3)] flex items-center justify-between gap-3 overflow-x-auto">
+                <code className="text-sm font-mono text-[#ffb840] font-semibold select-all">
                   {formula || result.split('\n')[0] || result}
                 </code>
               </div>
@@ -151,7 +151,7 @@ export const FormulaHelperPage: React.FC<FormulaHelperPageProps> = ({ navigate }
             {example && (
               <div className="space-y-2 pt-2 border-t border-[rgba(143,163,192,0.12)]">
                 <span className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold flex items-center gap-1.5">
-                  <Sigma className="w-3.5 h-3.5 text-[#39ff88]" aria-hidden="true" />
+                  <Sigma className="w-3.5 h-3.5 text-[#ffb840]" aria-hidden="true" />
                   <span>Example Scenario</span>
                 </span>
                 <div className="text-xs font-mono text-[#8fa3c0] bg-[#0a1424] p-4 rounded-2xl border border-[rgba(143,163,192,0.14)] leading-relaxed">

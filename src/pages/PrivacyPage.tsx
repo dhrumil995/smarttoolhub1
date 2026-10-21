@@ -11,7 +11,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
     <article className="py-6 sm:py-12 max-w-3xl mx-auto space-y-8">
       {/* Breadcrumbs Landmark */}
       <nav aria-label="Breadcrumbs" className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-        <Link href="/" navigate={navigate} className="hover:text-[#39ff88] transition-colors focus-laser rounded">
+        <Link href="/" navigate={navigate} className="hover:text-[#7db8ff] transition-colors focus-ring rounded">
           Home
         </Link>
         <ChevronRight className="w-3.5 h-3.5 text-[#8fa3c0]/60" />
@@ -20,11 +20,11 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
 
       {/* Header Landmark */}
       <header className="space-y-3">
-        <div className="text-xs font-mono uppercase tracking-wider text-[#39ff88]">
+        <div className="text-xs font-mono uppercase tracking-wider text-[#0a84ff]">
           Plain English Privacy
         </div>
         <h1 className="h1-fluid font-display text-[#f2f7ff]">
-          Privacy Policy<span className="text-[#39ff88]">.</span>
+          Privacy Policy<span className="text-[#0a84ff]">.</span>
         </h1>
         <p className="body-fluid text-[#8fa3c0] leading-relaxed">
           Last updated: October 2026. We believe tools should be useful without tracking you across the web.
@@ -34,7 +34,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
       {/* Key Highlights Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
-          <EyeOff className="w-5 h-5 text-[#39ff88]" />
+          <EyeOff className="w-5 h-5 text-[#0a84ff]" />
           <div className="font-semibold text-sm text-[#f2f7ff]">No Accounts or Logins</div>
           <p className="text-xs text-[#8fa3c0] leading-relaxed">
             You do not need to provide your name, phone number, or email address to use any of our free tools.
@@ -42,7 +42,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
         </div>
 
         <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
-          <Server className="w-5 h-5 text-[#39ff88]" />
+          <Server className="w-5 h-5 text-[#0a84ff]" />
           <div className="font-semibold text-sm text-[#f2f7ff]">Ephemeral Processing</div>
           <p className="text-xs text-[#8fa3c0] leading-relaxed">
             Text you enter is sent securely to the AI API over HTTPS strictly to generate your answer. We do not store or sell your prompts.
@@ -50,7 +50,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
         </div>
 
         <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
-          <HardDrive className="w-5 h-5 text-[#39ff88]" />
+          <HardDrive className="w-5 h-5 text-[#0a84ff]" />
           <div className="font-semibold text-sm text-[#f2f7ff]">Local Device Storage</div>
           <p className="text-xs text-[#8fa3c0] leading-relaxed">
             Your recent tool history and saved snippets stay on your own phone or computer in browser localStorage. You can clear it anytime.
@@ -58,7 +58,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
         </div>
 
         <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
-          <Lock className="w-5 h-5 text-[#39ff88]" />
+          <Lock className="w-5 h-5 text-[#0a84ff]" />
           <div className="font-semibold text-sm text-[#f2f7ff]">No Invasive Tracking</div>
           <p className="text-xs text-[#8fa3c0] leading-relaxed">
             We do not use fingerprinting or sell personal tracking profiles to data brokers.
@@ -116,7 +116,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
           </h2>
           <p>
             If you have questions about our privacy standards, you can contact Dhrumil directly at{' '}
-            <a href="mailto:contact@smarttoolhub.net" className="text-[#39ff88] hover:underline font-mono">
+            <a href="mailto:contact@smarttoolhub.net" className="text-[#0a84ff] hover:underline font-mono">
               contact@smarttoolhub.net
             </a>.
           </p>

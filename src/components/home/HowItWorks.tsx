@@ -22,7 +22,7 @@ export const HowItWorks: React.FC = () => {
   return (
     <section className="py-12 sm:py-16 border-t border-[rgba(143,163,192,0.12)]">
       <div className="space-y-4 mb-10">
-        <div className="text-xs font-mono uppercase tracking-wider text-[#39ff88]">
+        <div className="text-xs font-mono uppercase tracking-wider text-[#0a84ff]">
           Simple Workflow
         </div>
         <h2 className="h2-fluid font-display text-[#f2f7ff]">
@@ -39,7 +39,7 @@ export const HowItWorks: React.FC = () => {
             key={step.number}
             className="glass-surface rounded-3xl p-6 sm:p-7 space-y-4 relative overflow-hidden"
           >
-            <div className="font-mono text-2xl font-bold text-[#39ff88]">
+            <div className="font-mono text-2xl font-bold text-[#0a84ff]">
               {step.number}
             </div>
             <h3 className="text-lg font-bold font-display text-[#f2f7ff]">

@@ -1013,7 +1013,40 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
     // 11. Pricing
     else if (currentPath === '/pricing') {
       title = 'Pricing & Pro Upgrade - 100% Free Tools | SmartToolHub';
-      description = 'All 8 AI tools are free forever. Optional Pro plan for power users wanting higher caps and zero ads via secure hosted checkout.';
+      description = 'All tools are free forever. Optional Pro plan for power users wanting higher caps and zero ads via secure hosted checkout.';
+    }
+
+    // 12. Dynamic Tool Fallback for all tools in LAUNCH_TOOLS
+    else if (currentPath.startsWith('/tools/')) {
+      const toolSlug = currentPath.replace('/tools/', '').split('?')[0].split('#')[0];
+      const matchedTool = LAUNCH_TOOLS.find((t) => t.slug === toolSlug);
+      if (matchedTool) {
+        title = `${matchedTool.name} - Free Utility | SmartToolHub`;
+        description = `${matchedTool.description} Free with no sign-up. Fast, private on-device utility.`;
+        schemaJson = {
+          '@context': 'https://schema.org',
+          '@graph': [
+            {
+              '@type': 'WebApplication',
+              'name': matchedTool.name,
+              'applicationCategory': 'UtilitiesApplication',
+              'operatingSystem': 'iOS, iPadOS, macOS, Web',
+              'url': canonicalUrl,
+              'description': matchedTool.description,
+              'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+              'creator': { '@type': 'Person', 'name': 'Dhrumil Aslaliya' },
+            },
+            {
+              '@type': 'BreadcrumbList',
+              'itemListElement': [
+                { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': origin },
+                { '@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': `${origin}/tools` },
+                { '@type': 'ListItem', 'position': 3, 'name': matchedTool.name, 'item': canonicalUrl },
+              ],
+            },
+          ],
+        };
+      }
     }
 
     // Apply document title

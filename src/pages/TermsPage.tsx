@@ -11,7 +11,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({ navigate }) => {
     <article className="py-6 sm:py-12 max-w-3xl mx-auto space-y-8">
       {/* Breadcrumbs Landmark */}
       <nav aria-label="Breadcrumbs" className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-        <Link href="/" navigate={navigate} className="hover:text-[#39ff88] transition-colors focus-laser rounded">
+        <Link href="/" navigate={navigate} className="hover:text-[#7db8ff] transition-colors focus-ring rounded">
           Home
         </Link>
         <ChevronRight className="w-3.5 h-3.5 text-[#8fa3c0]/60" />
@@ -20,11 +20,11 @@ export const TermsPage: React.FC<TermsPageProps> = ({ navigate }) => {
 
       {/* Header Landmark */}
       <header className="space-y-3">
-        <div className="text-xs font-mono uppercase tracking-wider text-[#39ff88]">
+        <div className="text-xs font-mono uppercase tracking-wider text-[#0a84ff]">
           Simple Legal Terms
         </div>
         <h1 className="h1-fluid font-display text-[#f2f7ff]">
-          Terms of Service<span className="text-[#39ff88]">.</span>
+          Terms of Service<span className="text-[#0a84ff]">.</span>
         </h1>
         <p className="body-fluid text-[#8fa3c0] leading-relaxed">
           Last updated: October 2026. By using SmartToolHub (smarttoolhub.net), you agree to these straightforward terms.
@@ -96,7 +96,7 @@ export const TermsPage: React.FC<TermsPageProps> = ({ navigate }) => {
           </h2>
           <p>
             For questions regarding these terms, contact us at{' '}
-            <a href="mailto:contact@smarttoolhub.net" className="text-[#39ff88] hover:underline font-mono">
+            <a href="mailto:contact@smarttoolhub.net" className="text-[#0a84ff] hover:underline font-mono">
               contact@smarttoolhub.net
             </a>.
           </p>

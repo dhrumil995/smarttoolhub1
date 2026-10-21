@@ -21,7 +21,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
  * - Leading/trailing icons
  * - Loading state (small spinner replaces icon, label stays, width does not jump)
  * - 44px minimum tap target on mobile
- * - Active press scale(0.97), 200ms transitions, focus-laser outline
+ * - Active press scale(0.97), 200ms transitions, focus-ring outline
  */
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({
   variant = 'primary',
@@ -38,7 +38,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({
 }, ref) => {
   const isIconOnly = variant === 'icon-only';
 
-  const baseStyles = 'inline-flex items-center justify-center font-semibold tracking-tight transition-all duration-200 select-none focus-laser disabled:opacity-50 disabled:pointer-events-none active:scale-[0.97] relative';
+  const baseStyles = 'inline-flex items-center justify-center font-semibold tracking-tight transition-all duration-200 select-none focus-ring disabled:opacity-50 disabled:pointer-events-none active:scale-[0.97] relative';
 
   const sizeStyles: Record<ButtonSize, string> = {
     sm: isIconOnly ? 'min-w-[44px] min-h-[44px] w-11 h-11 p-2 text-xs rounded-xl' : 'min-h-[44px] px-3.5 py-2 text-xs rounded-xl gap-2',
@@ -47,10 +47,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({
   };
 
   const variantStyles: Record<ButtonVariant, string> = {
-    primary: 'bg-[#39ff88] text-[#050a14] font-bold hover:bg-[#2ee677] shadow-[0_0_20px_rgba(57,255,136,0.25)] hover:shadow-[0_0_28px_rgba(57,255,136,0.4)] border border-transparent',
-    secondary: 'bg-[#0a1424] text-[#f2f7ff] border border-[rgba(143,163,192,0.18)] hover:border-[#39ff88] hover:text-[#39ff88] bg-opacity-90',
-    ghost: 'bg-transparent text-[#8fa3c0] hover:text-[#f2f7ff] hover:bg-[rgba(143,163,192,0.08)] border border-transparent',
-    'icon-only': 'bg-[#0a1424] text-[#8fa3c0] border border-[rgba(143,163,192,0.18)] hover:text-[#39ff88] hover:border-[rgba(57,255,136,0.4)]',
+    primary: 'bg-gradient-to-r from-[#0b6bf0] via-[#7a45f5] to-[#d6347f] text-white font-bold hover:brightness-110 shadow-[0_4px_16px_rgba(11,107,240,0.3)] hover:shadow-[0_0_0_4px_rgba(10,132,255,0.3),0_8px_24px_rgba(122,69,245,0.35)] border border-transparent',
+    secondary: 'bg-[#0a1424] text-[#f2f7ff] border border-[rgba(143,163,192,0.18)] hover:border-[#0a84ff] hover:text-white hover:shadow-[0_0_16px_rgba(10,132,255,0.2)] bg-opacity-90',
+    ghost: 'bg-transparent text-[#9aaccb] hover:text-[#f2f7ff] hover:bg-[rgba(143,163,192,0.08)] border border-transparent',
+    'icon-only': 'bg-[#0a1424] text-[#9aaccb] border border-[rgba(143,163,192,0.18)] hover:text-white hover:border-[#0a84ff] hover:shadow-[0_0_16px_rgba(10,132,255,0.2)]',
   };
 
   // Determine icon size
@@ -171,17 +171,17 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
       onClick={handleCopy}
       aria-label={computedAriaLabel}
       className={`min-w-[44px] min-h-[44px] transition-colors ${
-        copied ? 'border-[#39ff88] text-[#39ff88] bg-[rgba(57,255,136,0.06)]' : ''
+        copied ? 'border-[#34e0a1] text-[#34e0a1] bg-[rgba(52,224,161,0.08)] shadow-[0_0_12px_rgba(52,224,161,0.2)]' : ''
       } ${className}`}
       {...rest}
     >
       {copied ? (
-        <Check size={size === 'sm' ? 15 : 18} strokeWidth={2} className="text-[#39ff88] shrink-0" aria-hidden="true" />
+        <Check size={size === 'sm' ? 15 : 18} strokeWidth={2} className="text-[#34e0a1] shrink-0" aria-hidden="true" />
       ) : (
         <Copy size={size === 'sm' ? 15 : 18} strokeWidth={1.75} className="shrink-0" aria-hidden="true" />
       )}
       {!iconOnly && (
-        <span className={copied ? 'text-[#39ff88] font-bold' : ''}>
+        <span className={copied ? 'text-[#34e0a1] font-bold' : ''}>
           {copied ? copiedLabel : label}
         </span>
       )}

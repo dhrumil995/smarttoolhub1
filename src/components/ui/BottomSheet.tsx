@@ -97,7 +97,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
               type="button"
               onClick={onClose}
               aria-label="Close bottom sheet"
-              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl flex items-center justify-center text-[#8fa3c0] hover:text-[#f2f7ff] focus-laser"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl flex items-center justify-center text-[#8fa3c0] hover:text-[#f2f7ff] focus-ring"
             >
               <X size={18} aria-hidden="true" />
             </button>

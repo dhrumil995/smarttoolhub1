@@ -91,24 +91,24 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({
               key={tab.key}
               type="button"
               onClick={tab.onClick}
-              className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 transition-all focus-laser rounded-xl relative ${
-                isActive ? 'text-[#39ff88]' : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
+              className={`flex flex-col items-center justify-center min-h-[44px] min-w-[44px] py-1 transition-all focus-ring rounded-xl relative ${
+                isActive ? 'text-[#0a84ff]' : 'text-[#9aaccb] hover:text-[#f2f7ff]'
               }`}
               aria-label={tab.ariaLabel}
               aria-current={isActive ? 'page' : undefined}
             >
               <IconComp size={20} strokeWidth={1.75} aria-hidden="true" />
-              <span className="text-[10px] font-medium tracking-tight mt-0.5 leading-none">
+              <span className={`text-[10px] tracking-tight mt-0.5 leading-none ${isActive ? 'font-bold text-[#f2f7ff]' : 'font-medium'}`}>
                 {tab.label}
               </span>
-              {/* Small green dot indicator under active tab */}
+              {/* Small gradient dot indicator under active tab */}
               {isActive ? (
                 <span
-                  className="w-1 h-1 rounded-full bg-[#39ff88] mt-1 shrink-0 animate-in fade-in"
+                  className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#0b6bf0] via-[#7a45f5] to-[#ff4f9a] mt-1 shrink-0 animate-in fade-in"
                   aria-hidden="true"
                 />
               ) : (
-                <span className="w-1 h-1 mt-1 opacity-0 shrink-0" aria-hidden="true" />
+                <span className="w-1.5 h-1.5 mt-1 opacity-0 shrink-0" aria-hidden="true" />
               )}
             </button>
           );

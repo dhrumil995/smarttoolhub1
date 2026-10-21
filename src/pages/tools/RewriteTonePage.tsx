@@ -57,9 +57,9 @@ export const RewriteTonePage: React.FC<RewriteTonePageProps> = ({ navigate }) =>
                 key={item.id}
                 type="button"
                 onClick={() => setTone(item.id)}
-                className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-laser ${
+                className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-ring ${
                   tone === item.id
-                    ? 'bg-[#39ff88] text-[#050a14] border-[#39ff88] font-bold shadow-[0_0_12px_rgba(57,255,136,0.3)]'
+                    ? 'bg-[#0a84ff] text-[#050a14] border-[#0a84ff] font-bold shadow-[0_0_12px_rgba(10, 132, 255,0.3)]'
                     : 'bg-[#0a1424] text-[#8fa3c0] border-[rgba(143,163,192,0.16)] hover:text-[#f2f7ff]'
                 }`}
               >
@@ -87,7 +87,7 @@ export const RewriteTonePage: React.FC<RewriteTonePageProps> = ({ navigate }) =>
         return (
           <div className="space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#0a84ff] font-semibold flex items-center gap-1.5">
                 <PenLine className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Before &amp; After Comparison</span>
               </span>
@@ -96,7 +96,7 @@ export const RewriteTonePage: React.FC<RewriteTonePageProps> = ({ navigate }) =>
                 <button
                   type="button"
                   onClick={copyOnlyRewritten}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#39ff88] text-[#050a14] text-xs font-bold hover:bg-[#39ff88]/90 transition-colors focus-laser shadow-[0_0_12px_rgba(57,255,136,0.25)]"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#0a84ff] text-[#050a14] text-xs font-bold hover:bg-[#0a84ff]/90 transition-colors focus-ring shadow-[0_0_12px_rgba(10, 132, 255,0.25)]"
                 >
                   {copiedRewritten ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copiedRewritten ? 'Copied Rewrite' : 'Copy Rewrite'}</span>
@@ -104,7 +104,7 @@ export const RewriteTonePage: React.FC<RewriteTonePageProps> = ({ navigate }) =>
                 <button
                   type="button"
                   onClick={() => onShare(rewritten)}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-laser"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-ring"
                 >
                   <span className="text-xs">{shared ? 'Shared' : 'Share'}</span>
                 </button>
@@ -125,15 +125,15 @@ export const RewriteTonePage: React.FC<RewriteTonePageProps> = ({ navigate }) =>
               </div>
 
               {/* After Card */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[#39ff88]/30 space-y-2 shadow-[0_0_15px_rgba(57,255,136,0.08)]">
-                <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider text-[#39ff88] font-bold">
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[#0a84ff]/30 space-y-2 shadow-[0_0_15px_rgba(10, 132, 255,0.08)]">
+                <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider text-[#0a84ff] font-bold">
                   <span className="flex items-center gap-1">
                     <span>Rewritten ({tone})</span>
                     <ArrowRight className="w-3 h-3" />
                   </span>
                   <span>{rewritten.length} chars</span>
                 </div>
-                <p className="text-sm text-[#f2f7ff] leading-relaxed whitespace-pre-wrap font-medium selection:bg-[#39ff88] selection:text-[#050a14]">
+                <p className="text-sm text-[#f2f7ff] leading-relaxed whitespace-pre-wrap font-medium selection:bg-[#0a84ff] selection:text-[#050a14]">
                   {rewritten}
                 </p>
               </div>
@@ -142,7 +142,7 @@ export const RewriteTonePage: React.FC<RewriteTonePageProps> = ({ navigate }) =>
             {/* What Changed Summary Card */}
             {changes && (
               <div className="p-3.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.14)] flex items-start gap-2.5 text-xs text-[#8fa3c0]">
-                <div className="font-mono text-[#39ff88] font-bold uppercase shrink-0">Note:</div>
+                <div className="font-mono text-[#0a84ff] font-bold uppercase shrink-0">Note:</div>
                 <div className="leading-relaxed text-[#f2f7ff]">{changes}</div>
               </div>
             )}

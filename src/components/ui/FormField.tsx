@@ -80,7 +80,7 @@ export const FormField: React.FC<FormFieldProps> = ({
 
   const fieldBorderClass = error
     ? 'border-[#ff5c7a] focus:border-[#ff5c7a] focus:ring-[#ff5c7a]/20'
-    : 'border-[rgba(143,163,192,0.18)] focus:border-[#39ff88]';
+    : 'border-[rgba(143,163,192,0.18)] focus:border-[#0a84ff] focus:ring-[#0a84ff]/25';
 
   return (
     <div className={`space-y-1.5 ${className}`}>

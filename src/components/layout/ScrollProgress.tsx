@@ -25,7 +25,7 @@ export const ScrollProgress: React.FC = () => {
       className="fixed top-0 left-0 right-0 h-[2px] z-50 pointer-events-none bg-transparent"
     >
       <div
-        className="h-full bg-[#39ff88] shadow-[0_0_8px_#39ff88] origin-left will-change-transform"
+        className="h-full bg-gradient-to-r from-[#0b6bf0] via-[#7a45f5] via-[#d6347f] to-[#ffb840] shadow-[0_0_8px_rgba(10,132,255,0.4)] origin-left will-change-transform"
         style={{
           transform: `scaleX(${progress})`,
           transition: 'transform 50ms linear',

@@ -1,10 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Brand Gradient: #0b6bf0 -> #7a45f5 -> #d6347f -> #ffb840 -->
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b6bf0" />
+      <stop offset="40%" stop-color="#7a45f5" />
+      <stop offset="75%" stop-color="#d6347f" />
+      <stop offset="100%" stop-color="#ffb840" />
+    </linearGradient>
+  </defs>
   <!-- Navy Rounded Square Base (#050a14) with subtle hairline border -->
   <rect width="512" height="512" rx="128" fill="#050a14" />
   <rect x="8" y="8" width="496" height="496" rx="120" fill="none" stroke="rgba(143,163,192,0.16)" stroke-width="4" />
-  <!-- Laser Green Bolt (#39ff88) -->
+  <!-- Colorful Aurora Bolt with Brand Signature Gradient -->
   <path
     d="M294 72 L150 276 H254 L220 440 L362 236 H258 Z"
-    fill="#39ff88"
+    fill="url(#brandGrad)"
   />
 </svg>

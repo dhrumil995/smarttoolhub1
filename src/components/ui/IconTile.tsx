@@ -1,31 +1,47 @@
 import React from 'react';
 import { Icon, IconSize } from './Icon.tsx';
+import { getCategoryTheme } from '../../data/tools.ts';
 
 export interface IconTileProps {
   icon: string;
   size?: 'md' | 'lg';
   className?: string;
   glowOnHover?: boolean;
+  category?: string;
+  color?: string;
 }
 
 /**
- * 48px rounded-14px tile with bg-3 background, 1px line border,
- * laser green icon, and soft green glow on hover (where hover exists).
+ * Category-aware Icon Tile conforming to Phase 3:
+ * - 48px rounded-14px tile
+ * - Background = category colour at 14% opacity
+ * - Border = category colour at 32% opacity
+ * - Icon in the full colour
+ * - On hover: soft glow in that colour
  */
 export const IconTile: React.FC<IconTileProps> = ({
   icon,
   size = 'lg',
   className = '',
   glowOnHover = true,
+  category = 'Writing',
+  color,
 }) => {
   const iconSize: IconSize = size === 'lg' ? 'lg' : 'md';
+  const theme = getCategoryTheme(category);
+  const activeColor = color || theme.color;
+  const activeBg = color ? 'rgba(10, 132, 255, 0.14)' : theme.bgSubtle;
+  const activeBorder = color ? 'rgba(10, 132, 255, 0.32)' : theme.borderSubtle;
 
   return (
     <div
-      className={`w-12 h-12 min-w-[48px] min-h-[48px] rounded-[14px] bg-[#0c1322] border border-[rgba(143,163,192,0.16)] flex items-center justify-center text-[#39ff88] transition-all duration-200 ${
-        glowOnHover
-          ? 'group-hover:border-[rgba(57,255,136,0.4)] group-hover:shadow-[0_0_16px_rgba(57,255,136,0.22)]'
-          : ''
+      style={{
+        backgroundColor: activeBg,
+        borderColor: activeBorder,
+        color: activeColor,
+      }}
+      className={`w-12 h-12 min-w-[48px] min-h-[48px] rounded-[14px] border flex items-center justify-center transition-all duration-200 ${
+        glowOnHover ? 'group-hover:shadow-[0_0_16px_rgba(10,132,255,0.25)]' : ''
       } ${className}`}
       aria-hidden="true"
     >

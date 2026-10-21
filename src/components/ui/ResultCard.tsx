@@ -86,8 +86,8 @@ export const ResultCard: React.FC<ResultCardProps> = ({
       {/* Header Row: Mono Label "RESULT" + Standard Action Icons */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(143,163,192,0.12)] pb-3">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#39ff88]" aria-hidden="true" />
-          <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-bold">
+          <span className="w-2 h-2 rounded-full bg-[#0a84ff]" aria-hidden="true" />
+          <span className="font-mono text-xs uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#5aa9ff] to-[#ff7ab5] font-bold">
             RESULT
           </span>
         </div>
@@ -135,7 +135,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
             aria-label="Helpful result"
             title="Helpful"
             className={`w-10 h-10 min-w-[40px] min-h-[40px] ${
-              feedbackGiven === 'up' ? 'text-[#39ff88] border-[#39ff88]' : ''
+              feedbackGiven === 'up' ? 'text-[#34e0a1] border-[#34e0a1]' : ''
             }`}
           >
             <ThumbsUp size={15} aria-hidden="true" />
@@ -162,11 +162,11 @@ export const ResultCard: React.FC<ResultCardProps> = ({
             aria-label={isSaved ? 'Saved to device' : 'Save result to device'}
             title={isSaved ? 'Saved' : 'Save to device'}
             className={`w-10 h-10 min-w-[40px] min-h-[40px] ${
-              isSaved ? 'text-[#39ff88] border-[#39ff88] bg-[rgba(57,255,136,0.08)]' : ''
+              isSaved ? 'text-[#0a84ff] border-[#0a84ff] bg-[rgba(10,132,255,0.08)]' : ''
             }`}
           >
             {isSaved ? (
-              <BookmarkCheck size={16} className="text-[#39ff88]" aria-hidden="true" />
+              <BookmarkCheck size={16} className="text-[#0a84ff]" aria-hidden="true" />
             ) : (
               <Bookmark size={16} aria-hidden="true" />
             )}
@@ -178,7 +178,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({
       {children ? (
         children
       ) : (
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.14)] max-h-[520px] overflow-y-auto selection:bg-[#39ff88] selection:text-[#050a14]">
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.14)] max-h-[520px] overflow-y-auto selection:bg-[#0a84ff] selection:text-[#050a14]">
           <div className="text-sm sm:text-base text-[#f2f7ff] leading-relaxed max-w-[65ch] whitespace-pre-wrap">
             {result}
           </div>

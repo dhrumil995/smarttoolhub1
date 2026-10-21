@@ -30,7 +30,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ navigate, onOpenSear
         <button
           type="button"
           onClick={() => navigate('/')}
-          className="btn-laser text-xs inline-flex items-center gap-2"
+          className="btn-primary text-xs inline-flex items-center gap-2"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Home</span>
@@ -41,7 +41,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ navigate, onOpenSear
           navigate={navigate}
           className="btn-glass text-xs inline-flex items-center gap-2"
         >
-          <Zap className="w-3.5 h-3.5 text-[#39ff88]" />
+          <Zap className="w-3.5 h-3.5 text-[#0a84ff]" />
           <span>Explore 8 Tools</span>
         </Link>
 

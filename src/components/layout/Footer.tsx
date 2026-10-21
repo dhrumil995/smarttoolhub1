@@ -16,20 +16,20 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
             <Link
               href="/"
               navigate={navigate}
-              className="inline-flex items-center gap-2.5 text-lg font-bold tracking-tight text-[#f2f7ff] focus-laser rounded-lg p-1 -ml-1"
+              className="inline-flex items-center gap-2.5 text-lg font-bold tracking-tight text-[#f2f7ff] focus-ring rounded-lg p-1 -ml-1"
             >
-              <div className="w-7 h-7 rounded-lg bg-[#0a1424] border border-[rgba(57,255,136,0.3)] flex items-center justify-center text-[#39ff88]">
+              <div className="w-7 h-7 rounded-lg bg-[#0a1424] border border-[rgba(10,132,255,0.35)] flex items-center justify-center text-[#0a84ff] shadow-[0_0_12px_rgba(10,132,255,0.2)]">
                 <Zap className="w-3.5 h-3.5 fill-current" />
               </div>
               <span className="font-display text-lg text-[#f2f7ff]">
-                SmartToolHub<span className="text-[#39ff88]">.</span>
+                SmartToolHub<span className="text-[#0a84ff]">.</span>
               </span>
             </Link>
-            <p className="text-sm text-[#8fa3c0] max-w-sm leading-relaxed">
+            <p className="text-sm text-[#9aaccb] max-w-sm leading-relaxed">
               Free AI tools that just work. No sign-up. Results in seconds. Designed for everyday phone and desktop utility.
             </p>
-            <div className="flex items-center gap-2 text-xs text-[#8fa3c0]">
-              <ShieldCheck className="w-4 h-4 text-[#39ff88]" />
+            <div className="flex items-center gap-2 text-xs text-[#9aaccb]">
+              <ShieldCheck className="w-4 h-4 text-[#34e0a1]" />
               <span>Independent &amp; privacy-respecting</span>
             </div>
           </div>
@@ -44,7 +44,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/tools/apple-shortcuts-generator"
                   navigate={navigate}
-                  className="hover:text-[#39ff88] transition-colors focus-laser rounded"
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
                 >
                   Apple Shortcuts
                 </Link>
@@ -53,7 +53,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/tools/ai-prompt-improver"
                   navigate={navigate}
-                  className="hover:text-[#39ff88] transition-colors focus-laser rounded"
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
                 >
                   Prompt Improver
                 </Link>
@@ -62,7 +62,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/tools/ai-email-writer"
                   navigate={navigate}
-                  className="hover:text-[#39ff88] transition-colors focus-laser rounded"
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
                 >
                   Email Writer
                 </Link>
@@ -71,7 +71,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/tools/formula-helper"
                   navigate={navigate}
-                  className="hover:text-[#39ff88] transition-colors focus-laser rounded"
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
                 >
                   Excel &amp; Sheets Helper
                 </Link>
@@ -80,9 +80,9 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/tools"
                   navigate={navigate}
-                  className="text-[#39ff88] hover:underline transition-colors focus-laser rounded font-medium"
+                  className="text-[#7db8ff] hover:underline transition-colors focus-ring rounded font-medium"
                 >
-                  View all 8 tools &rarr;
+                  View all tools &rarr;
                 </Link>
               </li>
             </ul>
@@ -98,7 +98,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/guides"
                   navigate={navigate}
-                  className="hover:text-[#39ff88] transition-colors focus-laser rounded"
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
                 >
                   How-To Guides
                 </Link>
@@ -107,7 +107,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/about"
                   navigate={navigate}
-                  className="hover:text-[#39ff88] transition-colors focus-laser rounded"
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
                 >
                   About the Site
                 </Link>
@@ -116,7 +116,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/pricing"
                   navigate={navigate}
-                  className="hover:text-[#39ff88] transition-colors focus-laser rounded"
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
                 >
                   Pro &amp; Pricing
                 </Link>
@@ -125,7 +125,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/contact"
                   navigate={navigate}
-                  className="hover:text-[#39ff88] transition-colors focus-laser rounded"
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
                 >
                   Contact
                 </Link>
@@ -134,7 +134,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/privacy"
                   navigate={navigate}
-                  className="hover:text-[#39ff88] transition-colors focus-laser rounded"
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
                 >
                   Privacy Policy
                 </Link>
@@ -143,7 +143,7 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/terms"
                   navigate={navigate}
-                  className="hover:text-[#39ff88] transition-colors focus-laser rounded"
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
                 >
                   Terms of Service
                 </Link>

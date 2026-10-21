@@ -12,13 +12,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
         {/* Left Column: Headlines & Primary CTA (7 cols on lg) */}
         <div className="lg:col-span-7 space-y-6 text-left">
-          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#39ff88]">
-            <span className="w-2 h-2 rounded-full bg-[#39ff88]" />
+          <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#0a84ff]">
+            <span className="w-2 h-2 rounded-full bg-[#0a84ff]" />
             <span>Fast · Free · No Account Required</span>
           </div>
 
           <h1 className="h1-fluid font-display text-[#f2f7ff]">
-            Free AI tools that just work<span className="text-[#39ff88]">.</span>
+            Free AI tools that just work<span className="text-[#0a84ff]">.</span>
           </h1>
 
           <p className="body-fluid text-[#8fa3c0] max-w-xl leading-relaxed">
@@ -29,7 +29,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
             <button
               type="button"
               onClick={onExploreClick}
-              className="btn-laser shadow-[0_0_24px_rgba(57,255,136,0.3)]"
+              className="btn-primary shadow-[0_4px_16px_rgba(11,107,240,0.28)]"
             >
               <Zap className="w-4 h-4 fill-current" />
               <span>Browse All Tools</span>
@@ -54,7 +54,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreClick }) => {
               <div className="text-[#8fa3c0] text-[11px] mt-0.5">Logins or passwords</div>
             </div>
             <div>
-              <div className="font-mono text-sm font-bold text-[#39ff88]">100%</div>
+              <div className="font-mono text-sm font-bold text-[#0a84ff]">100%</div>
               <div className="text-[#8fa3c0] text-[11px] mt-0.5">Free forever tools</div>
             </div>
           </div>

@@ -42,7 +42,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 <Link
                   href={item.href}
                   navigate={navigate}
-                  className="hover:text-[#39ff88] transition-colors focus-laser rounded py-0.5"
+                  className="hover:text-[#7db8ff] hover:underline transition-colors focus-ring rounded py-0.5"
                 >
                   {item.label}
                 </Link>
@@ -70,7 +70,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
               <Link
                 href={items[0].href || '/'}
                 navigate={navigate}
-                className="hover:text-[#39ff88] transition-colors focus-laser rounded"
+                className="hover:text-[#7db8ff] hover:underline transition-colors focus-ring rounded"
               >
                 {items[0].label}
               </Link>
@@ -97,7 +97,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                   <Link
                     href={item.href}
                     navigate={navigate}
-                    className="hover:text-[#39ff88] transition-colors focus-laser rounded shrink-0"
+                    className="hover:text-[#7db8ff] hover:underline transition-colors focus-ring rounded shrink-0"
                   >
                     {item.label}
                   </Link>

@@ -47,9 +47,9 @@ export const SummarizerPage: React.FC<SummarizerPageProps> = ({ navigate }) => {
             <button
               type="button"
               onClick={() => setSummaryLength('short')}
-              className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-laser ${
+              className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-ring ${
                 summaryLength === 'short'
-                  ? 'bg-[#39ff88] text-[#050a14] border-[#39ff88] font-bold shadow-[0_0_12px_rgba(57,255,136,0.3)]'
+                  ? 'bg-[#0a84ff] text-[#050a14] border-[#0a84ff] font-bold shadow-[0_0_12px_rgba(10, 132, 255,0.3)]'
                   : 'bg-[#0a1424] text-[#8fa3c0] border-[rgba(143,163,192,0.16)] hover:text-[#f2f7ff]'
               }`}
             >
@@ -58,9 +58,9 @@ export const SummarizerPage: React.FC<SummarizerPageProps> = ({ navigate }) => {
             <button
               type="button"
               onClick={() => setSummaryLength('medium')}
-              className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-laser ${
+              className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-ring ${
                 summaryLength === 'medium'
-                  ? 'bg-[#39ff88] text-[#050a14] border-[#39ff88] font-bold shadow-[0_0_12px_rgba(57,255,136,0.3)]'
+                  ? 'bg-[#0a84ff] text-[#050a14] border-[#0a84ff] font-bold shadow-[0_0_12px_rgba(10, 132, 255,0.3)]'
                   : 'bg-[#0a1424] text-[#8fa3c0] border-[rgba(143,163,192,0.16)] hover:text-[#f2f7ff]'
               }`}
             >
@@ -76,7 +76,7 @@ export const SummarizerPage: React.FC<SummarizerPageProps> = ({ navigate }) => {
         return (
           <div className="space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#0a84ff] font-semibold flex items-center gap-1.5">
                 <FileText className="w-3.5 h-3.5" />
                 <span>Executive Summary</span>
               </span>
@@ -85,14 +85,14 @@ export const SummarizerPage: React.FC<SummarizerPageProps> = ({ navigate }) => {
                 <button
                   type="button"
                   onClick={() => onCopy(result)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#0a84ff] transition-colors focus-ring"
                 >
                   <span className="text-xs">{copied ? 'Copied All' : 'Copy All'}</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => onShare(result)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-laser"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-ring"
                 >
                   <span className="text-xs">{shared ? 'Shared' : 'Share'}</span>
                 </button>
@@ -102,7 +102,7 @@ export const SummarizerPage: React.FC<SummarizerPageProps> = ({ navigate }) => {
             {/* 3-Sentence Summary Card */}
             {summary && (
               <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] space-y-2">
-                <div className="text-[11px] font-mono uppercase tracking-wider text-[#39ff88] font-semibold">
+                <div className="text-[11px] font-mono uppercase tracking-wider text-[#0a84ff] font-semibold">
                   3-Sentence Summary
                 </div>
                 <p className="text-sm text-[#f2f7ff] leading-relaxed">
@@ -114,13 +114,13 @@ export const SummarizerPage: React.FC<SummarizerPageProps> = ({ navigate }) => {
             {/* 5 Key Points Card */}
             {keyPoints.length > 0 && (
               <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] space-y-3">
-                <div className="text-[11px] font-mono uppercase tracking-wider text-[#39ff88] font-semibold">
+                <div className="text-[11px] font-mono uppercase tracking-wider text-[#0a84ff] font-semibold">
                   5 Key Points
                 </div>
                 <ul className="space-y-2">
                   {keyPoints.map((point, idx) => (
                     <li key={idx} className="flex items-start gap-2.5 text-sm text-[#8fa3c0]">
-                      <CheckCircle2 className="w-4 h-4 text-[#39ff88] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-[#34e0a1] shrink-0 mt-0.5" />
                       <span className="text-[#f2f7ff]">{point}</span>
                     </li>
                   ))}

@@ -24,7 +24,7 @@ function highlightMatch(text: string, query: string): React.ReactNode {
   return (
     <>
       {before}
-      <mark className="bg-[rgba(57,255,136,0.22)] text-[#39ff88] font-bold rounded-sm px-0.5">
+      <mark className="bg-[rgba(10,132,255,0.22)] text-[#5aa9ff] font-bold rounded-sm px-0.5">
         {match}
       </mark>
       {after}
@@ -177,8 +177,8 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar with Search Icon and Clear Button */}
-        <div className="flex items-center gap-3 px-3.5 py-3 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.18)] focus-within:border-[#39ff88] transition-colors shrink-0">
-          <Search size={18} className="text-[#8fa3c0] shrink-0" aria-hidden="true" />
+        <div className="flex items-center gap-3 px-3.5 py-3 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.18)] focus-within:border-[#0a84ff] focus-within:shadow-[0_0_12px_rgba(10,132,255,0.25)] transition-colors shrink-0">
+          <Search size={18} className="text-[#9aaccb] shrink-0" aria-hidden="true" />
           <input
             ref={inputRef}
             type="search"
@@ -189,7 +189,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
             }}
             onKeyDown={handleKeyDown}
             placeholder="Type a tool name (e.g. shortcuts, email, formulas)..."
-            className="flex-1 bg-transparent text-base sm:text-sm text-[#f2f7ff] placeholder-[#8fa3c0] focus:outline-none"
+            className="flex-1 bg-transparent text-base sm:text-sm text-[#f2f7ff] placeholder-[#9aaccb] focus:outline-none"
             style={{ fontSize: '16px' }}
           />
           {query ? (
@@ -200,20 +200,20 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                 setSelectedIndex(0);
                 inputRef.current?.focus();
               }}
-              className="text-[#8fa3c0] hover:text-[#f2f7ff] p-1.5 focus-laser rounded-lg"
+              className="text-[#9aaccb] hover:text-[#f2f7ff] p-1.5 focus-ring rounded-lg"
               aria-label="Clear search input"
             >
               <X size={16} aria-hidden="true" />
             </button>
           ) : (
             <div className="flex items-center gap-2">
-              <span className="hidden sm:inline-block font-mono text-[10px] text-[#8fa3c0] px-2 py-0.5 rounded border border-[rgba(143,163,192,0.16)]">
+              <span className="hidden sm:inline-block font-mono text-[10px] text-[#9aaccb] px-2 py-0.5 rounded border border-[rgba(143,163,192,0.16)]">
                 ESC
               </span>
               <button
                 type="button"
                 onClick={onClose}
-                className="md:hidden text-xs text-[#8fa3c0] hover:text-[#f2f7ff] p-1"
+                className="md:hidden text-xs text-[#9aaccb] hover:text-[#f2f7ff] p-1"
                 aria-label="Close search"
               >
                 Cancel
@@ -230,7 +230,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
               <div className="space-y-5">
                 {Array.from(groupedResults.entries()).map(([category, tools]) => (
                   <div key={category} className="space-y-2">
-                    <div className="text-[11px] font-mono uppercase tracking-wider text-[#39ff88] px-2 font-bold">
+                    <div className="text-[11px] font-mono uppercase tracking-wider text-[#5aa9ff] px-2 font-bold">
                       {category}
                     </div>
                     <div className="space-y-1.5">
@@ -243,26 +243,26 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                             key={tool.id}
                             type="button"
                             onClick={() => handleSelect(tool.slug, query)}
-                            className={`w-full flex items-center justify-between p-3.5 rounded-2xl border transition-all text-left group focus-laser select-none ${
+                            className={`w-full flex items-center justify-between p-3.5 rounded-2xl border transition-all text-left group focus-ring select-none ${
                               isKeyboardSelected
-                                ? 'bg-[#101c33] border-[#39ff88] shadow-[0_0_16px_rgba(57,255,136,0.2)]'
-                                : 'bg-[#050a14]/60 hover:bg-[#101c33] border-[rgba(143,163,192,0.12)] hover:border-[#39ff88]/40'
+                                ? 'bg-[#101c33] border-[#0a84ff] shadow-[0_0_16px_rgba(10,132,255,0.25)]'
+                                : 'bg-[#050a14]/60 hover:bg-[#101c33] border-[rgba(143,163,192,0.12)] hover:border-[#0a84ff]/50'
                             }`}
                           >
                             <div className="flex items-center gap-3.5 min-w-0 pr-2">
-                              <div className="w-9 h-9 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] flex items-center justify-center text-[#39ff88] shrink-0">
+                              <div className="w-9 h-9 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] flex items-center justify-center text-[#0a84ff] shrink-0">
                                 <Icon name={TOOL_ICON_MAP[tool.slug] || tool.icon} size="sm" strokeWidth={1.75} aria-hidden={true} />
                               </div>
                               <div className="min-w-0">
-                                <div className="text-sm font-semibold text-[#f2f7ff] truncate group-hover:text-[#39ff88] transition-colors">
+                                <div className="text-sm font-semibold text-[#f2f7ff] truncate group-hover:text-[#5aa9ff] transition-colors">
                                   {highlightMatch(tool.name, query)}
                                 </div>
-                                <div className="text-xs text-[#8fa3c0] truncate mt-0.5">
+                                <div className="text-xs text-[#9aaccb] truncate mt-0.5">
                                   {highlightMatch(tool.description, query)}
                                 </div>
                               </div>
                             </div>
-                            <ChevronRight size={16} className="text-[#8fa3c0] group-hover:text-[#39ff88] shrink-0 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                            <ChevronRight size={16} className="text-[#9aaccb] group-hover:text-[#5aa9ff] shrink-0 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                           </button>
                         );
                       })}
@@ -287,14 +287,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({
               {recentSearches.length > 0 && (
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between px-1">
-                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold flex items-center gap-1.5">
-                      <History size={13} className="text-[#39ff88]" aria-hidden="true" />
+                    <span className="text-[11px] font-mono uppercase tracking-wider text-[#9aaccb] font-semibold flex items-center gap-1.5">
+                      <History size={13} className="text-[#0a84ff]" aria-hidden="true" />
                       <span>Recent Searches</span>
                     </span>
                     <button
                       type="button"
                       onClick={clearRecentSearches}
-                      className="text-[11px] text-[#8fa3c0] hover:text-[#ff5c7a] transition-colors"
+                      className="text-[11px] text-[#9aaccb] hover:text-[#ff5c7a] transition-colors"
                     >
                       Clear
                     </button>
@@ -308,9 +308,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                           setQuery(term);
                           inputRef.current?.focus();
                         }}
-                        className="px-3 py-1.5 rounded-xl bg-[#050a14] border border-[rgba(143,163,192,0.16)] text-xs text-[#f2f7ff] hover:border-[#39ff88] hover:text-[#39ff88] transition-colors inline-flex items-center gap-1.5 focus-laser"
+                        className="px-3 py-1.5 rounded-xl bg-[#050a14] border border-[rgba(143,163,192,0.16)] text-xs text-[#f2f7ff] hover:border-[#0a84ff] hover:text-[#5aa9ff] transition-colors inline-flex items-center gap-1.5 focus-ring"
                       >
-                        <Search size={12} className="text-[#8fa3c0]" aria-hidden="true" />
+                        <Search size={12} className="text-[#9aaccb]" aria-hidden="true" />
                         <span>{term}</span>
                       </button>
                     ))}
@@ -320,8 +320,8 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
               {/* 6 Popular Tools */}
               <div className="space-y-3">
-                <span className="text-[11px] font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold flex items-center gap-1.5 px-1">
-                  <Zap size={13} className="text-[#39ff88]" aria-hidden="true" />
+                <span className="text-[11px] font-mono uppercase tracking-wider text-[#9aaccb] font-semibold flex items-center gap-1.5 px-1">
+                  <Zap size={13} className="text-[#ffb840]" aria-hidden="true" />
                   <span>Popular Tools</span>
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -330,22 +330,22 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                       key={tool.id}
                       type="button"
                       onClick={() => handleSelect(tool.slug)}
-                      className="flex items-center justify-between p-3 rounded-2xl bg-[#050a14]/60 hover:bg-[#101c33] border border-[rgba(143,163,192,0.12)] hover:border-[#39ff88]/40 transition-all text-left group focus-laser"
+                      className="flex items-center justify-between p-3 rounded-2xl bg-[#050a14]/60 hover:bg-[#101c33] border border-[rgba(143,163,192,0.12)] hover:border-[#0a84ff]/50 transition-all text-left group focus-ring"
                     >
                       <div className="flex items-center gap-3 min-w-0 pr-2">
-                        <div className="w-8 h-8 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.16)] flex items-center justify-center text-[#39ff88] shrink-0">
+                        <div className="w-8 h-8 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.16)] flex items-center justify-center text-[#0a84ff] shrink-0">
                           <Icon name={TOOL_ICON_MAP[tool.slug] || tool.icon} size="sm" strokeWidth={1.75} aria-hidden={true} />
                         </div>
                         <div className="min-w-0">
-                          <div className="text-sm font-semibold text-[#f2f7ff] truncate group-hover:text-[#39ff88] transition-colors">
+                          <div className="text-sm font-semibold text-[#f2f7ff] truncate group-hover:text-[#5aa9ff] transition-colors">
                             {tool.name}
                           </div>
-                          <div className="text-[11px] font-mono text-[#8fa3c0] uppercase">
+                          <div className="text-[11px] font-mono text-[#9aaccb] uppercase">
                             {tool.category}
                           </div>
                         </div>
                       </div>
-                      <ChevronRight size={14} className="text-[#8fa3c0] group-hover:text-[#39ff88] shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                      <ChevronRight size={14} className="text-[#9aaccb] group-hover:text-[#5aa9ff] shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                     </button>
                   ))}
                 </div>
@@ -355,7 +355,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         </div>
 
         {/* Footer info & shortcut cues */}
-        <div className="mt-4 pt-3 border-t border-[rgba(143,163,192,0.12)] flex items-center justify-between text-[11px] font-mono text-[#8fa3c0] shrink-0">
+        <div className="mt-4 pt-3 border-t border-[rgba(143,163,192,0.12)] flex items-center justify-between text-[11px] font-mono text-[#9aaccb] shrink-0">
           <div className="hidden sm:flex items-center gap-4">
             <span>&uarr;&darr; to navigate</span>
             <span>&crarr; to select</span>
@@ -367,7 +367,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
               navigate('/tools');
               onClose();
             }}
-            className="hover:text-[#39ff88] transition-colors ml-auto text-xs font-semibold"
+            className="hover:text-[#7db8ff] text-[#7db8ff] hover:underline transition-colors ml-auto text-xs font-semibold"
           >
             Explore all {LAUNCH_TOOLS.length} tools &rarr;
           </button>

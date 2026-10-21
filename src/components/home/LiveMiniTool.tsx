@@ -81,7 +81,7 @@ export const LiveMiniTool: React.FC = () => {
   return (
     <div className="w-full glass-surface rounded-3xl p-5 sm:p-6 border border-[rgba(143,163,192,0.18)] shadow-2xl relative overflow-hidden">
       {toast && (
-        <div className="absolute top-3 right-3 z-20 px-3 py-1.5 rounded-xl bg-[#0a1424] border border-[#39ff88] text-[11px] font-semibold text-[#39ff88] shadow-lg flex items-center gap-1.5 animate-fade-in">
+        <div className="absolute top-3 right-3 z-20 px-3 py-1.5 rounded-xl bg-[#0a1424] border border-[#0a84ff] text-[11px] font-semibold text-[#0a84ff] shadow-lg flex items-center gap-1.5 animate-fade-in">
           <Check className="w-3.5 h-3.5" />
           <span>{toast}</span>
         </div>
@@ -90,7 +90,7 @@ export const LiveMiniTool: React.FC = () => {
       {/* Mini Tool Header */}
       <div className="flex items-center justify-between pb-4 border-b border-[rgba(143,163,192,0.12)]">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-[#0a1424] border border-[rgba(57,255,136,0.3)] flex items-center justify-center text-[#39ff88]">
+          <div className="w-7 h-7 rounded-lg bg-[#0a1424] border border-[rgba(10,132,255,0.3)] flex items-center justify-center text-[#0a84ff]">
             <Sparkles className="w-4 h-4 fill-current" />
           </div>
           <div>
@@ -102,7 +102,7 @@ export const LiveMiniTool: React.FC = () => {
         <button
           type="button"
           onClick={handleExample}
-          className="text-xs text-[#39ff88] hover:underline focus-laser rounded font-mono uppercase tracking-wider"
+          className="text-xs text-[#0a84ff] hover:underline focus-ring rounded font-mono uppercase tracking-wider"
         >
           Try an example
         </button>
@@ -120,14 +120,14 @@ export const LiveMiniTool: React.FC = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type a request (e.g. 'write email to client saying delayed by 2 days')..."
-            className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.16)] rounded-xl p-3 text-base sm:text-sm text-[#f2f7ff] placeholder-[#8fa3c0] focus-laser resize-none"
+            className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.16)] rounded-xl p-3 text-base sm:text-sm text-[#f2f7ff] placeholder-[#8fa3c0] focus-ring resize-none"
           />
         </div>
 
         <button
           type="submit"
           disabled={!input.trim() || isLoading}
-          className="w-full btn-laser disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isLoading ? (
             <span className="flex items-center gap-2">
@@ -144,26 +144,26 @@ export const LiveMiniTool: React.FC = () => {
       {result && (
         <div className="mt-4 pt-4 border-t border-[rgba(143,163,192,0.12)] space-y-3" aria-live="polite">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88]">
+            <span className="font-mono text-xs uppercase tracking-wider text-[#0a84ff]">
               Formatted Result
             </span>
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={handleCopy}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#f2f7ff] hover:border-[#0a84ff] transition-colors focus-ring"
                 aria-label="Copy result to clipboard"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-[#0a84ff]" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copied' : 'Copy'}</span>
               </button>
               <button
                 type="button"
                 onClick={handleShare}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-laser"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-ring"
                 aria-label="Share result"
               >
-                {shared ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Share2 className="w-3.5 h-3.5" />}
+                {shared ? <Check className="w-3.5 h-3.5 text-[#0a84ff]" /> : <Share2 className="w-3.5 h-3.5" />}
                 <span className="hidden sm:inline">Share</span>
               </button>
             </div>

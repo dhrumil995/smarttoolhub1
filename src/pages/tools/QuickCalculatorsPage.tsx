@@ -48,7 +48,7 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
   const chargeMinutes = Math.round(chargeHours * 60);
 
   const interactiveCalculatorWidget = (
-    <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[rgba(57,255,136,0.25)] space-y-4 mb-4">
+    <div className="p-4 sm:p-5 rounded-2xl bg-[#0a1424] border border-[rgba(52, 224, 161,0.25)] space-y-4 mb-4">
       {/* Tab Switcher */}
       <div className="flex items-center gap-2 border-b border-[rgba(143,163,192,0.12)] pb-3 overflow-x-auto">
         <button
@@ -56,7 +56,7 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
           onClick={() => setActiveTab('retina')}
           className={`flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
             activeTab === 'retina'
-              ? 'bg-[#39ff88] text-[#050a14]'
+              ? 'bg-[#34e0a1] text-[#050a14]'
               : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
           }`}
         >
@@ -69,7 +69,7 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
           onClick={() => setActiveTab('transfer')}
           className={`flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
             activeTab === 'transfer'
-              ? 'bg-[#39ff88] text-[#050a14]'
+              ? 'bg-[#34e0a1] text-[#050a14]'
               : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
           }`}
         >
@@ -82,7 +82,7 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
           onClick={() => setActiveTab('battery')}
           className={`flex items-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
             activeTab === 'battery'
-              ? 'bg-[#39ff88] text-[#050a14]'
+              ? 'bg-[#34e0a1] text-[#050a14]'
               : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
           }`}
         >
@@ -101,7 +101,7 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
                 type="number"
                 value={baseWidth}
                 onChange={(e) => setBaseWidth(Math.max(1, Number(e.target.value)))}
-                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-laser mt-1"
+                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-ring mt-1"
               />
             </div>
             <div>
@@ -110,7 +110,7 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
                 type="number"
                 value={baseHeight}
                 onChange={(e) => setBaseHeight(Math.max(1, Number(e.target.value)))}
-                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-laser mt-1"
+                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-ring mt-1"
               />
             </div>
           </div>
@@ -120,8 +120,8 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
               <div className="font-mono text-[#8fa3c0]">@1x Standard</div>
               <div className="font-bold text-[#f2f7ff] mt-0.5">{baseWidth} &times; {baseHeight}</div>
             </div>
-            <div className="p-2.5 rounded-xl bg-[#101c33] border border-[rgba(57,255,136,0.3)]">
-              <div className="font-mono text-[#39ff88]">@2x Retina</div>
+            <div className="p-2.5 rounded-xl bg-[#101c33] border border-[rgba(52, 224, 161,0.3)]">
+              <div className="font-mono text-[#34e0a1]">@2x Retina</div>
               <div className="font-bold text-[#f2f7ff] mt-0.5">{baseWidth * 2} &times; {baseHeight * 2}</div>
             </div>
             <div className="p-2.5 rounded-xl bg-[#101c33] border border-[rgba(143,163,192,0.12)]">
@@ -143,12 +143,12 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
                   type="number"
                   value={fileSizeVal}
                   onChange={(e) => setFileSizeVal(Math.max(1, Number(e.target.value)))}
-                  className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-laser"
+                  className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-ring"
                 />
                 <select
                   value={fileSizeUnit}
                   onChange={(e) => setFileSizeUnit(e.target.value as any)}
-                  className="bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl px-2 text-sm text-[#f2f7ff] focus-laser"
+                  className="bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl px-2 text-sm text-[#f2f7ff] focus-ring"
                 >
                   <option value="MB">MB</option>
                   <option value="GB">GB</option>
@@ -161,14 +161,14 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
                 type="number"
                 value={speedVal}
                 onChange={(e) => setSpeedVal(Math.max(1, Number(e.target.value)))}
-                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-laser mt-1"
+                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-ring mt-1"
               />
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-[#101c33] border border-[rgba(57,255,136,0.3)] flex items-center justify-between text-xs">
+          <div className="p-3 rounded-xl bg-[#101c33] border border-[rgba(52, 224, 161,0.3)] flex items-center justify-between text-xs">
             <span className="text-[#8fa3c0]">Estimated Download Time:</span>
-            <span className="font-mono font-bold text-sm text-[#39ff88]">
+            <span className="font-mono font-bold text-sm text-[#34e0a1]">
               {transferSeconds < 60 ? `${Math.round(transferSeconds)} seconds` : `${transferMinutes} minutes`}
             </span>
           </div>
@@ -185,7 +185,7 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
                 type="number"
                 value={batteryCap}
                 onChange={(e) => setBatteryCap(Math.max(100, Number(e.target.value)))}
-                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-laser mt-1"
+                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-ring mt-1"
               />
             </div>
             <div>
@@ -194,7 +194,7 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
                 type="number"
                 value={chargerWatts}
                 onChange={(e) => setChargerWatts(Math.max(1, Number(e.target.value)))}
-                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-laser mt-1"
+                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2.5 text-sm text-[#f2f7ff] focus-ring mt-1"
               />
             </div>
           </div>
@@ -208,7 +208,7 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
                 max="99"
                 value={startPct}
                 onChange={(e) => setStartPct(Math.min(99, Math.max(0, Number(e.target.value))))}
-                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2 text-sm text-[#f2f7ff] focus-laser mt-1"
+                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2 text-sm text-[#f2f7ff] focus-ring mt-1"
               />
             </div>
             <div>
@@ -219,14 +219,14 @@ export const QuickCalculatorsPage: React.FC<QuickCalculatorsPageProps> = ({ navi
                 max="100"
                 value={targetPct}
                 onChange={(e) => setTargetPct(Math.min(100, Math.max(1, Number(e.target.value))))}
-                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2 text-sm text-[#f2f7ff] focus-laser mt-1"
+                className="w-full bg-[#101c33] border border-[rgba(143,163,192,0.2)] rounded-xl p-2 text-sm text-[#f2f7ff] focus-ring mt-1"
               />
             </div>
           </div>
 
-          <div className="p-3 rounded-xl bg-[#101c33] border border-[rgba(57,255,136,0.3)] flex items-center justify-between text-xs">
+          <div className="p-3 rounded-xl bg-[#101c33] border border-[rgba(52, 224, 161,0.3)] flex items-center justify-between text-xs">
             <span className="text-[#8fa3c0]">Estimated Charging Time:</span>
-            <span className="font-mono font-bold text-sm text-[#39ff88]">
+            <span className="font-mono font-bold text-sm text-[#34e0a1]">
               ~{chargeMinutes} minutes ({startPct}% &rarr; {targetPct}%)
             </span>
           </div>

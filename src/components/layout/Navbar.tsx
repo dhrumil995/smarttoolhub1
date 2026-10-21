@@ -30,20 +30,20 @@ export const Navbar: React.FC<NavbarProps> = ({
         <Link
           href="/"
           navigate={navigate}
-          className="flex items-center gap-2.5 text-lg font-bold tracking-tight text-[#f2f7ff] hover:text-white transition-colors whitespace-nowrap shrink-0 focus-laser rounded-lg p-1 -ml-1"
+          className="flex items-center gap-2.5 text-lg font-bold tracking-tight text-[#f2f7ff] hover:text-white transition-colors whitespace-nowrap shrink-0 focus-ring rounded-lg p-1 -ml-1"
           aria-label="SmartToolHub Home"
         >
-          <div className="w-8 h-8 rounded-lg bg-[#0a1424] border border-[rgba(57,255,136,0.3)] flex items-center justify-center text-[#39ff88] shadow-[0_0_12px_rgba(57,255,136,0.18)]">
+          <div className="w-8 h-8 rounded-lg bg-[#0a1424] border border-[rgba(10,132,255,0.35)] flex items-center justify-center text-[#0a84ff] shadow-[0_0_12px_rgba(10,132,255,0.2)]">
             <Zap className="w-4 h-4 fill-current" />
           </div>
           <span className="font-display text-xl tracking-[-0.04em] text-[#f2f7ff]">
-            SmartToolHub<span className="text-[#39ff88]">.</span>
+            SmartToolHub<span className="text-[#0a84ff]">.</span>
           </span>
         </Link>
 
         {/* Zone 2: Navigation Links (Desktop) */}
         <nav
-          className="hidden md:flex items-center gap-8 text-sm font-medium text-[#8fa3c0]"
+          className="hidden md:flex items-center gap-8 text-sm font-medium text-[#9aaccb]"
           aria-label="Main Navigation"
         >
           {NAV_LINKS.map((link) => {
@@ -53,9 +53,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={link.href}
                 href={link.href}
                 navigate={navigate}
-                className={`transition-colors whitespace-nowrap shrink-0 py-1 border-b-2 text-sm focus-laser rounded-sm ${
+                className={`transition-colors whitespace-nowrap shrink-0 py-1 border-b-2 text-sm focus-ring rounded-sm ${
                   isActive
-                    ? 'text-[#f2f7ff] border-[#39ff88] font-semibold'
+                    ? 'text-[#f2f7ff] border-[#0a84ff] font-semibold'
                     : 'border-transparent hover:text-[#f2f7ff]'
                 }`}
               >
@@ -74,12 +74,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={onOpenSearch}
-            className="flex items-center gap-2 h-10 px-3 md:px-3.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-xs text-[#8fa3c0] hover:text-[#f2f7ff] hover:border-[rgba(143,163,192,0.32)] transition-all focus-laser"
+            className="flex items-center gap-2 h-10 px-3 md:px-3.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-xs text-[#9aaccb] hover:text-[#f2f7ff] hover:border-[rgba(143,163,192,0.32)] transition-all focus-ring"
             aria-label="Search tools and guides"
           >
-            <Search className="w-4 h-4 text-[#8fa3c0]" />
+            <Search className="w-4 h-4 text-[#9aaccb]" />
             <span className="hidden sm:inline font-mono text-[11px] uppercase tracking-wider">Search</span>
-            <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-[#101c33] text-[#8fa3c0] rounded border border-[rgba(143,163,192,0.2)]">
+            <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-[#101c33] text-[#9aaccb] rounded border border-[rgba(143,163,192,0.2)]">
               /
             </kbd>
           </button>
@@ -88,7 +88,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <Link
             href="/pricing"
             navigate={navigate}
-            className="hidden sm:inline-flex items-center justify-center h-10 px-4 rounded-xl bg-[#39ff88] text-[#050a14] font-bold text-xs tracking-wide uppercase transition-all hover:bg-[#1fbf62] hover:shadow-[0_0_20px_rgba(57,255,136,0.35)] active:scale-[0.97] focus-laser"
+            className="hidden sm:inline-flex items-center justify-center h-10 px-4 rounded-xl bg-gradient-to-r from-[#0b6bf0] via-[#7a45f5] to-[#d6347f] text-white font-bold text-xs tracking-wide uppercase transition-all hover:brightness-110 hover:shadow-[0_0_20px_rgba(10,132,255,0.35)] active:scale-[0.97] focus-ring"
           >
             Pro
           </Link>
@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={onOpenMenu}
-            className="md:hidden flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-laser"
+            className="md:hidden flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-ring"
             aria-label="Open navigation menu"
           >
             <Menu className="w-5 h-5" aria-hidden="true" />

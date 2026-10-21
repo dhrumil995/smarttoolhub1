@@ -71,7 +71,7 @@ export const BioGeneratorPage: React.FC<BioGeneratorPageProps> = ({ navigate }) 
               value={interests}
               onChange={(e) => setInterests(e.target.value)}
               placeholder="e.g. React, UI design, pour-over coffee, building indie apps"
-              className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl px-3.5 py-2.5 text-sm text-[#f2f7ff] placeholder-[#8fa3c0] focus-laser"
+              className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl px-3.5 py-2.5 text-sm text-[#f2f7ff] placeholder-[#8fa3c0] focus-ring"
             />
           </div>
 
@@ -91,9 +91,9 @@ export const BioGeneratorPage: React.FC<BioGeneratorPageProps> = ({ navigate }) 
                   key={p.id}
                   type="button"
                   onClick={() => setPlatform(p.id)}
-                  className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-laser ${
+                  className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-ring ${
                     platform === p.id
-                      ? 'bg-[#39ff88] text-[#050a14] border-[#39ff88] font-bold shadow-[0_0_12px_rgba(57,255,136,0.3)]'
+                      ? 'bg-[#ff4f9a] text-[#050a14] border-[#ff4f9a] font-bold shadow-[0_0_12px_rgba(255, 79, 154,0.3)]'
                       : 'bg-[#0a1424] text-[#8fa3c0] border-[rgba(143,163,192,0.16)] hover:text-[#f2f7ff]'
                   }`}
                 >
@@ -114,7 +114,7 @@ export const BioGeneratorPage: React.FC<BioGeneratorPageProps> = ({ navigate }) 
                   key={len.id}
                   type="button"
                   onClick={() => setBioLength(len.id)}
-                  className={`py-1.5 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-laser ${
+                  className={`py-1.5 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-ring ${
                     bioLength === len.id
                       ? 'bg-[#5aa9ff] text-[#050a14] border-[#5aa9ff] font-bold shadow-[0_0_10px_rgba(90,169,255,0.3)]'
                       : 'bg-[#0a1424] text-[#8fa3c0] border-[rgba(143,163,192,0.16)] hover:text-[#f2f7ff]'
@@ -144,7 +144,7 @@ export const BioGeneratorPage: React.FC<BioGeneratorPageProps> = ({ navigate }) 
           <div className="space-y-6">
             {/* Top Toolbar */}
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#ff4f9a] font-semibold flex items-center gap-1.5">
                 <UserRound className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>4 Profile Bios for {platform}</span>
               </span>
@@ -152,9 +152,9 @@ export const BioGeneratorPage: React.FC<BioGeneratorPageProps> = ({ navigate }) 
               <button
                 type="button"
                 onClick={() => onCopy(result)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#ff4f9a] transition-colors focus-ring"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copied All' : 'Copy All'}</span>
               </button>
             </div>
@@ -168,11 +168,11 @@ export const BioGeneratorPage: React.FC<BioGeneratorPageProps> = ({ navigate }) 
                   return (
                     <div
                       key={idx}
-                      className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[rgba(57,255,136,0.3)] transition-colors flex flex-col sm:flex-row sm:items-start justify-between gap-3"
+                      className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[rgba(255, 79, 154,0.3)] transition-colors flex flex-col sm:flex-row sm:items-start justify-between gap-3"
                     >
                       <div className="space-y-2 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#101c33] text-[#39ff88] border border-[rgba(57,255,136,0.2)]">
+                          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#101c33] text-[#ff4f9a] border border-[rgba(255, 79, 154,0.2)]">
                             {b.style}
                           </span>
                           <span
@@ -193,13 +193,13 @@ export const BioGeneratorPage: React.FC<BioGeneratorPageProps> = ({ navigate }) 
                       <button
                         type="button"
                         onClick={() => copySingleBio(b.text, idx)}
-                        className="self-end sm:self-start inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#8fa3c0] hover:text-[#39ff88] hover:border-[#39ff88] transition-colors focus-laser"
+                        className="self-end sm:self-start inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#8fa3c0] hover:text-[#ff4f9a] hover:border-[#ff4f9a] transition-colors focus-ring"
                         title="Copy this bio"
                       >
                         {copiedBioIdx === idx ? (
                           <>
-                            <Check className="w-3.5 h-3.5 text-[#39ff88]" />
-                            <span className="text-[#39ff88]">Copied</span>
+                            <Check className="w-3.5 h-3.5 text-[#34e0a1]" />
+                            <span className="text-[#34e0a1]">Copied</span>
                           </>
                         ) : (
                           <>

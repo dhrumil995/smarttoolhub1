@@ -71,9 +71,9 @@ export const CaptionHashtagPage: React.FC<CaptionHashtagPageProps> = ({ navigate
                   key={p.id}
                   type="button"
                   onClick={() => setPlatform(p.id)}
-                  className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-laser ${
+                  className={`py-2 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-ring ${
                     platform === p.id
-                      ? 'bg-[#39ff88] text-[#050a14] border-[#39ff88] font-bold shadow-[0_0_12px_rgba(57,255,136,0.3)]'
+                      ? 'bg-[#ff4f9a] text-[#050a14] border-[#ff4f9a] font-bold shadow-[0_0_12px_rgba(255, 79, 154,0.3)]'
                       : 'bg-[#0a1424] text-[#8fa3c0] border-[rgba(143,163,192,0.16)] hover:text-[#f2f7ff]'
                   }`}
                 >
@@ -94,7 +94,7 @@ export const CaptionHashtagPage: React.FC<CaptionHashtagPageProps> = ({ navigate
                   key={m.id}
                   type="button"
                   onClick={() => setMood(m.id)}
-                  className={`py-1.5 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-laser ${
+                  className={`py-1.5 px-3 text-xs rounded-xl font-medium transition-colors border text-center focus-ring ${
                     mood === m.id
                       ? 'bg-[#5aa9ff] text-[#050a14] border-[#5aa9ff] font-bold shadow-[0_0_10px_rgba(90,169,255,0.3)]'
                       : 'bg-[#0a1424] text-[#8fa3c0] border-[rgba(143,163,192,0.16)] hover:text-[#f2f7ff]'
@@ -145,7 +145,7 @@ export const CaptionHashtagPage: React.FC<CaptionHashtagPageProps> = ({ navigate
           <div className="space-y-6">
             {/* Top Toolbar */}
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#ff4f9a] font-semibold flex items-center gap-1.5">
                 <Hash className="w-3.5 h-3.5" />
                 <span>Generated Content ({platform} · {mood})</span>
               </span>
@@ -153,9 +153,9 @@ export const CaptionHashtagPage: React.FC<CaptionHashtagPageProps> = ({ navigate
               <button
                 type="button"
                 onClick={() => onCopy(result)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#ff4f9a] transition-colors focus-ring"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copied Everything' : 'Copy All'}</span>
               </button>
             </div>
@@ -171,11 +171,11 @@ export const CaptionHashtagPage: React.FC<CaptionHashtagPageProps> = ({ navigate
                   {captions.map((caption, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[rgba(57,255,136,0.3)] transition-colors flex flex-col sm:flex-row sm:items-start justify-between gap-3"
+                      className="p-3.5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[rgba(255, 79, 154,0.3)] transition-colors flex flex-col sm:flex-row sm:items-start justify-between gap-3"
                     >
                       <div className="space-y-1 flex-1">
                         <div className="flex items-center gap-2">
-                          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#101c33] text-[#39ff88] border border-[rgba(57,255,136,0.2)]">
+                          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#101c33] text-[#ff4f9a] border border-[rgba(255, 79, 154,0.2)]">
                             Option {idx + 1}
                           </span>
                         </div>
@@ -187,13 +187,13 @@ export const CaptionHashtagPage: React.FC<CaptionHashtagPageProps> = ({ navigate
                       <button
                         type="button"
                         onClick={() => copySingleCaption(caption, idx)}
-                        className="self-end sm:self-start inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-xs font-medium text-[#8fa3c0] hover:text-[#39ff88] hover:border-[#39ff88] transition-colors focus-laser"
+                        className="self-end sm:self-start inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-xs font-medium text-[#8fa3c0] hover:text-[#ff4f9a] hover:border-[#ff4f9a] transition-colors focus-ring"
                         title="Copy this caption"
                       >
                         {copiedCaptionIdx === idx ? (
                           <>
-                            <Check className="w-3 h-3 text-[#39ff88]" />
-                            <span className="text-[#39ff88]">Copied</span>
+                            <Check className="w-3 h-3 text-[#34e0a1]" />
+                            <span className="text-[#34e0a1]">Copied</span>
                           </>
                         ) : (
                           <>
@@ -222,7 +222,7 @@ export const CaptionHashtagPage: React.FC<CaptionHashtagPageProps> = ({ navigate
                   <button
                     type="button"
                     onClick={copyAllHashtags}
-                    className="inline-flex items-center gap-1.5 text-xs text-[#39ff88] font-semibold hover:underline focus-laser"
+                    className="inline-flex items-center gap-1.5 text-xs text-[#ff4f9a] font-semibold hover:underline focus-ring"
                   >
                     {copiedAllTags ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{copiedAllTags ? 'Copied All 15 Tags' : 'Copy All 15 Tags'}</span>
@@ -235,12 +235,12 @@ export const CaptionHashtagPage: React.FC<CaptionHashtagPageProps> = ({ navigate
                       key={idx}
                       type="button"
                       onClick={() => copySingleHashtag(tag, idx)}
-                      className="px-2.5 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[#39ff88] text-xs font-mono text-[#5aa9ff] hover:text-[#39ff88] transition-colors flex items-center gap-1.5 focus-laser"
+                      className="px-2.5 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[#ff4f9a] text-xs font-mono text-[#5aa9ff] hover:text-[#ff4f9a] transition-colors flex items-center gap-1.5 focus-ring"
                       title="Tap to copy single hashtag"
                     >
                       <span>{tag}</span>
                       {copiedHashtagIdx === idx ? (
-                        <Check className="w-3 h-3 text-[#39ff88]" />
+                        <Check className="w-3 h-3 text-[#34e0a1]" />
                       ) : (
                         <Copy className="w-3 h-3 opacity-40 hover:opacity-100" />
                       )}

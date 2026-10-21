@@ -97,8 +97,8 @@ const ToastCard: React.FC<{ toast: ToastMessage; onDismiss: () => void }> = ({ t
 
   const borderAndIcon = {
     success: {
-      border: 'border-[rgba(57,255,136,0.35)] shadow-[0_4px_24px_rgba(57,255,136,0.15)]',
-      icon: <Check size={18} strokeWidth={2} className="text-[#39ff88] shrink-0" aria-hidden="true" />,
+      border: 'border-[rgba(52,224,161,0.35)] shadow-[0_4px_24px_rgba(52,224,161,0.18)]',
+      icon: <Check size={18} strokeWidth={2} className="text-[#34e0a1] shrink-0" aria-hidden="true" />,
     },
     error: {
       border: 'border-[rgba(255,92,122,0.4)] shadow-[0_4px_24px_rgba(255,92,122,0.18)]',
@@ -129,7 +129,7 @@ const ToastCard: React.FC<{ toast: ToastMessage; onDismiss: () => void }> = ({ t
           onDismiss();
         }}
         aria-label="Dismiss notification"
-        className="text-[#8fa3c0] hover:text-[#f2f7ff] p-1 -mr-1 rounded-lg focus-laser"
+        className="text-[#8fa3c0] hover:text-[#f2f7ff] p-1 -mr-1 rounded-lg focus-ring"
       >
         <X size={14} aria-hidden="true" />
       </button>

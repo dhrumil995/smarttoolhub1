@@ -31,24 +31,24 @@ export const MobileMenuDrawer: React.FC<MobileMenuDrawerProps> = ({
           <button
             type="button"
             onClick={() => handleLinkClick('/tools')}
-            className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.14)] text-left hover:border-[#39ff88] transition-colors focus-laser"
+            className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.14)] text-left hover:border-[#0a84ff] transition-colors focus-ring"
           >
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-[#0a1424] border border-[rgba(57,255,136,0.3)] flex items-center justify-center text-[#39ff88]">
+              <div className="w-8 h-8 rounded-lg bg-[#0a1424] border border-[rgba(10,132,255,0.35)] flex items-center justify-center text-[#0a84ff]">
                 <LayoutGrid size={18} aria-hidden="true" />
               </div>
               <div>
                 <div className="font-semibold text-sm text-[#f2f7ff]">All AI Tools</div>
-                <div className="text-[11px] text-[#8fa3c0]">{LAUNCH_TOOLS.length} free browser tools</div>
+                <div className="text-[11px] text-[#9aaccb]">{LAUNCH_TOOLS.length} free browser tools</div>
               </div>
             </div>
-            <ChevronRight size={16} className="text-[#8fa3c0]" aria-hidden="true" />
+            <ChevronRight size={16} className="text-[#9aaccb]" aria-hidden="true" />
           </button>
 
           <button
             type="button"
             onClick={() => handleLinkClick('/guides')}
-            className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.14)] text-left hover:border-[#39ff88] transition-colors focus-laser"
+            className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.14)] text-left hover:border-[#5aa9ff] transition-colors focus-ring"
           >
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg bg-[#0a1424] border border-[rgba(90,169,255,0.3)] flex items-center justify-center text-[#5aa9ff]">
@@ -56,10 +56,10 @@ export const MobileMenuDrawer: React.FC<MobileMenuDrawerProps> = ({
               </div>
               <div>
                 <div className="font-semibold text-sm text-[#f2f7ff]">How-To Guides</div>
-                <div className="text-[11px] text-[#8fa3c0]">Practical workflows & tutorials</div>
+                <div className="text-[11px] text-[#9aaccb]">Practical workflows & tutorials</div>
               </div>
             </div>
-            <ChevronRight size={16} className="text-[#8fa3c0]" aria-hidden="true" />
+            <ChevronRight size={16} className="text-[#9aaccb]" aria-hidden="true" />
           </button>
         </div>
 
@@ -68,57 +68,57 @@ export const MobileMenuDrawer: React.FC<MobileMenuDrawerProps> = ({
           <button
             type="button"
             onClick={() => handleLinkClick('/pricing')}
-            className="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#8fa3c0] hover:text-[#f2f7ff] rounded-xl focus-laser"
+            className="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#9aaccb] hover:text-[#f2f7ff] rounded-xl focus-ring"
           >
-            <Tag size={16} className="text-[#39ff88]" aria-hidden="true" />
+            <Tag size={16} className="text-[#ffb840]" aria-hidden="true" />
             <span>Pricing &amp; Pro Access</span>
           </button>
           <button
             type="button"
             onClick={() => handleLinkClick('/about')}
-            className="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#8fa3c0] hover:text-[#f2f7ff] rounded-xl focus-laser"
+            className="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#9aaccb] hover:text-[#f2f7ff] rounded-xl focus-ring"
           >
-            <Info size={16} className="text-[#8fa3c0]" aria-hidden="true" />
+            <Info size={16} className="text-[#9aaccb]" aria-hidden="true" />
             <span>About SmartToolHub</span>
           </button>
           <button
             type="button"
             onClick={() => handleLinkClick('/contact')}
-            className="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#8fa3c0] hover:text-[#f2f7ff] rounded-xl focus-laser"
+            className="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#9aaccb] hover:text-[#f2f7ff] rounded-xl focus-ring"
           >
-            <Mail size={16} className="text-[#8fa3c0]" aria-hidden="true" />
+            <Mail size={16} className="text-[#9aaccb]" aria-hidden="true" />
             <span>Contact &amp; Feedback</span>
           </button>
           <button
             type="button"
             onClick={() => handleLinkClick('/privacy')}
-            className="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#8fa3c0] hover:text-[#f2f7ff] rounded-xl focus-laser"
+            className="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#9aaccb] hover:text-[#f2f7ff] rounded-xl focus-ring"
           >
-            <Shield size={16} className="text-[#8fa3c0]" aria-hidden="true" />
+            <Shield size={16} className="text-[#9aaccb]" aria-hidden="true" />
             <span>Privacy Policy</span>
           </button>
           <button
             type="button"
             onClick={() => handleLinkClick('/terms')}
-            className="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#8fa3c0] hover:text-[#f2f7ff] rounded-xl focus-laser"
+            className="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#9aaccb] hover:text-[#f2f7ff] rounded-xl focus-ring"
           >
-            <FileText size={16} className="text-[#8fa3c0]" aria-hidden="true" />
+            <FileText size={16} className="text-[#9aaccb]" aria-hidden="true" />
             <span>Terms of Service</span>
           </button>
         </div>
 
         {/* Pro Plan Banner */}
-        <div className="p-4 rounded-2xl bg-[#050a14] border border-[rgba(57,255,136,0.25)] space-y-2.5">
-          <span className="font-mono text-[11px] uppercase tracking-wider text-[#39ff88] font-semibold">
+        <div className="p-4 rounded-2xl bg-[#050a14] border border-[rgba(10,132,255,0.3)] space-y-2.5">
+          <span className="font-mono text-[11px] uppercase tracking-wider text-[#5aa9ff] font-semibold">
             Optional Upgrade
           </span>
-          <p className="text-xs text-[#8fa3c0] leading-relaxed">
+          <p className="text-xs text-[#9aaccb] leading-relaxed">
             Need unlimited daily usage and zero ads? Upgrade to SmartToolHub Pro.
           </p>
           <button
             type="button"
             onClick={() => handleLinkClick('/pricing')}
-            className="w-full btn-laser text-xs font-bold py-2.5"
+            className="w-full btn-primary text-xs font-bold py-2.5"
           >
             View Pro Plan
           </button>

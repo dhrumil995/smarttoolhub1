@@ -20,6 +20,9 @@ export const ToolsHubPage: React.FC<ToolsHubPageProps> = ({ navigate }) => {
     { id: 'Social', label: 'Social' },
     { id: 'Productivity', label: 'Productivity' },
     { id: 'Apple', label: 'Apple' },
+    { id: 'Study', label: 'Study' },
+    { id: 'Work', label: 'Work' },
+    { id: 'Files', label: 'Files' },
     { id: 'Calculators', label: 'Calculators' },
     { id: 'Text', label: 'Text' },
     { id: 'Developer', label: 'Developer' },
@@ -40,11 +43,11 @@ export const ToolsHubPage: React.FC<ToolsHubPageProps> = ({ navigate }) => {
     <div className="py-6 sm:py-12 max-w-[1200px] mx-auto space-y-8">
       {/* Header Landmark */}
       <header className="space-y-3">
-        <div className="text-xs font-mono uppercase tracking-wider text-[#39ff88]">
+        <div className="text-xs font-mono uppercase tracking-wider text-[#0a84ff]">
           Free AI Tool Directory
         </div>
         <h1 className="h1-fluid font-display text-[#f2f7ff]">
-          All AI Tools<span className="text-[#39ff88]">.</span>
+          All AI Tools<span className="text-[#0a84ff]">.</span>
         </h1>
         <p className="body-fluid text-[#8fa3c0] max-w-xl">
           Free AI tools that just work. No sign-up. Results in seconds. Pick a tool below to start immediately.
@@ -61,7 +64,7 @@ export const ToolsHubPage: React.FC<ToolsHubPageProps> = ({ navigate }) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={`Search all ${LAUNCH_TOOLS.length} tools...`}
-            className="w-full pl-10 pr-10 py-2.5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] text-sm text-[#f2f7ff] placeholder-[#8fa3c0] focus-laser"
+            className="w-full pl-10 pr-10 py-2.5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] text-sm text-[#f2f7ff] placeholder-[#8fa3c0] focus-ring"
           />
           {searchQuery && (
             <button

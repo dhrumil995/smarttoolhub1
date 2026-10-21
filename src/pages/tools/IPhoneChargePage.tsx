@@ -160,9 +160,9 @@ export const IPhoneChargePage: React.FC<IPhoneChargePageProps> = ({ navigate }) 
                     setSelectedModelIdx(idx);
                     setCustomMah(m.mah);
                   }}
-                  className={`p-2.5 rounded-xl border text-left transition-colors focus-laser ${
+                  className={`p-2.5 rounded-xl border text-left transition-colors focus-ring ${
                     selectedModelIdx === idx
-                      ? 'bg-[#101c33] border-[#39ff88] text-[#39ff88]'
+                      ? 'bg-[#101c33] border-[#8b5cf6] text-[#8b5cf6]'
                       : 'bg-[#0a1424] border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#f2f7ff]'
                   }`}
                 >
@@ -186,9 +186,9 @@ export const IPhoneChargePage: React.FC<IPhoneChargePageProps> = ({ navigate }) 
                   key={idx}
                   type="button"
                   onClick={() => setChargerWatts(c.watts)}
-                  className={`py-2 px-2.5 rounded-xl border text-center transition-colors focus-laser ${
+                  className={`py-2 px-2.5 rounded-xl border text-center transition-colors focus-ring ${
                     chargerWatts === c.watts
-                      ? 'bg-[#39ff88] text-[#050a14] font-bold border-[#39ff88] shadow-[0_0_10px_rgba(57,255,136,0.2)]'
+                      ? 'bg-[#8b5cf6] text-[#050a14] font-bold border-[#8b5cf6] shadow-[0_0_10px_rgba(139, 92, 246,0.2)]'
                       : 'bg-[#0a1424] border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#f2f7ff]'
                   }`}
                 >
@@ -204,7 +204,7 @@ export const IPhoneChargePage: React.FC<IPhoneChargePageProps> = ({ navigate }) 
             <div className="space-y-1">
               <div className="flex items-center justify-between text-xs font-mono">
                 <span className="text-[#8fa3c0]">Starting Battery:</span>
-                <span className="text-[#39ff88] font-bold">{startPct}%</span>
+                <span className="text-[#8b5cf6] font-bold">{startPct}%</span>
               </div>
               <input
                 type="range"
@@ -212,7 +212,7 @@ export const IPhoneChargePage: React.FC<IPhoneChargePageProps> = ({ navigate }) 
                 max="95"
                 value={startPct}
                 onChange={(e) => setStartPct(Math.min(parseInt(e.target.value, 10), targetPct - 5))}
-                className="w-full accent-[#39ff88] cursor-pointer"
+                className="w-full accent-[#8b5cf6] cursor-pointer"
               />
             </div>
 
@@ -240,7 +240,7 @@ export const IPhoneChargePage: React.FC<IPhoneChargePageProps> = ({ navigate }) 
           <div className="space-y-6">
             {/* Top Toolbar */}
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#8b5cf6] font-semibold flex items-center gap-1.5">
                 <BatteryCharging className="w-3.5 h-3.5" />
                 <span>Charging Projection ({startPct}% &rarr; {targetPct}%)</span>
               </span>
@@ -248,20 +248,20 @@ export const IPhoneChargePage: React.FC<IPhoneChargePageProps> = ({ navigate }) 
               <button
                 type="button"
                 onClick={() => onCopy(result)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#8b5cf6] transition-colors focus-ring"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copied Calculation' : 'Copy Result'}</span>
               </button>
             </div>
 
             {/* Hero Result Banner */}
-            <div className="p-5 rounded-2xl bg-[#0a1424] border border-[rgba(57,255,136,0.3)] shadow-[0_0_20px_rgba(57,255,136,0.1)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="p-5 rounded-2xl bg-[#0a1424] border border-[rgba(139, 92, 246,0.3)] shadow-[0_0_20px_rgba(139, 92, 246,0.1)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0]">
                   Total Estimated Time
                 </div>
-                <div className="text-3xl sm:text-4xl font-bold font-mono text-[#39ff88]">
+                <div className="text-3xl sm:text-4xl font-bold font-mono text-[#8b5cf6]">
                   {displayHours > 0 ? `${displayHours} hr ` : ''}{displayMins} min
                 </div>
                 <div className="text-xs text-[#8fa3c0]">
@@ -286,7 +286,7 @@ export const IPhoneChargePage: React.FC<IPhoneChargePageProps> = ({ navigate }) 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="p-3.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] space-y-1">
                 <div className="flex items-center gap-1.5 text-xs text-[#8fa3c0] font-mono">
-                  <Zap className="w-3.5 h-3.5 text-[#39ff88]" />
+                  <Zap className="w-3.5 h-3.5 text-[#8b5cf6]" />
                   <span>Reach 50%</span>
                 </div>
                 <div className="text-lg font-bold font-mono text-[#f2f7ff]">

@@ -182,7 +182,7 @@ ${comparisonText}`;
                 max="100000"
                 value={sizeVal}
                 onChange={(e) => setSizeVal(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                className="flex-1 bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl px-3.5 py-2.5 text-sm text-[#f2f7ff] font-mono focus-laser"
+                className="flex-1 bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl px-3.5 py-2.5 text-sm text-[#f2f7ff] font-mono focus-ring"
               />
               <div className="grid grid-cols-3 gap-1 bg-[#0a1424] p-1 rounded-xl border border-[rgba(143,163,192,0.16)]">
                 {(['MB', 'GB', 'TB'] as const).map((unit) => (
@@ -190,9 +190,9 @@ ${comparisonText}`;
                     key={unit}
                     type="button"
                     onClick={() => setSizeUnit(unit)}
-                    className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors focus-laser ${
+                    className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors focus-ring ${
                       sizeUnit === unit
-                        ? 'bg-[#39ff88] text-[#050a14]'
+                        ? 'bg-[#8b5cf6] text-[#050a14]'
                         : 'text-[#8fa3c0] hover:text-[#f2f7ff]'
                     }`}
                   >
@@ -214,14 +214,14 @@ ${comparisonText}`;
                   key={m.id}
                   type="button"
                   onClick={() => setSelectedMethodId(m.id)}
-                  className={`p-3 rounded-xl border text-left transition-colors focus-laser ${
+                  className={`p-3 rounded-xl border text-left transition-colors focus-ring ${
                     selectedMethodId === m.id
-                      ? 'bg-[#101c33] border-[#39ff88] shadow-[0_0_12px_rgba(57,255,136,0.15)]'
+                      ? 'bg-[#101c33] border-[#8b5cf6] shadow-[0_0_12px_rgba(139, 92, 246,0.15)]'
                       : 'bg-[#0a1424] border-[rgba(143,163,192,0.16)] hover:border-[rgba(143,163,192,0.3)]'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className={`text-xs font-semibold ${selectedMethodId === m.id ? 'text-[#39ff88]' : 'text-[#f2f7ff]'}`}>
+                    <span className={`text-xs font-semibold ${selectedMethodId === m.id ? 'text-[#8b5cf6]' : 'text-[#f2f7ff]'}`}>
                       {m.name}
                     </span>
                   </div>
@@ -239,7 +239,7 @@ ${comparisonText}`;
           <div className="space-y-6">
             {/* Top Toolbar */}
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#8b5cf6] font-semibold flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5" />
                 <span>Transfer Estimate ({sizeVal} {sizeUnit})</span>
               </span>
@@ -247,20 +247,20 @@ ${comparisonText}`;
               <button
                 type="button"
                 onClick={() => onCopy(result)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#8b5cf6] transition-colors focus-ring"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copied Details' : 'Copy All Comparisons'}</span>
               </button>
             </div>
 
             {/* Hero Result Banner */}
-            <div className="p-5 rounded-2xl bg-[#0a1424] border border-[rgba(57,255,136,0.3)] shadow-[0_0_20px_rgba(57,255,136,0.1)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="p-5 rounded-2xl bg-[#0a1424] border border-[rgba(139, 92, 246,0.3)] shadow-[0_0_20px_rgba(139, 92, 246,0.1)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0]">
                   Estimated Transfer Time
                 </div>
-                <div className="text-3xl sm:text-4xl font-bold font-mono text-[#39ff88]">
+                <div className="text-3xl sm:text-4xl font-bold font-mono text-[#8b5cf6]">
                   {formatDuration(activeSeconds)}
                 </div>
                 <div className="text-xs text-[#8fa3c0]">
@@ -281,7 +281,7 @@ ${comparisonText}`;
             {/* All Methods Comparison Table */}
             <div className="space-y-2 pt-2 border-t border-[rgba(143,163,192,0.12)]">
               <span className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold flex items-center gap-1.5">
-                <HardDrive className="w-3.5 h-3.5 text-[#39ff88]" />
+                <HardDrive className="w-3.5 h-3.5 text-[#8b5cf6]" />
                 <span>Speed Comparison for {sizeVal} {sizeUnit} Across All Methods</span>
               </span>
 
@@ -295,13 +295,13 @@ ${comparisonText}`;
                       key={m.id}
                       className={`p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 transition-colors ${
                         isCurrent
-                          ? 'bg-[#101c33] border-[#39ff88]'
+                          ? 'bg-[#101c33] border-[#8b5cf6]'
                           : 'bg-[#0a1424] border-[rgba(143,163,192,0.14)]'
                       }`}
                     >
                       <div className="flex items-center gap-2">
                         {m.category === 'cable' ? (
-                          <Cable className="w-3.5 h-3.5 text-[#39ff88]" />
+                          <Cable className="w-3.5 h-3.5 text-[#8b5cf6]" />
                         ) : (
                           <Wifi className="w-3.5 h-3.5 text-[#5aa9ff]" />
                         )}
@@ -310,7 +310,7 @@ ${comparisonText}`;
 
                       <div className="flex items-center gap-3 self-end sm:self-center font-mono">
                         <span className="text-[11px] text-[#8fa3c0]">{m.realWorldMBps} MB/s</span>
-                        <span className={`text-xs font-bold ${isCurrent ? 'text-[#39ff88]' : 'text-[#f2f7ff]'}`}>
+                        <span className={`text-xs font-bold ${isCurrent ? 'text-[#8b5cf6]' : 'text-[#f2f7ff]'}`}>
                           {formatDuration(s)}
                         </span>
                       </div>

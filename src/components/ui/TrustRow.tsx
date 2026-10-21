@@ -40,16 +40,22 @@ export const TrustRow: React.FC<TrustRowProps> = ({ className = '' }) => {
         {points.map((pt, idx) => {
           const IconComponent = pt.icon;
 
+          const styles = [
+            { border: 'border-[rgba(52,224,161,0.3)] text-[#34e0a1] shadow-[0_0_12px_rgba(52,224,161,0.18)]' },
+            { border: 'border-[rgba(255,184,64,0.3)] text-[#ffb840] shadow-[0_0_12px_rgba(255,184,64,0.18)]' },
+            { border: 'border-[rgba(10,132,255,0.3)] text-[#0a84ff] shadow-[0_0_12px_rgba(10,132,255,0.18)]' },
+          ][idx] || { border: 'border-[rgba(10,132,255,0.3)] text-[#0a84ff]' };
+
           return (
             <div key={idx} className="flex items-start gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-[#0a1424] border border-[rgba(57,255,136,0.3)] flex items-center justify-center text-[#39ff88] shrink-0 shadow-[0_0_12px_rgba(57,255,136,0.14)]">
+              <div className={`w-10 h-10 rounded-xl bg-[#0a1424] border flex items-center justify-center shrink-0 ${styles.border}`}>
                 <IconComponent size={20} strokeWidth={1.75} aria-hidden="true" />
               </div>
               <div className="space-y-0.5">
                 <h3 className="text-sm font-bold font-display text-[#f2f7ff]">
                   {pt.title}
                 </h3>
-                <p className="text-xs text-[#8fa3c0] leading-relaxed">
+                <p className="text-xs text-[#9aaccb] leading-relaxed">
                   {pt.description}
                 </p>
               </div>

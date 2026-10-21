@@ -25,7 +25,7 @@ export const Tooltip: React.FC<TooltipProps> = ({ content, children, className =
         type="button"
         onClick={() => setIsOpenMobile((prev) => !prev)}
         aria-label="More information"
-        className="md:hidden ml-1.5 p-1 text-[#8fa3c0] hover:text-[#39ff88] focus-laser rounded-full"
+        className="md:hidden ml-1.5 p-1 text-[#9aaccb] hover:text-[#5aa9ff] focus-ring rounded-full"
       >
         <Info size={14} aria-hidden="true" />
       </button>
@@ -34,7 +34,7 @@ export const Tooltip: React.FC<TooltipProps> = ({ content, children, className =
       {isOpenMobile && (
         <div
           role="tooltip"
-          className="md:hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 p-2.5 rounded-xl bg-[#0a1424] border border-[rgba(57,255,136,0.3)] shadow-[0_4px_24px_rgba(0,0,0,0.6)] text-[11px] font-mono text-[#f2f7ff] max-w-xs w-max whitespace-normal flex items-start gap-2"
+          className="md:hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 p-2.5 rounded-xl bg-[#0a1424] border border-[rgba(10,132,255,0.35)] shadow-[0_4px_24px_rgba(0,0,0,0.6)] text-[11px] font-mono text-[#f2f7ff] max-w-xs w-max whitespace-normal flex items-start gap-2"
         >
           <span>{content}</span>
           <button

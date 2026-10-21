@@ -29,7 +29,7 @@ export const AppleShortcutsPage: React.FC<AppleShortcutsPageProps> = ({ navigate
         <button
           type="button"
           onClick={() => downloadShortcutFile(result, input)}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#39ff88]/15 border border-[#39ff88]/40 text-xs font-semibold text-[#39ff88] hover:bg-[#39ff88]/25 transition-colors focus-laser"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#8b5cf6]/15 border border-[#8b5cf6]/40 text-xs font-semibold text-[#8b5cf6] hover:bg-[#8b5cf6]/25 transition-colors focus-ring"
           title="Download ready-to-import iOS .shortcut file"
         >
           <Download className="w-3.5 h-3.5" />

@@ -58,13 +58,13 @@ export const TitleHeadlinePage: React.FC<TitleHeadlinePageProps> = ({ navigate }
                   key={item.id}
                   type="button"
                   onClick={() => setContentType(item.id)}
-                  className={`p-3 rounded-xl border text-left transition-all focus-laser ${
+                  className={`p-3 rounded-xl border text-left transition-all focus-ring ${
                     contentType === item.id
-                      ? 'bg-[#101c33] border-[#39ff88] shadow-[0_0_12px_rgba(57,255,136,0.2)]'
+                      ? 'bg-[#101c33] border-[#ff4f9a] shadow-[0_0_12px_rgba(255, 79, 154,0.2)]'
                       : 'bg-[#0a1424] border-[rgba(143,163,192,0.16)] hover:border-[rgba(143,163,192,0.3)]'
                   }`}
                 >
-                  <div className={`text-xs font-bold ${contentType === item.id ? 'text-[#39ff88]' : 'text-[#f2f7ff]'}`}>
+                  <div className={`text-xs font-bold ${contentType === item.id ? 'text-[#ff4f9a]' : 'text-[#f2f7ff]'}`}>
                     {item.label}
                   </div>
                   <div className="text-[11px] text-[#8fa3c0] mt-0.5">
@@ -93,7 +93,7 @@ export const TitleHeadlinePage: React.FC<TitleHeadlinePageProps> = ({ navigate }
           <div className="space-y-6">
             {/* Top Toolbar */}
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#39ff88] font-semibold flex items-center gap-1.5">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#ff4f9a] font-semibold flex items-center gap-1.5">
                 <Heading className="w-3.5 h-3.5" />
                 <span>10 Headlines for {contentType}</span>
               </span>
@@ -101,9 +101,9 @@ export const TitleHeadlinePage: React.FC<TitleHeadlinePageProps> = ({ navigate }
               <button
                 type="button"
                 onClick={() => onCopy(result)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#39ff88] transition-colors focus-laser"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-xs font-semibold text-[#f2f7ff] hover:border-[#ff4f9a] transition-colors focus-ring"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-[#39ff88]" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copied ? 'Copied All 10 Titles' : 'Copy All'}</span>
               </button>
             </div>
@@ -114,7 +114,7 @@ export const TitleHeadlinePage: React.FC<TitleHeadlinePageProps> = ({ navigate }
                 titles.map((t, idx) => (
                   <div
                     key={idx}
-                    className="p-3.5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[rgba(57,255,136,0.3)] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                    className="p-3.5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[rgba(255, 79, 154,0.3)] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                   >
                     <div className="space-y-1 flex-1">
                       <div className="flex items-center gap-2">
@@ -133,13 +133,13 @@ export const TitleHeadlinePage: React.FC<TitleHeadlinePageProps> = ({ navigate }
                     <button
                       type="button"
                       onClick={() => copySingleTitle(t.text, idx)}
-                      className="self-end sm:self-center inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-xs font-medium text-[#8fa3c0] hover:text-[#39ff88] hover:border-[#39ff88] transition-colors focus-laser whitespace-nowrap"
+                      className="self-end sm:self-center inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#101c33] border border-[rgba(143,163,192,0.2)] text-xs font-medium text-[#8fa3c0] hover:text-[#ff4f9a] hover:border-[#ff4f9a] transition-colors focus-ring whitespace-nowrap"
                       title="Copy this headline"
                     >
                       {copiedTitleIdx === idx ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-[#39ff88]" />
-                          <span className="text-[#39ff88]">Copied</span>
+                          <Check className="w-3.5 h-3.5 text-[#34e0a1]" />
+                          <span className="text-[#34e0a1]">Copied</span>
                         </>
                       ) : (
                         <>

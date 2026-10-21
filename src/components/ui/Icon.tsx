@@ -82,9 +82,9 @@ export const IconButton: React.FC<IconButtonProps> = ({
   ...rest
 }) => {
   const variantStyles = {
-    primary: 'bg-[#39ff88] text-[#050a14] hover:bg-[#2ee677] active:scale-[0.97]',
-    secondary: 'bg-[#0a1424] text-[#f2f7ff] border border-[rgba(143,163,192,0.18)] hover:border-[#39ff88] active:scale-[0.97]',
-    ghost: 'text-[#8fa3c0] hover:text-[#f2f7ff] hover:bg-[rgba(143,163,192,0.08)] active:scale-[0.97]',
+    primary: 'bg-gradient-to-r from-[#0b6bf0] via-[#7a45f5] to-[#d6347f] text-white hover:brightness-110 active:scale-[0.97]',
+    secondary: 'bg-[#0a1424] text-[#f2f7ff] border border-[rgba(143,163,192,0.18)] hover:border-[#0a84ff] hover:text-white active:scale-[0.97]',
+    ghost: 'text-[#9aaccb] hover:text-[#f2f7ff] hover:bg-[rgba(143,163,192,0.08)] active:scale-[0.97]',
   }[variant];
 
   return (
@@ -93,7 +93,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
       aria-label={ariaLabel}
       disabled={disabled}
       onClick={onClick}
-      className={`min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center rounded-xl transition-all duration-200 focus-laser disabled:opacity-50 disabled:pointer-events-none ${variantStyles} ${className}`}
+      className={`min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center rounded-xl transition-all duration-200 focus-ring disabled:opacity-50 disabled:pointer-events-none ${variantStyles} ${className}`}
       {...rest}
     >
       <Icon name={icon} size={size} strokeWidth={1.75} aria-hidden={true} />
