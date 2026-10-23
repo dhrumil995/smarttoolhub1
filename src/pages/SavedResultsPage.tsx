@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, ArrowUpRight, Share2 } from 'lucide-react';
-import { getToolHistory, clearToolHistory, SavedItem } from '../utils/storage.ts';
+import { Trash2, ArrowUpRight, Share2, AlertCircle } from 'lucide-react';
+import { getToolHistory, clearToolHistory, deleteSavedItem, SavedItem } from '../utils/storage.ts';
 import { Link } from '../hooks/useRouter.tsx';
 import { shareWithFallback } from '../utils/share.ts';
 import { Icon } from '../components/ui/Icon.tsx';
@@ -15,6 +15,7 @@ interface SavedResultsPageProps {
 
 export const SavedResultsPage: React.FC<SavedResultsPageProps> = ({ navigate }) => {
   const [history, setHistory] = useState<SavedItem[]>([]);
+  const [isConfirmingClear, setIsConfirmingClear] = useState<boolean>(false);
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -39,12 +40,17 @@ export const SavedResultsPage: React.FC<SavedResultsPageProps> = ({ navigate }) 
     }
   };
 
-  const handleClear = () => {
-    if (window.confirm('Clear all locally saved results?')) {
-      clearToolHistory();
-      setHistory([]);
-      showToast('All saved history cleared', 'info');
-    }
+  const handleConfirmClear = () => {
+    clearToolHistory();
+    setHistory([]);
+    setIsConfirmingClear(false);
+    showToast('All saved history cleared', 'info');
+  };
+
+  const handleDeleteItem = (id: string) => {
+    deleteSavedItem(id);
+    setHistory((prev) => prev.filter((item) => item.id !== id));
+    showToast('Item removed from history', 'info');
   };
 
   return (
@@ -63,15 +69,37 @@ export const SavedResultsPage: React.FC<SavedResultsPageProps> = ({ navigate }) 
         </div>
 
         {history.length > 0 && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleClear}
-            className="text-xs text-[#ff5c7a] border border-[#ff5c7a]/30 hover:border-[#ff5c7a] hover:bg-[#ff5c7a]/10 self-start sm:self-auto"
-          >
-            <Trash2 size={14} className="mr-1.5" aria-hidden="true" />
-            <span>Clear History</span>
-          </Button>
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            {isConfirmingClear ? (
+              <div className="flex items-center gap-2 bg-[#101c33] p-1.5 rounded-2xl border border-[#ff5c7a]/40 shadow-lg">
+                <span className="text-xs text-[#f2f7ff] px-2 font-medium">Clear all?</span>
+                <button
+                  type="button"
+                  onClick={handleConfirmClear}
+                  className="px-3 py-1 rounded-xl bg-[#ff5c7a] text-white text-xs font-semibold hover:brightness-110 transition-all focus-ring"
+                >
+                  Yes, Clear All
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsConfirmingClear(false)}
+                  className="px-2.5 py-1 rounded-xl bg-transparent text-xs text-[#9aaccb] hover:text-[#f2f7ff] transition-all focus-ring"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsConfirmingClear(true)}
+                className="text-xs text-[#ff5c7a] border border-[#ff5c7a]/30 hover:border-[#ff5c7a] hover:bg-[#ff5c7a]/10 self-start sm:self-auto"
+              >
+                <Trash2 size={14} className="mr-1.5" aria-hidden="true" />
+                <span>Clear History</span>
+              </Button>
+            )}
+          </div>
         )}
       </header>
 
@@ -111,6 +139,16 @@ export const SavedResultsPage: React.FC<SavedResultsPageProps> = ({ navigate }) 
                     className="w-11 h-11"
                   >
                     <Share2 size={16} aria-hidden="true" />
+                  </Button>
+
+                  <Button
+                    variant="icon-only"
+                    size="sm"
+                    onClick={() => handleDeleteItem(item.id)}
+                    aria-label="Delete this saved result"
+                    className="w-11 h-11 text-[#8fa3c0] hover:text-[#ff5c7a] hover:border-[#ff5c7a]/40"
+                  >
+                    <Trash2 size={16} aria-hidden="true" />
                   </Button>
 
                   <Link

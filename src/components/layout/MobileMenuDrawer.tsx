@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRight, Shield, FileText, Mail, Info, Tag, LayoutGrid, BookOpen } from 'lucide-react';
+import { ChevronRight, Shield, FileText, Mail, Info, Tag, LayoutGrid, BookOpen, Laptop, Smartphone, Apple } from 'lucide-react';
 import { PWAInstallButton } from './PWAInstallButton.tsx';
 import { BottomSheet } from '../ui/BottomSheet.tsx';
 import { LAUNCH_TOOLS } from '../../data/tools.ts';
@@ -61,6 +61,65 @@ export const MobileMenuDrawer: React.FC<MobileMenuDrawerProps> = ({
             </div>
             <ChevronRight size={16} className="text-[#9aaccb]" aria-hidden="true" />
           </button>
+        </div>
+
+        {/* Curated Software Directories (50 Apps) */}
+        <div className="space-y-2 border-t border-[rgba(143,163,192,0.1)] pt-4">
+          <div className="text-[11px] font-mono uppercase tracking-wider text-[#9aaccb] font-semibold px-1">
+            Software Directories (50 Apps)
+          </div>
+          <div className="grid grid-cols-1 gap-2">
+            <button
+              type="button"
+              onClick={() => handleLinkClick('/pc-tools')}
+              className="w-full flex items-center justify-between p-3 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.12)] text-left hover:border-[#0a84ff] transition-colors focus-ring"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-7 h-7 rounded-lg bg-[#0a1424] border border-[rgba(10,132,255,0.35)] flex items-center justify-center text-[#0a84ff]">
+                  <Laptop size={15} />
+                </div>
+                <div>
+                  <div className="font-semibold text-xs text-[#f2f7ff]">PC & Windows Tools</div>
+                  <div className="text-[10px] text-[#9aaccb]">20 apps • winget verified</div>
+                </div>
+              </div>
+              <ChevronRight size={14} className="text-[#9aaccb]" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleLinkClick('/apple-tools')}
+              className="w-full flex items-center justify-between p-3 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.12)] text-left hover:border-[#8b5cf6] transition-colors focus-ring"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-7 h-7 rounded-lg bg-[#0a1424] border border-[rgba(139,92,246,0.35)] flex items-center justify-center text-[#8b5cf6]">
+                  <Apple size={15} />
+                </div>
+                <div>
+                  <div className="font-semibold text-xs text-[#f2f7ff]">Apple & Mac Tools</div>
+                  <div className="text-[10px] text-[#9aaccb]">10 apps • brew cask verified</div>
+                </div>
+              </div>
+              <ChevronRight size={14} className="text-[#9aaccb]" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleLinkClick('/android-tools')}
+              className="w-full flex items-center justify-between p-3 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.12)] text-left hover:border-[#34e0a1] transition-colors focus-ring"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-7 h-7 rounded-lg bg-[#0a1424] border border-[rgba(52,224,161,0.35)] flex items-center justify-center text-[#34e0a1]">
+                  <Smartphone size={15} />
+                </div>
+                <div>
+                  <div className="font-semibold text-xs text-[#f2f7ff]">Android Power Tools</div>
+                  <div className="text-[10px] text-[#9aaccb]">20 apps • F-Droid & Shizuku</div>
+                </div>
+              </div>
+              <ChevronRight size={14} className="text-[#9aaccb]" />
+            </button>
+          </div>
         </div>
 
         {/* Secondary Links */}

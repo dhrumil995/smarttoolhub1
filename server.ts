@@ -1377,6 +1377,316 @@ STRICT GUIDELINES:
   }
 });
 
+// Dedicated Endpoint: M1 Android Automation Recipe Generator
+app.post('/api/android-automation', rateLimiter, async (req: Request, res: Response) => {
+  try {
+    const { description = '', appType = 'MacroDroid' } = req.body;
+
+    if (!description || description.trim().length < 3) {
+      return res.status(400).json({ error: 'Please enter what you want your phone to automate.' });
+    }
+
+    if (description.length > 1000) {
+      return res.status(400).json({ error: 'Input is too long. Please keep it under 1,000 characters.' });
+    }
+
+    let recipeName = `${appType} Recipe: ${description.slice(0, 40)}`;
+    let trigger = 'Wi-Fi Connected / Disconnected or Time Trigger';
+    let actions = [
+      'Set Do Not Disturb (DND) or Volume Stream to 0%',
+      'Display notification: "Work Mode Active"',
+    ];
+    let constraints = ['Only on Weekdays (Mon-Fri)'];
+    let permissions = [
+      'Do Not Disturb access (Notification Policy)',
+      'Location / Nearby Wi-Fi Devices permission (required by Android for SSID detection)',
+    ];
+    let summary = `This automation configures ${appType} to automate device state based on your conditions.`;
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const prompt = `You are a certified Android automation engineer specializing in Tasker and MacroDroid.
+User Request: "${description}"
+Target Application: ${appType}
+
+Generate an accurate, feasible automation recipe matching modern Android 13/14/15 capabilities.
+Do NOT suggest private root actions if standard Android permissions suffice.
+Return strictly valid JSON:
+{
+  "recipeName": "Brief descriptive title",
+  "trigger": "Exact trigger name in ${appType} (e.g. Wi-Fi Connected, Geofence, Time, Battery)",
+  "actions": ["Step 1 in ${appType}", "Step 2 in ${appType}"],
+  "constraints": ["Optional condition 1", "Optional condition 2"],
+  "permissions": ["Required Android permission 1", "Required Android permission 2"],
+  "summary": "Plain English summary of what this automation accomplishes"
+}`;
+
+        const aiRes = await generateWithTimeout({
+          model: 'gemini-2.5-flash',
+          contents: prompt,
+          generationConfig: { responseMimeType: 'application/json' },
+        });
+
+        const raw = aiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed.recipeName) recipeName = parsed.recipeName;
+          if (parsed.trigger) trigger = parsed.trigger;
+          if (Array.isArray(parsed.actions) && parsed.actions.length > 0) actions = parsed.actions;
+          if (Array.isArray(parsed.constraints)) constraints = parsed.constraints;
+          if (Array.isArray(parsed.permissions) && parsed.permissions.length > 0) permissions = parsed.permissions;
+          if (parsed.summary) summary = parsed.summary;
+        }
+      } catch (err) {
+        console.warn('Android automation AI fallback:', err);
+      }
+    }
+
+    const formattedResult = `### ${recipeName} (${appType})\n\n${summary}\n\n**1. TRIGGER:**\n• ${trigger}\n\n**2. ACTIONS (In Order):**\n${actions.map((a, i) => `${i + 1}. ${a}`).join('\n')}\n\n${constraints.length > 0 ? `**3. CONSTRAINTS / CONDITIONS:**\n${constraints.map(c => `• ${c}`).join('\n')}\n\n` : ''}**REQUIRED ANDROID PERMISSIONS:**\n${permissions.map(p => `• ${p}`).join('\n')}\n\n*Note: Menus and names can vary by app version.*`;
+
+    return res.json({
+      recipeName,
+      appType,
+      trigger,
+      actions,
+      constraints,
+      permissions,
+      summary,
+      result: formattedResult,
+    });
+  } catch (error) {
+    console.error('Android automation error:', error);
+    return res.status(500).json({ error: "That didn't work. Try again in a moment." });
+  }
+});
+
+// Dedicated Endpoint: M2 AutoHotkey Script Generator
+app.post('/api/autohotkey-script', rateLimiter, async (req: Request, res: Response) => {
+  try {
+    const { description = '' } = req.body;
+
+    if (!description || description.trim().length < 3) {
+      return res.status(400).json({ error: 'Please describe the hotkey or automation you want.' });
+    }
+
+    if (description.length > 1000) {
+      return res.status(400).json({ error: 'Input is too long. Please keep it under 1,000 characters.' });
+    }
+
+    // Strict Safety Check: Refuse keyloggers, surveillance, credential theft, security evasion
+    const disallowedPatterns = [
+      /\bkeylog/i,
+      /\bpassword\s*stealer/i,
+      /\bsteal\s*credential/i,
+      /\bcredential\s*harvest/i,
+      /\bstealth\s*record/i,
+      /\bspy\b/i,
+      /\banti[\s-]*cheat\s*bypass/i,
+      /\bbypass\s*security/i,
+      /\btoken\s*grab/i,
+      /\bhidden\s*surveillance/i,
+    ];
+
+    if (disallowedPatterns.some(pattern => pattern.test(description))) {
+      return res.status(400).json({
+        error:
+          'I cannot generate scripts intended for keylogging, credential harvesting, hidden surveillance, or security evasion. I can help create hotkeys for everyday productivity, text expansion, window management, or gaming shortcuts.',
+      });
+    }
+
+    let script = `; AutoHotkey v2 Script
+; Read it before you run it.
+#Requires AutoHotkey v2.0+
+
+; Hotkey: Ctrl + Alt + E
+^!e::
+{
+    SendInput("user@example.com")
+}
+`;
+    let explanation = [
+      '#Requires AutoHotkey v2.0+ ensures the script runs in modern AutoHotkey v2 syntax.',
+      '^!e defines the hotkey triggers: ^ is Control, ! is Alt, and e is the letter key.',
+      'SendInput instantly types your text into whichever field currently has keyboard focus.',
+    ];
+    let howToRun = [
+      'Install AutoHotkey v2 from the official website (autohotkey.com).',
+      'Right-click your Windows desktop > New > AutoHotkey Script.',
+      'Right-click the newly created .ahk file > Edit Script, paste this code, and save.',
+      'Double-click the .ahk file to run it. An "H" icon will appear in your Windows taskbar notification tray.',
+    ];
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const prompt = `You are a senior Windows automation engineer specializing in AutoHotkey v2.
+User Request: "${description}"
+
+Rules:
+1. Generate valid, modern AutoHotkey v2 syntax (#Requires AutoHotkey v2.0+). Do NOT use legacy v1 syntax.
+2. Refuse any harmful, stealth, or credential-stealing requests.
+3. Every script must include the comment: "; Read it before you run it."
+4. Provide a line-by-line explanation and standard instructions on how to run it.
+
+Return strictly valid JSON:
+{
+  "script": "Complete .ahk v2 code string",
+  "explanation": ["Explanation of line 1", "Explanation of line 2"],
+  "howToRun": ["Step 1", "Step 2", "Step 3"]
+}`;
+
+        const aiRes = await generateWithTimeout({
+          model: 'gemini-2.5-flash',
+          contents: prompt,
+          generationConfig: { responseMimeType: 'application/json' },
+        });
+
+        const raw = aiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed.script) script = parsed.script;
+          if (Array.isArray(parsed.explanation) && parsed.explanation.length > 0) explanation = parsed.explanation;
+          if (Array.isArray(parsed.howToRun) && parsed.howToRun.length > 0) howToRun = parsed.howToRun;
+        }
+      } catch (err) {
+        console.warn('AutoHotkey AI fallback:', err);
+      }
+    }
+
+    const formattedResult = `${script}\n\n---\n**Line-by-Line Explanation:**\n${explanation.map(e => `• ${e}`).join('\n')}\n\n**How to Run It:**\n${howToRun.map((h, i) => `${i + 1}. ${h}`).join('\n')}\n\n*Notice: Read it before you run it.*`;
+
+    return res.json({
+      script,
+      explanation,
+      howToRun,
+      safetyNotice: 'Read it before you run it.',
+      result: formattedResult,
+    });
+  } catch (error) {
+    console.error('AutoHotkey script error:', error);
+    return res.status(500).json({ error: "That didn't work. Try again in a moment." });
+  }
+});
+
+// Dedicated Endpoint: Command Explainer (AI)
+app.post('/api/command-explainer', rateLimiter, async (req: Request, res: Response) => {
+  try {
+    const { command = '', environment = 'auto' } = req.body;
+    const cleanCmd = String(command).trim();
+
+    if (!cleanCmd) {
+      return res.status(400).json({ error: 'Please enter a command to explain.' });
+    }
+
+    if (cleanCmd.length > 1000) {
+      return res.status(400).json({ error: 'Command exceeds the 1,000 character limit.' });
+    }
+
+    let whatItDoes = `This command executes "${cleanCmd}" in the ${environment === 'auto' ? 'terminal shell' : environment} environment.`;
+    let breakdown: Array<{ part: string; meaning: string }> = [
+      { part: cleanCmd.split(' ')[0] || cleanCmd, meaning: 'The base command or executable invoked.' },
+    ];
+    let riskRating: 'Safe' | 'Caution' | 'Dangerous' = 'Safe';
+    let riskReason = 'This command queries information or performs a standard non-destructive operation.';
+    let saferAlternative: string | null = null;
+
+    const lower = cleanCmd.toLowerCase();
+    if (
+      lower.includes('rm -rf /') ||
+      lower.includes('mkfs') ||
+      lower.includes('dd if=') ||
+      lower.includes('format c:') ||
+      lower.includes('wipefs') ||
+      lower.includes(':(){ :|:& };:') ||
+      lower.includes('chmod -r 777 /')
+    ) {
+      riskRating = 'Dangerous';
+      riskReason = 'Contains destructive patterns capable of erasing entire disks, wiping critical system files, or crashing the OS.';
+      saferAlternative = 'Inspect files with ls or find first, or use a trash CLI utility like trash-put instead of unrecoverable recursive deletion.';
+    } else if (
+      lower.includes('rm ') ||
+      lower.includes('sudo ') ||
+      lower.includes('del /') ||
+      lower.includes('drop database') ||
+      lower.includes('kill -9') ||
+      lower.includes('reboot') ||
+      lower.includes('poweroff') ||
+      lower.includes('fastboot flash')
+    ) {
+      riskRating = 'Caution';
+      riskReason = 'Modifies system state, terminates processes, or removes files without a recycle bin.';
+      saferAlternative = 'Verify the exact target path first with an interactive flag (such as rm -i) or run without elevated privileges if possible.';
+    }
+
+    if (process.env.GEMINI_API_KEY) {
+      try {
+        const prompt = `You are a principal systems administrator and security researcher.
+User pasted command: "${cleanCmd}"
+Target environment: ${environment}
+
+Analyze the command and provide:
+1. whatItDoes: A plain-English explanation of what this command does, written at an accessible level (no jargon without quick clarification).
+2. breakdown: An array of objects each having "part" (e.g. binary name, flags, subcommands, target arguments, pipes) and "meaning" (plain explanation of what that exact flag or parameter instructs the system to do).
+3. riskRating: Exactly one of "Safe", "Caution", or "Dangerous".
+   - Safe: Read-only, inspection, status queries (e.g. ls, cat, ping, git status, Get-Process, uname).
+   - Caution: System modifications, software installations, elevated permissions, or overwriting specific files (e.g. sudo apt install, chmod, npm i -g, restarting services).
+   - Dangerous: Recursive data deletion, disk formatting, partition wiping, arbitrary remote script piping (curl | bash), or unrecoverable system destruction.
+4. riskReason: Plain-English explanation of why this risk rating was assigned.
+5. saferAlternative: A safer variation (e.g. adding -i for interactive confirmation, using --dry-run, running on a test directory first, or quoting variables), or null if the command is already safe.
+
+Rules:
+- NEVER execute or attempt to execute the command.
+- Always include the safety reminder "Read it before you run it."
+- Limit your breakdown to the actual components of the command provided.
+
+Return strictly valid JSON:
+{
+  "whatItDoes": "...",
+  "breakdown": [
+    {"part": "command_part", "meaning": "..."},
+    {"part": "flag", "meaning": "..."}
+  ],
+  "riskRating": "Safe",
+  "riskReason": "...",
+  "saferAlternative": "..."
+}`;
+
+        const aiRes = await generateWithTimeout({
+          model: 'gemini-2.5-flash',
+          contents: prompt,
+          generationConfig: { responseMimeType: 'application/json' },
+        });
+
+        const raw = aiRes.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed.whatItDoes) whatItDoes = parsed.whatItDoes;
+          if (Array.isArray(parsed.breakdown) && parsed.breakdown.length > 0) breakdown = parsed.breakdown;
+          if (['Safe', 'Caution', 'Dangerous'].includes(parsed.riskRating)) riskRating = parsed.riskRating;
+          if (parsed.riskReason) riskReason = parsed.riskReason;
+          if (parsed.saferAlternative !== undefined) saferAlternative = parsed.saferAlternative;
+        }
+      } catch (err) {
+        console.warn('Command Explainer AI fallback:', err);
+      }
+    }
+
+    const formattedResult = `### Command Overview\n${whatItDoes}\n\n**Risk Level:** ${riskRating}\n${riskReason}\n\n---\n**Part-by-Part Breakdown:**\n${breakdown.map(b => `• \`${b.part}\`: ${b.meaning}`).join('\n')}${saferAlternative ? `\n\n---\n**Safer Alternative:**\n\`${saferAlternative}\`` : ''}\n\n*Notice: Read it before you run it.*`;
+
+    return res.json({
+      whatItDoes,
+      breakdown,
+      riskRating,
+      riskReason,
+      saferAlternative,
+      safetyNotice: 'Read it before you run it.',
+      result: formattedResult,
+    });
+  } catch (error) {
+    console.error('Command explainer error:', error);
+    return res.status(500).json({ error: "That didn't work. Try again in a moment." });
+  }
+});
+
 // Hosted Checkout Webhook with cryptographic HMAC-SHA256 signature verification
 app.post('/api/webhooks/checkout', (req: Request, res: Response) => {
   try {

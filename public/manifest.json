@@ -1,17 +1,48 @@
 {
-  "name": "SmartToolHub",
+  "name": "SmartToolHub - Free Everyday AI Tools",
   "short_name": "SmartToolHub",
   "description": "Free AI tools that just work. No sign-up. Results in seconds.",
   "start_url": "/",
+  "id": "/",
   "display": "standalone",
   "background_color": "#050a14",
   "theme_color": "#050a14",
   "icons": [
     {
       "src": "/icon.svg",
-      "sizes": "any",
+      "sizes": "192x192 512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Apple Shortcuts",
+      "short_name": "Shortcuts",
+      "description": "Generate iOS & macOS Apple Shortcuts",
+      "url": "/tools/apple-shortcuts-generator",
+      "icons": [{ "src": "/icon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Prompt Improver",
+      "short_name": "Prompts",
+      "description": "Improve your AI prompts with clear context",
+      "url": "/tools/ai-prompt-improver",
+      "icons": [{ "src": "/icon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Formula Helper",
+      "short_name": "Formulas",
+      "description": "Convert English into Excel & Sheets formulas",
+      "url": "/tools/formula-helper",
+      "icons": [{ "src": "/icon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "PC Tools Directory",
+      "short_name": "PC Tools",
+      "description": "Browse 20 vetted Windows utilities",
+      "url": "/pc-tools",
+      "icons": [{ "src": "/icon.svg", "sizes": "192x192" }]
     }
   ]
 }

@@ -10,9 +10,9 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
   return (
     <footer className="w-full bg-[#050a14] border-t border-[rgba(143,163,192,0.14)] mt-20 pb-24 md:pb-12 text-[#8fa3c0]">
       <div className="max-w-[1200px] mx-auto px-5 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand & Value Col */}
-          <div className="md:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-4">
             <Link
               href="/"
               navigate={navigate}
@@ -83,6 +83,69 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                   className="text-[#7db8ff] hover:underline transition-colors focus-ring rounded font-medium"
                 >
                   View all tools &rarr;
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Software Directory Col */}
+          <div>
+            <h4 className="text-xs font-mono uppercase tracking-wider text-[#f2f7ff] mb-3">
+              Software Hubs
+            </h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link
+                  href="/pc-tools"
+                  navigate={navigate}
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                >
+                  PC &amp; Windows (20)
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/apple-tools"
+                  navigate={navigate}
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                >
+                  Apple &amp; Mac (10)
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/android-tools"
+                  navigate={navigate}
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                >
+                  Android Power (20)
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/compare/wiztree-vs-treesize"
+                  navigate={navigate}
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                >
+                  WizTree vs TreeSize
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/compare/rufus-vs-ventoy"
+                  navigate={navigate}
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                >
+                  Rufus vs Ventoy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/compare/shizuku-adb-wireless-guide"
+                  navigate={navigate}
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                >
+                  Shizuku &amp; ADB Guide
                 </Link>
               </li>
             </ul>

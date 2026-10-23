@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, X } from 'lucide-react';
+import { Search, X, Laptop, Apple, Smartphone, ArrowRight } from 'lucide-react';
 import { LAUNCH_TOOLS } from '../data/tools.ts';
 import { AdSlot } from '../components/ads/AdSlot.tsx';
 import { ToolCard } from '../components/ui/ToolCard.tsx';
@@ -52,6 +52,35 @@ export const ToolsHubPage: React.FC<ToolsHubPageProps> = ({ navigate }) => {
         <p className="body-fluid text-[#8fa3c0] max-w-xl">
           Free AI tools that just work. No sign-up. Results in seconds. Pick a tool below to start immediately.
         </p>
+
+        {/* Software Directories Quick Ribbon */}
+        <div className="pt-2 flex flex-wrap items-center gap-2 text-xs">
+          <span className="text-[#9aaccb] font-medium mr-1">Looking for desktop &amp; phone apps?</span>
+          <button
+            type="button"
+            onClick={() => navigate('/pc-tools')}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0a1424] hover:bg-[#101c33] border border-[rgba(143,163,192,0.14)] hover:border-[#0a84ff] text-[#f2f7ff] transition-all font-medium"
+          >
+            <Laptop size={13} className="text-[#0a84ff]" />
+            <span>PC Tools (20)</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/apple-tools')}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0a1424] hover:bg-[#101c33] border border-[rgba(143,163,192,0.14)] hover:border-[#8b5cf6] text-[#f2f7ff] transition-all font-medium"
+          >
+            <Apple size={13} className="text-[#8b5cf6]" />
+            <span>Apple Tools (10)</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate('/android-tools')}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0a1424] hover:bg-[#101c33] border border-[rgba(143,163,192,0.14)] hover:border-[#34e0a1] text-[#f2f7ff] transition-all font-medium"
+          >
+            <Smartphone size={13} className="text-[#34e0a1]" />
+            <span>Android Tools (20)</span>
+          </button>
+        </div>
       </header>
 
       {/* Search and Category Filter Bar */}

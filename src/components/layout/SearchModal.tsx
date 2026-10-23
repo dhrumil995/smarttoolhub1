@@ -1,14 +1,26 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Search, X, ChevronRight, History, Zap } from 'lucide-react';
 import { LAUNCH_TOOLS, TOOL_ICON_MAP } from '../../data/tools.ts';
+import { SOFTWARE_APPS } from '../../data/softwareDirectory.ts';
+import { COMPARISONS } from '../../data/comparisons.ts';
+import { GUIDE_ARTICLES } from '../../data/guides.ts';
 import { Icon } from '../ui/Icon.tsx';
 import { EmptyState } from '../ui/EmptyState.tsx';
-import { ToolMeta } from '../../types/navigation.ts';
 
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
   navigate: (path: string) => void;
+}
+
+interface SearchItem {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  path: string;
+  iconName?: string;
+  badge?: string;
 }
 
 const RECENT_SEARCHES_KEY = 'smarttoolhub_recent_searches';
@@ -37,7 +49,7 @@ function highlightMatch(text: string, query: string): React.ReactNode {
  * - Search field with Search icon and clear (X) button
  * - Mobile: full-screen search sheet with recent searches and 6 popular tools
  * - Desktop: "/" keyboard trigger, Escape to close
- * - Results grouped by category
+ * - Results grouped by category across tools, software directory, and comparisons
  * - Matching text highlight
  * - Arrow keys (Up/Down) & Enter selection
  */
@@ -95,33 +107,92 @@ export const SearchModal: React.FC<SearchModalProps> = ({
   // 6 Popular Tools for Quick Launch
   const popularTools = useMemo(() => LAUNCH_TOOLS.slice(0, 6), []);
 
-  // Filtered tools
-  const filteredTools = useMemo(() => {
+  // Complete searchable corpus across Tools, 50 Software Profiles, and Comparisons
+  const allSearchableItems: SearchItem[] = useMemo(() => {
+    const items: SearchItem[] = [];
+
+    // 1. Launch Tools
+    for (const t of LAUNCH_TOOLS) {
+      items.push({
+        id: `tool-${t.id}`,
+        name: t.name,
+        description: t.description,
+        category: `${t.category} Tools`,
+        path: `/tools/${t.slug}`,
+        iconName: TOOL_ICON_MAP[t.slug] || t.icon,
+      });
+    }
+
+    // 2. Software Directory (50 Apps)
+    for (const app of Object.values(SOFTWARE_APPS)) {
+      const hub = app.platform === 'apple' ? 'apple-tools' : app.platform === 'android' ? 'android-tools' : 'pc-tools';
+      items.push({
+        id: `app-${app.slug}`,
+        name: app.name,
+        description: app.tagline,
+        category: `${app.platformLabel} Software`,
+        path: `/${hub}/${app.slug}`,
+        iconName: app.platform === 'apple' ? 'Apple' : app.platform === 'android' ? 'Smartphone' : 'Laptop',
+        badge: app.category,
+      });
+    }
+
+    // 3. Comparisons
+    for (const comp of Object.values(COMPARISONS)) {
+      items.push({
+        id: `comp-${comp.slug}`,
+        name: comp.title,
+        description: comp.subtitle,
+        category: 'Software Comparisons',
+        path: `/compare/${comp.slug}`,
+        iconName: 'Scale',
+        badge: `${comp.optionAName} vs ${comp.optionBName}`,
+      });
+    }
+
+    // 4. How-To Guides
+    for (const guide of Object.values(GUIDE_ARTICLES)) {
+      items.push({
+        id: `guide-${guide.slug}`,
+        name: guide.title,
+        description: guide.summary,
+        category: 'How-To Guides',
+        path: `/guides/${guide.slug}`,
+        iconName: 'BookOpen',
+        badge: guide.readTime,
+      });
+    }
+
+    return items;
+  }, []);
+
+  // Filtered items
+  const filteredItems = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return [];
-    return LAUNCH_TOOLS.filter((t) =>
-      t.name.toLowerCase().includes(q) ||
-      t.description.toLowerCase().includes(q) ||
-      t.category.toLowerCase().includes(q) ||
-      (t.keywords && t.keywords.some((k) => k.toLowerCase().includes(q)))
+    return allSearchableItems.filter((item) =>
+      item.name.toLowerCase().includes(q) ||
+      item.description.toLowerCase().includes(q) ||
+      item.category.toLowerCase().includes(q) ||
+      (item.badge && item.badge.toLowerCase().includes(q))
     );
-  }, [query]);
+  }, [query, allSearchableItems]);
 
-  // Group filtered tools by category
+  // Group filtered items by category
   const groupedResults = useMemo(() => {
-    const map = new Map<string, ToolMeta[]>();
-    for (const tool of filteredTools) {
-      const cat = tool.category;
+    const map = new Map<string, SearchItem[]>();
+    for (const item of filteredItems) {
+      const cat = item.category;
       if (!map.has(cat)) map.set(cat, []);
-      map.get(cat)!.push(tool);
+      map.get(cat)!.push(item);
     }
     return map;
-  }, [filteredTools]);
+  }, [filteredItems]);
 
-  // Flat list of visible selectable tools
-  const flatSelectableList = filteredTools;
+  // Flat list of visible selectable items
+  const flatSelectableList = filteredItems;
 
-  const handleSelect = (slug: string, termToSave?: string) => {
+  const handleSelect = (path: string, termToSave?: string) => {
     if (termToSave && termToSave.trim().length > 1) {
       try {
         const updated = [termToSave.trim(), ...recentSearches.filter((s) => s !== termToSave.trim())].slice(0, 5);
@@ -131,7 +202,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         // Fallback
       }
     }
-    navigate(`/tools/${slug}`);
+    navigate(path);
     onClose();
   };
 
@@ -148,7 +219,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
       e.preventDefault();
       const chosen = flatSelectableList[selectedIndex];
       if (chosen) {
-        handleSelect(chosen.slug, query);
+        handleSelect(chosen.path, query);
       }
     }
   };
@@ -226,23 +297,23 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         <div className="flex-1 overflow-y-auto mt-4 space-y-6 pr-1">
           {/* Query Active: Show Grouped Results */}
           {query.trim().length > 0 ? (
-            filteredTools.length > 0 ? (
+            filteredItems.length > 0 ? (
               <div className="space-y-5">
-                {Array.from(groupedResults.entries()).map(([category, tools]) => (
+                {Array.from(groupedResults.entries()).map(([category, items]) => (
                   <div key={category} className="space-y-2">
                     <div className="text-[11px] font-mono uppercase tracking-wider text-[#5aa9ff] px-2 font-bold">
                       {category}
                     </div>
                     <div className="space-y-1.5">
-                      {tools.map((tool) => {
-                        const globalIndex = flatSelectableList.findIndex((t) => t.id === tool.id);
+                      {items.map((item) => {
+                        const globalIndex = flatSelectableList.findIndex((t) => t.id === item.id);
                         const isKeyboardSelected = globalIndex === selectedIndex;
 
                         return (
                           <button
-                            key={tool.id}
+                            key={item.id}
                             type="button"
-                            onClick={() => handleSelect(tool.slug, query)}
+                            onClick={() => handleSelect(item.path, query)}
                             className={`w-full flex items-center justify-between p-3.5 rounded-2xl border transition-all text-left group focus-ring select-none ${
                               isKeyboardSelected
                                 ? 'bg-[#101c33] border-[#0a84ff] shadow-[0_0_16px_rgba(10,132,255,0.25)]'
@@ -251,14 +322,21 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                           >
                             <div className="flex items-center gap-3.5 min-w-0 pr-2">
                               <div className="w-9 h-9 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] flex items-center justify-center text-[#0a84ff] shrink-0">
-                                <Icon name={TOOL_ICON_MAP[tool.slug] || tool.icon} size="sm" strokeWidth={1.75} aria-hidden={true} />
+                                <Icon name={item.iconName || 'Wand2'} size="sm" strokeWidth={1.75} aria-hidden={true} />
                               </div>
                               <div className="min-w-0">
-                                <div className="text-sm font-semibold text-[#f2f7ff] truncate group-hover:text-[#5aa9ff] transition-colors">
-                                  {highlightMatch(tool.name, query)}
+                                <div className="flex items-center gap-2">
+                                  <span className="text-sm font-semibold text-[#f2f7ff] truncate group-hover:text-[#5aa9ff] transition-colors">
+                                    {highlightMatch(item.name, query)}
+                                  </span>
+                                  {item.badge && (
+                                    <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[#0a1424] text-[#9aaccb] border border-[rgba(143,163,192,0.14)] shrink-0">
+                                      {item.badge}
+                                    </span>
+                                  )}
                                 </div>
                                 <div className="text-xs text-[#9aaccb] truncate mt-0.5">
-                                  {highlightMatch(tool.description, query)}
+                                  {highlightMatch(item.description, query)}
                                 </div>
                               </div>
                             </div>
@@ -329,7 +407,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                     <button
                       key={tool.id}
                       type="button"
-                      onClick={() => handleSelect(tool.slug)}
+                      onClick={() => handleSelect(`/tools/${tool.slug}`)}
                       className="flex items-center justify-between p-3 rounded-2xl bg-[#050a14]/60 hover:bg-[#101c33] border border-[rgba(143,163,192,0.12)] hover:border-[#0a84ff]/50 transition-all text-left group focus-ring"
                     >
                       <div className="flex items-center gap-3 min-w-0 pr-2">

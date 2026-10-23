@@ -12,9 +12,10 @@ interface NavbarProps {
 
 const NAV_LINKS = [
   { label: 'Tools', href: '/tools' },
+  { label: 'PC Tools', href: '/pc-tools' },
+  { label: 'Apple Tools', href: '/apple-tools' },
+  { label: 'Android Tools', href: '/android-tools' },
   { label: 'Guides', href: '/guides' },
-  { label: 'About', href: '/about' },
-  { label: 'Pricing', href: '/pricing' },
 ];
 
 export const Navbar: React.FC<NavbarProps> = ({

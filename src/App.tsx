@@ -70,6 +70,28 @@ const PdfSplitPage = lazy(() => import('./pages/tools/PdfSplitPage.tsx').then(m 
 const ImageToPdfPage = lazy(() => import('./pages/tools/ImageToPdfPage.tsx').then(m => ({ default: m.ImageToPdfPage })));
 const ImageToTextOcrPage = lazy(() => import('./pages/tools/ImageToTextOcrPage.tsx').then(m => ({ default: m.ImageToTextOcrPage })));
 
+// Batch L Private Browser Tools
+const InstallCommandGeneratorPage = lazy(() => import('./pages/tools/InstallCommandGeneratorPage.tsx').then(m => ({ default: m.InstallCommandGeneratorPage })));
+const FileChecksumVerifierPage = lazy(() => import('./pages/tools/FileChecksumVerifierPage.tsx').then(m => ({ default: m.FileChecksumVerifierPage })));
+const SubnetCalculatorPage = lazy(() => import('./pages/tools/SubnetCalculatorPage.tsx').then(m => ({ default: m.SubnetCalculatorPage })));
+const BootableUsbChooserPage = lazy(() => import('./pages/tools/BootableUsbChooserPage.tsx').then(m => ({ default: m.BootableUsbChooserPage })));
+const DriveSpeedCalculatorPage = lazy(() => import('./pages/tools/DriveSpeedCalculatorPage.tsx').then(m => ({ default: m.DriveSpeedCalculatorPage })));
+const DriveHealthReaderPage = lazy(() => import('./pages/tools/DriveHealthReaderPage.tsx').then(m => ({ default: m.DriveHealthReaderPage })));
+const ShortcutTranslatorPage = lazy(() => import('./pages/tools/ShortcutTranslatorPage.tsx').then(m => ({ default: m.ShortcutTranslatorPage })));
+const BatchQrCodeGeneratorPage = lazy(() => import('./pages/tools/BatchQrCodeGeneratorPage.tsx').then(m => ({ default: m.BatchQrCodeGeneratorPage })));
+
+// Batch M Automation and Command Helpers
+const AndroidAutomationPage = lazy(() => import('./pages/tools/AndroidAutomationPage.tsx').then(m => ({ default: m.AndroidAutomationPage })));
+const AutoHotkeyGeneratorPage = lazy(() => import('./pages/tools/AutoHotkeyGeneratorPage.tsx').then(m => ({ default: m.AutoHotkeyGeneratorPage })));
+const AdbFastbootCommandBuilderPage = lazy(() => import('./pages/tools/AdbFastbootCommandBuilderPage.tsx').then(m => ({ default: m.AdbFastbootCommandBuilderPage })));
+const CommandExplainerPage = lazy(() => import('./pages/tools/CommandExplainerPage.tsx').then(m => ({ default: m.CommandExplainerPage })));
+const BatteryWearCalculatorPage = lazy(() => import('./pages/tools/BatteryWearCalculatorPage.tsx').then(m => ({ default: m.BatteryWearCalculatorPage })));
+
+// Batch N Software Directory & Comparison Pages
+const SoftwareCategoryHubPage = lazy(() => import('./pages/software/SoftwareCategoryHubPage.tsx').then(m => ({ default: m.SoftwareCategoryHubPage })));
+const AppDetailPage = lazy(() => import('./pages/software/AppDetailPage.tsx').then(m => ({ default: m.AppDetailPage })));
+const ComparisonPage = lazy(() => import('./pages/software/ComparisonPage.tsx').then(m => ({ default: m.ComparisonPage })));
+
 // Lightweight zero-layout-shift loading fallback
 const PageLoadingSkeleton: React.FC = () => (
   <div className="py-16 max-w-3xl mx-auto space-y-6 animate-pulse" aria-busy="true" aria-label="Loading page content">
@@ -220,6 +242,78 @@ export default function App() {
           }
           if (currentPath === '/tools/image-to-text-ocr') {
             return <ImageToTextOcrPage navigate={navigate} />;
+          }
+
+          // Batch L Private Browser Tools Routes
+          if (currentPath === '/tools/install-command-generator') {
+            return <InstallCommandGeneratorPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/file-checksum-verifier') {
+            return <FileChecksumVerifierPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/cidr-subnet-calculator') {
+            return <SubnetCalculatorPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/bootable-usb-chooser') {
+            return <BootableUsbChooserPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/drive-speed-requirement-calculator') {
+            return <DriveSpeedCalculatorPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/drive-health-reader') {
+            return <DriveHealthReaderPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/mac-windows-shortcut-translator') {
+            return <ShortcutTranslatorPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/batch-qr-code-generator') {
+            return <BatchQrCodeGeneratorPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/android-automation-generator') {
+            return <AndroidAutomationPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/autohotkey-script-generator') {
+            return <AutoHotkeyGeneratorPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/adb-fastboot-command-builder') {
+            return <AdbFastbootCommandBuilderPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/command-explainer') {
+            return <CommandExplainerPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/battery-wear-calculator') {
+            return <BatteryWearCalculatorPage navigate={navigate} />;
+          }
+
+          // Batch N Software Directory Hubs & Details
+          if (currentPath === '/apple-tools') {
+            return <SoftwareCategoryHubPage platform="apple" navigate={navigate} />;
+          }
+          if (currentPath.startsWith('/apple-tools/')) {
+            const slug = currentPath.replace('/apple-tools/', '').split('?')[0].split('#')[0];
+            return <AppDetailPage platform="apple" slug={slug} navigate={navigate} />;
+          }
+
+          if (currentPath === '/android-tools') {
+            return <SoftwareCategoryHubPage platform="android" navigate={navigate} />;
+          }
+          if (currentPath.startsWith('/android-tools/')) {
+            const slug = currentPath.replace('/android-tools/', '').split('?')[0].split('#')[0];
+            return <AppDetailPage platform="android" slug={slug} navigate={navigate} />;
+          }
+
+          if (currentPath === '/pc-tools') {
+            return <SoftwareCategoryHubPage platform="pc" navigate={navigate} />;
+          }
+          if (currentPath.startsWith('/pc-tools/')) {
+            const slug = currentPath.replace('/pc-tools/', '').split('?')[0].split('#')[0];
+            return <AppDetailPage platform="pc" slug={slug} navigate={navigate} />;
+          }
+
+          // Batch N Comparisons
+          if (currentPath.startsWith('/compare/')) {
+            const slug = currentPath.replace('/compare/', '').split('?')[0].split('#')[0];
+            return <ComparisonPage slug={slug} navigate={navigate} />;
           }
 
           // 4. Saved History

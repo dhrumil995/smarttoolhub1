@@ -4,6 +4,7 @@ import { TrustRow } from '../components/ui/TrustRow.tsx';
 import { BentoGrid } from '../components/home/BentoGrid.tsx';
 import { HowItWorks } from '../components/home/HowItWorks.tsx';
 import { PopularTools } from '../components/home/PopularTools.tsx';
+import { SoftwareHubPreview } from '../components/home/SoftwareHubPreview.tsx';
 import { LatestGuides } from '../components/home/LatestGuides.tsx';
 import { FaqSection } from '../components/home/FaqSection.tsx';
 import { ClosingCta } from '../components/home/ClosingCta.tsx';
@@ -31,7 +32,10 @@ export const HomePage: React.FC<HomePageProps> = ({ navigate, onOpenSearch }) =>
       {/* 5. Popular Tools */}
       <PopularTools navigate={navigate} />
 
-      {/* 6. Latest Guides */}
+      {/* 6. Curated Software Directory & Comparisons (50 Apps & Comparisons) */}
+      <SoftwareHubPreview navigate={navigate} />
+
+      {/* 7. Latest Guides */}
       <LatestGuides navigate={navigate} />
 
       {/* 7. FAQ (6 real questions with rotating plus icon) */}

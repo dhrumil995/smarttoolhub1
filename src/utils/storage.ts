@@ -61,6 +61,17 @@ export function clearToolHistoryBySlug(slug: string): void {
   }
 }
 
+export function deleteSavedItem(id: string): void {
+  try {
+    if (typeof window === 'undefined') return;
+    const existing = getToolHistory();
+    const updated = existing.filter(item => item.id !== id);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  } catch {
+    // Graceful fallback
+  }
+}
+
 export function clearToolHistory(): void {
   try {
     if (typeof window === 'undefined') return;
