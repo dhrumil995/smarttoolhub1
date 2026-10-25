@@ -61,7 +61,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         <Link
           href={viewAllHref}
           navigate={navigate}
-          className="text-xs font-mono uppercase tracking-wider text-[#7db8ff] hover:underline focus-ring rounded py-1 inline-flex items-center gap-1.5 shrink-0 group self-start sm:self-end font-semibold"
+          className="text-xs font-mono uppercase tracking-wider text-[#7db8ff] hover:underline focus-ring rounded-lg py-2.5 px-2 min-h-[44px] inline-flex items-center gap-1.5 shrink-0 group self-start sm:self-end font-semibold"
         >
           <span>{viewAllLabel}</span>
           <ArrowRight

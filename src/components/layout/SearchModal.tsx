@@ -163,6 +163,53 @@ export const SearchModal: React.FC<SearchModalProps> = ({
       });
     }
 
+    // 5. Hub Directories & Releases
+    items.push({
+      id: 'hub-pc',
+      name: 'PC & Windows Software Directory',
+      description: '20 verified Windows utilities with winget commands, drawbacks, and reviews.',
+      category: 'Software Directory Hubs',
+      path: '/pc-tools',
+      iconName: 'Laptop',
+      badge: '20 Apps',
+    });
+    items.push({
+      id: 'hub-apple',
+      name: 'Apple & Mac Software Directory',
+      description: '10 verified macOS utilities with Homebrew cask commands and drawbacks.',
+      category: 'Software Directory Hubs',
+      path: '/apple-tools',
+      iconName: 'Apple',
+      badge: '10 Apps',
+    });
+    items.push({
+      id: 'hub-android',
+      name: 'Android Power Tools Directory',
+      description: '20 verified Android tools for wireless debugging, automation, and Shizuku.',
+      category: 'Software Directory Hubs',
+      path: '/android-tools',
+      iconName: 'Smartphone',
+      badge: '20 Apps',
+    });
+    items.push({
+      id: 'hub-changelog',
+      name: 'Changelog & Platform Releases',
+      description: 'Release history from v1.0 to v2.4 with RSS feed and version highlights.',
+      category: 'Platform Updates',
+      path: '/changelog',
+      iconName: 'Sparkles',
+      badge: 'What\'s New',
+    });
+    items.push({
+      id: 'hub-saved',
+      name: 'Saved Results & Bookmarked Tools',
+      description: 'Locally saved calculations, script recipes, and software bookmarks.',
+      category: 'Personal Toolkit',
+      path: '/saved',
+      iconName: 'History',
+      badge: 'Offline',
+    });
+
     return items;
   }, []);
 
@@ -271,7 +318,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                 setSelectedIndex(0);
                 inputRef.current?.focus();
               }}
-              className="text-[#9aaccb] hover:text-[#f2f7ff] p-1.5 focus-ring rounded-lg"
+              className="text-[#9aaccb] hover:text-[#f2f7ff] p-2 min-w-[44px] min-h-[44px] flex items-center justify-center focus-ring rounded-lg"
               aria-label="Clear search input"
             >
               <X size={16} aria-hidden="true" />
@@ -284,7 +331,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="md:hidden text-xs text-[#9aaccb] hover:text-[#f2f7ff] p-1"
+                className="md:hidden text-sm font-medium text-[#9aaccb] hover:text-[#f2f7ff] min-h-[44px] px-2 flex items-center justify-center focus-ring rounded-lg"
                 aria-label="Close search"
               >
                 Cancel

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileText, ChevronRight, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { FileText, ChevronRight, AlertTriangle, ShieldCheck, CheckCircle2, Scale } from 'lucide-react';
 import { Link } from '../hooks/useRouter.tsx';
 
 interface TermsPageProps {
@@ -21,81 +21,146 @@ export const TermsPage: React.FC<TermsPageProps> = ({ navigate }) => {
       {/* Header Landmark */}
       <header className="space-y-3">
         <div className="text-xs font-mono uppercase tracking-wider text-[#0a84ff]">
-          Simple Legal Terms
+          Clear &amp; Fair Agreement
         </div>
         <h1 className="h1-fluid font-display text-[#f2f7ff]">
           Terms of Service<span className="text-[#0a84ff]">.</span>
         </h1>
         <p className="body-fluid text-[#8fa3c0] leading-relaxed">
-          Last updated: October 2026. By using SmartToolHub (smarttoolhub.net), you agree to these straightforward terms.
+          Last updated: October 24, 2026. Please read these Terms of Service carefully before using SmartToolHub (smarttoolhub.net). By accessing our website or using any of our tools, you agree to be bound by these terms.
         </p>
       </header>
 
-      {/* Terms Body */}
-      <div className="space-y-6 text-sm text-[#8fa3c0] leading-relaxed">
-        <section className="space-y-2">
+      {/* Key Highlights Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
+          <Scale className="w-5 h-5 text-[#34e0a1]" />
+          <div className="font-semibold text-sm text-[#f2f7ff]">You Own Your Output</div>
+          <p className="text-xs text-[#8fa3c0] leading-relaxed">
+            Any text, formula, shortcut recipe, or format you generate using our tools is 100% yours to use commercially or privately.
+          </p>
+        </div>
+
+        <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
+          <AlertTriangle className="w-5 h-5 text-[#ffb840]" />
+          <div className="font-semibold text-sm text-[#f2f7ff]">Verify Important Results</div>
+          <p className="text-xs text-[#8fa3c0] leading-relaxed">
+            AI language models and diagnostic formulas can make errors. Always double-check sensitive data before publishing or executing commands.
+          </p>
+        </div>
+      </div>
+
+      {/* Detailed Sections */}
+      <div className="space-y-8 text-sm text-[#8fa3c0] leading-relaxed">
+        <section className="space-y-3">
           <h2 className="text-xl font-bold font-display text-[#f2f7ff]">
-            1. Use of Free Tools
+            1. Acceptance of Terms
           </h2>
           <p>
-            SmartToolHub provides free web tools to help you create personal automations, draft emails, format text, and calculate everyday metrics. You are free to use the generated output for personal and commercial projects without paying royalties to us.
+            By visiting or interacting with SmartToolHub (<code className="text-[#7db8ff] bg-[#0a1424] px-1.5 py-0.5 rounded text-xs">smarttoolhub.net</code>), operated by <strong>Dhrumil Aslaliya</strong>, you agree to comply with and be legally bound by these Terms of Service and our Privacy Policy. If you do not agree to these terms, please discontinue use of our site immediately.
           </p>
         </section>
 
-        <section className="space-y-2">
+        <section className="space-y-3">
           <h2 className="text-xl font-bold font-display text-[#f2f7ff]">
-            2. Fair Use and Acceptable Conduct
+            2. Description of the Service
           </h2>
           <p>
-            You agree to use our tools responsibly. You must not:
+            SmartToolHub offers a suite of free web-based utilities, including AI-assisted text transformers, spreadsheet formula helpers, iOS shortcut instructions, battery diagnostic estimators, hardware bandwidth calculators, and an editorial directory of curated open-source desktop and mobile software.
           </p>
-          <ul className="list-disc pl-5 space-y-1.5">
-            <li>Launch automated bot scripts, flood attacks, or denial-of-service traffic against our API endpoints.</li>
-            <li>Submit illegal, harassing, infringing, or malicious content.</li>
-            <li>Attempt to reverse-engineer server secrets or bypass our rate limits.</li>
+          <p>
+            We strive to maintain continuous availability and accurate functionality, but we reserve the right to modify, suspend, or retire any tool or feature at any time without prior notice.
+          </p>
+        </section>
+
+        <section className="space-y-3">
+          <h2 className="text-xl font-bold font-display text-[#f2f7ff]">
+            3. User Content &amp; Ownership
+          </h2>
+          <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm">
+            <li><strong>Your Rights:</strong> You retain full ownership and intellectual property rights in any input text you submit and any output generated by our tools. You may freely use, modify, republish, sell, or distribute generated outputs for personal or commercial projects with zero royalty fees owed to SmartToolHub.</li>
+            <li><strong>Website Intellectual Property:</strong> The SmartToolHub website design, software architecture, branding, curated software evaluations, editorial guides, and custom user interface code are the exclusive property of Dhrumil Aslaliya and are protected by applicable copyright and trademark laws.</li>
           </ul>
         </section>
 
-        <section className="space-y-3 p-5 rounded-2xl bg-[#0a1424] border border-[rgba(255,184,64,0.3)]">
+        <section className="space-y-3">
+          <h2 className="text-xl font-bold font-display text-[#f2f7ff]">
+            4. Acceptable Use Policy
+          </h2>
+          <p>
+            You agree to use SmartToolHub strictly for lawful purposes. You agree not to:
+          </p>
+          <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+            <li>Deploy automated scripts, bots, scrapers, or flood attacks that disrupt server stability or degrade service for other users.</li>
+            <li>Submit prompts or inputs containing malicious code, exploit payloads, defamatory material, or content that infringes upon third-party intellectual property rights.</li>
+            <li>Attempt to probe, scan, or reverse-engineer our backend APIs or bypass our rate-limiting controls.</li>
+          </ul>
+        </section>
+
+        <section className="space-y-3 p-5 sm:p-6 rounded-2xl bg-[#0a1424] border border-[rgba(255,184,64,0.3)]">
           <div className="flex items-center gap-2 text-[#ffb840] font-semibold text-sm">
             <AlertTriangle className="w-4 h-4 shrink-0" />
-            <span>3. AI Output Disclaimer: Verify Important Details</span>
+            <span>5. AI &amp; Diagnostic Disclaimer: &ldquo;As Is&rdquo; Provision</span>
           </div>
           <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
-            AI technologies generate responses based on statistical language patterns. While we optimize prompt instructions for precision, AI models can occasionally produce inaccurate formulas, incorrect dates, or invalid software steps.
+            The tools, calculations, formulas, automated scripts, and AI-generated outputs on SmartToolHub are provided strictly on an <strong>&ldquo;as is&rdquo;</strong> and <strong>&ldquo;as available&rdquo;</strong> basis without warranties of any kind, whether express or implied.
           </p>
           <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
-            All tools and results are provided &ldquo;as is&rdquo; without warranties of any kind. You are responsible for inspecting and verifying all code, formulas, and messages before relying on them for critical personal, financial, legal, or medical matters.
+            Generative AI models and mathematical estimation tools can occasionally produce incomplete, inaccurate, or outdated information. <strong>You are solely responsible for inspecting, testing, and verifying all formulas, shell commands, shortcut workflows, and hardware calculations before applying them in production environments, financial spreadsheets, or critical devices.</strong>
           </p>
         </section>
 
-        <section className="space-y-2">
+        <section className="space-y-3">
           <h2 className="text-xl font-bold font-display text-[#f2f7ff]">
-            4. Trademark &amp; Independence Disclaimer
+            6. Software Directory &amp; Third-Party Applications
           </h2>
           <p>
-            SmartToolHub is an independent utility website operated by Dhrumil Aslaliya. SmartToolHub is not affiliated with, endorsed by, or sponsored by Apple Inc. or Google LLC.
+            SmartToolHub indexes, reviews, and references third-party open-source software applications (such as Ventoy, Rufus, Shizuku, PowerToys, MonitorControl, and OBS Studio).
           </p>
-          <p>
-            Apple, iOS, iPadOS, Siri, and Shortcuts are registered trademarks of Apple Inc. Google, Google Sheets, and Android are registered trademarks of Google LLC. All other product names are trademarks of their respective owners.
+          <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+            <li>SmartToolHub does not develop, host, or distribute executable binary installer files for third-party programs.</li>
+            <li>All download links and package manager commands (such as <code className="text-[#7db8ff] bg-[#0a1424] px-1 py-0.5 rounded text-xs">winget</code>, <code className="text-[#7db8ff] bg-[#0a1424] px-1 py-0.5 rounded text-xs">brew</code>, and F-Droid) point to official upstream repositories.</li>
+            <li>Each application is subject to its own developer&apos;s license and privacy policies. SmartToolHub is not liable for any issues, data loss, or system instability resulting from installing third-party software.</li>
+          </ul>
+        </section>
+
+        <section className="space-y-3 p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)]">
+          <h2 className="text-base font-bold font-display text-[#f2f7ff]">
+            7. Trademark &amp; Independent Operation Disclaimer
+          </h2>
+          <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
+            SmartToolHub is an independent website operated by Dhrumil Aslaliya. SmartToolHub is <strong>not affiliated with, endorsed by, sponsored by, or associated with Apple Inc., Google LLC, or Microsoft Corporation</strong>.
+          </p>
+          <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
+            Apple, iPhone, iPad, iOS, macOS, iPadOS, Siri, and Shortcuts are registered trademarks of Apple Inc. Google, Android, Google Sheets, Google Drive, and Google Chrome are registered trademarks of Google LLC. Windows and Microsoft Excel are registered trademarks of Microsoft Corporation. All other product names, logos, and brands mentioned are property of their respective owners. Their use on this website is strictly for identification, compatibility, and educational commentary under fair use doctrine.
           </p>
         </section>
 
-        <section className="space-y-2">
+        <section className="space-y-3">
           <h2 className="text-xl font-bold font-display text-[#f2f7ff]">
-            5. Changes to These Terms
+            8. Limitation of Liability
           </h2>
           <p>
-            We may update these terms occasionally as we introduce new tools. Continued use of SmartToolHub after changes are posted constitutes acceptance of the revised terms.
+            To the maximum extent permitted by applicable law, in no event shall SmartToolHub, its creator Dhrumil Aslaliya, or its contributors be liable for any indirect, incidental, special, consequential, or punitive damages—including but not limited to loss of data, loss of business, hardware failure, or lost profits—arising out of or in connection with your use of or inability to use this website.
           </p>
         </section>
 
-        <section className="space-y-2">
+        <section className="space-y-3">
           <h2 className="text-xl font-bold font-display text-[#f2f7ff]">
-            6. Questions and Inquiries
+            9. Changes to Terms
           </h2>
           <p>
-            For questions regarding these terms, contact us at{' '}
+            We may revise these Terms of Service periodically. When updates occur, the &ldquo;Last updated&rdquo; date at the top of this page will be refreshed. Your continued use of the website following any changes signifies your acceptance of the updated terms.
+          </p>
+        </section>
+
+        <section className="p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] space-y-2">
+          <div className="flex items-center gap-2 text-sm font-bold text-[#f2f7ff]">
+            <CheckCircle2 className="w-4 h-4 text-[#34e0a1]" />
+            <span>Contact Regarding Terms</span>
+          </div>
+          <p className="text-xs sm:text-sm text-[#8fa3c0]">
+            For legal notices, terms questions, or permission requests, please contact us directly at{' '}
             <a href="mailto:contact@smarttoolhub.net" className="text-[#0a84ff] hover:underline font-mono">
               contact@smarttoolhub.net
             </a>.

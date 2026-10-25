@@ -163,7 +163,7 @@ export const COMPARISONS: Record<string, ComparisonData> = {
     subtitle: 'An objective look at third-party iOS device management tools, backup capabilities, data transfer, and privacy considerations.',
     optionAName: '3uTools',
     optionBName: 'iMazing',
-    optionAPermalink: '/pc-tools/3utools',
+    optionAPermalink: '/compare/3utools-vs-imazing',
     optionBPermalink: '/pc-tools/imazing',
     appleOfficialNote: 'Important notice on Apple device management: Apple provides official, completely free local device backup and sync solutions. On macOS, use the native Finder sidebar. On Windows, use Apple Devices (available in the Microsoft Store) or iTunes. Third-party tools should only be considered when specific export or diagnostic capabilities are required.',
     optionAPickIf: [
@@ -200,7 +200,7 @@ export const COMPARISONS: Record<string, ComparisonData> = {
 
   'shizuku-adb-wireless-guide': {
     slug: 'shizuku-adb-wireless-guide',
-    title: 'Shizuku & ADB Wireless Setup Guide: Elevate Android Privileges Without Root',
+    title: 'Shizuku & ADB Wireless Setup Guide: Grant Android Privileges Without Root',
     subtitle: 'Step-by-step setup guide for pairing Shizuku via Android Wireless Debugging to grant secure elevated permissions without a PC.',
     optionAName: 'Shizuku (Wireless Debugging)',
     optionBName: 'Standard ADB over USB Cable',
@@ -216,7 +216,7 @@ export const COMPARISONS: Record<string, ComparisonData> = {
       'You need low-level recovery, bootloader access, or OS partition operations.',
       'You are diagnosing hardware logs or taking low-level system bug reports from a computer.',
     ],
-    verdictSummary: 'Shizuku is one of the most transformative tools in modern Android customization. It allows apps to execute ADB-level commands directly on-device without root. For initial setup on Android 11+, all you need is local Wi-Fi and Wireless Debugging. For older devices or firmware flashing, standard ADB over a USB cable remains essential.',
+    verdictSummary: 'Shizuku is one of the most useful tools in modern Android customization. It allows apps to execute ADB-level commands directly on-device without root. For initial setup on Android 11+, all you need is local Wi-Fi and Wireless Debugging. For older devices or firmware flashing, standard ADB over a USB cable remains essential.',
     matchingToolSlug: 'adb-fastboot-command-builder',
     matchingToolName: 'ADB & Fastboot Command Builder',
     comparisonRows: [

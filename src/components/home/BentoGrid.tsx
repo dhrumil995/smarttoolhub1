@@ -96,7 +96,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <Link
               href="/tools/ai-prompt-improver"
               navigate={navigate}
-              className="text-xs font-semibold text-[#0a84ff] hover:underline flex items-center gap-1.5 focus-ring rounded"
+              className="text-xs font-semibold text-[#0a84ff] hover:underline inline-flex items-center gap-1.5 focus-ring rounded-lg min-h-[44px] py-2"
             >
               <span>Open Prompt Improver</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -124,7 +124,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <Link
               href="/tools/ai-email-writer"
               navigate={navigate}
-              className="text-xs font-semibold text-[#0a84ff] hover:underline flex items-center gap-1.5 focus-ring rounded"
+              className="text-xs font-semibold text-[#0a84ff] hover:underline inline-flex items-center gap-1.5 focus-ring rounded-lg min-h-[44px] py-2"
             >
               <span>Open Email Writer</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -152,7 +152,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <Link
               href="/tools/ai-summarizer"
               navigate={navigate}
-              className="text-xs font-semibold text-[#0a84ff] hover:underline flex items-center gap-1.5 focus-ring rounded"
+              className="text-xs font-semibold text-[#0a84ff] hover:underline inline-flex items-center gap-1.5 focus-ring rounded-lg min-h-[44px] py-2"
             >
               <span>Open Summarizer</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -180,7 +180,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <Link
               href="/tools/formula-helper"
               navigate={navigate}
-              className="text-xs font-semibold text-[#0a84ff] hover:underline flex items-center gap-1.5 focus-ring rounded"
+              className="text-xs font-semibold text-[#0a84ff] hover:underline inline-flex items-center gap-1.5 focus-ring rounded-lg min-h-[44px] py-2"
             >
               <span>Open Formula Helper</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -208,7 +208,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
             <Link
               href="/tools/caption-hashtag-generator"
               navigate={navigate}
-              className="text-xs font-semibold text-[#0a84ff] hover:underline flex items-center gap-1.5 focus-ring rounded"
+              className="text-xs font-semibold text-[#0a84ff] hover:underline inline-flex items-center gap-1.5 focus-ring rounded-lg min-h-[44px] py-2"
             >
               <span>Open Caption Tool</span>
               <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -222,7 +222,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ navigate }) => {
         <Link
           href="/tools"
           navigate={navigate}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[#0a84ff] text-xs font-semibold text-[#f2f7ff] hover:text-[#0a84ff] transition-all focus-ring"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3 min-h-[44px] rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] hover:border-[#0a84ff] text-xs font-semibold text-[#f2f7ff] hover:text-[#0a84ff] transition-all focus-ring"
         >
           <span>Explore All Tools in the Directory</span>
           <ArrowUpRight className="w-4 h-4 text-[#0a84ff]" aria-hidden="true" />

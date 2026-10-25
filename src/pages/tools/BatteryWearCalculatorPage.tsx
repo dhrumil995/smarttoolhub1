@@ -86,7 +86,7 @@ export const BatteryWearCalculatorPage: React.FC<BatteryWearCalculatorPageProps>
       status = 'replace';
       statusLabel = 'Service or Replace Soon';
       statusColor = '#ff5c7a'; // Coral
-      verdict = 'Degradation is severe. Battery cells may have elevated internal resistance, risking sudden shutdowns. Servicing or replacing the pack is recommended.';
+      verdict = 'Degradation is severe. Battery cells may have high internal resistance, risking sudden shutdowns. Servicing or replacing the pack is recommended.';
     }
 
     return {
@@ -470,7 +470,7 @@ This calculation is an estimate based on software reporting. Actual lithium batt
       whatItDoesContent={
         <>
           <p>
-            All modern consumer electronics—from lightweight ultrabooks and gaming laptops to smartphones and tablets—rely on lithium-ion or lithium-polymer battery chemistry. Over time, recurring charge cycles, elevated operating temperatures, and calendar aging cause irreversible loss of active lithium ions and increase internal cell resistance.
+            All modern consumer electronics—from lightweight ultrabooks and gaming laptops to smartphones and tablets—rely on lithium-ion or lithium-polymer battery chemistry. Over time, recurring charge cycles, high operating temperatures, and calendar aging cause irreversible loss of active lithium ions and increase internal cell resistance.
           </p>
           <p>
             The <strong>Battery Wear Calculator</strong> compares your battery pack’s original factory <strong>Design Capacity</strong> against its current <strong>Full-Charge Capacity</strong> to reveal your exact health percentage, wear level, and lost runtime. It provides step-by-step instructions on extracting diagnostic battery reports on Windows (<code>powercfg /batteryreport</code>), macOS System Information, and Android diagnostics.

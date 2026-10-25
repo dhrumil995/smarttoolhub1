@@ -1,5 +1,6 @@
 import React from 'react';
 import { Laptop, Apple, Smartphone, ArrowRight, ShieldCheck, Terminal, Scale } from 'lucide-react';
+import { Link } from '../../hooks/useRouter.tsx';
 import { SectionHeader } from '../ui/SectionHeader.tsx';
 
 interface SoftwareHubPreviewProps {
@@ -93,10 +94,11 @@ export const SoftwareHubPreview: React.FC<SoftwareHubPreviewProps> = ({ navigate
         {ECOSYSTEMS.map((eco) => {
           const IconComp = eco.icon;
           return (
-            <div
+            <Link
               key={eco.id}
-              onClick={() => navigate(eco.path)}
-              className="group relative p-6 rounded-3xl bg-[#0a1424]/70 hover:bg-[#101c33] border border-[rgba(143,163,192,0.14)] hover:border-[#0a84ff]/50 transition-all cursor-pointer flex flex-col justify-between"
+              href={eco.path}
+              navigate={navigate}
+              className="group relative p-6 rounded-3xl bg-[#0a1424]/70 hover:bg-[#101c33] border border-[rgba(143,163,192,0.14)] hover:border-[#0a84ff]/50 transition-all cursor-pointer flex flex-col justify-between focus-ring text-left"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -140,7 +142,7 @@ export const SoftwareHubPreview: React.FC<SoftwareHubPreviewProps> = ({ navigate
                   Browse directory <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

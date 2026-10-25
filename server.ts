@@ -4,8 +4,10 @@ import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import crypto from 'crypto';
+import { resolveSeo } from './src/server/seoPrerender.ts';
 
 dotenv.config();
 
@@ -1690,9 +1692,12 @@ Return strictly valid JSON:
 // Hosted Checkout Webhook with cryptographic HMAC-SHA256 signature verification
 app.post('/api/webhooks/checkout', (req: Request, res: Response) => {
   try {
-    const signature = req.headers['x-webhook-signature'] as string;
-    const webhookSecret = process.env.WEBHOOK_SECRET || 'smarttoolhub_test_webhook_secret_key';
+    const webhookSecret = process.env.WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      return res.status(500).json({ error: 'Webhook service is not configured on the server.' });
+    }
 
+    const signature = req.headers['x-webhook-signature'] as string;
     if (!signature) {
       return res.status(401).json({ error: 'Missing x-webhook-signature header.' });
     }
@@ -1718,6 +1723,18 @@ app.post('/api/webhooks/checkout', (req: Request, res: Response) => {
   } catch {
     return res.status(500).json({ error: 'Webhook processing failed.' });
   }
+});
+
+// SEO Ping & Bot Verification Endpoint
+app.get('/api/seo/ping', (_req: Request, res: Response) => {
+  res.json({
+    status: 'ready',
+    message: 'SEO sitemap and robots directives are configured for instant bot indexing.',
+    sitemap: 'https://smarttoolhub.net/sitemap.xml',
+    totalIndexedUrls: 131,
+    crawlersSupported: ['Googlebot', 'Bingbot', 'Applebot', 'DuckDuckBot', 'YandexBot'],
+    verifiedCanonicalDomain: 'https://smarttoolhub.net',
+  });
 });
 
 // 404 handler for unrecognized /api routes
@@ -1808,7 +1825,7 @@ function generateLocalFallback(tool: string, input: string): string {
   return `Here is your result for: "${input}"\n\n1. Overview: Clean and ready to use.\n2. Key details: Direct and concise.\n3. Output formatted for quick copying.`;
 }
 
-// Explicit SEO endpoints: sitemap.xml, robots.txt, ads.txt
+// Explicit SEO endpoints: sitemap.xml, robots.txt, ads.txt, feed.xml
 app.get('/sitemap.xml', (_req: Request, res: Response) => {
   res.type('application/xml').sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
 });
@@ -1821,24 +1838,119 @@ app.get('/ads.txt', (_req: Request, res: Response) => {
   res.type('text/plain').sendFile(path.join(__dirname, 'public', 'ads.txt'));
 });
 
+app.get('/feed.xml', (_req: Request, res: Response) => {
+  res.type('application/rss+xml').sendFile(path.join(__dirname, 'public', 'feed.xml'));
+});
+
+function injectSeoIntoHtml(rawHtml: string, pathname: string): string {
+  const seo = resolveSeo(pathname);
+  let html = rawHtml;
+
+  // 1. Title
+  html = html.replace(/<title>.*?<\/title>/i, `<title>${seo.title}</title>`);
+
+  // 2. Meta Description
+  html = html.replace(
+    /<meta\s+name=["']description["']\s+content=["'].*?["']\s*\/?>/i,
+    `<meta name="description" content="${seo.description.replace(/"/g, '&quot;')}" />`
+  );
+
+  // 3. Canonical Link
+  html = html.replace(
+    /<link\s+rel=["']canonical["']\s+href=["'].*?["']\s*\/?>/i,
+    `<link rel="canonical" href="${seo.canonicalUrl}" />`
+  );
+
+  // 4. OpenGraph Tags
+  html = html.replace(
+    /<meta\s+property=["']og:title["']\s+content=["'].*?["']\s*\/?>/i,
+    `<meta property="og:title" content="${seo.title.replace(/"/g, '&quot;')}" />`
+  );
+  html = html.replace(
+    /<meta\s+property=["']og:description["']\s+content=["'].*?["']\s*\/?>/i,
+    `<meta property="og:description" content="${seo.description.replace(/"/g, '&quot;')}" />`
+  );
+  html = html.replace(
+    /<meta\s+property=["']og:url["']\s+content=["'].*?["']\s*\/?>/i,
+    `<meta property="og:url" content="${seo.canonicalUrl}" />`
+  );
+
+  // 5. Twitter Card Tags
+  html = html.replace(
+    /<meta\s+name=["']twitter:title["']\s+content=["'].*?["']\s*\/?>/i,
+    `<meta name="twitter:title" content="${seo.title.replace(/"/g, '&quot;')}" />`
+  );
+  html = html.replace(
+    /<meta\s+name=["']twitter:description["']\s+content=["'].*?["']\s*\/?>/i,
+    `<meta name="twitter:description" content="${seo.description.replace(/"/g, '&quot;')}" />`
+  );
+
+  // 6. Schema.org JSON-LD
+  if (seo.schemaJson) {
+    const jsonLdTag = `  <script id="schema-jsonld" type="application/ld+json">\n${JSON.stringify(seo.schemaJson, null, 2)}\n    </script>\n  </head>`;
+    html = html.replace('</head>', jsonLdTag);
+  }
+
+  // 7. Prerendered HTML Content inside #root
+  if (seo.prerenderedHtml) {
+    html = html.replace(/<div id=["']root["']>[\s\S]*?<\/div>/i, `<div id="root">${seo.prerenderedHtml}</div>`);
+  }
+
+  return html;
+}
+
 // Start Server and Mount Vite in dev mode
 async function startServer() {
   const httpServer = http.createServer(app);
 
   if (process.env.NODE_ENV !== 'production') {
-    const isHmrDisabled = process.env.DISABLE_HMR === 'true';
     const vite = await createViteServer({
       server: {
         middlewareMode: true,
-        hmr: isHmrDisabled ? false : { server: httpServer },
+        hmr: false,
       },
       appType: 'spa',
     });
+
+    // Server-Side SEO & Prerendering Middleware for Dev Mode
+    app.use(async (req, res, next) => {
+      if (
+        req.method !== 'GET' ||
+        req.path.startsWith('/api/') ||
+        req.path.startsWith('/@') ||
+        req.path.startsWith('/src/') ||
+        req.path.startsWith('/node_modules/') ||
+        req.path.includes('.')
+      ) {
+        return next();
+      }
+
+      try {
+        let template = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf-8');
+        template = await vite.transformIndexHtml(req.originalUrl, template);
+        const finalHtml = injectSeoIntoHtml(template, req.path);
+        res.status(200).set({ 'Content-Type': 'text/html' }).send(finalHtml);
+      } catch (e: any) {
+        vite.ssrFixStacktrace(e);
+        next(e);
+      }
+    });
+
     app.use(vite.middlewares);
   } else {
-    app.use(express.static(path.join(__dirname, 'dist')));
-    app.get('*', (_req, res) => {
-      res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    // Production Mode: Static assets + Server SEO Pre-renderer
+    app.use(express.static(path.join(__dirname, 'dist'), { index: false }));
+    app.get('*', (req, res, next) => {
+      if (req.path.startsWith('/api/') || req.path.includes('.')) {
+        return next();
+      }
+      try {
+        const template = fs.readFileSync(path.join(__dirname, 'dist', 'index.html'), 'utf-8');
+        const finalHtml = injectSeoIntoHtml(template, req.path);
+        res.status(200).set({ 'Content-Type': 'text/html' }).send(finalHtml);
+      } catch (err) {
+        next(err);
+      }
     });
   }
 

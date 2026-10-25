@@ -46,7 +46,7 @@ export const DriveHealthReaderPage: React.FC<DriveHealthReaderPageProps> = ({ na
       criticalCount++;
       reasons.push({
         title: `Reallocated Sectors High (${reallocatedSectors})`,
-        desc: 'The drive has exhausted numerous spare reserve blocks due to physical surface degradation or flash wear. Data corruption risk is elevated.',
+        desc: 'The drive has exhausted numerous spare reserve blocks due to physical surface degradation or flash wear. Data corruption risk is high.',
         severity: 'critical',
       });
     } else if (reallocatedSectors > 0) {

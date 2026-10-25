@@ -368,7 +368,10 @@ Privacy: 100% Client-Side. Your files never leave your device.`,
                       </span>
                       <img
                         src={img.dataUrl}
-                        alt={img.name}
+                        alt={`Thumbnail preview of uploaded file: ${img.name}`}
+                        width={40}
+                        height={40}
+                        loading="lazy"
                         className="w-10 h-10 rounded-lg object-cover bg-black/40 border border-[rgba(143,163,192,0.2)] shrink-0"
                       />
                       <div className="truncate">

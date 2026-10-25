@@ -203,13 +203,31 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ slug, navigate }
                 {comparison.comparisonRows.map((row, idx) => (
                   <tr key={idx} className="hover:bg-[#101c33]/40 transition-colors">
                     <td className="py-3.5 px-3 font-medium text-[#f2f7ff]">
-                      {row.feature}
+                      <div className="flex flex-col gap-1">
+                        <span>{row.feature}</span>
+                        {row.winner === 'A' && (
+                          <span className="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-[#0a84ff]/15 text-[#0a84ff] border border-[#0a84ff]/30 sm:hidden self-start">
+                            Edge: {comparison.optionAName}
+                          </span>
+                        )}
+                        {row.winner === 'B' && (
+                          <span className="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-[#34e0a1]/15 text-[#34e0a1] border border-[#34e0a1]/30 sm:hidden self-start">
+                            Edge: {comparison.optionBName}
+                          </span>
+                        )}
+                      </div>
                     </td>
-                    <td className="py-3.5 px-3 text-[#9aaccb] leading-relaxed">
-                      {row.optionA}
+                    <td className={`py-3.5 px-3 leading-relaxed ${row.winner === 'A' ? 'text-[#f2f7ff] font-medium bg-[#0a84ff]/5' : 'text-[#9aaccb]'}`}>
+                      <div className="flex items-start gap-1.5">
+                        {row.winner === 'A' && <span className="text-[#0a84ff] font-bold text-xs shrink-0 mt-0.5">✓</span>}
+                        <span>{row.optionA}</span>
+                      </div>
                     </td>
-                    <td className="py-3.5 px-3 text-[#9aaccb] leading-relaxed">
-                      {row.optionB}
+                    <td className={`py-3.5 px-3 leading-relaxed ${row.winner === 'B' ? 'text-[#f2f7ff] font-medium bg-[#34e0a1]/5' : 'text-[#9aaccb]'}`}>
+                      <div className="flex items-start gap-1.5">
+                        {row.winner === 'B' && <span className="text-[#34e0a1] font-bold text-xs shrink-0 mt-0.5">✓</span>}
+                        <span>{row.optionB}</span>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -296,6 +314,39 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ slug, navigate }
             </div>
           </div>
         )}
+
+        {/* Other Comparisons Grid */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-bold text-[#f2f7ff]">
+              Explore Other Head-to-Head Comparisons
+            </h3>
+            <span className="text-xs font-mono text-[#9aaccb]">Objective Analysis</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {Object.values(COMPARISONS)
+              .filter((c) => c.slug !== comparison.slug)
+              .map((c) => (
+                <button
+                  key={c.slug}
+                  type="button"
+                  onClick={() => navigate(`/compare/${c.slug}`)}
+                  className="p-4 rounded-2xl bg-[#050a14] hover:bg-[#101c33] border border-[rgba(143,163,192,0.12)] hover:border-[#0a84ff] transition-all text-left group flex items-center justify-between focus-ring"
+                >
+                  <div className="min-w-0 pr-2">
+                    <div className="text-xs font-bold text-[#f2f7ff] group-hover:text-[#0a84ff] transition-colors truncate">
+                      {c.optionAName} vs {c.optionBName}
+                    </div>
+                    <div className="text-[11px] text-[#9aaccb] truncate mt-0.5">
+                      {c.subtitle}
+                    </div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-[#9aaccb] group-hover:text-[#0a84ff] group-hover:translate-x-1 transition-transform shrink-0" />
+                </button>
+              ))}
+          </div>
+        </div>
       </div>
     </div>
   );

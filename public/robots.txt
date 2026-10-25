@@ -1,5 +1,29 @@
 User-agent: *
-Disallow: /api/
 Allow: /
+Disallow: /api/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+
+User-agent: Googlebot-Image
+Allow: /
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+
+User-agent: Applebot
+Allow: /
+Disallow: /api/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /api/
+
+User-agent: YandexBot
+Allow: /
+Disallow: /api/
 
 Sitemap: https://smarttoolhub.net/sitemap.xml

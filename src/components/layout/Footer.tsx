@@ -168,6 +168,15 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
               </li>
               <li>
                 <Link
+                  href="/changelog"
+                  navigate={navigate}
+                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                >
+                  Changelog &amp; Releases
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/about"
                   navigate={navigate}
                   className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
@@ -218,10 +227,10 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
         {/* Mandatory Independent Disclaimer & Copyright */}
         <div className="mt-12 pt-8 border-t border-[rgba(143,163,192,0.1)] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#8fa3c0]/90">
           <p>
-            &copy; {new Date().getFullYear()} SmartToolHub (smarttoolhub.net). All rights reserved.
+            &copy; {new Date().getFullYear()} SmartToolHub (smarttoolhub.net). Created by Dhrumil Aslaliya. All rights reserved.
           </p>
           <p className="text-center md:text-right text-[#8fa3c0]/75">
-            SmartToolHub is an independent utility website and is not affiliated with, endorsed by, or sponsored by Apple Inc. or Google LLC.
+            SmartToolHub is an independent utility website and is not affiliated with, endorsed by, or sponsored by Apple Inc., Google LLC, or Microsoft Corporation.
           </p>
         </div>
       </div>

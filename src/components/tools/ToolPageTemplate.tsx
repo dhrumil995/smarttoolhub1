@@ -338,9 +338,9 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
                 <button
                   type="button"
                   onClick={handleClear}
-                  className="text-xs text-[#8fa3c0] hover:text-[#f2f7ff] focus-ring rounded inline-flex items-center gap-1"
+                  className="text-xs text-[#8fa3c0] hover:text-[#f2f7ff] focus-ring rounded-lg px-2 min-h-[44px] min-w-[44px] inline-flex items-center justify-end gap-1"
                 >
-                  <RotateCcw className="w-3 h-3" aria-hidden="true" />
+                  <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
                   <span>Clear</span>
                 </button>
               ) : null
@@ -382,7 +382,7 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
                   key={idx}
                   type="button"
                   onClick={() => handleExampleClick(chip)}
-                  className="px-3 py-1.5 text-xs rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#7db8ff] hover:border-[rgba(143,163,192,0.3)] transition-colors text-left max-w-full truncate focus-ring"
+                  className="px-3.5 py-2.5 min-h-[44px] inline-flex items-center text-xs rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#7db8ff] hover:border-[rgba(143,163,192,0.3)] transition-colors text-left max-w-full truncate focus-ring"
                 >
                   {chip.length > 55 ? `${chip.slice(0, 55)}...` : chip}
                 </button>
@@ -578,6 +578,25 @@ export const ToolPageTemplate: React.FC<ToolPageTemplateProps> = ({
         </div>
 
         {/* 4-Question Tool FAQ */}
+        {faq && faq.length > 0 && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'FAQPage',
+                mainEntity: faq.map((item) => ({
+                  '@type': 'Question',
+                  name: item.question,
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: item.answer,
+                  },
+                })),
+              }),
+            }}
+          />
+        )}
         <div className="space-y-4 pt-4 border-t border-[rgba(143,163,192,0.12)]">
           <h2 className="text-xl sm:text-2xl font-bold font-display text-[#f2f7ff]">
             Frequently asked questions

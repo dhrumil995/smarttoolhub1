@@ -412,7 +412,10 @@ export const IPhoneMockupMakerPage: React.FC<IPhoneMockupMakerPageProps> = ({ na
                   {imageSrc ? (
                     <img
                       src={imageSrc}
-                      alt="Screenshot Preview"
+                      alt="Uploaded screen capture preview inside iPhone frame"
+                      width={390}
+                      height={844}
+                      loading="lazy"
                       className="w-full h-full object-cover select-none pointer-events-none"
                     />
                   ) : (
@@ -536,7 +539,7 @@ Ready to paste directly into Figma, Canva, or marketing presentations without ma
         },
         {
           question: 'What is the optimal screenshot resolution for best results?',
-          answer: 'Standard iOS screenshots at 1170×2532 (iPhone 13/14/15/16 Pro), 1290×2796 (Pro Max / Plus), or 1080×2340 match the 19.5:9 display proportion seamlessly.',
+          answer: 'Standard iOS screenshots at 1170×2532 (iPhone 13/14/15/16 Pro), 1290×2796 (Pro Max / Plus), or 1080×2340 match the 19.5:9 display proportion cleanly without cropping.',
         },
         {
           question: 'Can I export a transparent background for landing pages?',

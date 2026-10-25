@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Filter, ExternalLink, ArrowRight, ShieldCheck, Check, Terminal, Laptop, Smartphone, Apple, HelpCircle, Sparkles } from 'lucide-react';
+import { Search, Filter, ExternalLink, ArrowRight, ShieldCheck, Check, Terminal, Laptop, Smartphone, Apple, HelpCircle, Sparkles, CheckSquare, Square, Copy, X, SlidersHorizontal } from 'lucide-react';
 import { Breadcrumbs } from '../../components/ui/Breadcrumbs.tsx';
 import { SOFTWARE_APPS, DirectoryApp } from '../../data/softwareDirectory.ts';
 import { COMPARISONS } from '../../data/comparisons.ts';
@@ -64,6 +64,23 @@ export const SoftwareCategoryHubPage: React.FC<SoftwareCategoryHubPageProps> = (
   const config = PLATFORM_CONFIG[platform];
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedLicenseFilter, setSelectedLicenseFilter] = useState<'all' | 'foss' | 'cli'>('all');
+  const [sortBy, setSortBy] = useState<'recommended' | 'a-z' | 'z-a' | 'category'>('recommended');
+  const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
+
+  // Multi-selection state for bulk script generator
+  const [selectedAppSlugs, setSelectedAppSlugs] = useState<string[]>([]);
+  const [copiedBulkCommand, setCopiedBulkCommand] = useState(false);
+
+  const handleCopyCommand = async (cmd: string, slug: string) => {
+    try {
+      await navigator.clipboard.writeText(cmd);
+      setCopiedSlug(slug);
+      setTimeout(() => setCopiedSlug(null), 2000);
+    } catch {
+      // Fallback
+    }
+  };
 
   // Filter apps matching platform
   const apps = useMemo(() => {
@@ -76,17 +93,94 @@ export const SoftwareCategoryHubPage: React.FC<SoftwareCategoryHubPageProps> = (
     return ['All', ...Array.from(set)];
   }, [apps]);
 
+  // Helper to determine if app is open source
+  const isOpenSource = (app: DirectoryApp) => {
+    if (app.fDroidId) return true;
+    if (app.officialUrl?.includes('github.com') || app.officialUrl?.includes('gitlab.com')) return true;
+    const knownFoss = ['powertoys', 'sevenzip', 'notepadplusplus', 'rufus', 'ventoy', 'handbrake', 'vlc', 'sharex', 'bleachbit', 'keepassxc', 'crystaldiskinfo', 'localsend', 'rectangle', 'maccy', 'stats', 'iina', 'appcleaner', 'shizuku', 'scrcpy', 'app-manager', 'termux', 'newpipe', 'immich', 'aegis', 'libre-torrent'];
+    return knownFoss.includes(app.slug);
+  };
+
   const filteredApps = useMemo(() => {
-    return apps.filter((app) => {
+    let result = apps.filter((app) => {
       const matchesCategory = selectedCategory === 'All' || app.category === selectedCategory;
       const matchesSearch =
         searchQuery === '' ||
         app.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         app.tagline.toLowerCase().includes(searchQuery.toLowerCase()) ||
         app.whoItsFor.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesCategory && matchesSearch;
+
+      let matchesLicense = true;
+      if (selectedLicenseFilter === 'foss') {
+        matchesLicense = isOpenSource(app);
+      } else if (selectedLicenseFilter === 'cli') {
+        matchesLicense = Boolean(app.wingetId || app.brewName);
+      }
+
+      return matchesCategory && matchesSearch && matchesLicense;
     });
-  }, [apps, selectedCategory, searchQuery]);
+
+    // Sorting
+    result = [...result].sort((a, b) => {
+      if (sortBy === 'a-z') return a.name.localeCompare(b.name);
+      if (sortBy === 'z-a') return b.name.localeCompare(a.name);
+      if (sortBy === 'category') return a.category.localeCompare(b.category);
+      return 0; // 'recommended' uses original editorial order
+    });
+
+    return result;
+  }, [apps, selectedCategory, searchQuery, selectedLicenseFilter, sortBy]);
+
+  // Toggle app selection for bulk script
+  const toggleSelectApp = (slug: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedAppSlugs((prev) =>
+      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
+    );
+  };
+
+  const handleSelectAllFiltered = () => {
+    const selectableSlugs = filteredApps
+      .filter((a) => (platform === 'pc' ? a.wingetId : platform === 'apple' ? a.brewName : true))
+      .map((a) => a.slug);
+    setSelectedAppSlugs(selectableSlugs);
+  };
+
+  const handleClearSelection = () => {
+    setSelectedAppSlugs([]);
+  };
+
+  // Generate combined bulk command
+  const bulkCommandString = useMemo(() => {
+    if (selectedAppSlugs.length === 0) return '';
+    const selectedApps = selectedAppSlugs.map((s) => SOFTWARE_APPS[s]).filter(Boolean);
+
+    if (platform === 'pc') {
+      const wingetApps = selectedApps.filter((a) => a.wingetId);
+      if (wingetApps.length === 0) return '';
+      return wingetApps.map((a) => `winget install --id ${a.wingetId} -e --accept-source-agreements --accept-package-agreements`).join('; ');
+    }
+
+    if (platform === 'apple') {
+      const brewApps = selectedApps.filter((a) => a.brewName);
+      if (brewApps.length === 0) return '';
+      return `brew install --cask ${brewApps.map((a) => a.brewName).join(' ')}`;
+    }
+
+    // Android: package list for ADB / F-Droid
+    return `# Android package list:\n` + selectedApps.map((a) => `# ${a.name}: ${a.officialUrl || a.fDroidId || ''}`).join('\n');
+  }, [selectedAppSlugs, platform]);
+
+  const handleCopyBulkCommand = async () => {
+    if (!bulkCommandString) return;
+    try {
+      await navigator.clipboard.writeText(bulkCommandString);
+      setCopiedBulkCommand(true);
+      setTimeout(() => setCopiedBulkCommand(false), 2500);
+    } catch {
+      // Handled
+    }
+  };
 
   // Matching comparison guides
   const relevantComparisons = useMemo(() => {
@@ -129,7 +223,7 @@ export const SoftwareCategoryHubPage: React.FC<SoftwareCategoryHubPageProps> = (
   const IconComponent = config.icon;
 
   return (
-    <div className="min-h-screen bg-[#050a14] text-[#f2f7ff] pb-24">
+    <div className="min-h-screen bg-[#050a14] text-[#f2f7ff] pb-32">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
@@ -181,9 +275,9 @@ export const SoftwareCategoryHubPage: React.FC<SoftwareCategoryHubPageProps> = (
           </div>
         </div>
 
-        {/* Search & Filter Bar */}
-        <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row gap-3">
+        {/* Search, Filter & Sort Controls */}
+        <div className="p-4 sm:p-6 rounded-3xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] space-y-4">
+          <div className="flex flex-col md:flex-row gap-3">
             {/* Search Input */}
             <div className="relative flex-1">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9aaccb]" />
@@ -192,10 +286,44 @@ export const SoftwareCategoryHubPage: React.FC<SoftwareCategoryHubPageProps> = (
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={`Search ${config.platformLabel} apps (e.g. PowerToys, WizTree, archiver)...`}
-                className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.2)] rounded-2xl pl-10 pr-4 py-3 text-sm text-[#f2f7ff] placeholder-[#9aaccb] focus-ring"
+                className="w-full bg-[#050a14] border border-[rgba(143,163,192,0.2)] rounded-2xl pl-10 pr-10 py-3 text-base sm:text-sm text-[#f2f7ff] placeholder-[#9aaccb] focus-ring min-h-[44px]"
+                style={{ fontSize: '16px' }}
               />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  aria-label="Clear search input"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-[#9aaccb] hover:text-[#f2f7ff] min-w-[44px] min-h-[44px] flex items-center justify-center focus-ring rounded-lg"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
             </div>
 
+            {/* Quick Sort Dropdown */}
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="text-xs font-mono text-[#9aaccb] hidden sm:inline flex items-center gap-1">
+                <SlidersHorizontal className="w-3.5 h-3.5" />
+                <span>Sort:</span>
+              </span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                aria-label="Sort applications"
+                className="bg-[#050a14] border border-[rgba(143,163,192,0.2)] rounded-2xl px-3.5 py-2.5 min-h-[44px] text-base sm:text-xs font-mono text-[#f2f7ff] focus-ring"
+                style={{ fontSize: '16px' }}
+              >
+                <option value="recommended">Featured / Curated</option>
+                <option value="a-z">Alphabetical (A &rarr; Z)</option>
+                <option value="z-a">Alphabetical (Z &rarr; A)</option>
+                <option value="category">Category</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Categories & Filter Toggles */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-[rgba(143,163,192,0.1)]">
             {/* Category Filter Chips */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
               {categories.map((cat) => (
@@ -203,74 +331,188 @@ export const SoftwareCategoryHubPage: React.FC<SoftwareCategoryHubPageProps> = (
                   key={cat}
                   type="button"
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3.5 py-2.5 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all focus-ring ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-mono font-medium whitespace-nowrap transition-all focus-ring ${
                     selectedCategory === cat
                       ? 'bg-[#101c33] border border-[#0a84ff] text-[#f2f7ff] shadow-sm'
-                      : 'bg-[#0a1424] border border-[rgba(143,163,192,0.14)] text-[#9aaccb] hover:text-[#f2f7ff]'
+                      : 'bg-[#050a14] border border-[rgba(143,163,192,0.14)] text-[#9aaccb] hover:text-[#f2f7ff]'
                   }`}
                 >
                   {cat}
                 </button>
               ))}
             </div>
+
+            {/* License & CLI Toggles */}
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() =>
+                  setSelectedLicenseFilter((prev) => (prev === 'foss' ? 'all' : 'foss'))
+                }
+                className={`px-2.5 py-1.5 rounded-xl text-xs font-mono transition-all ${
+                  selectedLicenseFilter === 'foss'
+                    ? 'bg-[#101c33] border border-[#34e0a1] text-[#34e0a1]'
+                    : 'bg-[#050a14] border border-[rgba(143,163,192,0.12)] text-[#9aaccb] hover:text-[#f2f7ff]'
+                }`}
+              >
+                Open Source (FOSS)
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setSelectedLicenseFilter((prev) => (prev === 'cli' ? 'all' : 'cli'))
+                }
+                className={`px-2.5 py-1.5 rounded-xl text-xs font-mono transition-all ${
+                  selectedLicenseFilter === 'cli'
+                    ? 'bg-[#101c33] border border-[#6c7dff] text-[#6c7dff]'
+                    : 'bg-[#050a14] border border-[rgba(143,163,192,0.12)] text-[#9aaccb] hover:text-[#f2f7ff]'
+                }`}
+              >
+                CLI Command
+              </button>
+            </div>
           </div>
         </div>
 
         {/* App Directory Grid */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between text-xs font-mono text-[#9aaccb]">
-            <span>Showing {filteredApps.length} verified applications</span>
-            <span>Click any app for full editorial review & drawbacks</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-mono text-[#9aaccb]">
+            <div className="flex items-center gap-2">
+              <span>Showing {filteredApps.length} verified applications</span>
+              {(platform === 'pc' || platform === 'apple') && (
+                <span className="text-[#34e0a1] font-semibold">
+                  &bull; Check cards to build bulk install script
+                </span>
+              )}
+            </div>
+            {(platform === 'pc' || platform === 'apple') && filteredApps.length > 0 && (
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleSelectAllFiltered}
+                  className="hover:text-[#0a84ff] underline transition-colors"
+                >
+                  Select all matching ({filteredApps.length})
+                </button>
+                {selectedAppSlugs.length > 0 && (
+                  <>
+                    <span>|</span>
+                    <button
+                      type="button"
+                      onClick={handleClearSelection}
+                      className="hover:text-red-400 transition-colors"
+                    >
+                      Clear ({selectedAppSlugs.length})
+                    </button>
+                  </>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {filteredApps.map((app) => (
-              <div
-                key={app.slug}
-                onClick={() => navigate(`/${config.slug}/${app.slug}`)}
-                className="p-5 sm:p-6 rounded-3xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] hover:border-[#0a84ff] transition-all cursor-pointer flex flex-col justify-between space-y-4 group"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#101c33] text-[#6c7dff] uppercase font-bold">
-                        {app.category}
-                      </span>
-                      <h3 className="text-lg font-bold text-[#f2f7ff] group-hover:text-[#0a84ff] transition-colors mt-1.5">
-                        {app.name}
-                      </h3>
+            {filteredApps.map((app) => {
+              const isSelected = selectedAppSlugs.includes(app.slug);
+              const hasCli = Boolean(app.wingetId || app.brewName);
+
+              return (
+                <div
+                  key={app.slug}
+                  onClick={() => navigate(`/${config.slug}/${app.slug}`)}
+                  className={`p-5 sm:p-6 rounded-3xl bg-[#0a1424] border transition-all cursor-pointer flex flex-col justify-between space-y-4 group relative ${
+                    isSelected
+                      ? 'border-[#0a84ff] shadow-[0_0_15px_rgba(10,132,255,0.15)] bg-[#0d182b]'
+                      : 'border-[rgba(143,163,192,0.16)] hover:border-[#0a84ff]'
+                  }`}
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-2.5">
+                        {/* Multi-select Checkbox */}
+                        {(platform === 'pc' || platform === 'apple') && hasCli && (
+                          <button
+                            type="button"
+                            onClick={(e) => toggleSelectApp(app.slug, e)}
+                            className="mt-1 text-[#9aaccb] hover:text-[#0a84ff] transition-colors"
+                            title="Select for bulk script generation"
+                          >
+                            {isSelected ? (
+                              <CheckSquare className="w-5 h-5 text-[#0a84ff]" />
+                            ) : (
+                              <Square className="w-5 h-5" />
+                            )}
+                          </button>
+                        )}
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#101c33] text-[#6c7dff] uppercase font-bold">
+                              {app.category}
+                            </span>
+                            {isOpenSource(app) && (
+                              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#101c33] text-[#34e0a1] uppercase font-bold">
+                                FOSS
+                              </span>
+                            )}
+                          </div>
+                          <h3 className="text-lg font-bold text-[#f2f7ff] group-hover:text-[#0a84ff] transition-colors mt-1.5">
+                            {app.name}
+                          </h3>
+                        </div>
+                      </div>
+                      <ArrowRight className="w-5 h-5 text-[#9aaccb] group-hover:text-[#0a84ff] group-hover:translate-x-1 transition-all shrink-0 mt-1" />
                     </div>
-                    <ArrowRight className="w-5 h-5 text-[#9aaccb] group-hover:text-[#0a84ff] group-hover:translate-x-1 transition-all shrink-0 mt-1" />
-                  </div>
 
-                  <p className="text-xs text-[#9aaccb] leading-relaxed line-clamp-2">
-                    {app.tagline}
-                  </p>
-
-                  <div className="p-3 rounded-xl bg-[#050a14] border border-[rgba(143,163,192,0.12)] space-y-1">
-                    <span className="text-[10px] font-mono uppercase text-[#34e0a1] font-bold block">
-                      Best For:
-                    </span>
-                    <p className="text-xs text-[#f2f7ff] line-clamp-2">
-                      {app.whoItsFor}
+                    <p className="text-xs text-[#9aaccb] leading-relaxed line-clamp-2">
+                      {app.tagline}
                     </p>
+
+                    <div className="p-3 rounded-xl bg-[#050a14] border border-[rgba(143,163,192,0.12)] space-y-1">
+                      <span className="text-[10px] font-mono uppercase text-[#34e0a1] font-bold block">
+                        Best For:
+                      </span>
+                      <p className="text-xs text-[#f2f7ff] line-clamp-2">
+                        {app.whoItsFor}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-[rgba(143,163,192,0.1)] text-xs font-mono text-[#9aaccb]">
+                    {app.wingetId ? (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCopyCommand(`winget install --id ${app.wingetId} -e`, app.slug);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-[#050a14] border border-[rgba(108,125,255,0.25)] text-[11px] text-[#6c7dff] hover:border-[#6c7dff] transition-all"
+                        title="Click to copy winget command"
+                      >
+                        <Terminal className="w-3 h-3 text-[#6c7dff]" />
+                        <span>{copiedSlug === app.slug ? 'Copied command!' : `winget: ${app.wingetId}`}</span>
+                      </button>
+                    ) : app.brewName ? (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCopyCommand(`brew install --cask ${app.brewName}`, app.slug);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-[#050a14] border border-[rgba(139,92,246,0.25)] text-[11px] text-[#8b5cf6] hover:border-[#8b5cf6] transition-all"
+                        title="Click to copy brew command"
+                      >
+                        <Terminal className="w-3 h-3 text-[#8b5cf6]" />
+                        <span>{copiedSlug === app.slug ? 'Copied command!' : `brew: ${app.brewName}`}</span>
+                      </button>
+                    ) : (
+                      <span className="text-[11px] text-[#9aaccb]">Direct Download</span>
+                    )}
+                    <span className="text-[11px] text-[#0a84ff] group-hover:underline">
+                      Read Review &rarr;
+                    </span>
                   </div>
                 </div>
-
-                <div className="flex items-center justify-between pt-2 border-t border-[rgba(143,163,192,0.1)] text-xs font-mono text-[#9aaccb]">
-                  {app.wingetId ? (
-                    <span className="text-[11px] text-[#6c7dff]">winget: {app.wingetId}</span>
-                  ) : app.brewName ? (
-                    <span className="text-[11px] text-[#8b5cf6]">brew: {app.brewName}</span>
-                  ) : (
-                    <span>Direct Download</span>
-                  )}
-                  <span className="text-[11px] text-[#0a84ff] group-hover:underline">
-                    Read Review &rarr;
-                  </span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {filteredApps.length === 0 && (
@@ -278,13 +520,13 @@ export const SoftwareCategoryHubPage: React.FC<SoftwareCategoryHubPageProps> = (
               <Search className="w-8 h-8 text-[#9aaccb] mx-auto opacity-50" />
               <p className="text-sm text-[#f2f7ff] font-bold">No applications found</p>
               <p className="text-xs text-[#9aaccb]">
-                Try adjusting your search query or reset the category filter to "All".
+                Try adjusting your search query or reset the filters.
               </p>
             </div>
           )}
         </div>
 
-        {/* In-depth Head-to-Head Comparisons */}
+        {/* Head-to-Head Comparisons */}
         {relevantComparisons.length > 0 && (
           <div className="p-6 sm:p-8 rounded-3xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] space-y-5">
             <div className="flex items-center justify-between">
@@ -328,7 +570,7 @@ export const SoftwareCategoryHubPage: React.FC<SoftwareCategoryHubPageProps> = (
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono uppercase text-[#34e0a1] font-bold flex items-center gap-1.5">
               <Terminal className="w-4 h-4" />
-              <span>Related Browser Tools & Diagnostics</span>
+              <span>Related Browser Tools &amp; Diagnostics</span>
             </span>
             <span className="text-xs font-mono text-[#9aaccb]">
               Zero-Install Browser Tools
@@ -359,6 +601,54 @@ export const SoftwareCategoryHubPage: React.FC<SoftwareCategoryHubPageProps> = (
           </div>
         </div>
       </div>
+
+      {/* Floating Bulk Command Bar when apps are selected */}
+      {selectedAppSlugs.length > 0 && (
+        <aside
+          aria-label="Bulk install command builder"
+          className="fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-2xl bg-[#0a1424]/95 backdrop-blur-md border border-[#0a84ff] rounded-2xl p-4 shadow-2xl space-y-3"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#0a84ff] animate-ping" />
+              <span className="text-xs font-mono font-bold text-[#f2f7ff]">
+                Bulk Script Builder: {selectedAppSlugs.length} apps selected
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={handleClearSelection}
+              className="text-xs font-mono text-[#9aaccb] hover:text-red-400 transition-colors"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div className="p-2.5 rounded-xl bg-[#050a14] border border-[rgba(143,163,192,0.15)] flex items-center justify-between gap-3 overflow-hidden">
+            <code className="text-xs font-mono text-[#6c7dff] truncate">
+              {bulkCommandString || 'No CLI packages found for selected apps'}
+            </code>
+            <button
+              type="button"
+              onClick={handleCopyBulkCommand}
+              disabled={!bulkCommandString}
+              className="px-3.5 py-1.5 rounded-lg bg-[#0a84ff] hover:bg-[#0070e0] text-white font-mono text-xs font-semibold flex items-center gap-1.5 shrink-0 transition-all disabled:opacity-50"
+            >
+              {copiedBulkCommand ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-white" />
+                  <span>Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>Copy Command</span>
+                </>
+              )}
+            </button>
+          </div>
+        </aside>
+      )}
     </div>
   );
 };

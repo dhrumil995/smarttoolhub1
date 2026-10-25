@@ -75,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             type="button"
             onClick={onOpenSearch}
-            className="flex items-center gap-2 h-10 px-3 md:px-3.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-xs text-[#9aaccb] hover:text-[#f2f7ff] hover:border-[rgba(143,163,192,0.32)] transition-all focus-ring"
+            className="flex items-center gap-2 min-h-[44px] h-11 px-3 md:px-3.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-xs text-[#9aaccb] hover:text-[#f2f7ff] hover:border-[rgba(143,163,192,0.32)] transition-all focus-ring"
             aria-label="Search tools and guides"
           >
             <Search className="w-4 h-4 text-[#9aaccb]" />

@@ -195,7 +195,7 @@ export const GUIDE_ARTICLES: Record<string, GuideArticle> = {
     relatedToolName: 'ADB & Fastboot Command Builder',
     sections: [
       {
-        heading: 'What is Shizuku and Why Is It Revolutionary?',
+        heading: 'What is Shizuku and Why Does It Matter?',
         body: [
           'Historically, performing deep Android system tasks—like freezing bloatware, modifying system UI icons, or automating restricted settings—required either rooting your phone (which trips Knox and breaks banking apps) or tethering to a PC via ADB USB cable.',
           'Shizuku solves this by running an ADB-privileged Binder service directly on your device. Once started, authorized open-source apps (App Manager, Hail, SD Maid SE, Termux) can execute privileged operations safely.',
@@ -268,7 +268,7 @@ export const GUIDE_ARTICLES: Record<string, GuideArticle> = {
         heading: 'Window Snapping and Spotlight Replacement',
         body: [
           'Windows Snap (Win + Arrow keys) is sorely missed on older macOS versions. Install Rectangle (brew install --cask rectangle) to get instant snapping with Ctrl+Option+Left/Right/Enter.',
-          'Upgrade from default Spotlight to Raycast (brew install --cask raycast) to gain a supercharged launcher with integrated clipboard history, window tiling, and calculator conversions.',
+          'Upgrade from default Spotlight to Raycast (brew install --cask raycast) to gain a fast, versatile keyboard launcher with integrated clipboard history, window tiling, and calculator conversions.',
         ],
       },
     ],

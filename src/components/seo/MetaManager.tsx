@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { LAUNCH_TOOLS } from '../../data/tools.ts';
 import { GUIDE_ARTICLES } from '../../data/guides.ts';
+import { SOFTWARE_APPS } from '../../data/softwareDirectory.ts';
+import { COMPARISONS } from '../../data/comparisons.ts';
 
 interface MetaManagerProps {
   currentPath: string;
@@ -88,27 +90,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 3, 'name': 'Apple Shortcuts Generator', 'item': canonicalUrl },
             ],
           },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'Do I need a Mac or a computer to use this?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No. Everything runs directly on your iPhone or iPad. The generated steps are designed for the native iOS Shortcuts app that is already installed on your device.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Can this shortcut run automatically without me tapping it?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. In the iOS Shortcuts app, tap the "Automation" tab at the bottom, select "Create Personal Automation", choose a trigger, and select "Run Shortcut".',
-                },
-              },
-            ],
-          },
         ],
       };
     }
@@ -135,43 +116,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': origin },
               { '@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': `${origin}/tools` },
               { '@type': 'ListItem', 'position': 3, 'name': 'AI Email Writer', 'item': canonicalUrl },
-            ],
-          },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'What does the "Make it shorter" button do?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'It condenses your generated email down to under 70 words by removing pleasantries and wordy clauses while keeping the subject line, main request, and call to action intact.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Are my email drafts saved on your servers?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No. Your inputs and generated emails are processed securely in real time and are never stored on our database or shared with third parties.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Can I write emails in languages other than English?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. Enter your purpose and bullet points in Spanish, French, German, Japanese, or any language you prefer, and the tool will draft the email in that language.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'How do the four tones differ from one another?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Friendly is warm and approachable. Formal is polite and executive. Short cuts straight to the facts. Firm is confident and direct when holding boundaries or chasing deliverables.',
-                },
-              },
             ],
           },
         ],
@@ -202,43 +146,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 3, 'name': 'AI Summarizer', 'item': canonicalUrl },
             ],
           },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'What is the difference between Short and Medium mode?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Short mode keeps sentences tight and produces brief one-line bullet points. Medium mode provides richer context around background reasons and next steps.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'How long can the pasted text be?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'You can paste up to 4,000 characters at once, which comfortably covers articles, email chains, and typical meeting transcripts.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Does the tool make up facts if the text is incomplete?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No. The AI model is strictly instructed to only summarize information explicitly found in your pasted text, preventing hallucinated numbers or false claims.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Are my pasted articles or private notes saved anywhere?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No. Everything is processed ephemerally through our server API and is never recorded, saved in a database, or used to train models.',
-                },
-              },
-            ],
-          },
         ],
       };
     }
@@ -265,43 +172,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': origin },
               { '@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': `${origin}/tools` },
               { '@type': 'ListItem', 'position': 3, 'name': 'Rewrite and Tone Changer', 'item': canonicalUrl },
-            ],
-          },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'Does this change what my message actually means?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No. The AI is instructed to preserve 100% of your facts, dates, commitments, and core intent. Only the vocabulary, rhythm, and sentence structure are refined.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'How does the Before and After view help me?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'It lets you compare your original draft side-by-side with the new phrasing and review the character count so you can be confident your message strikes the right chord.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Which tone should I use for asking for a favor?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'The Friendlier tone works best. It softens direct commands into helpful requests, which makes people far more willing to help you quickly.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Are my private messages or emails stored on your server?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No. SmartToolHub operates with an ephemeral architecture. Your text is processed in memory to generate the rewrite and is immediately discarded.',
-                },
-              },
             ],
           },
         ],
@@ -332,43 +202,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 3, 'name': 'Caption and Hashtag Generator', 'item': canonicalUrl },
             ],
           },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'How many hashtags should I use on Instagram and TikTok?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Current social media algorithms favor 5 to 15 targeted, accurate hashtags rather than 30 spammy tags. Our tool produces 15 high-relevance tags so you can paste them all or pick your top 10.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Can I generate professional captions for LinkedIn?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. Simply tap the LinkedIn platform button. The tool adjusts sentence structure, removes unnecessary slang, and highlights professional insights and clear discussions.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Are emojis included in the generated captions?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'The tool uses 1 to 2 tasteful emojis that match the mood you selected. You can easily delete or replace them before posting.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Is this caption generator free to use?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. You can generate unlimited captions and hashtags with no account, no credits, and no subscription fees.',
-                },
-              },
-            ],
-          },
         ],
       };
     }
@@ -395,43 +228,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': origin },
               { '@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': `${origin}/tools` },
               { '@type': 'ListItem', 'position': 3, 'name': 'Social Bio Generator', 'item': canonicalUrl },
-            ],
-          },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'What are the character limits for bios on different platforms?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Twitter/X allows 160 characters, Instagram allows 150 characters, TikTok allows 80 characters, and LinkedIn allows 220 characters for your headline. Our generator enforces these limits automatically.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Can I include emojis in my generated bio?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. The generator includes 1 to 2 tasteful emojis that fit your industry. You can easily remove or adjust them before saving your profile.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'How do I pick between the four generated styles?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Choose Minimalist if you want a clean look, Creator if you share tips and build an audience, Professional if you are pitching freelance clients, or Casual for personal accounts.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Is my personal information stored anywhere?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No. The bio generator processes your input in real time and does not save your profile details, name, or interests to any database.',
-                },
-              },
             ],
           },
         ],
@@ -462,43 +258,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 3, 'name': 'Title and Headline Generator', 'item': canonicalUrl },
             ],
           },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'Are these headlines optimized for Google SEO?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. The generator ensures the primary keyword appears near the front of the headline while keeping total character length under 60 to 70 characters so search engines do not truncate it.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'What makes YouTube titles different from blog titles?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'YouTube titles prioritize immediate emotional curiosity and fast comprehension on mobile devices, while blog titles focus more on keyword clarity and reader promise.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Can I generate headlines for eCommerce product pages?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. Select the "Product Pages" button. The tool creates high-converting value proposition headers designed to explain the key benefit to shoppers instantly.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Is there a limit on how many titles I can generate?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No. The Title and Headline Generator is completely free with no usage caps, credits, or account requirements.',
-                },
-              },
-            ],
-          },
         ],
       };
     }
@@ -525,43 +284,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': origin },
               { '@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': `${origin}/tools` },
               { '@type': 'ListItem', 'position': 3, 'name': 'AI Prompt Improver', 'item': canonicalUrl },
-            ],
-          },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'Does this improved prompt work across all AI models?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. The structure follows universal prompt engineering standards that work reliably on ChatGPT, Claude 3.5 Sonnet, Google Gemini, and open-source models.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Why do short prompts often produce disappointing AI responses?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'When you give an AI a short prompt without constraints, it fills in the missing context with statistical averages. Adding persona, boundaries, and formatting requirements forces it to focus on your specific situation.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Can I edit the prompt before running it?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. The output is plain text. Simply copy it into your clipboard and tweak any bracketed placeholders or requirements as needed.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Are my private prompts recorded or stored?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No. SmartToolHub operates with an ephemeral memory model. Your text is processed in real time and is never saved to a database or used for training.',
-                },
-              },
             ],
           },
         ],
@@ -592,43 +314,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 3, 'name': 'Formula Helper', 'item': canonicalUrl },
             ],
           },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'Does this formula work in both Google Sheets and Microsoft Excel?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. Unless specified otherwise, formulas are written using universal modern spreadsheet syntax compatible with Excel 365, Excel 2021+, and Google Sheets.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Why should I use XLOOKUP instead of VLOOKUP?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'XLOOKUP is faster, searches in any direction (including looking to the left of the lookup key), and does not require counting column numbers, making your spreadsheets far less prone to breaking.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'What should I do if my formula returns a #VALUE! error?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Check that your numbers are not stored as text, and verify that all range sizes match (for example, using D2:D100 with E2:E100 rather than different lengths).',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Is my spreadsheet data sent to your server?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No spreadsheet files or actual personal row data are ever uploaded. You only enter the description of the columns and the calculation you want.',
-                },
-              },
-            ],
-          },
         ],
       };
     }
@@ -655,43 +340,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': origin },
               { '@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': `${origin}/tools` },
               { '@type': 'ListItem', 'position': 3, 'name': 'Meeting Notes to Action Items', 'item': canonicalUrl },
-            ],
-          },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'What if someone in the meeting is not assigned a specific task?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'If an action item has no clear person named, the tool tags the owner as "Unassigned" so your team can assign it during follow-up.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Can I paste transcripts from Zoom or Google Meet?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. You can paste raw text transcripts directly into the box. The tool filters out conversational filler and extracts only key takeaways and tasks.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'How are priority levels (High, Medium, Low) determined?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Tasks with same-day deadlines or blocking dependencies are marked High, near-term weekly tasks are marked Medium, and general follow-ups are marked Low.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Are my confidential company meeting notes safe?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. All text is processed transiently in memory without being recorded to a database or used to train public language models.',
-                },
-              },
             ],
           },
         ],
@@ -722,43 +370,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 3, 'name': 'Retina Image Size Calculator', 'item': canonicalUrl },
             ],
           },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'What is the difference between a point (pt) and a pixel (px)?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'A point is an abstract unit of physical distance on a screen that stays roughly the same physical size to the human eye, whereas a pixel is an actual hardware light emitter. On a Retina screen, 1 point contains 4 pixels (@2x) or 9 pixels (@3x).',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Which Apple devices use @3x assets?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'All modern flagship iPhones with OLED screens use @3x, including iPhone 16 Pro, iPhone 16, iPhone 15 series, iPhone 14 Pro, iPhone 13 Pro, and iPhone Plus models. iPads and MacBooks primarily use @2x.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Can I just export @3x and let the browser scale it down?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'While browsers can downscale images, loading a massive @3x image on a mobile cellular connection wastes user data and slows down page speed. Providing responsive @1x, @2x, and @3x via srcset is the recommended best practice.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Does this calculator run on my device or on a server?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'All calculations run directly in your web browser. No measurements or image data are sent to any server.',
-                },
-              },
-            ],
-          },
         ],
       };
     }
@@ -787,43 +398,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 3, 'name': 'iPhone Charging Time Calculator', 'item': canonicalUrl },
             ],
           },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'Does using a fast charger ruin my iPhone battery health?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No. Modern iPhones feature intelligent Power Delivery management that throttles speed when the battery warms up. Setting the 80% limit in iOS 18+ is the most effective way to keep your battery healthy.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Can I use a MacBook or iPad charger for my iPhone?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes. Apple USB-C chargers (from 30W to 140W) negotiate safe voltages via the USB-PD standard. Your iPhone will safely draw its maximum rate without danger of overcharging.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Why does charging slow down so much after 80%?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Lithium-ion cells experience high resistance and heat when almost full. iOS automatically switches to trickle charging to avoid damaging the internal electrolyte and preserve battery longevity.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Is wireless MagSafe charging as fast as a cable?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'MagSafe charges at up to 15W to 25W on newer models, but because wireless charging generates more ambient heat, thermal throttling usually makes it about 20% to 30% slower than a direct USB-C cable.',
-                },
-              },
-            ],
-          },
         ],
       };
     }
@@ -850,43 +424,6 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
               { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': origin },
               { '@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': `${origin}/tools` },
               { '@type': 'ListItem', 'position': 3, 'name': 'File Transfer Time Calculator', 'item': canonicalUrl },
-            ],
-          },
-          {
-            '@type': 'FAQPage',
-            'mainEntity': [
-              {
-                '@type': 'Question',
-                'name': 'Why is real-world transfer speed slower than the rated cable speed?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Rated speeds (like 10 Gbps) describe maximum raw signalling bandwidth. After accounting for USB encoding overhead, file system metadata, and target SSD sustained write speeds, real-world speeds typically hover around 900 to 1,000 MB/s.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Does the cable included in the iPhone box support high-speed transfers?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No. The cable included in the box is designed primarily for charging and runs at USB 2.0 speeds (up to 480 Mbps). To achieve 10 Gbps on an iPhone 15 Pro or 16 Pro, you must purchase a USB 3.2 Gen 2 or Thunderbolt cable.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Is AirDrop faster than a standard Lightning cable?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'Yes! AirDrop over Wi-Fi 6 routinely achieves sustained speeds of 60 to 80 MB/s, which is more than double the ~35 MB/s maximum speed of a physical Lightning cable.',
-                },
-              },
-              {
-                '@type': 'Question',
-                'name': 'Are my file names or directory details stored anywhere?',
-                'acceptedAnswer': {
-                  '@type': 'Answer',
-                  'text': 'No files or file names are ever uploaded to a server. All calculations run strictly in your browser using local mathematical formulas.',
-                },
-              },
             ],
           },
         ],
@@ -1047,6 +584,45 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
           ],
         };
       }
+    }
+
+    // 13. Category Hubs & Software Profiles
+    else if (currentPath === '/pc-tools') {
+      title = 'PC & Windows Software Directory - Curated Open Source & Winget Tools | SmartToolHub';
+      description = 'Definitive curated toolkit of high-performance utilities, file managers, storage analyzers, and desktop enhancers for Windows 10 and 11.';
+    }
+    else if (currentPath === '/apple-tools') {
+      title = 'Apple & Mac Software Directory - Curated Native macOS Tools | SmartToolHub';
+      description = 'Exclusively vetted, open-source and reputable native desktop applications built specifically for macOS and iOS power users.';
+    }
+    else if (currentPath === '/android-tools') {
+      title = 'Android Power Tools Directory - F-Droid & Shizuku ADB Tools | SmartToolHub';
+      description = 'Verified open-source Android utilities, developer debugging tools, and system automation platforms available via GitHub and F-Droid.';
+    }
+    else if (currentPath.startsWith('/pc-tools/') || currentPath.startsWith('/apple-tools/') || currentPath.startsWith('/android-tools/')) {
+      const parts = currentPath.split('/');
+      const appSlug = parts[2]?.split('?')[0].split('#')[0];
+      const app = appSlug ? SOFTWARE_APPS[appSlug] : undefined;
+      if (app) {
+        title = `${app.name} (${app.platformLabel}) Review, Limitations & Commands | SmartToolHub`;
+        description = `${app.tagline} Honest review, two limitations to consider, and verified package manager install commands.`;
+      }
+    }
+    else if (currentPath.startsWith('/compare/')) {
+      const compSlug = currentPath.replace('/compare/', '').split('?')[0].split('#')[0];
+      const comp = COMPARISONS[compSlug];
+      if (comp) {
+        title = `${comp.title} | SmartToolHub`;
+        description = comp.subtitle;
+      }
+    }
+    else if (currentPath === '/changelog') {
+      title = 'Platform Changelog & Release History | SmartToolHub';
+      description = 'Track every new zero-install browser tool, hardware diagnostic calculator, and curated software profile deployed to SmartToolHub.';
+    }
+    else if (currentPath === '/saved') {
+      title = 'Saved Results & Bookmarked Tools | SmartToolHub';
+      description = 'View your locally saved tool outputs, guide cheat sheets, and software profile bookmarks. 100% offline and private.';
     }
 
     // Apply document title

@@ -359,7 +359,9 @@ ${qrList.map((item, idx) => `${idx + 1}. ${item.filename} [${item.text}]`).join(
                     <div className="aspect-square w-full rounded-2xl bg-white p-3 flex items-center justify-center shadow-inner">
                       <img
                         src={item.dataUrl}
-                        alt={`QR Code ${item.id + 1}`}
+                        alt={`Generated QR Code ${item.id + 1} for text target`}
+                        width={qrSize || 256}
+                        height={qrSize || 256}
                         className="w-full h-full object-contain"
                         loading="lazy"
                       />

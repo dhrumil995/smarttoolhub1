@@ -22,6 +22,7 @@ const ContactPage = lazy(() => import('./pages/ContactPage.tsx').then(m => ({ de
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage.tsx').then(m => ({ default: m.PrivacyPage })));
 const TermsPage = lazy(() => import('./pages/TermsPage.tsx').then(m => ({ default: m.TermsPage })));
 const PricingPage = lazy(() => import('./pages/PricingPage.tsx').then(m => ({ default: m.PricingPage })));
+const ChangelogPage = lazy(() => import('./pages/ChangelogPage.tsx').then(m => ({ default: m.ChangelogPage })));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage.tsx').then(m => ({ default: m.NotFoundPage })));
 
 // Guide Pages
@@ -86,6 +87,18 @@ const AutoHotkeyGeneratorPage = lazy(() => import('./pages/tools/AutoHotkeyGener
 const AdbFastbootCommandBuilderPage = lazy(() => import('./pages/tools/AdbFastbootCommandBuilderPage.tsx').then(m => ({ default: m.AdbFastbootCommandBuilderPage })));
 const CommandExplainerPage = lazy(() => import('./pages/tools/CommandExplainerPage.tsx').then(m => ({ default: m.CommandExplainerPage })));
 const BatteryWearCalculatorPage = lazy(() => import('./pages/tools/BatteryWearCalculatorPage.tsx').then(m => ({ default: m.BatteryWearCalculatorPage })));
+
+// Batch O New High-Performance Tools
+const CronGeneratorPage = lazy(() => import('./pages/tools/CronGeneratorPage.tsx').then(m => ({ default: m.CronGeneratorPage })));
+const RegexTesterPage = lazy(() => import('./pages/tools/RegexTesterPage.tsx').then(m => ({ default: m.RegexTesterPage })));
+const MarkdownToHtmlPage = lazy(() => import('./pages/tools/MarkdownToHtmlPage.tsx').then(m => ({ default: m.MarkdownToHtmlPage })));
+const CssBoxShadowPage = lazy(() => import('./pages/tools/CssBoxShadowPage.tsx').then(m => ({ default: m.CssBoxShadowPage })));
+const JsonYamlConverterPage = lazy(() => import('./pages/tools/JsonYamlConverterPage.tsx').then(m => ({ default: m.JsonYamlConverterPage })));
+const Base64ConverterPage = lazy(() => import('./pages/tools/Base64ConverterPage.tsx').then(m => ({ default: m.Base64ConverterPage })));
+const UrlEncoderDecoderPage = lazy(() => import('./pages/tools/UrlEncoderDecoderPage.tsx').then(m => ({ default: m.UrlEncoderDecoderPage })));
+const LoremIpsumGeneratorPage = lazy(() => import('./pages/tools/LoremIpsumGeneratorPage.tsx').then(m => ({ default: m.LoremIpsumGeneratorPage })));
+const PasswordEntropyPage = lazy(() => import('./pages/tools/PasswordEntropyPage.tsx').then(m => ({ default: m.PasswordEntropyPage })));
+const MacAddressFormatterPage = lazy(() => import('./pages/tools/MacAddressFormatterPage.tsx').then(m => ({ default: m.MacAddressFormatterPage })));
 
 // Batch N Software Directory & Comparison Pages
 const SoftwareCategoryHubPage = lazy(() => import('./pages/software/SoftwareCategoryHubPage.tsx').then(m => ({ default: m.SoftwareCategoryHubPage })));
@@ -285,6 +298,38 @@ export default function App() {
             return <BatteryWearCalculatorPage navigate={navigate} />;
           }
 
+          // Batch O New High-Performance Tools Routes
+          if (currentPath === '/tools/cron-expression-generator') {
+            return <CronGeneratorPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/regex-tester-explainer') {
+            return <RegexTesterPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/markdown-to-html-converter') {
+            return <MarkdownToHtmlPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/css-box-shadow-generator') {
+            return <CssBoxShadowPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/json-yaml-converter') {
+            return <JsonYamlConverterPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/base64-file-converter') {
+            return <Base64ConverterPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/url-encoder-decoder') {
+            return <UrlEncoderDecoderPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/lorem-ipsum-generator') {
+            return <LoremIpsumGeneratorPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/password-entropy-generator') {
+            return <PasswordEntropyPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/mac-address-formatter') {
+            return <MacAddressFormatterPage navigate={navigate} />;
+          }
+
           // Batch N Software Directory Hubs & Details
           if (currentPath === '/apple-tools') {
             return <SoftwareCategoryHubPage platform="apple" navigate={navigate} />;
@@ -345,6 +390,9 @@ export default function App() {
           }
           if (currentPath === '/pricing') {
             return <PricingPage navigate={navigate} />;
+          }
+          if (currentPath === '/changelog') {
+            return <ChangelogPage navigate={navigate} />;
           }
 
           // 7. 404 Not Found

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SmartToolHub - Curated Software, Privacy Utilities and Developer Tools</title>
+    <link>https://smarttoolhub.net</link>
+    <description>Updates, release changelogs, and deep-dive technical benchmarks from SmartToolHub.</description>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 22 Oct 2026 21:00:00 +0000</lastBuildDate>
+    <atom:link href="https://smarttoolhub.net/feed.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title>v2.4: 50 Curated Software Profiles and Head-to-Head Comparisons</title>
+      <link>https://smarttoolhub.net/changelog</link>
+      <guid>https://smarttoolhub.net/changelog#v2.4</guid>
+      <pubDate>Thu, 22 Oct 2026 18:00:00 +0000</pubDate>
+      <description>Released 50 verified application profiles across PC, Apple, and Android directories with honest drawbacks, verified winget/cask commands, and 5 head-to-head comparison guides.</description>
+    </item>
+
+    <item>
+      <title>Rufus vs Ventoy: Which Bootable USB Creator Should You Choose?</title>
+      <link>https://smarttoolhub.net/compare/rufus-vs-ventoy</link>
+      <guid>https://smarttoolhub.net/compare/rufus-vs-ventoy</guid>
+      <pubDate>Wed, 21 Oct 2026 12:00:00 +0000</pubDate>
+      <description>In-depth technical breakdown comparing single-OS partition flashing with Rufus against multi-ISO drag-and-drop Ventoy drive architecture.</description>
+    </item>
+
+    <item>
+      <title>WizTree vs TreeSize Free: High-Speed NTFS Disk Analysis Benchmark</title>
+      <link>https://smarttoolhub.net/compare/wiztree-vs-treesize</link>
+      <guid>https://smarttoolhub.net/compare/wiztree-vs-treesize</guid>
+      <pubDate>Tue, 20 Oct 2026 09:30:00 +0000</pubDate>
+      <description>Benchmark comparing Master File Table (MFT) scanning speeds, network share support, and RAM usage on Windows 11.</description>
+    </item>
+
+    <item>
+      <title>How to Use Shizuku for Wireless ADB on Android 11+</title>
+      <link>https://smarttoolhub.net/guides/shizuku-wireless-adb-guide</link>
+      <guid>https://smarttoolhub.net/guides/shizuku-wireless-adb-guide</guid>
+      <pubDate>Mon, 19 Oct 2026 14:00:00 +0000</pubDate>
+      <description>Complete tutorial on pairing Android Wireless Debugging on device to grant elevated Shizuku permissions without a PC.</description>
+    </item>
+
+    <item>
+      <title>v2.3: Automation and Command Helpers with Gemini 2.5 Flash</title>
+      <link>https://smarttoolhub.net/changelog</link>
+      <guid>https://smarttoolhub.net/changelog#v2.3</guid>
+      <pubDate>Fri, 16 Oct 2026 10:00:00 +0000</pubDate>
+      <description>Released Android Automation Generator, AutoHotkey v2 Script Generator, ADB Command Builder, and Command Explainer.</description>
+    </item>
+  </channel>
+</rss>

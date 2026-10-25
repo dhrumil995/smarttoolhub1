@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { BookOpen, ChevronRight, ArrowLeft, ArrowUpRight, Zap, CheckCircle2, Copy, Check, Terminal } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { BookOpen, ChevronRight, ArrowLeft, ArrowUpRight, Zap, CheckCircle2, Copy, Check, Terminal, FileDown, Printer, Bookmark, BookmarkCheck } from 'lucide-react';
 import { GUIDE_ARTICLES } from '../../data/guides.ts';
 import { Link } from '../../hooks/useRouter.tsx';
+import { saveToolResult } from '../../utils/storage.ts';
 
 interface GuideDetailPageProps {
   slug: string;
@@ -11,6 +12,23 @@ interface GuideDetailPageProps {
 export const GuideDetailPage: React.FC<GuideDetailPageProps> = ({ slug, navigate }) => {
   const guide = GUIDE_ARTICLES[slug];
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [copiedMarkdown, setCopiedMarkdown] = useState<boolean>(false);
+  const [isSaved, setIsSaved] = useState<boolean>(false);
+
+  // Markdown export generation for developers and offline notes
+  const guideMarkdown = useMemo(() => {
+    if (!guide) return '';
+    const bodyText = guide.sections
+      .map(
+        (s) =>
+          `## ${s.heading}\n\n` +
+          s.body.join('\n\n') +
+          (s.callout ? `\n\n> **Tip:** ${s.callout}` : '')
+      )
+      .join('\n\n');
+
+    return `# ${guide.title}\n\n*${guide.summary}*\n\n**Author:** ${guide.author} | **Updated:** ${guide.lastUpdated}\n\n---\n\n${bodyText}\n\n---\n*Source: SmartToolHub (https://smarttoolhub.net/guides/${guide.slug})*`;
+  }, [guide]);
 
   if (!guide) {
     return (
@@ -36,6 +54,31 @@ export const GuideDetailPage: React.FC<GuideDetailPageProps> = ({ slug, navigate
     } catch {
       // Handled
     }
+  };
+
+  const handleCopyMarkdown = async () => {
+    try {
+      await navigator.clipboard.writeText(guideMarkdown);
+      setCopiedMarkdown(true);
+      setTimeout(() => setCopiedMarkdown(false), 2000);
+    } catch {
+      // Handled
+    }
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleBookmarkGuide = () => {
+    saveToolResult(
+      `guide-${guide.slug}`,
+      guide.title,
+      'Technical Guide Bookmark',
+      `Guide: ${guide.title}\nSummary: ${guide.summary}\nURL: https://smarttoolhub.net/guides/${guide.slug}`
+    );
+    setIsSaved(true);
+    setTimeout(() => setIsSaved(false), 3000);
   };
 
   // Structured Data: BreadcrumbList + TechArticle
@@ -123,17 +166,70 @@ export const GuideDetailPage: React.FC<GuideDetailPageProps> = ({ slug, navigate
 
       {/* Header Landmark */}
       <header className="space-y-4 border-b border-[rgba(143,163,192,0.14)] pb-8">
-        <div className="flex flex-wrap items-center gap-2 text-xs text-[#8fa3c0]">
-          <span className="font-mono text-[#0a84ff] uppercase font-bold">{guide.readTime}</span>
-          <span aria-hidden="true">·</span>
-          <span>Updated {guide.lastUpdated}</span>
-          <span aria-hidden="true">·</span>
-          <span>
-            By{' '}
-            <Link href="/about" navigate={navigate} className="text-[#f2f7ff] hover:underline focus-ring rounded font-medium">
-              {guide.author}
-            </Link>
-          </span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#8fa3c0]">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-mono text-[#0a84ff] uppercase font-bold">{guide.readTime}</span>
+            <span aria-hidden="true">&bull;</span>
+            <span>Updated {guide.lastUpdated}</span>
+            <span aria-hidden="true">&bull;</span>
+            <span>
+              By{' '}
+              <Link href="/about" navigate={navigate} className="text-[#f2f7ff] hover:underline focus-ring rounded font-medium">
+                {guide.author}
+              </Link>
+            </span>
+          </div>
+
+          {/* Quick Reader Actions */}
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            <button
+              type="button"
+              onClick={handleBookmarkGuide}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-[11px] font-mono text-[#9aaccb] hover:text-[#f2f7ff] hover:border-[#0a84ff] transition-all focus-ring"
+              title="Bookmark guide to your saved results"
+            >
+              {isSaved ? (
+                <>
+                  <BookmarkCheck className="w-3.5 h-3.5 text-[#34e0a1]" />
+                  <span className="text-[#34e0a1]">Saved</span>
+                </>
+              ) : (
+                <>
+                  <Bookmark className="w-3.5 h-3.5" />
+                  <span>Bookmark</span>
+                </>
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleCopyMarkdown}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-[11px] font-mono text-[#9aaccb] hover:text-[#f2f7ff] hover:border-[#0a84ff] transition-all focus-ring"
+              title="Copy entire guide in GitHub-Flavored Markdown"
+            >
+              {copiedMarkdown ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-[#34e0a1]" />
+                  <span className="text-[#34e0a1]">Copied MD</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>Copy Markdown</span>
+                </>
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={handlePrint}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#0a1424] border border-[rgba(143,163,192,0.2)] text-[11px] font-mono text-[#9aaccb] hover:text-[#f2f7ff] hover:border-[#0a84ff] transition-all focus-ring"
+              title="Print or Save as PDF"
+            >
+              <Printer className="w-3.5 h-3.5" />
+              <span>Print</span>
+            </button>
+          </div>
         </div>
 
         <h1 className="h1-fluid font-display text-[#f2f7ff]">

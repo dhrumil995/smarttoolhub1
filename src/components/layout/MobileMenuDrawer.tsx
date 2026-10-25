@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRight, Shield, FileText, Mail, Info, Tag, LayoutGrid, BookOpen, Laptop, Smartphone, Apple } from 'lucide-react';
+import { ChevronRight, Shield, FileText, Mail, Info, Tag, LayoutGrid, BookOpen, Laptop, Smartphone, Apple, Sparkles } from 'lucide-react';
 import { PWAInstallButton } from './PWAInstallButton.tsx';
 import { BottomSheet } from '../ui/BottomSheet.tsx';
 import { LAUNCH_TOOLS } from '../../data/tools.ts';
@@ -131,6 +131,14 @@ export const MobileMenuDrawer: React.FC<MobileMenuDrawerProps> = ({
           >
             <Tag size={16} className="text-[#ffb840]" aria-hidden="true" />
             <span>Pricing &amp; Pro Access</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleLinkClick('/changelog')}
+            className="w-full flex items-center gap-3 px-3 py-3 text-sm font-medium text-[#9aaccb] hover:text-[#f2f7ff] rounded-xl focus-ring"
+          >
+            <Sparkles size={16} className="text-[#34e0a1]" aria-hidden="true" />
+            <span>Changelog &amp; Releases</span>
           </button>
           <button
             type="button"

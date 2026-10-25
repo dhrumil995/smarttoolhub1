@@ -199,7 +199,10 @@ Privacy: 100% Client-Side. Your files never leave your device.`,
                 <div className="flex items-center gap-3">
                   <img
                     src={selectedImage.dataUrl}
-                    alt={selectedImage.name}
+                    alt={`Preview of document image to scan: ${selectedImage.name}`}
+                    width={48}
+                    height={48}
+                    loading="lazy"
                     className="w-12 h-12 rounded-xl object-cover bg-black/50 border border-[rgba(143,163,192,0.2)] shrink-0"
                   />
                   <div>

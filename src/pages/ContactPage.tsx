@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Send, CheckCircle2, ChevronRight, MessageSquare, Shield } from 'lucide-react';
+import { Mail, Send, CheckCircle2, ChevronRight, MessageSquare, Shield, Copy, Check, Clock, HelpCircle } from 'lucide-react';
 import { Link } from '../hooks/useRouter.tsx';
 
 interface ContactPageProps {
@@ -12,11 +12,22 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
   const [topic, setTopic] = useState('Feedback / Tool Suggestion');
   const [message, setMessage] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !message.trim()) return;
     setIsSubmitted(true);
+  };
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText('contact@smarttoolhub.net');
+      setCopiedEmail(true);
+      setTimeout(() => setCopiedEmail(false), 2000);
+    } catch {
+      // Handled
+    }
   };
 
   return (
@@ -36,12 +47,37 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
           Get in Touch
         </div>
         <h1 className="h1-fluid font-display text-[#f2f7ff]">
-          Contact Us<span className="text-[#34e0a1]">.</span>
+          Contact &amp; Feedback<span className="text-[#34e0a1]">.</span>
         </h1>
         <p className="body-fluid text-[#8fa3c0] leading-relaxed">
-          Have an idea for a new everyday AI tool? Found a bug? Send us a note. Dhrumil reads and replies to every message.
+          Have an idea for a new everyday AI tool? Spotted a typo or software bug? Dhrumil Aslaliya reads and personally responds to every genuine message.
         </p>
       </header>
+
+      {/* Direct Email Card */}
+      <div className="glass-surface p-5 sm:p-6 rounded-2xl border border-[rgba(143,163,192,0.16)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="text-xs font-mono uppercase tracking-wider text-[#8fa3c0] font-semibold flex items-center gap-1.5">
+            <Mail className="w-3.5 h-3.5 text-[#34e0a1]" />
+            <span>Direct Email Address</span>
+          </div>
+          <div className="text-sm sm:text-base font-semibold text-[#f2f7ff] font-mono">
+            contact@smarttoolhub.net
+          </div>
+          <div className="text-xs text-[#8fa3c0] flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 text-[#7db8ff]" />
+            <span>Typical response time: 24 to 48 hours</span>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={handleCopyEmail}
+          className="btn-glass text-xs inline-flex items-center gap-1.5 self-start sm:self-center"
+        >
+          {copiedEmail ? <Check className="w-3.5 h-3.5 text-[#34e0a1]" /> : <Copy className="w-3.5 h-3.5" />}
+          <span>{copiedEmail ? 'Copied Email' : 'Copy Email'}</span>
+        </button>
+      </div>
 
       {/* Contact Form Card */}
       <div className="glass-surface p-6 sm:p-8 rounded-3xl border border-[rgba(143,163,192,0.16)] shadow-xl">
@@ -54,7 +90,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
               Message Received!
             </h2>
             <p className="text-sm text-[#8fa3c0] max-w-md mx-auto leading-relaxed">
-              Thank you for reaching out. We will review your message and reply to <span className="text-[#f2f7ff] font-medium">{email}</span> within 24 to 48 hours.
+              Thank you for reaching out. Dhrumil will review your note regarding <strong className="text-[#f2f7ff]">{topic}</strong> and reply to <span className="text-[#f2f7ff] font-medium">{email}</span> within 24 to 48 hours.
             </p>
             <button
               type="button"
@@ -112,7 +148,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
               >
                 <option value="Feedback / Tool Suggestion">Feedback / Tool Suggestion</option>
                 <option value="Bug Report">Bug Report</option>
-                <option value="Pro Plan Question">Pro Plan Question</option>
+                <option value="Software Directory Suggestion">Software Directory Suggestion</option>
+                <option value="Editorial Correction">Editorial Correction</option>
+                <option value="Privacy / Legal Inquiry">Privacy / Legal Inquiry</option>
                 <option value="General Question">General Question</option>
               </select>
             </div>
@@ -127,8 +165,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
                 rows={4}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="How can we help or what tool would you like to see next?..."
-                className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl p-3 text-sm text-[#f2f7ff] placeholder-[#8fa3c0] focus-ring resize-y min-h-[100px]"
+                placeholder="What tool would you like to see next, or what issue did you encounter?..."
+                className="w-full bg-[#0a1424] border border-[rgba(143,163,192,0.18)] rounded-xl p-3 text-sm text-[#f2f7ff] placeholder-[#8fa3c0] focus-ring resize-y min-h-[110px]"
               />
             </div>
 
@@ -139,23 +177,41 @@ export const ContactPage: React.FC<ContactPageProps> = ({ navigate }) => {
               <Send className="w-4 h-4" />
               <span>Send Message</span>
             </button>
+
+            <p className="text-[11px] text-[#8fa3c0]/80 text-center pt-1">
+              Your email will only be used to reply to your inquiry. We do not add you to marketing lists or sell your email.
+            </p>
           </form>
         )}
       </div>
 
-      {/* Direct Email Card */}
-      <div className="p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.14)] flex items-center justify-between text-xs text-[#8fa3c0]">
-        <div className="flex items-center gap-2">
-          <Mail className="w-4 h-4 text-[#34e0a1]" />
-          <span>Prefer direct email? Reach out at:</span>
+      {/* Frequently Asked Inquiries */}
+      <section className="space-y-4 pt-4 border-t border-[rgba(143,163,192,0.12)]">
+        <h2 className="text-xl font-bold font-display text-[#f2f7ff] flex items-center gap-2">
+          <HelpCircle className="w-5 h-5 text-[#34e0a1]" />
+          <span>Frequently Asked Questions</span>
+        </h2>
+        <div className="space-y-3">
+          <div className="glass-surface p-4 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-1.5">
+            <div className="text-sm font-semibold text-[#f2f7ff]">Can I suggest an everyday tool to build?</div>
+            <p className="text-xs text-[#8fa3c0] leading-relaxed">
+              Yes, absolutely! The best tools on SmartToolHub come directly from user suggestions. If you find yourself repeatedly doing a routine task on your phone or PC, send it over and we may build a dedicated free tool for it.
+            </p>
+          </div>
+          <div className="glass-surface p-4 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-1.5">
+            <div className="text-sm font-semibold text-[#f2f7ff]">Do you accept paid or sponsored software reviews?</div>
+            <p className="text-xs text-[#8fa3c0] leading-relaxed">
+              No. We strictly refuse sponsored rankings, paid software recommendations, and compensated reviews. All directory entries are independently evaluated with honest pros, cons, and drawbacks.
+            </p>
+          </div>
+          <div className="glass-surface p-4 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-1.5">
+            <div className="text-sm font-semibold text-[#f2f7ff]">How do I report a security vulnerability or bug?</div>
+            <p className="text-xs text-[#8fa3c0] leading-relaxed">
+              Select &ldquo;Bug Report&rdquo; in the form above or email <span className="font-mono text-[#7db8ff]">contact@smarttoolhub.net</span> with steps to reproduce the issue. We investigate and deploy fixes promptly.
+            </p>
+          </div>
         </div>
-        <a
-          href="mailto:contact@smarttoolhub.net"
-          className="text-[#34e0a1] font-mono hover:underline focus-ring rounded"
-        >
-          contact@smarttoolhub.net
-        </a>
-      </div>
+      </section>
     </article>
   );
 };
