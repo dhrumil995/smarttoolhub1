@@ -36,7 +36,7 @@ function highlightMatch(text: string, query: string): React.ReactNode {
   return (
     <>
       {before}
-      <mark className="bg-[rgba(10,132,255,0.22)] text-[#5aa9ff] font-bold rounded-sm px-0.5">
+      <mark className="bg-purple-100 text-purple-900 font-bold rounded-sm px-0.5">
         {match}
       </mark>
       {after}
@@ -287,16 +287,16 @@ export const SearchModal: React.FC<SearchModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-label="Search tools"
-      className="fixed inset-0 z-50 flex items-start justify-center p-0 md:p-4 pt-0 md:pt-20 bg-[#050a14]/90 backdrop-blur-[24px]"
+      className="fixed inset-0 z-50 flex items-start justify-center p-0 md:p-4 pt-0 md:pt-20 bg-black/40 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="w-full h-full md:h-auto md:max-h-[85vh] md:max-w-2xl bg-[#0a1424] border-0 md:border border-[rgba(143,163,192,0.18)] rounded-none md:rounded-3xl p-4 sm:p-6 shadow-2xl flex flex-col overflow-hidden safe-top safe-bottom"
+        className="w-full h-full md:h-auto md:max-h-[85vh] md:max-w-2xl bg-white border-0 md:border border-gray-200 rounded-none md:rounded-3xl p-4 sm:p-6 shadow-2xl flex flex-col overflow-hidden safe-top safe-bottom"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar with Search Icon and Clear Button */}
-        <div className="flex items-center gap-3 px-3.5 py-3 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.18)] focus-within:border-[#0a84ff] focus-within:shadow-[0_0_12px_rgba(10,132,255,0.25)] transition-colors shrink-0">
-          <Search size={18} className="text-[#9aaccb] shrink-0" aria-hidden="true" />
+        <div className="flex items-center gap-3 px-3.5 py-3 rounded-2xl bg-gray-50 border border-gray-200 focus-within:border-purple-600 focus-within:ring-2 focus-within:ring-purple-100 transition-colors shrink-0">
+          <Search size={18} className="text-gray-400 shrink-0" aria-hidden="true" />
           <input
             ref={inputRef}
             type="search"
@@ -307,7 +307,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
             }}
             onKeyDown={handleKeyDown}
             placeholder="Type a tool name (e.g. shortcuts, email, formulas)..."
-            className="flex-1 bg-transparent text-base sm:text-sm text-[#f2f7ff] placeholder-[#9aaccb] focus:outline-none"
+            className="flex-1 bg-transparent text-base sm:text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none"
             style={{ fontSize: '16px' }}
           />
           {query ? (
@@ -318,20 +318,20 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                 setSelectedIndex(0);
                 inputRef.current?.focus();
               }}
-              className="text-[#9aaccb] hover:text-[#f2f7ff] p-2 min-w-[44px] min-h-[44px] flex items-center justify-center focus-ring rounded-lg"
+              className="text-gray-400 hover:text-gray-700 p-2 min-w-[44px] min-h-[44px] flex items-center justify-center focus-ring rounded-lg"
               aria-label="Clear search input"
             >
               <X size={16} aria-hidden="true" />
             </button>
           ) : (
             <div className="flex items-center gap-2">
-              <span className="hidden sm:inline-block font-mono text-[10px] text-[#9aaccb] px-2 py-0.5 rounded border border-[rgba(143,163,192,0.16)]">
+              <span className="hidden sm:inline-block font-mono text-[10px] text-gray-400 px-2 py-0.5 rounded border border-gray-200">
                 ESC
               </span>
               <button
                 type="button"
                 onClick={onClose}
-                className="md:hidden text-sm font-medium text-[#9aaccb] hover:text-[#f2f7ff] min-h-[44px] px-2 flex items-center justify-center focus-ring rounded-lg"
+                className="md:hidden text-sm font-medium text-gray-500 hover:text-gray-900 min-h-[44px] px-2 flex items-center justify-center focus-ring rounded-lg"
                 aria-label="Close search"
               >
                 Cancel
@@ -363,31 +363,31 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                             onClick={() => handleSelect(item.path, query)}
                             className={`w-full flex items-center justify-between p-3.5 rounded-2xl border transition-all text-left group focus-ring select-none ${
                               isKeyboardSelected
-                                ? 'bg-[#101c33] border-[#0a84ff] shadow-[0_0_16px_rgba(10,132,255,0.25)]'
-                                : 'bg-[#050a14]/60 hover:bg-[#101c33] border-[rgba(143,163,192,0.12)] hover:border-[#0a84ff]/50'
+                                ? 'bg-purple-50 border-purple-600 shadow-sm'
+                                : 'bg-gray-50 hover:bg-purple-50/60 border-gray-200 hover:border-purple-300'
                             }`}
                           >
                             <div className="flex items-center gap-3.5 min-w-0 pr-2">
-                              <div className="w-9 h-9 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] flex items-center justify-center text-[#0a84ff] shrink-0">
+                              <div className="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center text-purple-700 shrink-0">
                                 <Icon name={item.iconName || 'Wand2'} size="sm" strokeWidth={1.75} aria-hidden={true} />
                               </div>
                               <div className="min-w-0">
                                 <div className="flex items-center gap-2">
-                                  <span className="text-sm font-semibold text-[#f2f7ff] truncate group-hover:text-[#5aa9ff] transition-colors">
+                                  <span className="text-sm font-semibold text-gray-900 truncate group-hover:text-purple-700 transition-colors">
                                     {highlightMatch(item.name, query)}
                                   </span>
                                   {item.badge && (
-                                    <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[#0a1424] text-[#9aaccb] border border-[rgba(143,163,192,0.14)] shrink-0">
+                                    <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-purple-50 text-purple-700 border border-purple-200 shrink-0">
                                       {item.badge}
                                     </span>
                                   )}
                                 </div>
-                                <div className="text-xs text-[#9aaccb] truncate mt-0.5">
+                                <div className="text-xs text-gray-500 truncate mt-0.5">
                                   {highlightMatch(item.description, query)}
                                 </div>
                               </div>
                             </div>
-                            <ChevronRight size={16} className="text-[#9aaccb] group-hover:text-[#5aa9ff] shrink-0 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                            <ChevronRight size={16} className="text-gray-400 group-hover:text-purple-700 shrink-0 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                           </button>
                         );
                       })}

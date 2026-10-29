@@ -1,6 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useRouter } from './hooks/useRouter.tsx';
 import { Navbar } from './components/layout/Navbar.tsx';
+import { Sidebar } from './components/layout/Sidebar.tsx';
 import { BottomTabBar } from './components/layout/BottomTabBar.tsx';
 import { MobileMenuDrawer } from './components/layout/MobileMenuDrawer.tsx';
 import { SearchModal } from './components/layout/SearchModal.tsx';
@@ -70,6 +71,9 @@ const PdfMergePage = lazy(() => import('./pages/tools/PdfMergePage.tsx').then(m 
 const PdfSplitPage = lazy(() => import('./pages/tools/PdfSplitPage.tsx').then(m => ({ default: m.PdfSplitPage })));
 const ImageToPdfPage = lazy(() => import('./pages/tools/ImageToPdfPage.tsx').then(m => ({ default: m.ImageToPdfPage })));
 const ImageToTextOcrPage = lazy(() => import('./pages/tools/ImageToTextOcrPage.tsx').then(m => ({ default: m.ImageToTextOcrPage })));
+const HeicToJpgPage = lazy(() => import('./pages/tools/HeicToJpgPage.tsx').then(m => ({ default: m.HeicToJpgPage })));
+const ImageCompressorConverterPage = lazy(() => import('./pages/tools/ImageCompressorConverterPage.tsx').then(m => ({ default: m.ImageCompressorConverterPage })));
+const PdfMergeSplitPage = lazy(() => import('./pages/tools/PdfMergeSplitPage.tsx').then(m => ({ default: m.PdfMergeSplitPage })));
 
 // Batch L Private Browser Tools
 const InstallCommandGeneratorPage = lazy(() => import('./pages/tools/InstallCommandGeneratorPage.tsx').then(m => ({ default: m.InstallCommandGeneratorPage })));
@@ -244,17 +248,26 @@ export default function App() {
           }
 
           // Batch J Private File Tools Routes
+          if (currentPath === '/tools/pdf-merge-split') {
+            return <PdfMergeSplitPage navigate={navigate} />;
+          }
           if (currentPath === '/tools/pdf-merge') {
-            return <PdfMergePage navigate={navigate} />;
+            return <PdfMergeSplitPage navigate={navigate} defaultTab="merge" />;
           }
           if (currentPath === '/tools/pdf-split') {
-            return <PdfSplitPage navigate={navigate} />;
+            return <PdfMergeSplitPage navigate={navigate} defaultTab="split" />;
           }
           if (currentPath === '/tools/image-to-pdf') {
             return <ImageToPdfPage navigate={navigate} />;
           }
           if (currentPath === '/tools/image-to-text-ocr') {
             return <ImageToTextOcrPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/heic-to-jpg-converter') {
+            return <HeicToJpgPage navigate={navigate} />;
+          }
+          if (currentPath === '/tools/image-compressor-converter') {
+            return <ImageCompressorConverterPage navigate={navigate} />;
           }
 
           // Batch L Private Browser Tools Routes
@@ -404,72 +417,78 @@ export default function App() {
 
   return (
     <ToastProvider>
-      <div className="min-h-[100dvh] flex flex-col bg-[#050a14] text-[#f2f7ff] bg-ambient-grid relative selection:bg-[#0a84ff] selection:text-[#ffffff] overflow-x-hidden">
-      {/* Dynamic SEO Meta & Schema.org JSON-LD Manager */}
-      <MetaManager currentPath={currentPath} />
+      <div className="min-h-screen flex bg-[#f8f9fa] text-gray-900 selection:bg-purple-600 selection:text-white relative">
+        {/* Dynamic SEO Meta & Schema.org JSON-LD Manager */}
+        <MetaManager currentPath={currentPath} />
 
-      {/* Top ambient glow */}
-      <div className="pointer-events-none fixed top-0 left-0 right-0 h-[380px] bg-top-glow z-0" aria-hidden="true" />
+        {/* Accessible skip link */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-purple-700 focus:text-white focus:font-bold focus:rounded-lg focus:shadow-lg focus:outline-none"
+        >
+          Skip to main content
+        </a>
 
-      {/* Accessible skip link */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#0a84ff] focus:text-[#ffffff] focus:font-bold focus:rounded-lg focus:shadow-lg focus:outline-none"
-      >
-        Skip to main content
-      </a>
+        {/* Top thin scroll indicator */}
+        <ScrollProgress />
 
-      {/* Top thin Aurora Brand scroll indicator */}
-      <ScrollProgress />
+        {/* Left Sticky Sidebar for Desktop (Tool Finder style) */}
+        <Sidebar
+          currentPath={currentPath}
+          navigate={navigate}
+          onOpenSearch={() => setIsSearchOpen(true)}
+          className="hidden md:flex"
+        />
 
-      {/* Top 3-Zone Navigation */}
-      <Navbar
-        currentPath={currentPath}
-        navigate={navigate}
-        onOpenSearch={() => setIsSearchOpen(true)}
-        onOpenMenu={() => setIsMenuOpen(true)}
-      />
+        {/* Main Content & Navigation Column */}
+        <div className="flex-1 flex flex-col min-w-0 min-h-screen">
+          {/* Top Navigation (Mobile brand bar & desktop breadcrumbs/search trigger) */}
+          <Navbar
+            currentPath={currentPath}
+            navigate={navigate}
+            onOpenSearch={() => setIsSearchOpen(true)}
+            onOpenMenu={() => setIsMenuOpen(true)}
+          />
 
-      {/* Main Content Area */}
-      <main id="main-content" className="flex-1 relative z-10 pb-24 md:pb-12">
-        <div className="max-w-[1200px] mx-auto px-5">
-          <div key={currentPath} className="page-transition">
-            {renderContent()}
-          </div>
+          {/* Main Content Area */}
+          <main id="main-content" className="flex-1 px-4 sm:px-6 lg:px-8 py-6 md:py-8 max-w-7xl w-full mx-auto pb-24 md:pb-12">
+            <div key={currentPath} className="page-transition">
+              {renderContent()}
+            </div>
+          </main>
+
+          {/* Offline Status Banner */}
+          <OfflineIndicator />
+
+          {/* Footer */}
+          <Footer navigate={navigate} />
         </div>
-      </main>
 
-      {/* Offline Status Connectivity Banner */}
-      <OfflineIndicator />
+        {/* Mobile Fixed Bottom Navigation */}
+        <BottomTabBar
+          currentPath={currentPath}
+          navigate={navigate}
+          onOpenSearch={() => setIsSearchOpen(true)}
+          onOpenMore={() => setIsMenuOpen(true)}
+        />
 
-      {/* Semantic Footer with Independent Disclaimer */}
-      <Footer navigate={navigate} />
+        {/* Mobile Drawer */}
+        <MobileMenuDrawer
+          isOpen={isMenuOpen}
+          onClose={() => setIsMenuOpen(false)}
+          navigate={navigate}
+        />
 
-      {/* Mobile Fixed Bottom Tab Dock */}
-      <BottomTabBar
-        currentPath={currentPath}
-        navigate={navigate}
-        onOpenSearch={() => setIsSearchOpen(true)}
-        onOpenMore={() => setIsMenuOpen(true)}
-      />
+        {/* Search Modal */}
+        <SearchModal
+          isOpen={isSearchOpen}
+          onClose={() => setIsSearchOpen(false)}
+          navigate={navigate}
+        />
 
-      {/* Full-Height Glass Sheet Navigation (Mobile) */}
-      <MobileMenuDrawer
-        isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
-        navigate={navigate}
-      />
-
-      {/* Quick Search Modal */}
-      <SearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-        navigate={navigate}
-      />
-
-      {/* Floating Scroll to Top Button */}
-      <ScrollToTop />
-    </div>
+        {/* Floating Scroll to Top */}
+        <ScrollToTop />
+      </div>
     </ToastProvider>
   );
 }

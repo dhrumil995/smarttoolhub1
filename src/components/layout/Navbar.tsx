@@ -1,6 +1,7 @@
 import React from 'react';
-import { Search, Menu, Zap } from 'lucide-react';
+import { Search, Menu, Sparkles, ChevronRight } from 'lucide-react';
 import { Link } from '../../hooks/useRouter.tsx';
+import { ToolFinderLogo, SmartToolHubIcon } from './ToolFinderLogo.tsx';
 import { PWAInstallButton } from './PWAInstallButton.tsx';
 
 interface NavbarProps {
@@ -10,14 +11,6 @@ interface NavbarProps {
   onOpenMenu: () => void;
 }
 
-const NAV_LINKS = [
-  { label: 'Tools', href: '/tools' },
-  { label: 'PC Tools', href: '/pc-tools' },
-  { label: 'Apple Tools', href: '/apple-tools' },
-  { label: 'Android Tools', href: '/android-tools' },
-  { label: 'Guides', href: '/guides' },
-];
-
 export const Navbar: React.FC<NavbarProps> = ({
   currentPath,
   navigate,
@@ -25,83 +18,95 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenMenu,
 }) => {
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#050a14]/85 backdrop-blur-[18px] border-b border-[rgba(143,163,192,0.16)] safe-top">
-      <div className="max-w-[1200px] mx-auto px-5 h-16 flex items-center justify-between gap-8">
-        {/* Zone 1: Brand Wordmark */}
-        <Link
-          href="/"
-          navigate={navigate}
-          className="flex items-center gap-2.5 text-lg font-bold tracking-tight text-[#f2f7ff] hover:text-white transition-colors whitespace-nowrap shrink-0 focus-ring rounded-lg p-1 -ml-1"
-          aria-label="SmartToolHub Home"
-        >
-          <div className="w-8 h-8 rounded-lg bg-[#0a1424] border border-[rgba(10,132,255,0.35)] flex items-center justify-center text-[#0a84ff] shadow-[0_0_12px_rgba(10,132,255,0.2)]">
-            <Zap className="w-4 h-4 fill-current" />
-          </div>
-          <span className="font-display text-xl tracking-[-0.04em] text-[#f2f7ff]">
-            SmartToolHub<span className="text-[#0a84ff]">.</span>
-          </span>
-        </Link>
+    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-md border-b border-gray-200/80 safe-top">
+      <div className="px-4 sm:px-6 h-15 flex items-center justify-between gap-4">
+        {/* Brand Logo & Wordmark (Visible across ALL screen sizes) */}
+        <div className="flex items-center gap-3">
+          <Link
+            href="/"
+            navigate={navigate}
+            className="flex items-center gap-2.5 focus-ring rounded-xl py-1 px-1.5 -ml-1 hover:bg-gray-50 transition-colors"
+            aria-label="SmartToolHub Home"
+          >
+            <SmartToolHubIcon size={32} />
+            <span className="font-display font-extrabold text-lg sm:text-xl tracking-tight text-gray-900 leading-none">
+              SmartToolHub<span className="text-[#0a84ff]">.</span>
+            </span>
+          </Link>
 
-        {/* Zone 2: Navigation Links (Desktop) */}
-        <nav
-          className="hidden md:flex items-center gap-8 text-sm font-medium text-[#9aaccb]"
-          aria-label="Main Navigation"
-        >
-          {NAV_LINKS.map((link) => {
-            const isActive = currentPath === link.href || currentPath.startsWith(`${link.href}/`);
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                navigate={navigate}
-                className={`transition-colors whitespace-nowrap shrink-0 py-1 border-b-2 text-sm focus-ring rounded-sm ${
-                  isActive
-                    ? 'text-[#f2f7ff] border-[#0a84ff] font-semibold'
-                    : 'border-transparent hover:text-[#f2f7ff]'
-                }`}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+          {/* Desktop Breadcrumb indicator */}
+          {currentPath !== '/' && (
+            <div className="hidden lg:flex items-center gap-1.5 text-xs text-gray-400 font-medium ml-2 pl-3 border-l border-gray-200">
+              <ChevronRight className="w-3.5 h-3.5 text-gray-400" />
+              <span className="text-gray-700 font-semibold truncate max-w-xs">
+                {currentPath === '/tools'
+                  ? 'All Tools'
+                  : currentPath.replace('/tools/', '').replace(/-/g, ' ')}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Center / Navigation Links (Desktop) */}
+        <nav className="hidden xl:flex items-center gap-6 text-xs font-semibold text-gray-500">
+          <Link
+            href="/tools"
+            navigate={navigate}
+            className={`transition-colors hover:text-purple-700 ${
+              currentPath === '/tools' ? 'text-purple-700 font-bold' : ''
+            }`}
+          >
+            All Tools
+          </Link>
+          <Link
+            href="/tools?deal=true"
+            navigate={navigate}
+            className="transition-colors hover:text-purple-700"
+          >
+            Deals &amp; Free Tier
+          </Link>
+          <Link
+            href="/pc-tools"
+            navigate={navigate}
+            className="transition-colors hover:text-purple-700"
+          >
+            PC Utilities
+          </Link>
+          <Link
+            href="/guides"
+            navigate={navigate}
+            className="transition-colors hover:text-purple-700"
+          >
+            Guides
+          </Link>
         </nav>
 
-        {/* Zone 3: Actions (PWA Install + Search + Pro CTA + Mobile Menu) */}
-        <div className="flex items-center gap-2.5 shrink-0">
-          {/* PWA In-App Install Trigger */}
+        {/* Actions (PWA + Search + Mobile Menu) */}
+        <div className="flex items-center gap-2.5 ml-auto">
           <PWAInstallButton />
 
-          {/* Quick Search Trigger */}
+          {/* Quick Search Button */}
           <button
             type="button"
             onClick={onOpenSearch}
-            className="flex items-center gap-2 min-h-[44px] h-11 px-3 md:px-3.5 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-xs text-[#9aaccb] hover:text-[#f2f7ff] hover:border-[rgba(143,163,192,0.32)] transition-all focus-ring"
-            aria-label="Search tools and guides"
+            className="flex items-center gap-2 h-10 px-3 rounded-xl bg-gray-50 hover:bg-gray-100 border border-gray-200 text-xs text-gray-600 hover:text-gray-900 transition-all focus-ring touch-press"
+            aria-label="Search tools"
           >
-            <Search className="w-4 h-4 text-[#9aaccb]" />
-            <span className="hidden sm:inline font-mono text-[11px] uppercase tracking-wider">Search</span>
-            <kbd className="hidden lg:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-[#101c33] text-[#9aaccb] rounded border border-[rgba(143,163,192,0.2)]">
-              /
+            <Search className="w-4 h-4 text-gray-400" />
+            <span className="hidden sm:inline">Search...</span>
+            <kbd className="hidden sm:inline font-mono text-[10px] bg-white border border-gray-200 px-1 py-0.2 rounded text-gray-400">
+              ⌘K
             </kbd>
           </button>
 
-          {/* Desktop Pro Primary Button */}
-          <Link
-            href="/pricing"
-            navigate={navigate}
-            className="hidden sm:inline-flex items-center justify-center h-10 px-4 rounded-xl bg-gradient-to-r from-[#0b6bf0] via-[#7a45f5] to-[#d6347f] text-white font-bold text-xs tracking-wide uppercase transition-all hover:brightness-110 hover:shadow-[0_0_20px_rgba(10,132,255,0.35)] active:scale-[0.97] focus-ring"
-          >
-            Pro
-          </Link>
-
-          {/* Mobile Sheet Menu Toggle - 44x44px minimum tap target */}
+          {/* Mobile Menu Drawer Trigger (Hidden on Desktop) */}
           <button
             type="button"
             onClick={onOpenMenu}
-            className="md:hidden flex items-center justify-center min-w-[44px] min-h-[44px] w-11 h-11 rounded-xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] text-[#8fa3c0] hover:text-[#f2f7ff] transition-colors focus-ring"
-            aria-label="Open navigation menu"
+            className="md:hidden w-10 h-10 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-700 hover:text-purple-700 hover:bg-gray-100 transition-all focus-ring touch-press shrink-0"
+            aria-label="Open mobile menu"
           >
-            <Menu className="w-5 h-5" aria-hidden="true" />
+            <Menu className="w-4.5 h-4.5" />
           </button>
         </div>
       </div>

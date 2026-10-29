@@ -781,9 +781,39 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://smarttoolhub.net/saved</loc>
-    <lastmod>2026-10-24</lastmod>
+    <loc>https://smarttoolhub.net/tools/heic-to-jpg-converter</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://smarttoolhub.net/guides/convert-heic-to-jpg-iphone-mac-windows</loc>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://smarttoolhub.net/tools/image-compressor-converter</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://smarttoolhub.net/guides/how-to-compress-images-without-losing-quality</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://smarttoolhub.net/tools/pdf-merge-split</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://smarttoolhub.net/guides/how-to-merge-pdf-files-on-phone</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

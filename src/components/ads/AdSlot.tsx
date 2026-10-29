@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface AdSlotProps {
-  format?: 'banner' | 'rectangle';
+  format?: 'banner' | 'rectangle' | 'horizontal';
+  slotId?: string;
   className?: string;
 }
 
-export const AdSlot: React.FC<AdSlotProps> = ({ format = 'banner', className = '' }) => {
+export const AdSlot: React.FC<AdSlotProps> = ({
+  format = 'banner',
+  slotId,
+  className = '',
+}) => {
   const [isPro, setIsPro] = useState(false);
+  const adRef = useRef<HTMLDivElement>(null);
+  const isPushed = useRef(false);
 
   useEffect(() => {
     try {
@@ -19,29 +26,55 @@ export const AdSlot: React.FC<AdSlotProps> = ({ format = 'banner', className = '
     }
   }, []);
 
-  // Pro users see zero ads
+  useEffect(() => {
+    if (isPro) return;
+    // Safely trigger Google AdSense when script is loaded
+    if (!isPushed.current && typeof window !== 'undefined' && slotId) {
+      try {
+        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+        isPushed.current = true;
+      } catch (err) {
+        // Ignored
+      }
+    }
+  }, [isPro, slotId]);
+
   if (isPro) return null;
 
-  const heightClass = format === 'banner' ? 'h-[100px]' : 'h-[250px]';
+  const minHeight = format === 'rectangle' ? 'min-h-[250px]' : 'min-h-[90px]';
 
   return (
     <aside
       aria-label="Advertisement"
-      className={`w-full my-8 flex flex-col items-center justify-center ${className}`}
+      className={`w-full my-6 flex flex-col items-center justify-center select-none ${className}`}
     >
-      <div className="w-full text-center text-[10px] font-mono uppercase tracking-widest text-[#8fa3c0]/60 mb-1">
-        Advertisement
+      <div className="w-full text-center text-[10px] font-mono uppercase tracking-widest text-gray-400 mb-1.5">
+        Sponsored
       </div>
-      {/* Reserved fixed height container to guarantee zero layout shift (CLS = 0) */}
+      {/* Container with guaranteed CLS = 0 */}
       <div
-        className={`w-full max-w-2xl ${heightClass} rounded-2xl bg-[#0a1424]/80 border border-[rgba(143,163,192,0.12)] flex flex-col items-center justify-center p-4 text-center relative overflow-hidden`}
+        ref={adRef}
+        className={`w-full max-w-3xl ${minHeight} rounded-2xl bg-gray-50/90 border border-gray-200 flex flex-col items-center justify-center p-4 text-center relative overflow-hidden`}
       >
-        <div className="text-xs text-[#8fa3c0] space-y-1">
-          <p className="font-medium text-[#f2f7ff]">Support free everyday AI tools</p>
-          <p className="text-[11px] text-[#8fa3c0]/80">
-            SmartToolHub is independent. Upgrade to Pro for zero ads and higher daily limits.
-          </p>
-        </div>
+        {slotId ? (
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'block', width: '100%', height: '100%' }}
+            data-ad-client="ca-pub-4598132123552240"
+            data-ad-slot={slotId}
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          />
+        ) : (
+          <div className="space-y-1 text-gray-500">
+            <p className="text-xs font-semibold text-gray-800">
+              Support 55+ Free Everyday Tools
+            </p>
+            <p className="text-[11px] text-gray-400 max-w-md mx-auto">
+              SmartToolHub is 100% free and client-side private. Ad revenue supports server maintenance and open-source models.
+            </p>
+          </div>
+        )}
       </div>
     </aside>
   );

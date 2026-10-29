@@ -430,6 +430,71 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
       };
     }
 
+    // 3n. Task Breaker (AI)
+    else if (currentPath === '/tools/task-breaker') {
+      title = 'Task Breaker: Break Down Tasks & Beat Overwhelm';
+      description = 'Break down tasks and overwhelmed to-do lists into calm micro-steps with time estimates. Free AI task breaker with tickable checklists and subtask drilldowns.';
+      schemaJson = {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'WebApplication',
+            'name': 'Task Breaker',
+            'applicationCategory': 'UtilitiesApplication',
+            'url': canonicalUrl,
+            'description': 'Break overwhelming tasks into calm, bite-sized micro-steps with time estimates and tickable checklists.',
+            'offers': { '@type': 'Offer', 'price': '0', 'priceCurrency': 'USD' },
+            'creator': { '@type': 'Person', 'name': 'Dhrumil Aslaliya' },
+          },
+          {
+            '@type': 'BreadcrumbList',
+            'itemListElement': [
+              { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': origin },
+              { '@type': 'ListItem', 'position': 2, 'name': 'Tools', 'item': `${origin}/tools` },
+              { '@type': 'ListItem', 'position': 3, 'name': 'Task Breaker', 'item': canonicalUrl },
+            ],
+          },
+          {
+            '@type': 'FAQPage',
+            'mainEntity': [
+              {
+                '@type': 'Question',
+                'name': 'Why does breaking tasks down help reduce procrastination?',
+                'acceptedAnswer': {
+                  '@type': 'Answer',
+                  'text': 'Procrastination is an emotional regulation problem, not a time management issue. Large goals feel threatening because the path is unclear. Converting them into concrete, small physical steps lowers the required activation energy.',
+                },
+              },
+              {
+                '@type': 'Question',
+                'name': 'Are my tasks or personal notes stored on your server?',
+                'acceptedAnswer': {
+                  '@type': 'Answer',
+                  'text': 'No. Prompts are processed ephemerally by our AI model and immediately discarded. Your checklist checkmark states are saved strictly in your device local storage.',
+                },
+              },
+              {
+                '@type': 'Question',
+                'name': 'What is the difference between Normal and Tiny steps?',
+                'acceptedAnswer': {
+                  '@type': 'Answer',
+                  'text': 'Normal generates 5-7 standard 10-to-25 minute steps. Tiny steps generates 8-12 granular micro-steps (2-10 minutes each), which is especially helpful for ADHD or executive dysfunction.',
+                },
+              },
+              {
+                '@type': 'Question',
+                'name': 'Can I break down an individual step even further?',
+                'acceptedAnswer': {
+                  '@type': 'Answer',
+                  'text': 'Yes. Click Break down this step more on any step to instantly unpack it into bite-sized 2-to-5 minute sub-steps.',
+                },
+              },
+            ],
+          },
+        ],
+      };
+    }
+
     // 4. Other Tools
     else if (currentPath.startsWith('/tools/')) {
       const slug = currentPath.replace('/tools/', '');
@@ -553,7 +618,25 @@ export const MetaManager: React.FC<MetaManagerProps> = ({ currentPath }) => {
       description = 'All tools are free forever. Optional Pro plan for power users wanting higher caps and zero ads via secure hosted checkout.';
     }
 
-    // 12. Dynamic Tool Fallback for all tools in LAUNCH_TOOLS
+    // 12. HEIC to JPG Converter
+    else if (currentPath === '/tools/heic-to-jpg-converter') {
+      title = 'HEIC to JPG Converter: Free, Private, No Upload | SmartToolHub';
+      description = 'Convert HEIC and HEIF photos to JPG, PNG, or WebP right in your browser. Batch conversion, privacy-first, zero uploads, camera GPS removed.';
+    }
+
+    // 13. Image Compressor and Converter
+    else if (currentPath === '/tools/image-compressor-converter') {
+      title = 'Image Compressor & Converter: Free, Private | SmartToolHub';
+      description = 'Compress and convert images online with zero upload. Batch convert PNG to JPG, JPG to WebP, and tune compression quality directly in your browser.';
+    }
+
+    // 14. PDF Merge & Split
+    else if (currentPath === '/tools/pdf-merge-split') {
+      title = 'PDF Merge & Split: Free, Private, In-Browser | SmartToolHub';
+      description = 'Merge PDF files and split pages online with zero upload. Combine multiple PDFs or extract custom page ranges locally in your browser.';
+    }
+
+    // 15. Dynamic Tool Fallback for all tools in LAUNCH_TOOLS
     else if (currentPath.startsWith('/tools/')) {
       const toolSlug = currentPath.replace('/tools/', '').split('?')[0].split('#')[0];
       const matchedTool = LAUNCH_TOOLS.find((t) => t.slug === toolSlug);

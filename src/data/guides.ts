@@ -367,6 +367,169 @@ export const GUIDE_ARTICLES: Record<string, GuideArticle> = {
       },
     ],
   },
+  'convert-heic-to-jpg-iphone-mac-windows': {
+    slug: 'convert-heic-to-jpg-iphone-mac-windows',
+    title: 'How to Convert HEIC Photos to JPG on iPhone, Mac and Windows',
+    summary: 'A complete walkthrough on converting Apple HEIC images to universal JPGs on any device without uploading private photos to third-party clouds.',
+    readTime: '5 min read',
+    lastUpdated: 'October 2026',
+    author: 'Dhrumil Aslaliya',
+    relatedToolSlug: 'heic-to-jpg-converter',
+    relatedToolName: 'HEIC to JPG Converter',
+    sections: [
+      {
+        heading: 'Why Does Apple Use HEIC Instead of JPG?',
+        body: [
+          'Starting with iOS 11 and macOS High Sierra, Apple adopted HEIC (High Efficiency Image Container) based on the modern HEVC compression standard. HEIC stores high-resolution photos using roughly half the storage space of legacy JPEG files while preserving identical visual fidelity and wider 16-bit color gamuts.',
+          'While HEIC works seamlessly across iPhones, iPads, and modern Macs, sharing HEIC images with Windows laptops, older smart TVs, or web forms often leads to frustrating errors: "File format not supported" or blank thumbnails. Converting to standard JPG solves these compatibility headaches instantly.',
+        ],
+      },
+      {
+        heading: 'Method 1: Stop Your iPhone from Taking HEIC (Save Direct JPG)',
+        body: [
+          'If you frequently transfer photos to a Windows PC or upload them to portals that reject HEIC, you can configure your iPhone to capture standard JPEGs natively.',
+          '1. Open the Settings app on your iPhone.',
+          '2. Scroll down and tap "Camera". (Note: on newer iOS versions like iOS 17 and 18, camera settings may also be grouped under Apps > Camera).',
+          '3. Tap "Formats" at the very top.',
+          '4. Select "Most Compatible" instead of "High Efficiency".',
+          'Once enabled, all future still photos will be saved directly as standard .jpg files. Keep in mind that 4K at 60 fps video and 1080p at 240 fps slow-motion still require High Efficiency due to bandwidth limits.',
+        ],
+        callout: 'Sharing Setting: You can also keep High Efficiency for storage savings and tell your iPhone to convert on transfer. Go to Settings > Photos > scroll down to "Transfer to Mac or PC" and tap "Automatic".',
+      },
+      {
+        heading: 'Method 2: Convert HEIC to JPG on Windows Without Installs',
+        body: [
+          'Windows 10 and 11 do not support HEIC files out of the box unless you purchase a paid codec from the Microsoft Store. Instead of paying fees or uploading personal family photos to sketchy file-conversion websites, use our free client-side HEIC to JPG Converter.',
+          'Our tool uses modern WebAssembly and in-browser canvas decoding. You simply drop your .heic or .heif files into the browser. The conversion executes 100% inside your computer RAM with zero data leaving your device. You can adjust output compression quality, convert entire batches, and download a single tidy ZIP.',
+        ],
+      },
+      {
+        heading: 'Method 3: Native Conversion on macOS in Finder',
+        body: [
+          'If you have a Mac running macOS Monterey, Ventura, Sonoma, or Sequoia, Finder has a built-in Quick Action for instant conversion:',
+          '1. In Finder, select one or more .heic photos.',
+          '2. Right-click (or Control-click) the selected files.',
+          '3. Hover over "Quick Actions" and click "Convert Image".',
+          '4. Select "JPEG" as the format and choose your target image size (Actual Size, Large, Medium, or Small).',
+          '5. Click "Convert to JPEG". macOS will generate matching .jpeg copies in the exact same folder within seconds.',
+        ],
+      },
+      {
+        heading: 'Understanding Metadata and Privacy When Converting',
+        body: [
+          'Standard iPhone camera captures embed rich EXIF metadata, including the exact GPS coordinates of your home or office, device serial numbers, lens focal lengths, and timestamps. When converting HEIC images with SmartToolHub, the canvas rendering pipeline automatically strips private GPS geolocation metadata from the resulting JPG, protecting your privacy when uploading to public forums or classifieds.',
+        ],
+      },
+    ],
+  },
+  'how-to-compress-images-without-losing-quality': {
+    slug: 'how-to-compress-images-without-losing-quality',
+    title: 'How to Compress Images Without Losing Visual Quality',
+    summary: 'A practical, technical guide to reducing image file sizes by 60% to 80% using modern WebP encoding, intelligent dimensional downscaling, and perceptual quality tuning.',
+    readTime: '5 min read',
+    lastUpdated: 'October 26, 2026',
+    author: 'Dhrumil Aslaliya',
+    relatedToolSlug: 'image-compressor-converter',
+    relatedToolName: 'Image Compressor and Converter',
+    sections: [
+      {
+        heading: 'The Sweet Spot: Perceptual Lossless Compression',
+        body: [
+          'Every time you upload an image to a website, send an email attachment, or design a presentation, you face a dilemma: crisp visual fidelity versus snappy page load times. Raw smartphone photos and DSLR exports frequently weigh between 5 MB and 25 MB. At that weight, mobile browsers lag, cellular data drains quickly, and email servers bounce messages with size limit errors.',
+          'The secret to professional image compression is understanding perceptual loss: the human eye cannot distinguish subtle pixel-level color quantization differences at standard screen viewing distances. By reducing high-frequency chrominance data while preserving sharp luminance edges, you can discard up to 75% of an image byte payload without noticeable visual degradation.',
+        ],
+      },
+      {
+        heading: 'Lossy vs. Lossless: What Actually Happens to Your Pixels',
+        body: [
+          'Image compression falls into two fundamental categories: lossy and lossless.',
+          'Lossless compression (such as PNG and standard GIF) reorganizes image data and eliminates statistical redundancy without altering a single pixel value. Because no color information is removed, file size savings are modest — typically between 5% and 20%. Lossless formats are ideal for crisp UI screenshots, pixel art, charts with small text, and graphics requiring transparent backgrounds.',
+          'Lossy compression (such as JPEG, WebP, and AVIF) permanently discards visual details that human vision is least sensitive to. By tuning the quality factor between 75 and 85, you achieve dramatic 60% to 80% size reductions with zero discernible softness.',
+        ],
+        callout: 'Rule of Thumb: For photographs and natural scenes, always choose lossy WebP or JPEG at 80% to 85% quality. For technical diagrams and text screenshots, stick with PNG or WebP lossless.',
+      },
+      {
+        heading: 'Why WebP Outperforms Standard JPEG',
+        body: [
+          'Developed by Google and now supported in 97%+ of all active web browsers worldwide, WebP represents the modern standard for web imagery. WebP employs predictive block coding derived from the VP8 video codec, predicting color values based on neighboring pixel blocks and encoding only the difference.',
+          'In head-to-head laboratory tests, WebP images are consistently 25% to 35% smaller than comparable JPEGs at identical perceived visual quality scores (SSIM). Furthermore, WebP natively supports full 8-bit alpha transparency with lossy compression — a capability impossible in traditional JPEG.',
+        ],
+      },
+      {
+        heading: 'Dimensional Resizing: The Biggest File Size Multiplier',
+        body: [
+          'Many users attempt to compress a 48-megapixel (8000 x 6000 px) photo down to 200 KB solely using a quality slider. This approach causes severe blocky compression artifacts. Instead, the single most effective way to shrink an image is reducing its physical pixel dimensions.',
+          'A 4K display only has 3840 horizontal pixels, and standard laptop screens display content inside column widths of 800 to 1200 pixels. Downscaling an 8000px wide photo to 1920px (Full HD) reduces the total pixel count from 48,000,000 pixels to 2,073,600 pixels — an immediate 95.6% reduction in raw pixel data before compression even begins! Pairing reasonable pixel dimensions with an 80% quality slider yields razor-sharp, lightweight files.',
+        ],
+      },
+      {
+        heading: 'Safe, Private Browser-Based Compression',
+        body: [
+          'Traditional online image compressors require you to upload personal photos, receipts, or confidential business documents to third-party cloud servers where they may be stored, analyzed, or leaked. SmartToolHub solves this by executing the entire decompression, canvas resampling, and encoding pipeline client-side directly within your browser RAM using modern Web Workers, createImageBitmap, and HTML5 Canvas APIs.',
+          'Your confidential graphics never travel over the internet, and full control over quality, format, and dimensions remains entirely on your local device.',
+        ],
+      },
+    ],
+  },
+  'how-to-merge-pdf-files-on-phone': {
+    slug: 'how-to-merge-pdf-files-on-phone',
+    title: 'How to Merge PDF Files on Your Phone (iPhone & Android)',
+    summary: 'A step-by-step tutorial on combining multiple PDF documents, receipts, and contracts directly on iOS and Android devices without installing ad-cluttered apps.',
+    readTime: '5 min read',
+    lastUpdated: 'October 26, 2026',
+    author: 'Dhrumil Aslaliya',
+    relatedToolSlug: 'pdf-merge-split',
+    relatedToolName: 'PDF Merge and Split',
+    sections: [
+      {
+        heading: 'The Challenge of Managing PDFs on Mobile Screens',
+        body: [
+          'Smartphones have replaced desktop scanners and laptops for everyday administrative tasks. Whether you are assembling a rental application, submitting medical reimbursement receipts, or sending signed contract agreements to a client, you often find yourself with several fragmented single-page PDFs scattered across your phone downloads and email inboxes.',
+          'App stores are flooded with "free" PDF merger apps that aggressively harvest contact data, watermark your sensitive documents, or lock basic functionality behind expensive weekly subscriptions. Fortunately, you can easily combine documents using native operating system features or private client-side browser tools without paying a penny or sending bank statements to remote cloud servers.',
+        ],
+      },
+      {
+        heading: 'Method 1: Native PDF Merge on iPhone via the Files App',
+        body: [
+          'Every iPhone running iOS 15 or newer has a built-in PDF merger integrated directly into the pre-installed Files app:',
+          '1. Open the "Files" app on your iPhone and navigate to the folder where your target PDFs are stored (e.g., On My iPhone or iCloud Drive).',
+          '2. Tap the circular "..." button in the top right corner and choose "Select".',
+          '3. Tap each PDF document in the sequence you wish to merge them.',
+          '4. Tap the "..." icon in the bottom right corner of the screen.',
+          '5. Select "Create PDF" from the contextual menu.',
+          'iOS will immediately generate a brand-new combined PDF containing all selected pages. Note that Apple merges files strictly in alphabetical order by filename. If page order matters, rename your files with numbered prefixes (01_cover.pdf, 02_agreement.pdf) before selecting.',
+        ],
+        callout: 'Pro Tip on iOS: If you need to reorder pages or extract individual sheets after creating the PDF, open the file in the Files app, swipe from the left edge to reveal the page thumbnail sidebar, and drag pages up or down.',
+      },
+      {
+        heading: 'Method 2: Client-Side Browser Merge on Android and iPhone',
+        body: [
+          'Android devices lack a unified native "Create PDF" action across different manufacturer skins (Samsung One UI, Google Pixel, Xiaomi MIUI). Furthermore, native tools do not let you preview total page counts, drag to rearrange files interactively, or extract specific page ranges.',
+          'SmartToolHub PDF Merge and Split solves this seamlessly across all mobile browsers including Chrome, Safari, and Firefox. Because our tool uses WebAssembly and client-side pdf-lib, the entire document parsing and binary re-stitching pipeline runs inside your phone browser memory.',
+          '1. Open SmartToolHub PDF Merge and Split on your phone browser.',
+          '2. Tap the upload zone to pick your PDF documents from internal storage, Google Drive, or iCloud.',
+          '3. Review the total page count displayed on each file card.',
+          '4. Use the up and down arrow buttons to adjust document ordering.',
+          '5. Tap "Merge PDFs" and immediately download the combined document.',
+        ],
+      },
+      {
+        heading: 'Handling Split Ranges and Password-Protected Files',
+        body: [
+          'Often, combining files requires first extracting relevant excerpts — such as taking pages 1 through 3 from a 50-page employee handbook or splitting a multi-receipt scan into individual files.',
+          'In the Split tab of SmartToolHub, you can enter comma-separated numbers and ranges (e.g. 1-3, 5, 8-10) to export a consolidated subset, or choose "Every page as its own file" to unpack the document into a tidy ZIP archive.',
+          'Important Security Note: If your PDF is encrypted with a password (common with banking statements and payroll stubs), browser-based security prevents unauthorized reading. You must first open the PDF in your default PDF viewer, authenticate with your password, and choose "Print to PDF" to produce an unencrypted copy before merging.',
+        ],
+      },
+      {
+        heading: 'Privacy and Confidentiality for Sensitive Paperwork',
+        body: [
+          'Documents such as tax filings (W-2s, 1099s), medical histories, mortgage paperwork, and lease agreements contain highly sensitive personal information, including social security numbers and banking routing codes. You should never upload these files to public freemium PDF conversion websites.',
+          'By using SmartToolHub, your bytes never leave your physical smartphone. The moment you close the browser tab or tap Reset, all cached file buffers are scrubbed from RAM.',
+        ],
+      },
+    ],
+  },
 };
 
 export const POPULAR_GUIDES: GuideMeta[] = Object.values(GUIDE_ARTICLES);

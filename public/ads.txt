@@ -1,3 +1,3 @@
 # SmartToolHub (smarttoolhub.net) Ads.txt
-# Clean monetization configuration
-google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+# Authorized Google AdSense Publisher
+google.com, pub-4598132123552240, DIRECT, f08c47fec0942fa0

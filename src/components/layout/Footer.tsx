@@ -1,6 +1,7 @@
 import React from 'react';
-import { Zap, ShieldCheck, HeartHandshake } from 'lucide-react';
+import { ShieldCheck, Sparkles, Heart } from 'lucide-react';
 import { Link } from '../../hooks/useRouter.tsx';
+import { ToolFinderLogo } from './ToolFinderLogo.tsx';
 
 interface FooterProps {
   navigate: (path: string) => void;
@@ -8,205 +9,164 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ navigate }) => {
   return (
-    <footer className="w-full bg-[#050a14] border-t border-[rgba(143,163,192,0.14)] mt-20 pb-24 md:pb-12 text-[#8fa3c0]">
-      <div className="max-w-[1200px] mx-auto px-5 py-12">
+    <footer className="w-full bg-white border-t border-gray-200 mt-16 pb-24 md:pb-12 text-gray-500 text-xs">
+      <div className="max-w-7xl mx-auto px-5 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand & Value Col */}
           <div className="lg:col-span-2 space-y-4">
             <Link
               href="/"
               navigate={navigate}
-              className="inline-flex items-center gap-2.5 text-lg font-bold tracking-tight text-[#f2f7ff] focus-ring rounded-lg p-1 -ml-1"
+              className="inline-block focus-ring rounded-lg p-1 -ml-1"
             >
-              <div className="w-7 h-7 rounded-lg bg-[#0a1424] border border-[rgba(10,132,255,0.35)] flex items-center justify-center text-[#0a84ff] shadow-[0_0_12px_rgba(10,132,255,0.2)]">
-                <Zap className="w-3.5 h-3.5 fill-current" />
-              </div>
-              <span className="font-display text-lg text-[#f2f7ff]">
-                SmartToolHub<span className="text-[#0a84ff]">.</span>
-              </span>
+              <ToolFinderLogo size="md" showSubtitle />
             </Link>
-            <p className="text-sm text-[#9aaccb] max-w-sm leading-relaxed">
-              Free AI tools that just work. No sign-up. Results in seconds. Designed for everyday phone and desktop utility.
+            <p className="text-xs sm:text-sm text-gray-500 max-w-sm leading-relaxed">
+              Every tool in our library is verified for immediate execution. No sign-up, zero paywalls, results in seconds.
             </p>
-            <div className="flex items-center gap-2 text-xs text-[#9aaccb]">
-              <ShieldCheck className="w-4 h-4 text-[#34e0a1]" />
-              <span>Independent &amp; privacy-respecting</span>
+            <div className="flex items-center gap-2 text-xs text-purple-700 font-medium">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <span>Independent &amp; privacy-respecting client utilities</span>
             </div>
           </div>
 
-          {/* Quick Tools Col */}
+          {/* Popular Tools Col */}
           <div>
-            <h4 className="text-xs font-mono uppercase tracking-wider text-[#f2f7ff] mb-3">
+            <h4 className="text-xs font-mono uppercase tracking-wider font-bold text-gray-900 mb-3">
               Popular Tools
             </h4>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-xs">
               <li>
                 <Link
                   href="/tools/apple-shortcuts-generator"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
-                  Apple Shortcuts
+                  Apple Shortcuts Generator
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/ai-prompt-improver"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
-                  Prompt Improver
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/tools/ai-email-writer"
-                  navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
-                >
-                  Email Writer
+                  AI Prompt Improver
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tools/formula-helper"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
-                  Excel &amp; Sheets Helper
+                  Excel &amp; Sheets Formulas
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/tools"
+                  href="/tools/pdf-merge"
                   navigate={navigate}
-                  className="text-[#7db8ff] hover:underline transition-colors focus-ring rounded font-medium"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
-                  View all tools &rarr;
+                  Client-Side PDF Merge
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/tools/natural-rewrite"
+                  navigate={navigate}
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
+                >
+                  Natural AI Humanizer
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Software Directory Col */}
+          {/* Categories Col */}
           <div>
-            <h4 className="text-xs font-mono uppercase tracking-wider text-[#f2f7ff] mb-3">
-              Software Hubs
+            <h4 className="text-xs font-mono uppercase tracking-wider font-bold text-gray-900 mb-3">
+              Categories
             </h4>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-xs">
               <li>
                 <Link
-                  href="/pc-tools"
+                  href="/tools?category=apple"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
-                  PC &amp; Windows (20)
+                  Apple &amp; iOS Tools
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/apple-tools"
+                  href="/tools?category=developer"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
-                  Apple &amp; Mac (10)
+                  Developer &amp; CLI
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/android-tools"
+                  href="/tools?category=files"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
-                  Android Power (20)
+                  Files &amp; Privacy
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/compare/wiztree-vs-treesize"
+                  href="/tools?category=ai"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
-                  WizTree vs TreeSize
+                  AI Writing &amp; Work
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/compare/rufus-vs-ventoy"
-                  navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
-                >
-                  Rufus vs Ventoy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/compare/shizuku-adb-wireless-guide"
-                  navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
-                >
-                  Shizuku &amp; ADB Guide
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Company & Legal Col */}
-          <div>
-            <h4 className="text-xs font-mono uppercase tracking-wider text-[#f2f7ff] mb-3">
-              Site &amp; Legal
-            </h4>
-            <ul className="space-y-2 text-sm">
               <li>
                 <Link
                   href="/guides"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
-                  How-To Guides
+                  Guides &amp; Workflows
                 </Link>
               </li>
-              <li>
-                <Link
-                  href="/changelog"
-                  navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
-                >
-                  Changelog &amp; Releases
-                </Link>
-              </li>
+            </ul>
+          </div>
+
+          {/* Legal & Company */}
+          <div>
+            <h4 className="text-xs font-mono uppercase tracking-wider font-bold text-gray-900 mb-3">
+              Information
+            </h4>
+            <ul className="space-y-2 text-xs">
               <li>
                 <Link
                   href="/about"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
-                  About the Site
+                  About the Project
                 </Link>
               </li>
               <li>
                 <Link
                   href="/pricing"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
-                  Pro &amp; Pricing
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
-                >
-                  Contact
+                  Free Tier &amp; Deals
                 </Link>
               </li>
               <li>
                 <Link
                   href="/privacy"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
                   Privacy Policy
                 </Link>
@@ -215,22 +175,31 @@ export const Footer: React.FC<FooterProps> = ({ navigate }) => {
                 <Link
                   href="/terms"
                   navigate={navigate}
-                  className="hover:text-[#7db8ff] transition-colors focus-ring rounded"
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
                 >
                   Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  navigate={navigate}
+                  className="hover:text-purple-700 transition-colors focus-ring rounded"
+                >
+                  Contact &amp; Suggest Tools
                 </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Mandatory Independent Disclaimer & Copyright */}
-        <div className="mt-12 pt-8 border-t border-[rgba(143,163,192,0.1)] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#8fa3c0]/90">
+        {/* Disclaimer & Copyright */}
+        <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-gray-400">
           <p>
-            &copy; {new Date().getFullYear()} SmartToolHub (smarttoolhub.net). Created by Dhrumil Aslaliya. All rights reserved.
+            &copy; {new Date().getFullYear()} SmartToolHub. Independent software directory by Dhrumil Aslaliya.
           </p>
-          <p className="text-center md:text-right text-[#8fa3c0]/75">
-            SmartToolHub is an independent utility website and is not affiliated with, endorsed by, or sponsored by Apple Inc., Google LLC, or Microsoft Corporation.
+          <p className="text-center md:text-right text-gray-400">
+            Independent utility index. Not affiliated with Apple Inc., Google LLC, or Microsoft Corporation.
           </p>
         </div>
       </div>
