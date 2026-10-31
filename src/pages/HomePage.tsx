@@ -52,7 +52,7 @@ export const HomePage: React.FC<HomePageProps> = ({ navigate, onOpenSearch }) =>
           <div className="lg:col-span-7 space-y-4 sm:space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 border border-purple-200/80 text-[11px] sm:text-xs font-semibold text-purple-700">
               <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" />
-              <span>Version 2026.4 · 55+ Verified Utilities</span>
+              <span>Version 2026.4 · 55+ Everyday Utilities</span>
             </div>
 
             <h1 className="text-2xl sm:text-4xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-[1.1]">
@@ -60,7 +60,7 @@ export const HomePage: React.FC<HomePageProps> = ({ navigate, onOpenSearch }) =>
             </h1>
 
             <p className="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed max-w-xl">
-              Zero logins. Zero telemetry. High-performance client-side utilities, Apple automation generators, and AI assistants engineered for instant execution.
+              No sign-up needed. Practical client-side utilities, Apple automation generators, and AI assistants designed for fast everyday execution.
             </p>
 
             <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">

@@ -1,4 +1,4 @@
-import { GuideMeta } from '../types/navigation.ts';
+import type { GuideMeta } from '../types/navigation.ts';
 
 export interface GuideArticle {
   slug: string;

@@ -292,7 +292,7 @@ export default function App() {
           if (currentPath === '/tools/mac-windows-shortcut-translator') {
             return <ShortcutTranslatorPage navigate={navigate} />;
           }
-          if (currentPath === '/tools/batch-qr-code-generator') {
+          if (currentPath === '/tools/batch-qr-code-generator' || currentPath === '/qr-generator') {
             return <BatchQrCodeGeneratorPage navigate={navigate} />;
           }
           if (currentPath === '/tools/android-automation-generator') {

@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { type Request, type Response } from 'express';
 import http from 'http';
 import { createServer as createViteServer } from 'vite';
 import { GoogleGenAI } from '@google/genai';
@@ -7,7 +7,7 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import crypto from 'crypto';
-import { resolveSeo } from './src/server/seoPrerender.ts';
+import { generateSitemapXml, generateFeedXml, injectSeoIntoHtml } from './src/server/seoPrerender.ts';
 
 dotenv.config();
 
@@ -1859,7 +1859,7 @@ function generateLocalFallback(tool: string, input: string): string {
 
 // Explicit SEO endpoints: sitemap.xml, robots.txt, ads.txt, feed.xml
 app.get('/sitemap.xml', (_req: Request, res: Response) => {
-  res.type('application/xml').sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
+  res.type('application/xml').send(generateSitemapXml());
 });
 
 app.get('/robots.txt', (_req: Request, res: Response) => {
@@ -1871,65 +1871,8 @@ app.get('/ads.txt', (_req: Request, res: Response) => {
 });
 
 app.get('/feed.xml', (_req: Request, res: Response) => {
-  res.type('application/rss+xml').sendFile(path.join(__dirname, 'public', 'feed.xml'));
+  res.type('application/rss+xml').send(generateFeedXml());
 });
-
-function injectSeoIntoHtml(rawHtml: string, pathname: string): string {
-  const seo = resolveSeo(pathname);
-  let html = rawHtml;
-
-  // 1. Title
-  html = html.replace(/<title>.*?<\/title>/i, `<title>${seo.title}</title>`);
-
-  // 2. Meta Description
-  html = html.replace(
-    /<meta\s+name=["']description["']\s+content=["'].*?["']\s*\/?>/i,
-    `<meta name="description" content="${seo.description.replace(/"/g, '&quot;')}" />`
-  );
-
-  // 3. Canonical Link
-  html = html.replace(
-    /<link\s+rel=["']canonical["']\s+href=["'].*?["']\s*\/?>/i,
-    `<link rel="canonical" href="${seo.canonicalUrl}" />`
-  );
-
-  // 4. OpenGraph Tags
-  html = html.replace(
-    /<meta\s+property=["']og:title["']\s+content=["'].*?["']\s*\/?>/i,
-    `<meta property="og:title" content="${seo.title.replace(/"/g, '&quot;')}" />`
-  );
-  html = html.replace(
-    /<meta\s+property=["']og:description["']\s+content=["'].*?["']\s*\/?>/i,
-    `<meta property="og:description" content="${seo.description.replace(/"/g, '&quot;')}" />`
-  );
-  html = html.replace(
-    /<meta\s+property=["']og:url["']\s+content=["'].*?["']\s*\/?>/i,
-    `<meta property="og:url" content="${seo.canonicalUrl}" />`
-  );
-
-  // 5. Twitter Card Tags
-  html = html.replace(
-    /<meta\s+name=["']twitter:title["']\s+content=["'].*?["']\s*\/?>/i,
-    `<meta name="twitter:title" content="${seo.title.replace(/"/g, '&quot;')}" />`
-  );
-  html = html.replace(
-    /<meta\s+name=["']twitter:description["']\s+content=["'].*?["']\s*\/?>/i,
-    `<meta name="twitter:description" content="${seo.description.replace(/"/g, '&quot;')}" />`
-  );
-
-  // 6. Schema.org JSON-LD
-  if (seo.schemaJson) {
-    const jsonLdTag = `  <script id="schema-jsonld" type="application/ld+json">\n${JSON.stringify(seo.schemaJson, null, 2)}\n    </script>\n  </head>`;
-    html = html.replace('</head>', jsonLdTag);
-  }
-
-  // 7. Prerendered HTML Content inside #root
-  if (seo.prerenderedHtml) {
-    html = html.replace(/<div id=["']root["']>[\s\S]*?<\/div>/i, `<div id="root">${seo.prerenderedHtml}</div>`);
-  }
-
-  return html;
-}
 
 // Start Server and Mount Vite in dev mode
 async function startServer() {
@@ -1960,8 +1903,8 @@ async function startServer() {
       try {
         let template = fs.readFileSync(path.resolve(__dirname, 'index.html'), 'utf-8');
         template = await vite.transformIndexHtml(req.originalUrl, template);
-        const finalHtml = injectSeoIntoHtml(template, req.path);
-        res.status(200).set({ 'Content-Type': 'text/html' }).send(finalHtml);
+        const { html: finalHtml, statusCode } = injectSeoIntoHtml(template, req.path);
+        res.status(statusCode).set({ 'Content-Type': 'text/html' }).send(finalHtml);
       } catch (e: any) {
         vite.ssrFixStacktrace(e);
         next(e);
@@ -1971,15 +1914,15 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     // Production Mode: Static assets + Server SEO Pre-renderer
-    app.use(express.static(path.join(__dirname, 'dist'), { index: false }));
+    app.use(express.static(path.join(__dirname, 'dist'), { index: false, redirect: false }));
     app.get('*', (req, res, next) => {
       if (req.path.startsWith('/api/') || req.path.includes('.')) {
         return next();
       }
       try {
         const template = fs.readFileSync(path.join(__dirname, 'dist', 'index.html'), 'utf-8');
-        const finalHtml = injectSeoIntoHtml(template, req.path);
-        res.status(200).set({ 'Content-Type': 'text/html' }).send(finalHtml);
+        const { html: finalHtml, statusCode } = injectSeoIntoHtml(template, req.path);
+        res.status(statusCode).set({ 'Content-Type': 'text/html' }).send(finalHtml);
       } catch (err) {
         next(err);
       }

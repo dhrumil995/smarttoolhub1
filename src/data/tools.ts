@@ -1,4 +1,4 @@
-import { ToolMeta } from '../types/navigation.ts';
+import type { ToolMeta } from '../types/navigation.ts';
 
 /**
  * Universal Tool Icon Map strictly conforming to UI Phase 1 specifications.
@@ -349,11 +349,11 @@ export const LAUNCH_TOOLS: ToolMeta[] = [
     id: 'file-transfer-calculator',
     name: 'File Transfer Time Calculator',
     slug: 'file-transfer-time-calculator',
-    description: 'Calculate realistic transfer times for AirDrop, USB-C, Wi-Fi, and 5G with honest speeds.',
+    description: 'Calculate data transfer time with round-trip latency and protocol overhead. Switch between MB/s, Mbps, and GB to check realistic cable and network speeds.',
     category: 'Apple',
     icon: 'ArrowLeftRight',
     type: 'client',
-    keywords: ['file transfer time calculator', 'airdrop speed calculator', 'download time estimator', 'usb c transfer speed', 'gigabit transfer time'],
+    keywords: ['file transfer time calculator', 'file transfer calculator with latency', 'file copy speed calculator', 'calculate data transfer time', 'transfer time'],
     relatedToolSlugs: ['retina-image-size-calculator', 'iphone-charging-time-calculator'],
     guideSlug: 'mastering-apple-shortcuts-ios',
   },
@@ -666,13 +666,13 @@ export const LAUNCH_TOOLS: ToolMeta[] = [
   },
   {
     id: 'batch-qr-code-generator',
-    name: 'Batch QR Code Generator',
+    name: 'Free QR Code Generator (Single & Batch)',
     slug: 'batch-qr-code-generator',
-    description: 'Generate up to 50 custom QR codes in bulk from links or text. Preview in high resolution and download as individual PNGs or a single ZIP archive.',
+    description: 'Create free static QR codes with no sign-up and no expiry. Works offline in your browser with PNG & SVG downloads, custom colors, Wi-Fi, and vCard presets.',
     category: 'Productivity',
     icon: 'QrCode',
     type: 'client',
-    keywords: ['batch qr code generator', 'bulk qr code creator', 'multiple qr codes download zip', 'free bulk qr generator'],
+    keywords: ['free qr code generator', 'static qr code generator no expiry', 'qr code svg download', 'wifi qr code generator', 'batch qr code generator'],
     relatedToolSlugs: ['install-command-generator', 'file-checksum-verifier'],
     guideSlug: 'better-prompts-simple-rules',
     isFlagship: false,

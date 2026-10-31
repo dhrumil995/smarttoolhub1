@@ -27,7 +27,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
           Privacy Policy<span className="text-[#0a84ff]">.</span>
         </h1>
         <p className="body-fluid text-[#8fa3c0] leading-relaxed">
-          Last updated: October 24, 2026. At SmartToolHub (smarttoolhub.net), we believe online tools should deliver immediate value without requiring your personal identity or tracking your activity across the internet.
+          Last updated: October 30, 2026. At SmartToolHub (smarttoolhub.net), we believe online tools should deliver immediate value with no sign-up needed and clear, transparent disclosures about how data, cookies, and ads work.
         </p>
       </header>
 
@@ -35,7 +35,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
           <EyeOff className="w-5 h-5 text-[#0a84ff]" />
-          <div className="font-semibold text-sm text-[#f2f7ff]">No Accounts or Logins</div>
+          <div className="font-semibold text-sm text-[#f2f7ff]">No Sign-Up Needed</div>
           <p className="text-xs text-[#8fa3c0] leading-relaxed">
             You do not need an account, password, credit card, or email address to use any tool on SmartToolHub.
           </p>
@@ -59,9 +59,9 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
 
         <div className="glass-surface p-5 rounded-2xl border border-[rgba(143,163,192,0.12)] space-y-2">
           <Lock className="w-5 h-5 text-[#0a84ff]" />
-          <div className="font-semibold text-sm text-[#f2f7ff]">Zero Data Broker Sharing</div>
+          <div className="font-semibold text-sm text-[#f2f7ff]">Transparent Ad &amp; Cookie Disclosure</div>
           <p className="text-xs text-[#8fa3c0] leading-relaxed">
-            We do not sell personal data, do not build user tracking profiles, and do not use browser fingerprinting scripts.
+            We use Google AdSense to fund free access to our tools and do not sell first-party personal data to data brokers.
           </p>
         </div>
       </div>
@@ -90,22 +90,22 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
           <div className="space-y-2">
             <h3 className="text-sm font-bold text-[#f2f7ff]">A. Client-Side Tools (100% On-Device)</h3>
             <p className="text-xs sm:text-sm">
-              Many tools on our website—including the Battery Wear Calculator, Retina Image Size Calculator, Charging Time Forecaster, Storage Planner, CIDR Subnet Calculator, JSON Formatter, Base64 Encoder, Password Generator, and Word Counter—execute entirely within your browser&apos;s JavaScript engine. When you interact with these tools, your inputs never leave your computer or smartphone.
+              Many tools on our website—including the HEIC to JPG Converter, Image Compressor &amp; Converter, PDF Merge &amp; Split, Battery Wear Calculator, Retina Image Size Calculator, CIDR Subnet Calculator, JSON Formatter, Base64 Encoder, and Password Generator—execute entirely within your browser&apos;s JavaScript engine. When you interact with these tools, your files and inputs never leave your computer or smartphone.
             </p>
           </div>
           <div className="space-y-2">
             <h3 className="text-sm font-bold text-[#f2f7ff]">B. AI-Powered Generation Tools</h3>
             <p className="text-xs sm:text-sm">
-              For tools that require language generation (such as the Apple Shortcuts Generator, AI Email Writer, AI Prompt Improver, Formula Helper, and AI Summarizer), the text you input is securely transmitted over encrypted Transport Layer Security (TLS/HTTPS) to our backend server and passed to the Google Gemini API solely to generate your result.
+              For tools that require language generation (such as the Apple Shortcuts Generator, Task Breaker, AI Email Writer, AI Prompt Improver, Formula Helper, and AI Summarizer), the text you input is transmitted over encrypted Transport Layer Security (TLS/HTTPS) to our backend server and passed to the Google Gemini API solely to generate your result.
             </p>
             <p className="text-xs sm:text-sm">
-              <strong>We do not save your prompts or outputs on our servers.</strong> Once the response is sent back to your browser, it is immediately discarded from memory. Your prompts are not used to train custom commercial machine learning models.
+              <strong>We do not save your prompts or outputs on our servers.</strong> Once the response is sent back to your browser, it is immediately discarded from server memory.
             </p>
           </div>
           <div className="space-y-2">
-            <h3 className="text-sm font-bold text-[#f2f7ff]">C. Standard Server Connection Logs</h3>
+            <h3 className="text-sm font-bold text-[#f2f7ff]">C. Standard Server Logs &amp; Rate Limiting</h3>
             <p className="text-xs sm:text-sm">
-              Like virtually all web servers, our hosting infrastructure automatically logs standard technical request metadata (such as IP address, browser user-agent header, referring URL, and timestamp). These logs are used exclusively for security monitoring, DDoS mitigation, rate-limiting abuse prevention, and infrastructure debugging. They are never linked to personal profiles.
+              Our hosting infrastructure automatically logs standard technical request metadata (IP address, browser user-agent header, referring URL, and timestamp) and maintains a temporary in-memory IP rate-limiting counter (reset every 60 seconds) to prevent automated abuse and DDoS attacks.
             </p>
           </div>
         </section>
@@ -115,7 +115,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
             3. Local Storage and Saved Results
           </h2>
           <p>
-            To let you quickly view previous tool outputs, copy them again, or bookmark your favorite tools, SmartToolHub utilizes standard browser <code className="text-[#7db8ff] bg-[#0a1424] px-1.5 py-0.5 rounded text-xs">localStorage</code>.
+            To let you quickly view previous tool outputs, tick off checklists, or bookmark your favorite tools, SmartToolHub utilizes standard browser <code className="text-[#7db8ff] bg-[#0a1424] px-1.5 py-0.5 rounded text-xs">localStorage</code>.
           </p>
           <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
             <li>This information is stored physically on your own device only.</li>
@@ -126,15 +126,24 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ navigate }) => {
 
         <section className="space-y-3">
           <h2 className="text-xl font-bold font-display text-[#f2f7ff]">
-            4. Cookies and Advertising
+            4. Analytics, Cookies, and Advertising Services Used
           </h2>
           <p>
-            SmartToolHub is provided free of charge without paywalls or subscriptions. To cover hosting and maintenance costs, we display standard display advertisements served by verified advertising partners, such as Google AdSense.
+            SmartToolHub is provided free of charge without paywalls or subscriptions. Below is the exact list of third-party services loaded by this website:
           </p>
-          <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
-            <li>Google and other third-party vendors use cookies to serve ads based on prior visits to this website or other websites on the internet.</li>
-            <li>You may opt out of personalized advertising by visiting Google&apos;s <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-[#0a84ff] hover:underline">Ads Settings</a> or by visiting <a href="https://optout.aboutads.info" target="_blank" rel="noopener noreferrer" className="text-[#0a84ff] hover:underline">aboutads.info</a>.</li>
-            <li>We do not employ invasive canvas fingerprinting, cross-site tracking scripts, or data-broker trackers.</li>
+          <ul className="list-disc pl-5 space-y-2 text-xs sm:text-sm">
+            <li>
+              <strong>Google AdSense (<code className="text-[#7db8ff]">ca-pub-4598132123552240</code>):</strong> We load the Google AdSense script (<code className="text-[#7db8ff]">pagead2.googlesyndication.com</code>) to display advertisements. Google and its certified advertising partners may set and read cookies or use web beacons to serve ads based on your prior visits to this or other websites, limit ad frequency, and measure ad performance.
+            </li>
+            <li>
+              <strong>Opting Out of Personalized Ads:</strong> You can manage or opt out of personalized advertising at any time by visiting Google&apos;s <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-[#0a84ff] hover:underline">Ads Settings</a> or <a href="https://optout.aboutads.info" target="_blank" rel="noopener noreferrer" className="text-[#0a84ff] hover:underline">aboutads.info</a>.
+            </li>
+            <li>
+              <strong>Analytics Services:</strong> We do <strong>not</strong> currently use Google Analytics, Meta Pixel, Hotjar, Mixpanel, or any third-party behavioral session-recording scripts. Only standard server request logs and temporary in-memory rate-limit counters are used for operational stability.
+            </li>
+            <li>
+              <strong>Google Fonts:</strong> We load the Plus Jakarta Sans and Geist Mono typefaces from <code className="text-[#7db8ff]">fonts.googleapis.com</code> and <code className="text-[#7db8ff]">fonts.gstatic.com</code>.
+            </li>
           </ul>
         </section>
 

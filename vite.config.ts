@@ -11,7 +11,20 @@ export default defineConfig(() => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['favicon.ico', 'icon.svg', 'manifest.json', 'robots.txt', 'sitemap.xml', 'ads.txt'],
+        includeAssets: [
+          'favicon.ico',
+          'icon.svg',
+          'manifest.json',
+          'robots.txt',
+          'sitemap.xml',
+          'feed.xml',
+          'ads.txt',
+          'og-image.png',
+          'og-tools.png',
+          'og-directory.png',
+          'og-compare.png',
+          'og-guides.png',
+        ],
         manifest: {
           id: '/',
           name: 'SmartToolHub - Free Everyday AI Tools',
@@ -33,6 +46,13 @@ export default defineConfig(() => {
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+          navigateFallbackDenylist: [
+            /^\/api\//,
+            /^\/sitemap\.xml$/,
+            /^\/robots\.txt$/,
+            /^\/feed\.xml$/,
+            /^\/ads\.txt$/,
+          ],
           runtimeCaching: [
             {
               urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
