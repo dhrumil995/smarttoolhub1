@@ -131,6 +131,7 @@ export const GuideDetailPage: React.FC<GuideDetailPageProps> = ({ slug, navigate
       trimmed.startsWith('brew ') ||
       trimmed.startsWith('smartctl ') ||
       trimmed.startsWith('scrcpy ') ||
+      trimmed.startsWith('adb ') ||
       trimmed.startsWith('pkg ') ||
       trimmed.startsWith('::') ||
       trimmed.startsWith('#b::') ||

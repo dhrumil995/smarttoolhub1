@@ -1,51 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>SmartToolHub - Curated Software, Privacy Utilities and Developer Tools</title>
+    <title>SmartToolHub - Everyday Web Tools, Software Directories &amp; Guides</title>
     <link>https://smarttoolhub.net</link>
-    <description>Updates, release changelogs, and deep-dive technical benchmarks from SmartToolHub.</description>
+    <description>Practical guides, software comparisons, and browser-based utilities from SmartToolHub.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 22 Oct 2026 21:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 12:00:00 +0000</lastBuildDate>
     <atom:link href="https://smarttoolhub.net/feed.xml" rel="self" type="application/rss+xml"/>
-
     <item>
-      <title>v2.4: 50 Curated Software Profiles and Head-to-Head Comparisons</title>
-      <link>https://smarttoolhub.net/changelog</link>
-      <guid>https://smarttoolhub.net/changelog#v2.4</guid>
-      <pubDate>Thu, 22 Oct 2026 18:00:00 +0000</pubDate>
-      <description>Released 50 verified application profiles across PC, Apple, and Android directories with honest drawbacks, verified winget/cask commands, and 5 head-to-head comparison guides.</description>
+      <title>How to Build Your First iPhone Shortcut in Under 3 Minutes</title>
+      <link>https://smarttoolhub.net/guides/build-first-iphone-shortcut</link>
+      <guid>https://smarttoolhub.net/guides/build-first-iphone-shortcut</guid>
+      <pubDate>Thu, 29 Oct 2026 12:00:00 +0000</pubDate>
+      <description>A step-by-step walkthrough of creating automated morning routines and photo actions using Apple Shortcuts.</description>
     </item>
 
     <item>
-      <title>Rufus vs Ventoy: Which Bootable USB Creator Should You Choose?</title>
-      <link>https://smarttoolhub.net/compare/rufus-vs-ventoy</link>
-      <guid>https://smarttoolhub.net/compare/rufus-vs-ventoy</guid>
-      <pubDate>Wed, 21 Oct 2026 12:00:00 +0000</pubDate>
-      <description>In-depth technical breakdown comparing single-OS partition flashing with Rufus against multi-ISO drag-and-drop Ventoy drive architecture.</description>
+      <title>How to Get Exact AI Answers with 3 Simple Prompt Rules</title>
+      <link>https://smarttoolhub.net/guides/better-prompts-simple-rules</link>
+      <guid>https://smarttoolhub.net/guides/better-prompts-simple-rules</guid>
+      <pubDate>Thu, 29 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Stop getting generic answers. Learn how context, role, and output format change everything.</description>
     </item>
 
     <item>
-      <title>WizTree vs TreeSize Free: High-Speed NTFS Disk Analysis Benchmark</title>
+      <title>Convert Plain English Questions into Excel and Sheets Formulas</title>
+      <link>https://smarttoolhub.net/guides/spreadsheet-formulas-plain-english</link>
+      <guid>https://smarttoolhub.net/guides/spreadsheet-formulas-plain-english</guid>
+      <pubDate>Thu, 29 Oct 2026 12:00:00 +0000</pubDate>
+      <description>How to describe lookups, date calculations, and conditionals without memorizing syntax.</description>
+    </item>
+
+    <item>
+      <title>How to Set Up a Fresh Windows PC in Under 5 Minutes Using winget</title>
+      <link>https://smarttoolhub.net/guides/windows-winget-setup-guide</link>
+      <guid>https://smarttoolhub.net/guides/windows-winget-setup-guide</guid>
+      <pubDate>Thu, 29 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Automate software installation on new or reformatted Windows 10/11 computers without clicking through web downloaders or unchecking bundled adware.</description>
+    </item>
+
+    <item>
+      <title>How to Enable Shizuku on Android (Wireless ADB &amp; Fixes)</title>
+      <link>https://smarttoolhub.net/guides/shizuku-wireless-adb-walkthrough</link>
+      <guid>https://smarttoolhub.net/guides/shizuku-wireless-adb-walkthrough</guid>
+      <pubDate>Thu, 29 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Learn how to enable Shizuku on Android with Wireless Debugging, fix &quot;Shizuku pairing failed&quot; errors, or start Shizuku without wireless debugging via USB.</description>
+    </item>
+
+    <item>
+      <title>Mastering macOS Keyboard Navigation for Windows Switchers</title>
+      <link>https://smarttoolhub.net/guides/mac-keyboard-shortcuts-power-user</link>
+      <guid>https://smarttoolhub.net/guides/mac-keyboard-shortcuts-power-user</guid>
+      <pubDate>Thu, 29 Oct 2026 12:00:00 +0000</pubDate>
+      <description>A practical guide to bridging muscle memory between Windows and macOS: Option vs Command navigation, window snapping, and app switching.</description>
+    </item>
+
+    <item>
+      <title>How to Check SSD and Hard Drive Health with S.M.A.R.T. Telemetry</title>
+      <link>https://smarttoolhub.net/guides/check-ssd-health-smart-guide</link>
+      <guid>https://smarttoolhub.net/guides/check-ssd-health-smart-guide</guid>
+      <pubDate>Thu, 29 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Learn how to read SSD wear percentage, reallocated bad sectors, and total bytes written (TBW) before catastrophic drive failure occurs.</description>
+    </item>
+
+    <item>
+      <title>Automate Daily Windows Clicks and Text Expansion with AutoHotkey v2</title>
+      <link>https://smarttoolhub.net/guides/autohotkey-v2-beginners-guide</link>
+      <guid>https://smarttoolhub.net/guides/autohotkey-v2-beginners-guide</guid>
+      <pubDate>Thu, 29 Oct 2026 12:00:00 +0000</pubDate>
+      <description>How to write lightweight AutoHotkey v2 scripts to expand text snippets, remap awkward keys, and streamline repetitive workflow clicks.</description>
+    </item>
+
+    <item>
+      <title>How to Convert HEIC Photos to JPG on iPhone, Mac and Windows</title>
+      <link>https://smarttoolhub.net/guides/convert-heic-to-jpg-iphone-mac-windows</link>
+      <guid>https://smarttoolhub.net/guides/convert-heic-to-jpg-iphone-mac-windows</guid>
+      <pubDate>Thu, 29 Oct 2026 12:00:00 +0000</pubDate>
+      <description>A complete walkthrough on converting Apple HEIC images to universal JPGs on any device without uploading private photos to third-party clouds.</description>
+    </item>
+
+    <item>
+      <title>How to Compress Images Without Losing Visual Quality</title>
+      <link>https://smarttoolhub.net/guides/how-to-compress-images-without-losing-quality</link>
+      <guid>https://smarttoolhub.net/guides/how-to-compress-images-without-losing-quality</guid>
+      <pubDate>Thu, 29 Oct 2026 12:00:00 +0000</pubDate>
+      <description>A practical, technical guide to reducing image file sizes by 60% to 80% using modern WebP encoding, intelligent dimensional downscaling, and perceptual quality tuning.</description>
+    </item>
+
+    <item>
+      <title>How to Merge PDF Files on Your Phone (iPhone &amp; Android)</title>
+      <link>https://smarttoolhub.net/guides/how-to-merge-pdf-files-on-phone</link>
+      <guid>https://smarttoolhub.net/guides/how-to-merge-pdf-files-on-phone</guid>
+      <pubDate>Thu, 29 Oct 2026 12:00:00 +0000</pubDate>
+      <description>A step-by-step tutorial on combining multiple PDF documents, receipts, and contracts directly on iOS and Android devices without installing ad-cluttered apps.</description>
+    </item>
+
+    <item>
+      <title>WizTree vs TreeSize Free: Which Disk Analyzer Should You Use?: A detailed, objective comparison of the two leading Windows storage analyzers: speed benchmarks, MFT scanning, visual treemaps, and file exports.</title>
       <link>https://smarttoolhub.net/compare/wiztree-vs-treesize</link>
       <guid>https://smarttoolhub.net/compare/wiztree-vs-treesize</guid>
-      <pubDate>Tue, 20 Oct 2026 09:30:00 +0000</pubDate>
-      <description>Benchmark comparing Master File Table (MFT) scanning speeds, network share support, and RAM usage on Windows 11.</description>
+      <pubDate>Wed, 28 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Both utilities are far faster and clearer than the default Windows Settings storage screen. Pick WizTree if fast scan speed and visual color-coded treemaps are your top priority on a personal Windows PC. Pick TreeSize Free if you prefer classic hierarchical folder trees, need to scan network drives, or want business licensing options.</description>
     </item>
 
     <item>
-      <title>How to Use Shizuku for Wireless ADB on Android 11+</title>
-      <link>https://smarttoolhub.net/guides/shizuku-wireless-adb-guide</link>
-      <guid>https://smarttoolhub.net/guides/shizuku-wireless-adb-guide</guid>
-      <pubDate>Mon, 19 Oct 2026 14:00:00 +0000</pubDate>
-      <description>Complete tutorial on pairing Android Wireless Debugging on device to grant elevated Shizuku permissions without a PC.</description>
+      <title>Rufus vs Ventoy: Which Bootable USB Creator Is Best for You?: Comparing single-image dedicated USB flashing in Rufus against multi-ISO drag-and-drop boot drives in Ventoy.</title>
+      <link>https://smarttoolhub.net/compare/rufus-vs-ventoy</link>
+      <guid>https://smarttoolhub.net/compare/rufus-vs-ventoy</guid>
+      <pubDate>Wed, 28 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Pick Rufus when you want to create one dedicated bootable USB installer—especially if you want checkboxes to customize Windows 11 setup (such as creating a local account or skipping hardware checks). Pick Ventoy when you have a 32 GB or larger USB drive and want to drop multiple Windows, Linux, and rescue ISOs onto one stick without reformatting each time.</description>
     </item>
 
     <item>
-      <title>v2.3: Automation and Command Helpers with Gemini 2.5 Flash</title>
-      <link>https://smarttoolhub.net/changelog</link>
-      <guid>https://smarttoolhub.net/changelog#v2.3</guid>
-      <pubDate>Fri, 16 Oct 2026 10:00:00 +0000</pubDate>
-      <description>Released Android Automation Generator, AutoHotkey v2 Script Generator, ADB Command Builder, and Command Explainer.</description>
+      <title>PowerToys vs Flow Launcher: Windows Launcher &amp; Utility Comparison: Comparing Microsoft’s open-source system utility suite against the lightweight, plugin-driven Flow Launcher for Windows 10 and 11.</title>
+      <link>https://smarttoolhub.net/compare/powertoys-vs-flow-launcher</link>
+      <guid>https://smarttoolhub.net/compare/powertoys-vs-flow-launcher</guid>
+      <pubDate>Wed, 28 Oct 2026 12:00:00 +0000</pubDate>
+      <description>You do not have to choose strictly one or the other—many Windows users run both together. Pick Microsoft PowerToys for its 20+ desktop tools like FancyZones window snapping, screen OCR Text Extractor, and Color Picker. Pick Flow Launcher if your priority is a fast Alt+Space keyboard search bar with instant Everything file indexing and community plugins.</description>
+    </item>
+
+    <item>
+      <title>iMazing vs 3uTools: iPhone Backup, Features &amp; Pricing Comparison: A plain-language comparison of iMazing, 3uTools, and Apple’s free built-in backup tools for Mac and Windows—covering features, pricing, message exports, and privacy.</title>
+      <link>https://smarttoolhub.net/compare/3utools-vs-imazing</link>
+      <guid>https://smarttoolhub.net/compare/3utools-vs-imazing</guid>
+      <pubDate>Wed, 28 Oct 2026 12:00:00 +0000</pubDate>
+      <description>For routine full backups, use Apple’s free built-in tools (Finder on Mac or Apple Devices on Windows). Between the two third-party utilities, pick iMazing if you need to extract text messages, WhatsApp chats, voicemails, or photos on Mac or Windows while keeping your backup data private on your own computer. Pick 3uTools only if you are on Windows, need a free diagnostic readout or IPSW firmware flasher, and are comfortable using closed-source freeware that connects to remote servers.</description>
+    </item>
+
+    <item>
+      <title>Shizuku &amp; ADB Wireless Setup Guide: Grant Android Privileges Without Root: Step-by-step setup guide for pairing Shizuku via Android Wireless Debugging to grant secure elevated permissions without a PC.</title>
+      <link>https://smarttoolhub.net/compare/shizuku-adb-wireless-guide</link>
+      <guid>https://smarttoolhub.net/compare/shizuku-adb-wireless-guide</guid>
+      <pubDate>Wed, 28 Oct 2026 12:00:00 +0000</pubDate>
+      <description>Shizuku is one of the most useful tools in modern Android customization. It allows apps to execute ADB-level commands directly on-device without root. For initial setup on Android 11+, all you need is local Wi-Fi and Wireless Debugging. For older devices or firmware flashing, standard ADB over a USB cable remains essential.</description>
     </item>
   </channel>
 </rss>

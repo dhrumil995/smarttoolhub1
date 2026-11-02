@@ -12,7 +12,7 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
     "faqs": [
       {
         "question": "What is the downloaded .shortcut file?",
-        "answer": "The .shortcut file is Apple\\"
+        "answer": "The .shortcut file is Apple's native property list format. When opened on an iPhone, iPad, or Mac, the Shortcuts app immediately asks to add the shortcut to your library."
       },
       {
         "question": "Do I need a Mac or a computer to use this?",
@@ -24,7 +24,7 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
       },
       {
         "question": "Are there any security risks with these shortcuts?",
-        "answer": "Shortcuts created through the Apple Shortcuts app run within Apple\\"
+        "answer": "Shortcuts created through the Apple Shortcuts app run within Apple's secure sandbox. The app asks for your explicit permission the first time a shortcut accesses your Location, Contacts, or Photos."
       }
     ]
   },
@@ -55,7 +55,7 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
     "subheading": "Write ready-to-send emails in seconds. Pick your tone, add your main points, and get a clear subject line plus an email body ready to paste.",
     "faqs": [
       {
-        "question": "What does the &quot;Make it shorter&quot; button do?",
+        "question": "What does the \"Make it shorter\" button do?",
         "answer": "It condenses your generated email down to under 70 words by removing pleasantries and wordy clauses while keeping the subject line, main request, and call to action intact."
       },
       {
@@ -475,23 +475,24 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
   },
   "flashcard-quiz-maker": {
     "heading": "Flashcard and Quiz Maker",
-    "subheading": "Transform rough study notes, lecture slides, and textbook chapters into 10 interactive flippable flashcards and self-testing multiple-choice quizzes. Built for active recall.",
+    "subheading": "Turn class notes, textbook chapters, or study guides into 10 flippable flashcards and a 4-question multiple-choice practice quiz. Built for students, teachers, and self-learners.",
+    "extraHtml": `<section style="margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem;"><div style="background: #0a1424; border: 1px solid rgba(143,163,192,0.18); border-radius: 0.75rem; padding: 1.25rem;"><h2 style="font-size: 1.2rem; font-weight: 700; color: #f2f7ff; margin: 0 0 0.5rem;">How It Works</h2><p style="color: #8fa3c0; font-size: 0.92rem; line-height: 1.6; margin: 0 0 0.75rem;">Paste your lecture notes, textbook excerpt, or study guide and click Generate. The tool picks out key terms, definitions, and facts and organizes them into two study modes for students, teachers, and self-learners:</p><ul style="color: #d1dced; font-size: 0.92rem; line-height: 1.6; margin: 0; padding-left: 1.25rem;"><li><strong>10 Flippable Flashcards:</strong> Each card shows a question or term on the front and a concise answer on the back.</li><li><strong>4-Question Self-Test Quiz:</strong> Multiple-choice questions with instant right/wrong feedback and a short explanation for each answer.</li><li><strong>Copy &amp; Export:</strong> Copy the generated Q&amp;A list to paste into your notes, Anki, or Quizlet.</li></ul></div><div style="background: #0a1424; border: 1px solid rgba(143,163,192,0.18); border-radius: 0.75rem; padding: 1.25rem;"><h2 style="font-size: 1.2rem; font-weight: 700; color: #f2f7ff; margin: 0 0 0.75rem;">3 Example Inputs You Can Try</h2><ol style="color: #d1dced; font-size: 0.92rem; line-height: 1.6; margin: 0; padding-left: 1.25rem;"><li><strong>Biology &amp; Science Notes:</strong> &ldquo;Mitosis divides one somatic cell into 2 identical diploid cells for growth and tissue repair. Meiosis divides a germ cell twice to form 4 genetically diverse haploid gametes. Cellular respiration produces ATP in the mitochondria through glycolysis, the Krebs cycle, and the electron transport chain.&rdquo;</li><li><strong>History &amp; Civics Summary:</strong> &ldquo;The U.S. Constitution separates federal power into three branches: the Legislative branch (Congress) makes laws and controls the budget, the Executive branch (President) enforces laws and commands the armed forces, and the Judicial branch (Supreme Court) interprets laws and reviews constitutionality.&rdquo;</li><li><strong>Web Development &amp; IT Notes:</strong> &ldquo;HTTP status code 200 OK means a request succeeded, 301 means a permanent redirect, 404 means the requested resource was not found, and 500 means an internal server error occurred. In JavaScript, async functions always return a Promise, and the await keyword pauses execution until that Promise settles.&rdquo;</li></ol></div></section>`,
     "faqs": [
       {
-        "question": "How does the flashcard flip animation work with prefers-reduced-motion?",
-        "answer": "If your system has reduced-motion enabled in iOS or macOS settings, the 3D rotation is automatically disabled and replaced with an immediate, accessible opacity swap."
+        "question": "Who is the Flashcard and Quiz Maker designed for?",
+        "answer": "It is built for high school and college students studying for tests, teachers making quick review questions from lesson notes, and self-learners studying programming, certifications, or new languages."
       },
       {
-        "question": "How many flashcards are created per generation?",
-        "answer": "The tool extracts the top 10 most critical high-yield concepts from your notes, ensuring focused review rather than overwhelming volume."
+        "question": "How many flashcards and quiz questions does it create?",
+        "answer": "Each run creates 10 flippable question-and-answer flashcards and 4 multiple-choice quiz questions with answer explanations based on the notes you paste."
       },
       {
-        "question": "Can I use this for foreign vocabulary and languages?",
-        "answer": "Yes. It works with Spanish, French, German, Mandarin, Japanese, and other languages, creating vocabulary pairs and sentence translation cards."
+        "question": "Can I use this tool for foreign language vocabulary?",
+        "answer": "Yes. You can paste vocabulary lists or grammar notes in Spanish, French, German, Japanese, Mandarin, and other languages to create translation and usage flashcards."
       },
       {
-        "question": "Are my study notes saved or trained on?",
-        "answer": "No. SmartToolHub operates strictly ephemeral prompts; notes are processed in memory and never stored or used to train public models."
+        "question": "Are my pasted study notes saved on your server?",
+        "answer": "No. Your notes are sent only to generate your flashcards and quiz in memory and are not stored in a database or used to train AI models."
       }
     ]
   },
@@ -823,7 +824,7 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
       },
       {
         "question": "What is a wildcard mask and where is it used?",
-        "answer": "A wildcard mask is the inverted representation of a subnet mask where 0-bits indicate matching bits and 1-bits indicate \"don\\"
+        "answer": "A wildcard mask is the inverted representation of a subnet mask where 0-bits indicate matching bits and 1-bits indicate \"don't care\" bits. They are used in Cisco IOS Access Control Lists (ACLs) and OSPF router configurations."
       },
       {
         "question": "How do IPv6 prefixes differ from IPv4 subnets?",
@@ -1082,8 +1083,8 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
     ]
   },
   "cron-expression-generator": {
-    "heading": "Cron Expression Generator &amp; Explainer",
-    "subheading": "",
+    "heading": "Cron Expression Generator & Explainer",
+    "subheading": "Generate, test, and translate 5-part Linux crontab schedules into plain English with upcoming execution times.",
     "faqs": [
       {
         "question": "What is the standard order of fields in a Linux crontab?",
@@ -1104,8 +1105,8 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
     ]
   },
   "regex-tester-explainer": {
-    "heading": "Regex Pattern Tester &amp; Explainer",
-    "subheading": "",
+    "heading": "Regex Pattern Tester & Explainer",
+    "subheading": "Test regular expressions in real time with capture group breakdowns, match highlighting, and common pattern presets.",
     "faqs": [
       {
         "question": "What do the regex flags g, i, and m mean?",
@@ -1117,13 +1118,13 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
       },
       {
         "question": "Why did my regex match zero results?",
-        "answer": "Check for unescaped special characters like `.` (matches any character unless escaped as `\\\\.`), `/`, `(`, or `[`. Also check whether letter casing matters if the `i` flag is omitted."
+        "answer": "Check for unescaped special characters like `.` (matches any character unless escaped as `\\.`), `/`, `(`, or `[`. Also check whether letter casing matters if the `i` flag is omitted."
       }
     ]
   },
   "markdown-to-html-converter": {
-    "heading": "$1",
-    "subheading": "",
+    "heading": "Markdown to Clean HTML Converter",
+    "subheading": "Convert Markdown into clean, semantic HTML5 with live side-by-side preview and one-click code copy.",
     "faqs": [
       {
         "question": "Does this converter preserve clean semantic HTML tags?",
@@ -1140,8 +1141,8 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
     ]
   },
   "css-box-shadow-generator": {
-    "heading": "CSS Box Shadow &amp; Glow Generator",
-    "subheading": "",
+    "heading": "CSS Box Shadow & Glow Generator",
+    "subheading": "Design layered CSS box-shadow and dark-mode glow effects visually with live card preview and instant CSS output.",
     "faqs": [
       {
         "question": "What is the difference between blur and spread in CSS box-shadow?",
@@ -1158,12 +1159,12 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
     ]
   },
   "json-yaml-converter": {
-    "heading": "JSON to YAML &amp; YAML to JSON Converter",
-    "subheading": "",
+    "heading": "JSON to YAML & YAML to JSON Converter",
+    "subheading": "Convert between JSON and YAML formats with syntax validation, 2-space indentation, and instant clipboard copy.",
     "faqs": [
       {
         "question": "Why convert between JSON and YAML?",
-        "answer": "JSON is the standard format for web APIs and application data. YAML (YAML Ain\\"
+        "answer": "JSON is the standard format for web APIs and application data. YAML (YAML Ain't Markup Language) is preferred for human-readable DevOps configuration files like Docker Compose, Kubernetes manifests, GitHub Actions, and Helm charts."
       },
       {
         "question": "Does this converter validate syntax errors?",
@@ -1176,8 +1177,8 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
     ]
   },
   "base64-file-converter": {
-    "heading": "Base64 Encoder &amp; Decoder (Text &amp; Files)",
-    "subheading": "",
+    "heading": "Base64 Encoder & Decoder (Text & Files)",
+    "subheading": "Encode and decode UTF-8 text or binary files to Base64 strings and Data URIs locally in your browser.",
     "faqs": [
       {
         "question": "What is Base64 encoding used for?",
@@ -1194,8 +1195,8 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
     ]
   },
   "url-encoder-decoder": {
-    "heading": "URL Encoder &amp; Decoder",
-    "subheading": "",
+    "heading": "URL Encoder & Decoder",
+    "subheading": "Percent-encode and decode URLs and query string parameters with a live key-value query parser table.",
     "faqs": [
       {
         "question": "What is the difference between encodeURI and encodeURIComponent?",
@@ -1213,7 +1214,7 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
   },
   "lorem-ipsum-generator": {
     "heading": "Realistic Placeholder Text Generator",
-    "subheading": "",
+    "subheading": "Generate realistic English UI placeholder copy, developer documentation snippets, or classic Latin Lorem Ipsum.",
     "faqs": [
       {
         "question": "Why use realistic placeholder text instead of standard Latin Lorem Ipsum?",
@@ -1230,8 +1231,8 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
     ]
   },
   "password-entropy-generator": {
-    "heading": "Cryptographic Password &amp; Entropy Generator",
-    "subheading": "",
+    "heading": "Cryptographic Password & Entropy Generator",
+    "subheading": "Generate random passwords and passphrases using Web Crypto API with real-time Shannon entropy (bits) calculation.",
     "faqs": [
       {
         "question": "How does window.crypto.getRandomValues ensure security?",
@@ -1248,8 +1249,8 @@ export const TOOL_SEO_DATA: Record<string, ToolPageSeoEntry> = {
     ]
   },
   "mac-address-formatter": {
-    "heading": "MAC Address Formatter &amp; Vendor Lookup",
-    "subheading": "",
+    "heading": "MAC Address Formatter & Vendor Lookup",
+    "subheading": "Convert MAC addresses between colon, hyphen, Cisco dot, and bare hex formats with OUI vendor identification.",
     "faqs": [
       {
         "question": "Why are there multiple different MAC address formats?",

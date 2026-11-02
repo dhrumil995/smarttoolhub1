@@ -32,9 +32,9 @@ export const FlashcardsQuizPage: React.FC<FlashcardsQuizPageProps> = ({ navigate
   const relatedGuide = POPULAR_GUIDES.find((g) => g.slug === 'better-prompts-simple-rules') || POPULAR_GUIDES[0];
 
   const exampleChips = [
-    'Cellular biology: mitosis, meiosis, and ATP synthesis notes',
-    'World War II timeline, major treaties, and key figures',
-    'JavaScript ES6 promises, async/await, and event loop notes',
+    'Mitosis divides one somatic cell into 2 identical diploid cells for growth and tissue repair. Meiosis divides a germ cell twice to form 4 genetically diverse haploid gametes. Cellular respiration produces ATP in the mitochondria through glycolysis, the Krebs cycle, and the electron transport chain.',
+    'The U.S. Constitution separates federal power into three branches: the Legislative branch (Congress) makes laws and controls the budget, the Executive branch (President) enforces laws and commands the armed forces, and the Judicial branch (Supreme Court) interprets laws and reviews constitutionality.',
+    'HTTP status code 200 OK means a request succeeded, 301 means a permanent redirect, 404 means the requested resource was not found, and 500 means an internal server error occurred. In JavaScript, async functions always return a Promise, and the await keyword pauses execution until that Promise settles.',
   ];
 
   const handleNextCard = (total: number) => {
@@ -62,15 +62,15 @@ export const FlashcardsQuizPage: React.FC<FlashcardsQuizPageProps> = ({ navigate
     <ToolPageTemplate
       tool={tool}
       heading="Flashcard and Quiz Maker"
-      subheading="Transform rough study notes, lecture slides, and textbook chapters into 10 interactive flippable flashcards and self-testing multiple-choice quizzes. Built for active recall."
-      inputLabel="Paste your lecture notes, textbook text, or concept list"
-      inputPlaceholder="e.g. Paste notes on cell biology, European history, Python data structures, or legal contract clauses..."
+      subheading="Turn class notes, textbook chapters, or study guides into 10 flippable flashcards and a 4-question multiple-choice practice quiz. Built for students, teachers, and self-learners."
+      inputLabel="Paste your class notes, textbook excerpt, or study list"
+      inputPlaceholder="Paste a paragraph or bulleted list from your lecture notes, textbook chapter, vocabulary list, or certification guide..."
       examplePrompt={exampleChips[0]}
       exampleChips={exampleChips}
       generateButtonText="Generate Flashcards & Quiz"
       apiEndpoint="/api/flashcards-quiz"
       requestPayload={(input) => ({ notes: input })}
-      lastUpdated="October 2026"
+      lastUpdated="November 2026"
       navigate={navigate}
       customResultRenderer={({ result, rawData, onCopy, copied }) => {
         const flashcards: Flashcard[] = rawData?.flashcards || [
@@ -294,69 +294,130 @@ export const FlashcardsQuizPage: React.FC<FlashcardsQuizPageProps> = ({ navigate
         );
       }}
       whatItDoesContent={
-        <div className="space-y-3">
-          <p>
-            The Flashcard and Quiz Maker turns dense study notes and lectures into high-yield, interactive active recall systems. Cognitive science demonstrates that passively re-reading highlighting notes produces a false "illusion of competence." In contrast, forcing your brain to retrieve knowledge through flashcards and multiple-choice questions dramatically accelerates long-term retention.
-          </p>
-          <p>
-            This tool generates 10 atomic flashcards featuring smooth 3D flip animations (with instant reduced-motion fallbacks for accessibility) alongside a 4-question self-testing quiz. Every question provides immediate feedback and diagnostic explanations, helping you rapidly identify weak areas before test day.
-          </p>
+        <div className="space-y-6">
+          <div className="space-y-3">
+            <p>
+              The Flashcard and Quiz Maker converts your written study material—such as lecture notes, textbook paragraphs, or vocabulary lists—into 10 interactive flashcards and a 4-question multiple-choice quiz.
+            </p>
+            <p>
+              <strong>Who this tool is for:</strong> It is built for high school and college students preparing for exams, teachers who want a quick comprehension check from a lesson handout, and self-learners studying coding, foreign languages, or professional certifications. Testing yourself on questions rather than passively re-reading notes helps you spot which terms you already know and which ones need another look.
+            </p>
+          </div>
+
+          {/* Short "How It Works" Section */}
+          <div className="p-5 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] space-y-3">
+            <h3 className="text-base sm:text-lg font-bold font-display text-[#f2f7ff]">
+              How It Works
+            </h3>
+            <p className="text-xs sm:text-sm text-[#8fa3c0] leading-relaxed">
+              When you paste your notes and click <strong>Generate Flashcards &amp; Quiz</strong>, the tool reads your text, picks out the key terms, dates, definitions, and cause-and-effect facts, and formats them into two study modes:
+            </p>
+            <ul className="space-y-2 text-xs sm:text-sm text-[#d1dced] list-disc pl-5">
+              <li>
+                <strong>10 Flippable Flashcards:</strong> Each card puts one specific question or term on the front and a short, clear answer on the back. Click any card (or press the Spacebar) to flip it over, and use the Previous/Next buttons to move through the deck.
+              </li>
+              <li>
+                <strong>4-Question Self-Test Quiz:</strong> Switch to the quiz tab to answer four multiple-choice questions based on your notes. Clicking an option immediately shows whether your choice is right or wrong and explains why.
+              </li>
+              <li>
+                <strong>Easy Copy &amp; Export:</strong> You can copy the full set of questions and answers as plain text to paste into your own study documents, Anki, or Quizlet.
+              </li>
+            </ul>
+          </div>
+
+          {/* 3 Example Inputs Section */}
+          <div className="space-y-3">
+            <h3 className="text-base sm:text-lg font-bold font-display text-[#f2f7ff]">
+              3 Example Inputs You Can Try
+            </h3>
+            <p className="text-xs sm:text-sm text-[#8fa3c0]">
+              Not sure what to paste? You can click any of the three example buttons above the text box, or copy one of these sample inputs:
+            </p>
+            <div className="grid grid-cols-1 gap-3">
+              <div className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] space-y-1.5">
+                <div className="text-xs font-mono uppercase text-[#a3e635] font-semibold">
+                  Example Input 1 · Biology &amp; Science Notes (For Pre-Med &amp; Science Students)
+                </div>
+                <p className="text-xs sm:text-sm text-[#f2f7ff] font-mono bg-[#101c33] p-3 rounded-xl border border-[rgba(143,163,192,0.12)]">
+                  &ldquo;Mitosis divides one somatic cell into 2 identical diploid cells for growth and tissue repair. Meiosis divides a germ cell twice to form 4 genetically diverse haploid gametes. Cellular respiration produces ATP in the mitochondria through glycolysis, the Krebs cycle, and the electron transport chain.&rdquo;
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] space-y-1.5">
+                <div className="text-xs font-mono uppercase text-[#7db8ff] font-semibold">
+                  Example Input 2 · History &amp; Civics Summary (For High School &amp; AP Students)
+                </div>
+                <p className="text-xs sm:text-sm text-[#f2f7ff] font-mono bg-[#101c33] p-3 rounded-xl border border-[rgba(143,163,192,0.12)]">
+                  &ldquo;The U.S. Constitution separates federal power into three branches: the Legislative branch (Congress) makes laws and controls the budget, the Executive branch (President) enforces laws and commands the armed forces, and the Judicial branch (Supreme Court) interprets laws and reviews constitutionality.&rdquo;
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#0a1424] border border-[rgba(143,163,192,0.16)] space-y-1.5">
+                <div className="text-xs font-mono uppercase text-[#34e0a1] font-semibold">
+                  Example Input 3 · Web Development &amp; IT Notes (For Coding &amp; Certification Learners)
+                </div>
+                <p className="text-xs sm:text-sm text-[#f2f7ff] font-mono bg-[#101c33] p-3 rounded-xl border border-[rgba(143,163,192,0.12)]">
+                  &ldquo;HTTP status code 200 OK means a request succeeded, 301 means a permanent redirect, 404 means the requested resource was not found, and 500 means an internal server error occurred. In JavaScript, async functions always return a Promise, and the await keyword pauses execution until that Promise settles.&rdquo;
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       }
       howToUseSteps={[
         {
-          step: 'Paste your notes or text',
-          text: 'Copy lecture slides, bullet points, or chapter summaries directly into the input field.',
+          step: 'Paste your notes or pick an example',
+          text: 'Copy lecture notes, bullet points, or a textbook section into the box, or click one of the 3 example inputs.',
         },
         {
-          step: 'Review your 10 interactive flashcards',
-          text: 'Tap any card or press the spacebar to flip between the front prompt and back definition.',
+          step: 'Flip through your 10 flashcards',
+          text: 'Click any card or press the Spacebar to flip between the question on the front and the answer on the back.',
         },
         {
-          step: 'Take the self-test quiz',
-          text: 'Switch to the Self-Test Quiz tab to challenge yourself with timed multiple-choice questions.',
+          step: 'Check your memory with the quiz',
+          text: 'Switch to the Self-Test Quiz tab to answer 4 multiple-choice questions and read the explanation for each answer.',
         },
       ]}
       workedExample={{
-        title: 'Example: Cellular Biology & Energy Production Notes',
-        scenario: 'A pre-med student pasting 3 paragraphs on aerobic cellular respiration and glycolysis.',
-        output: `### Extracted Flashcards (Sample 3 of 10):
-- Card 1: Where does glycolysis occur?
-  Back: In the cytoplasm, yielding 2 pyruvate and a net of 2 ATP.
-- Card 2: What is the primary role of NADH and FADH2?
-  Back: High-energy electron carriers feeding electrons into the electron transport chain.
-- Card 3: What protein generates ATP using the proton gradient?
-  Back: ATP Synthase via chemiosmosis in the mitochondrial cristae.
+        title: 'Example Output: Cellular Biology & Energy Production Notes',
+        scenario: 'A student pasting notes on mitosis, meiosis, and cellular respiration.',
+        output: `### Sample Flashcards (3 of 10):
+- Card 1: Where does glycolysis take place in the cell?
+  Back: In the cytoplasm, producing 2 pyruvate molecules and a net gain of 2 ATP.
+- Card 2: How many cells are produced at the end of mitosis vs. meiosis?
+  Back: Mitosis produces 2 identical diploid cells; meiosis produces 4 genetically diverse haploid gametes.
+- Card 3: Which enzyme complex uses the proton gradient to make ATP?
+  Back: ATP synthase, located in the inner mitochondrial membrane.
 
-### Multiple Choice Question Sample:
-Q: What is the net yield of ATP from one glucose molecule through glycolysis alone?
+### Sample Multiple-Choice Question:
+Q: What is the net yield of ATP from one glucose molecule during glycolysis alone?
 - [A] 4 ATP
-- [B] 2 ATP (Correct - 4 produced minus 2 consumed)
+- [B] 2 ATP (Correct - 4 ATP are made, but 2 ATP are used during the initial steps)
 - [C] 32 ATP
 - [D] 0 ATP`,
       }}
       tips={[
-        'Follow the Minimum Information Principle: Effective flashcards test exactly one fact or relationship per card, avoiding messy multi-paragraph answers.',
-        'Study in short 15-minute bursts: Reviewing flashcards twice daily for 15 minutes is far more effective than cramming for 3 continuous hours.',
-        'Say the answer before flipping: Prevent cheating your own memory by articulating the answer aloud or in your head before tapping to reveal.',
-        'Export for Anki or Quizlet: Click Copy All to paste the formatted Q&A list directly into Anki or Quizlet import tools.',
+        'Keep one main idea per section: Pasting focused notes on a single topic or chapter produces clearer questions than mixing unrelated subjects.',
+        'Answer out loud before flipping: Try to state the definition in your own words before clicking the card to check the back.',
+        'Review missed quiz questions: When you miss a multiple-choice question, read the short explanation underneath and flip through that topic card again.',
+        'Copy for Anki or Quizlet: Use the Copy button to paste your generated Q&A pairs into a spreadsheet or flashcard app.',
       ]}
       faq={[
         {
-          question: 'How does the flashcard flip animation work with prefers-reduced-motion?',
-          answer: 'If your system has reduced-motion enabled in iOS or macOS settings, the 3D rotation is automatically disabled and replaced with an immediate, accessible opacity swap.',
+          question: 'Who is the Flashcard and Quiz Maker designed for?',
+          answer: 'It is built for high school and college students studying for tests, teachers making quick review questions from lesson notes, and self-learners studying programming, certifications, or new languages.',
         },
         {
-          question: 'How many flashcards are created per generation?',
-          answer: 'The tool extracts the top 10 most critical high-yield concepts from your notes, ensuring focused review rather than overwhelming volume.',
+          question: 'How many flashcards and quiz questions does it create?',
+          answer: 'Each run creates 10 flippable question-and-answer flashcards and 4 multiple-choice quiz questions with answer explanations based on the notes you paste.',
         },
         {
-          question: 'Can I use this for foreign vocabulary and languages?',
-          answer: 'Yes. It works with Spanish, French, German, Mandarin, Japanese, and other languages, creating vocabulary pairs and sentence translation cards.',
+          question: 'Can I use this tool for foreign language vocabulary?',
+          answer: 'Yes. You can paste vocabulary lists or grammar notes in Spanish, French, German, Japanese, Mandarin, and other languages to create translation and usage flashcards.',
         },
         {
-          question: 'Are my study notes saved or trained on?',
-          answer: 'No. SmartToolHub operates strictly ephemeral prompts; notes are processed in memory and never stored or used to train public models.',
+          question: 'Are my pasted study notes saved on your server?',
+          answer: 'No. Your notes are sent only to generate your flashcards and quiz in memory and are not stored in a database or used to train AI models.',
         },
       ]}
       relatedTools={relatedTools}

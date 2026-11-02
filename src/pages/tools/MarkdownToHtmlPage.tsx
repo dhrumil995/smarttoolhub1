@@ -8,10 +8,10 @@ interface MarkdownToHtmlPageProps {
 
 export const MarkdownToHtmlPage: React.FC<MarkdownToHtmlPageProps> = ({ navigate }) => {
   const [markdown, setMarkdown] = useState(`# Fast, Private Utilities
-SmartToolHub provides free everyday tools with **zero tracking** and no sign-up.
+SmartToolHub provides free everyday tools with **no sign-up needed** and local browser processing.
 
 ## Key Principles:
-- *Sub-second* client execution
+- *Fast* client-side execution
 - No account or password requirements
 - Clean semantic HTML output
 

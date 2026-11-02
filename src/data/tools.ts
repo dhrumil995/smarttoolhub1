@@ -445,7 +445,7 @@ export const LAUNCH_TOOLS: ToolMeta[] = [
     id: 'flashcard-quiz-maker',
     name: 'Flashcard and Quiz Maker',
     slug: 'flashcard-quiz-maker',
-    description: 'Turn study notes into 10 flippable flashcards and self-testing multiple-choice quizzes.',
+    description: 'Turn class notes, textbook chapters, or study guides into 10 flippable flashcards and a practice quiz for students, teachers, and self-learners.',
     category: 'Study',
     icon: 'Layers',
     type: 'ai',

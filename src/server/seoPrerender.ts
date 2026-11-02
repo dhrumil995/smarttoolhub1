@@ -519,33 +519,194 @@ export function resolveSeo(pathname: string): SeoMetadata {
         tool?.description ||
         `Use ${toolName} online for free with no sign-up needed.`;
 
-      // Custom titles for key tools, all strictly < 60 chars
+      // Custom titles for all tools, strictly < 60 chars
       const customTitles: Record<string, string> = {
+        'apple-shortcuts-generator': 'Apple Shortcuts Generator (Free iOS) | SmartToolHub',
+        'ai-email-writer': 'Free AI Email Writer & Subject Lines | SmartToolHub',
+        'ai-summarizer': 'AI Text Summarizer: Bullet Key Points | SmartToolHub',
+        'rewrite-tone-changer': 'Sentence Rewriter & Tone Changer | SmartToolHub',
+        'ai-prompt-improver': 'AI Prompt Improver for ChatGPT & Claude | SmartToolHub',
+        'caption-hashtag-generator': 'Caption & Hashtag Generator for Social | SmartToolHub',
+        'social-bio-generator': 'Social Media Bio Generator (4 Styles) | SmartToolHub',
+        'title-headline-generator': 'Blog & YouTube Title Headline Generator | SmartToolHub',
+        'formula-helper': 'Excel & Google Sheets Formula Helper | SmartToolHub',
+        'meeting-notes-action-items': 'Meeting Notes to Action Items Extractor | SmartToolHub',
+        'retina-image-size-calculator': 'Retina Image Size Calculator (@1x/@2x/@3x) | SmartToolHub',
+        'iphone-charging-time-calculator': 'iPhone Charging Time Calculator (Watts) | SmartToolHub',
+        'file-transfer-time-calculator': 'File Transfer Time Calculator with Latency | SmartToolHub',
+        'quick-calculators': 'Quick Tech Calculators: Retina & Charge | SmartToolHub',
+        'iphone-screenshot-mockup-maker': 'iPhone Screenshot Mockup Maker (Private) | SmartToolHub',
+        'iphone-battery-health-forecast': 'iPhone Battery Health & Cycle Calculator | SmartToolHub',
+        'iphone-storage-planner': 'iPhone Storage Planner & Size Calculator | SmartToolHub',
+        'wallpaper-gradient-maker': 'Mesh Wallpaper Gradient Maker (PNG & CSS) | SmartToolHub',
+        'apple-subscription-calculator': 'Apple Subscription & Apple One Calculator | SmartToolHub',
+        'task-breaker': 'Task Breaker: Break Down Tasks (AI) | SmartToolHub',
+        'explain-it-simply': 'Explain It Simply: Plain-English Tutor | SmartToolHub',
+        'flashcard-quiz-maker': 'Flashcard & Quiz Maker from Notes (Students) | SmartToolHub',
+        'study-plan-maker': 'Study Plan Maker & Exam Schedule Table | SmartToolHub',
+        'invoice-generator': 'Free Invoice Generator (Print & Save PDF) | SmartToolHub',
+        'cover-letter-resume-bullets': 'Cover Letter & Resume Bullet Improver | SmartToolHub',
+        'product-description-generator': 'Product Description & Bullet Generator | SmartToolHub',
+        'ai-translator-tone': 'Language Translator with Tone Control | SmartToolHub',
+        'natural-rewrite': 'Natural Rewrite: Edit Stiff Drafts | SmartToolHub',
+        'pdf-merge-split': 'PDF Merge & Split Online (No Upload) | SmartToolHub',
+        'pdf-merge': 'Merge PDF Files Online (100% On-Device) | SmartToolHub',
+        'pdf-split': 'Split PDF & Extract Pages (No Upload) | SmartToolHub',
+        'image-to-pdf': 'Image to PDF Converter (JPG/PNG Local) | SmartToolHub',
+        'image-to-text-ocr': 'Image to Text Converter (Browser OCR) | SmartToolHub',
         'heic-to-jpg-converter': 'HEIC to JPG Converter: Free & Private | SmartToolHub',
         'image-compressor-converter': 'Image Compressor & Converter (Free) | SmartToolHub',
-        'pdf-merge-split': 'PDF Merge & Split Online (No Upload) | SmartToolHub',
-        'task-breaker': 'Task Breaker: Break Down Tasks (AI) | SmartToolHub',
-        'apple-shortcuts-generator': 'Apple Shortcuts Generator (Free iOS) | SmartToolHub',
-        'file-transfer-time-calculator': 'File Transfer Time Calculator with Latency | SmartToolHub',
+        'install-command-generator': 'Winget & Homebrew Install Command Maker | SmartToolHub',
+        'file-checksum-verifier': 'File Checksum Verifier (SHA-256 & MD5) | SmartToolHub',
+        'cidr-subnet-calculator': 'CIDR & IPv4/IPv6 Subnet Mask Calculator | SmartToolHub',
+        'bootable-usb-chooser': 'Bootable USB Tool Chooser (Rufus/Ventoy) | SmartToolHub',
+        'drive-speed-requirement-calculator': 'Video Editing Drive Speed Calculator | SmartToolHub',
+        'drive-health-reader': 'SSD & HDD S.M.A.R.T. Drive Health Reader | SmartToolHub',
+        'mac-windows-shortcut-translator': 'Mac & Windows Keyboard Shortcut Lookup | SmartToolHub',
         'batch-qr-code-generator': 'Free QR Code Generator: No Sign-Up or Expiry | SmartToolHub',
+        'android-automation-generator': 'Tasker & MacroDroid Automation Builder | SmartToolHub',
+        'autohotkey-script-generator': 'AutoHotkey v2 Script & Hotkey Generator | SmartToolHub',
+        'adb-fastboot-command-builder': 'ADB & Fastboot Command Builder (Android) | SmartToolHub',
+        'command-explainer': 'Terminal, Bash & PowerShell Explainer | SmartToolHub',
+        'battery-wear-calculator': 'Laptop & Phone Battery Wear Calculator | SmartToolHub',
+        'cron-expression-generator': 'Cron Expression Generator & Crontab Tool | SmartToolHub',
+        'regex-tester-explainer': 'Regex Tester & Pattern Explainer Online | SmartToolHub',
+        'markdown-to-html-converter': 'Markdown to Clean HTML5 Code Converter | SmartToolHub',
+        'css-box-shadow-generator': 'CSS Box Shadow & Dark Glow Generator | SmartToolHub',
+        'json-yaml-converter': 'JSON to YAML & YAML to JSON Converter | SmartToolHub',
+        'base64-file-converter': 'Base64 Encoder & Decoder (Text & Files) | SmartToolHub',
+        'url-encoder-decoder': 'URL Encoder, Decoder & Query Parser | SmartToolHub',
+        'lorem-ipsum-generator': 'Realistic UI Placeholder Text Generator | SmartToolHub',
+        'password-entropy-generator': 'Password & Shannon Entropy Generator | SmartToolHub',
+        'mac-address-formatter': 'MAC Address Formatter & OUI Vendor Check | SmartToolHub',
       };
 
       const customDescriptions: Record<string, string> = {
+        'apple-shortcuts-generator':
+          'Describe any iPhone or iPad automation in plain words to get numbered iOS Shortcuts steps and a ready-to-import .shortcut file. Free with no sign-up.',
+        'ai-email-writer':
+          'Draft clear, polite emails with custom subject lines in friendly, formal, short, or firm tones. Free browser tool with no sign-up or account needed.',
+        'ai-summarizer':
+          'Condense long articles, meeting transcripts, and study notes into a 3-sentence summary and 5 bullet points. Free online tool with no sign-up needed.',
+        'rewrite-tone-changer':
+          'Rewrite sentences and emails to sound friendlier, more formal, shorter, or simpler while keeping your original meaning intact. Free, no sign-up needed.',
+        'ai-prompt-improver':
+          'Turn rough AI questions into structured prompts with clear roles, context, constraints, and output formats for ChatGPT, Claude, and Gemini. Free tool.',
+        'caption-hashtag-generator':
+          'Generate 5 social media captions and 15 relevant hashtags tailored for Instagram, TikTok, LinkedIn, and X. Free online tool with no sign-up required.',
+        'social-bio-generator':
+          'Create 4 profile bios with live character counts for Instagram, X/Twitter, LinkedIn, and TikTok in minimalist, creator, professional, or casual styles.',
+        'title-headline-generator':
+          'Generate 10 clear, engaging headlines and titles for blog posts, YouTube videos, newsletters, and product pages with character counts and angle labels.',
+        'formula-helper':
+          'Describe what you want to calculate in plain English and get the exact Excel or Google Sheets formula with a step-by-step explanation. No sign-up needed.',
+        'meeting-notes-action-items':
+          'Turn raw meeting notes or call transcripts into a short summary, key decisions, and assigned action items with owners and priorities. No sign-up needed.',
+        'retina-image-size-calculator':
+          'Convert UI design points (pt) into crisp @1x, @2x, and @3x pixel dimensions and PPI density for iPhone, iPad, Mac, and web displays in your browser.',
+        'iphone-charging-time-calculator':
+          'Estimate iPhone charging time from current battery percentage, battery mAh, and USB-C or MagSafe wattage, including the 80% fast-charge taper curve.',
         'file-transfer-time-calculator':
           'Calculate data transfer time with round-trip latency and protocol overhead. Switch between MB/s, Mbps, and GB to check realistic cable and network speeds.',
+        'quick-calculators':
+          'All-in-one browser calculator for Retina @2x/@3x display pixels, file download transfer times, and iPhone or laptop battery charging duration estimates.',
+        'iphone-screenshot-mockup-maker':
+          'Wrap app screenshots in a clean phone frame with custom gradient backgrounds and PNG export. Runs 100% locally in your browser with no image uploads.',
+        'iphone-battery-health-forecast':
+          'Estimate iPhone battery health degradation from charge cycle count and model generation (500-cycle vs 1,000-cycle batteries) until the 80% threshold.',
+        'iphone-storage-planner':
+          'Calculate whether you need 128GB, 256GB, 512GB, or 1TB before buying an iPhone based on your photos, 4K videos, apps, and iOS system storage footprint.',
+        'wallpaper-gradient-maker':
+          'Create custom 3-stop mesh and linear gradients with a live phone lock screen preview, one-click CSS copy, and high-resolution 1170x2532 PNG download.',
+        'apple-subscription-calculator':
+          'Calculate your monthly and yearly spending across iCloud+, Apple Music, TV+, and Arcade to see whether an Apple One bundle saves you money each month.',
+        'task-breaker':
+          'Break large or overwhelming projects into small, manageable checklist steps with time estimates. Choose normal or tiny steps with local progress saving.',
+        'explain-it-simply':
+          'Understand complex science, math, coding, or business topics at an age-10, high school, or college level with everyday analogies and a 3-question quiz.',
+        'flashcard-quiz-maker':
+          'Turn class notes, textbook chapters, or study guides into 10 flippable flashcards and a practice quiz. Built for students, teachers, and self-learners.',
+        'study-plan-maker':
+          'Build a realistic day-by-day study schedule and revision timetable based on your exam date, daily available hours, and topic list with rest day buffers.',
+        'invoice-generator':
+          'Create clean client invoices with automatic line-item totals, tax rates, discounts, and currency options. Print or save as PDF locally in your browser.',
+        'cover-letter-resume-bullets':
+          'Turn rough job experience notes into clear, metric-focused resume bullet points or a 3-paragraph cover letter using only the real facts you provide.',
+        'product-description-generator':
+          'Write clear e-commerce product descriptions, overview copy, and 5 benefit-focused bullet points for Shopify, Amazon, or online stores in your browser.',
+        'ai-translator-tone':
+          'Translate messages across 12 languages while choosing casual, polite, or formal business tone, complete with notes on cultural phrasing and etiquette.',
+        'natural-rewrite':
+          'Polish stiff or repetitive drafts into clear, natural-sounding sentences with varied rhythm while keeping every fact, number, and original point intact.',
+        'pdf-merge-split':
+          'Combine multiple PDF files or extract specific page ranges into new documents directly in your browser. 100% client-side processing with zero uploads.',
+        'pdf-merge':
+          'Combine multiple PDF documents in custom order directly inside your web browser. Your files stay on your device with no server uploads and no sign-up.',
+        'pdf-split':
+          'Extract custom page ranges or split a PDF into individual pages locally in your browser. Private client-side PDF processing with no file uploads needed.',
+        'image-to-pdf':
+          'Convert JPG, PNG, and WebP images into a single PDF with A4, US Letter, or fit-to-image page sizing. Runs locally in your browser with no file uploads.',
+        'image-to-text-ocr':
+          'Extract printed text from photos, receipts, and screenshots locally in your browser using client-side OCR. Private processing with zero server uploads.',
+        'heic-to-jpg-converter':
+          'Batch convert iPhone HEIC and HEIF photos to JPG, PNG, or WebP directly in your browser. 100% local on-device conversion with zero server photo uploads.',
+        'image-compressor-converter':
+          'Batch compress and convert JPG, PNG, WebP, and AVIF images with custom quality sliders and width resizing. Runs locally in your browser with no uploads.',
+        'install-command-generator':
+          'Select desktop apps for Windows or macOS to generate a single-line winget or Homebrew cask terminal install command with official package identifiers.',
+        'file-checksum-verifier':
+          'Calculate and compare SHA-256, SHA-512, SHA-1, and MD5 file hashes locally in your browser to verify ISO downloads without uploading files to a server.',
+        'cidr-subnet-calculator':
+          'Calculate IPv4 and IPv6 network ranges, usable host IPs, broadcast addresses, subnet masks, wildcard masks, and binary bit layouts from any CIDR prefix.',
+        'bootable-usb-chooser':
+          'Pick your host computer OS, target ISO (Windows 11, Linux, or multi-boot), and hardware type to get the right bootable USB tool and setup instructions.',
+        'drive-speed-requirement-calculator':
+          'Calculate required storage read speed (MB/s) and hourly disk space for 4K/8K ProRes, RAW, and H.264/H.265 video editing timelines and multi-cam streams.',
+        'drive-health-reader':
+          'Paste CrystalDiskInfo or smartctl S.M.A.R.T. logs to check reallocated sectors, pending sectors, NVMe wear percentage, and drive temperature warnings.',
+        'mac-windows-shortcut-translator':
+          'Search and translate 80+ keyboard shortcuts between macOS (Command/Option) and Windows (Ctrl/Alt) for text editing, browsers, screenshots, and files.',
         'batch-qr-code-generator':
           'Create free static QR codes with no sign-up and no expiry. Works offline in your browser with PNG & SVG downloads, custom colors, Wi-Fi, and vCard presets.',
+        'android-automation-generator':
+          'Describe an Android routine to get step-by-step Triggers, Actions, Constraints, and required permissions for MacroDroid or Tasker without needing root.',
+        'autohotkey-script-generator':
+          'Generate clean AutoHotkey v2 (.ahk) scripts for Windows keyboard shortcuts, text expansion hotstrings, and window management with line-by-line notes.',
+        'adb-fastboot-command-builder':
+          'Build Android Debug Bridge (ADB) and Fastboot terminal commands for wireless pairing, app management, logcat, and backups with clear safety risk labels.',
+        'command-explainer':
+          'Paste any Linux bash, macOS zsh, or Windows PowerShell command to see what each flag and pipe does in plain English along with a safety risk check.',
+        'battery-wear-calculator':
+          'Enter your battery design capacity and current full-charge capacity (in mWh, Wh, or mAh) to calculate battery health percentage and wear level locally.',
+        'cron-expression-generator':
+          'Build and test 5-field Linux crontab schedules with a plain-English translation, step syntax presets, and a preview of the next scheduled run times.',
+        'regex-tester-explainer':
+          'Test regular expressions in real time with JavaScript RegExp flags, highlighted matches, capture group inspection, and common validation presets.',
+        'markdown-to-html-converter':
+          'Convert Markdown text into clean, semantic HTML5 tags with a live visual preview and one-click copy for blogs, documentation, and CMS code blocks.',
+        'css-box-shadow-generator':
+          'Design single or layered CSS box-shadow and dark-mode glow effects with interactive sliders for offset, blur, spread, opacity, and inset CSS code.',
+        'json-yaml-converter':
+          'Convert between JSON and YAML in your browser with syntax validation, 2-space indentation formatting, and one-click copy for DevOps config files.',
+        'base64-file-converter':
+          'Encode and decode UTF-8 text or local files into Base64 strings and HTML/CSS Data URIs directly in your browser with zero server file uploads.',
+        'url-encoder-decoder':
+          'Percent-encode or decode URLs and query parameters in your browser, with an automatic key-value table that breaks down every query string field.',
+        'lorem-ipsum-generator':
+          'Generate realistic English UI placeholder text, developer documentation copy, or classic Latin Lorem Ipsum by paragraph, sentence, or word count.',
+        'password-entropy-generator':
+          'Generate random passwords and passphrases locally using your browser Web Crypto API, with real-time Shannon entropy (bits) and offline crack-time math.',
+        'mac-address-formatter':
+          'Convert MAC addresses between colon, hyphen, Cisco dot, and bare hex formats in your browser, with IEEE OUI hardware vendor and address bit lookup.',
       };
 
       const title = customTitles[slug]
         ? ensureTitleUnder60(customTitles[slug], '')
-        : ensureTitleUnder60(`${toolName} – Free Online Tool`, ' | SmartToolHub');
+        : ensureTitleUnder60(toolName, ' | SmartToolHub');
 
       const description = customDescriptions[slug]
         ? ensureDesc120To158(customDescriptions[slug])
-        : ensureDesc120To158(
-            `${tool ? tool.description : introText} Free online tool on SmartToolHub with no sign-up needed and fast browser execution.`
-          );
+        : ensureDesc120To158(tool ? tool.description : introText);
       const ogImage = `${BASE_URL}/og-tools.png`;
 
       const faqs =
@@ -848,10 +1009,34 @@ export function resolveSeo(pathname: string): SeoMetadata {
     const comp = COMPARISONS[slug];
 
     if (comp) {
-      const title = ensureTitleUnder60(`${comp.optionAName} vs ${comp.optionBName} Comparison`, ' | SmartToolHub');
-      const description = ensureDesc120To158(
-        `${comp.subtitle} Side-by-side feature table, practical differences, and clear recommendations on which option fits your workflow.`
-      );
+      const customCompareTitles: Record<string, string> = {
+        'wiztree-vs-treesize': 'WizTree vs TreeSize Free: Disk Analyzer | SmartToolHub',
+        'rufus-vs-ventoy': 'Rufus vs Ventoy: Bootable USB Comparison | SmartToolHub',
+        'powertoys-vs-flow-launcher': 'PowerToys vs Flow Launcher (Windows 11) | SmartToolHub',
+        '3utools-vs-imazing': 'iMazing vs 3uTools: iPhone Backup & Pricing | SmartToolHub',
+        'shizuku-adb-wireless-guide': 'Shizuku Wireless ADB vs USB ADB Guide | SmartToolHub',
+      };
+      const customCompareDescriptions: Record<string, string> = {
+        'wiztree-vs-treesize':
+          'Compare WizTree and TreeSize Free for Windows 10 and 11: NTFS MFT scan speeds, visual treemaps vs folder trees, NAS network support, and free licensing.',
+        'rufus-vs-ventoy':
+          'Compare Rufus and Ventoy for bootable USB drives: single-ISO Windows 11 setup customization vs multi-boot ISO drag-and-drop, Secure Boot, and use cases.',
+        'powertoys-vs-flow-launcher':
+          'Compare Microsoft PowerToys and Flow Launcher on Windows: FancyZones window snapping and OCR tools vs fast Everything file search and community plugins.',
+        '3utools-vs-imazing':
+          "Compare iMazing and 3uTools for iPhone backups, message exports, and diagnostics. See pricing, Mac vs Windows support, and when to use Apple's free tools.",
+        'shizuku-adb-wireless-guide':
+          'Compare Shizuku on-device Wireless Debugging against standard USB cable ADB on Android: setup requirements, reboot behavior, permissions, and fixes.',
+      };
+
+      const title = customCompareTitles[slug]
+        ? ensureTitleUnder60(customCompareTitles[slug], '')
+        : ensureTitleUnder60(`${comp.optionAName} vs ${comp.optionBName} Comparison`, ' | SmartToolHub');
+      const description = customCompareDescriptions[slug]
+        ? ensureDesc120To158(customCompareDescriptions[slug])
+        : ensureDesc120To158(
+            `${comp.subtitle} Side-by-side feature table, practical differences, and clear recommendations on which option fits your workflow.`
+          );
       const ogImage = `${BASE_URL}/og-compare.png`;
 
       const schemaJson = {
@@ -894,8 +1079,32 @@ export function resolveSeo(pathname: string): SeoMetadata {
           </header>
 
           <section style="background: #0a1424; border: 1px solid rgba(143,163,192,0.18); border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 2rem;">
-            <h2 style="font-size: 1.25rem; color: #39ff88; margin-top: 0;">The Verdict</h2>
+            <h2 style="font-size: 1.25rem; color: #39ff88; margin-top: 0;">Quick Verdict</h2>
             <p style="color: #f2f7ff; line-height: 1.7; margin: 0;">${escapeHtml(comp.verdictSummary)}</p>
+          </section>
+
+          ${
+            comp.appleOfficialNote
+              ? `<section style="background: #101c33; border: 1px solid rgba(10,132,255,0.3); border-radius: 0.75rem; padding: 1.25rem 1.5rem; margin-bottom: 2rem;">
+                  <h2 style="font-size: 1.05rem; color: #7db8ff; margin-top: 0; margin-bottom: 0.5rem;">Apple Official Backup Tools First</h2>
+                  <p style="color: #f2f7ff; line-height: 1.6; margin: 0;">${escapeHtml(comp.appleOfficialNote)}</p>
+                </section>`
+              : ''
+          }
+
+          <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem;">
+            <div style="background: #0a1424; border: 1px solid rgba(10,132,255,0.25); border-radius: 0.75rem; padding: 1.5rem;">
+              <h2 style="font-size: 1.2rem; color: #7db8ff; margin-top: 0; margin-bottom: 0.75rem;">Pick ${escapeHtml(comp.optionAName)} If:</h2>
+              <ul style="color: #f2f7ff; line-height: 1.6; margin: 0; padding-left: 1.25rem;">
+                ${comp.optionAPickIf.map((pt) => `<li style="margin-bottom: 0.5rem;">${escapeHtml(pt)}</li>`).join('')}
+              </ul>
+            </div>
+            <div style="background: #0a1424; border: 1px solid rgba(52,224,161,0.25); border-radius: 0.75rem; padding: 1.5rem;">
+              <h2 style="font-size: 1.2rem; color: #39ff88; margin-top: 0; margin-bottom: 0.75rem;">Pick ${escapeHtml(comp.optionBName)} If:</h2>
+              <ul style="color: #f2f7ff; line-height: 1.6; margin: 0; padding-left: 1.25rem;">
+                ${comp.optionBPickIf.map((pt) => `<li style="margin-bottom: 0.5rem;">${escapeHtml(pt)}</li>`).join('')}
+              </ul>
+            </div>
           </section>
 
           <section style="margin-bottom: 2.5rem;">
@@ -925,6 +1134,47 @@ export function resolveSeo(pathname: string): SeoMetadata {
               </table>
             </div>
           </section>
+
+          ${
+            comp.pricingDetails && comp.pricingDetails.length > 0
+              ? `<section style="margin-bottom: 2.5rem;">
+                  <h2 style="font-size: 1.35rem; color: #f2f7ff; margin-bottom: 1rem;">Pricing Breakdown: Free vs Paid Options</h2>
+                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+                    ${comp.pricingDetails
+                      .map(
+                        (p) => `
+                      <div style="background: #0a1424; border: 1px solid rgba(143,163,192,0.18); border-radius: 0.75rem; padding: 1.25rem;">
+                        <div style="font-family: monospace; font-size: 0.8rem; color: #39ff88; margin-bottom: 0.35rem;">${escapeHtml(p.priceBadge)}</div>
+                        <h3 style="font-size: 1.05rem; color: #f2f7ff; margin: 0 0 0.5rem;">${escapeHtml(p.name)}</h3>
+                        <p style="color: #8fa3c0; font-size: 0.9rem; line-height: 1.5; margin: 0;">${escapeHtml(p.summary)}</p>
+                      </div>
+                    `
+                      )
+                      .join('')}
+                  </div>
+                </section>`
+              : ''
+          }
+
+          ${
+            comp.useCases && comp.useCases.length > 0
+              ? `<section style="margin-bottom: 2.5rem;">
+                  <h2 style="font-size: 1.35rem; color: #f2f7ff; margin-bottom: 1rem;">Which One Should You Pick? (By Use Case)</h2>
+                  <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+                    ${comp.useCases
+                      .map(
+                        (uc) => `
+                      <div style="background: #0a1424; border: 1px solid rgba(143,163,192,0.18); border-radius: 0.75rem; padding: 1.25rem;">
+                        <h3 style="font-size: 1rem; color: #f2f7ff; margin: 0 0 0.35rem;">${escapeHtml(uc.scenario)} — <span style="color: #7db8ff;">Best Pick: ${escapeHtml(uc.pick)}</span></h3>
+                        <p style="color: #8fa3c0; font-size: 0.9rem; line-height: 1.5; margin: 0;">${escapeHtml(uc.reason)}</p>
+                      </div>
+                    `
+                      )
+                      .join('')}
+                  </div>
+                </section>`
+              : ''
+          }
 
           <section style="margin-bottom: 2.5rem;">
             <h2 style="font-size: 1.35rem; color: #f2f7ff; margin-bottom: 1rem;">Frequently Asked Questions</h2>
@@ -1019,10 +1269,53 @@ export function resolveSeo(pathname: string): SeoMetadata {
     const guide = GUIDE_ARTICLES[slug];
 
     if (guide) {
-      const title = ensureTitleUnder60(guide.title, ' | SmartToolHub');
-      const description = ensureDesc120To158(
-        `${guide.summary} Step-by-step tutorial written by ${guide.author} on SmartToolHub.`
-      );
+      const customGuideTitles: Record<string, string> = {
+        'build-first-iphone-shortcut': 'Build Your First iPhone Shortcut in 3 Mins | SmartToolHub',
+        'better-prompts-simple-rules': 'Get Better AI Answers with 3 Prompt Rules | SmartToolHub',
+        'spreadsheet-formulas-plain-english': 'Plain English to Excel & Sheets Formulas | SmartToolHub',
+        'windows-winget-setup-guide': 'Set Up a Windows PC in 5 Mins with winget | SmartToolHub',
+        'shizuku-wireless-adb-walkthrough': 'Enable Shizuku on Android: Wireless ADB | SmartToolHub',
+        'mac-keyboard-shortcuts-power-user': 'Mac Keyboard Shortcuts for Windows Users | SmartToolHub',
+        'check-ssd-health-smart-guide': 'Check SSD & Hard Drive Health (S.M.A.R.T.) | SmartToolHub',
+        'autohotkey-v2-beginners-guide': 'AutoHotkey v2 Beginner Guide for Windows | SmartToolHub',
+        'convert-heic-to-jpg-iphone-mac-windows': 'Convert HEIC to JPG on iPhone, Mac & PC | SmartToolHub',
+        'how-to-compress-images-without-losing-quality': 'Compress Images Without Losing Quality | SmartToolHub',
+        'how-to-merge-pdf-files-on-phone': 'Merge PDF Files on iPhone & Android Free | SmartToolHub',
+      };
+      const customGuideDescriptions: Record<string, string> = {
+        'build-first-iphone-shortcut':
+          'Step-by-step walkthrough for building your first iPhone Shortcut in under 3 minutes, including travel time texts, bedtime routines, and Home Screen icons.',
+        'better-prompts-simple-rules':
+          'Learn 3 practical prompt rules—role and context, negative constraints, and output formatting—to get clear, accurate answers from ChatGPT, Claude, and Gemini.',
+        'spreadsheet-formulas-plain-english':
+          'Learn how to describe spreadsheet columns and conditions in plain English to generate XLOOKUP, SUMIFS, and IFERROR formulas for Excel and Google Sheets.',
+        'windows-winget-setup-guide':
+          'Set up a fresh Windows 10 or 11 PC in minutes using the built-in winget package manager to batch-install verified desktop apps without adware installers.',
+        'shizuku-wireless-adb-walkthrough':
+          'Learn how to enable Shizuku on Android with Wireless Debugging, fix "Shizuku pairing failed" errors, or start Shizuku without wireless debugging via USB.',
+        'mac-keyboard-shortcuts-power-user':
+          'Bridge the gap between Windows and macOS keyboards: learn Command vs Control modifiers, Option word navigation, window snapping, and Cmd+Tab alternatives.',
+        'check-ssd-health-smart-guide':
+          'Learn how to read SSD and hard drive S.M.A.R.T. health attributes—including Available Spare, Percentage Used, and Reallocated Sectors—before a drive fails.',
+        'autohotkey-v2-beginners-guide':
+          'Beginner guide to AutoHotkey v2 on Windows: install via winget, write text expansion hotstrings, create custom window hotkeys, and run scripts at startup.',
+        'convert-heic-to-jpg-iphone-mac-windows':
+          'Convert iPhone HEIC photos to JPG on Windows, macOS Finder, or in your browser without uploading private photos to cloud servers, plus iOS camera settings.',
+        'how-to-compress-images-without-losing-quality':
+          'Reduce image file sizes by 60% to 80% without noticeable blur using WebP compression, 80% quality settings, and pixel width resizing in your web browser.',
+        'how-to-merge-pdf-files-on-phone':
+          'Combine multiple PDF files and extract pages on iPhone and Android using the built-in iOS Files app or private in-browser PDF tools with zero file uploads.',
+      };
+
+      const title = customGuideTitles[slug]
+        ? ensureTitleUnder60(customGuideTitles[slug], '')
+        : ensureTitleUnder60(guide.title, ' | SmartToolHub');
+      const description = customGuideDescriptions[slug]
+        ? ensureDesc120To158(customGuideDescriptions[slug])
+        : ensureDesc120To158(
+            guide.summary,
+            `Step-by-step tutorial written by ${guide.author} on SmartToolHub.`
+          );
       const ogImage = `${BASE_URL}/og-guides.png`;
 
       const schemaJson = {
@@ -1103,16 +1396,39 @@ export function resolveSeo(pathname: string): SeoMetadata {
   // 8. Company, Trust & Utility Pages (`/about`, `/contact`, `/privacy`, `/terms`, `/pricing`, `/changelog`, `/saved`)
   const corePages: Record<string, { title: string; desc: string; h1: string; bodyHtml: string }> = {
     '/about': {
-      title: 'About SmartToolHub & Dhrumil Aslaliya',
+      title: 'About SmartToolHub & Dhrumil Aslaliya | SmartToolHub',
       desc: 'Learn about SmartToolHub, our software review criteria, and independent creator Dhrumil Aslaliya building practical everyday browser utilities.',
       h1: 'About SmartToolHub',
-      bodyHtml: `<p>SmartToolHub is an independent collection of everyday web utilities, file converters, AI writing helpers, and curated software directories created by Dhrumil Aslaliya. Every tool is built to work without requiring user accounts or sign-ups.</p>`,
+      bodyHtml: `
+        <section style="margin-top: 1.5rem; color: #d1dced; line-height: 1.7;">
+          <h2>Why SmartToolHub Exists</h2>
+          <p>SmartToolHub is an independent collection of everyday web utilities, client-side file converters, AI writing helpers, and curated desktop and mobile software directories created by Dhrumil Aslaliya. Every tool is built to open quickly and work without requiring user accounts, email sign-ups, or subscription paywalls.</p>
+          <h2>How Our Tools Work</h2>
+          <ul>
+            <li><strong>On-Device Browser Utilities:</strong> Calculators, QR code generators, PDF merge/split tools, HEIC converters, and image compressors run inside your web browser using JavaScript, HTML5 Canvas, and WebAssembly so your files stay on your device.</li>
+            <li><strong>Ephemeral AI Utilities:</strong> Writing, summarizing, formula, and study helpers send your text prompt over HTTPS to generate the response and return it to your screen without storing your inputs in a database.</li>
+            <li><strong>Curated Software Directories &amp; Comparisons:</strong> Our Windows, macOS, and Android directories highlight practical utilities with honest drawbacks, plain-language setup notes, and official package manager commands (such as <code>winget</code> and Homebrew).</li>
+          </ul>
+        </section>
+      `,
     },
     '/contact': {
-      title: 'Contact SmartToolHub – Feedback & Requests',
+      title: 'Contact SmartToolHub – Feedback & Bug Reports | SmartToolHub',
       desc: 'Get in touch with SmartToolHub creator Dhrumil Aslaliya. Submit new tool suggestions, report bugs, or ask questions with a response in 24 to 48 hours.',
       h1: 'Contact & Feedback',
-      bodyHtml: `<p>Have a question, bug report, or request for a new utility? Email creator Dhrumil Aslaliya directly at <a href="mailto:contact@smarttoolhub.net" style="color:#39ff88;">contact@smarttoolhub.net</a>.</p>`,
+      bodyHtml: `
+        <section style="margin-top: 1.5rem; color: #d1dced; line-height: 1.7;">
+          <h2>Get in Touch</h2>
+          <p>Have a question, found a bug on a specific browser, or want to suggest a new calculator or software comparison? Email creator Dhrumil Aslaliya directly at <a href="mailto:contact@smarttoolhub.net" style="color:#39ff88;">contact@smarttoolhub.net</a>.</p>
+          <h2>What to Include in Bug Reports</h2>
+          <ul>
+            <li>The URL of the tool, guide, or comparison page you were using.</li>
+            <li>Your device and browser (for example: Safari on iOS 18, Chrome on Windows 11, or Firefox on macOS).</li>
+            <li>A short description of what you expected to happen versus what appeared on screen.</li>
+          </ul>
+          <p>We read every message and typically reply within 24 to 48 hours on weekdays.</p>
+        </section>
+      `,
     },
     '/privacy': {
       title: 'Privacy Policy – Data, Cookies & Ads | SmartToolHub',
@@ -1133,25 +1449,59 @@ export function resolveSeo(pathname: string): SeoMetadata {
       title: 'Terms of Service & Usage Policy | SmartToolHub',
       desc: 'Terms of service for SmartToolHub covering free tool usage, user ownership of generated outputs, AI accuracy reminders, and liability disclaimers.',
       h1: 'Terms of Service',
-      bodyHtml: `<p>By using SmartToolHub, you retain full ownership of the files and text outputs you generate. All utilities are provided on an "as-is" basis without warranties.</p>`,
+      bodyHtml: `
+        <section style="margin-top: 1.5rem; color: #d1dced; line-height: 1.7;">
+          <h2>1. Free Access &amp; Acceptable Use</h2>
+          <p>SmartToolHub provides browser-based utilities, calculators, and technical guides for personal, educational, and commercial workflows. You agree not to abuse rate limits, attempt automated scraping of AI endpoints, or submit unlawful content.</p>
+          <h2>2. Ownership of Your Files &amp; Outputs</h2>
+          <p>You retain full ownership of all files, photos, documents, and text you process or generate through SmartToolHub. We claim no copyright over your exported PDFs, images, QR codes, invoices, or text drafts.</p>
+          <h2>3. Accuracy &amp; "As-Is" Disclaimer</h2>
+          <p>All tools, calculators, commands, and software guides are provided on an "as-is" basis without warranties of any kind. Always verify terminal commands, spreadsheet formulas, and backup files before making system changes or deleting original data.</p>
+        </section>
+      `,
     },
     '/pricing': {
       title: 'Pricing & Free Access Plan | SmartToolHub',
       desc: 'All everyday tools, file converters, and software directories on SmartToolHub are free to use in your browser with no sign-up or credit card needed.',
       h1: 'Transparent Pricing',
-      bodyHtml: `<p>Every tool on SmartToolHub is free to use with no account required.</p>`,
+      bodyHtml: `
+        <section style="margin-top: 1.5rem; color: #d1dced; line-height: 1.7;">
+          <h2>$0 Forever — No Accounts or Subscriptions</h2>
+          <p>Every tool, calculator, file converter, and guide on SmartToolHub is free to use in your web browser with no sign-up and no credit card required.</p>
+          <ul>
+            <li><strong>Unlimited Client-Side Utilities:</strong> Convert HEIC photos, compress images, merge or split PDFs, generate static QR codes, and run network or hardware calculators as many times as you need.</li>
+            <li><strong>Fair-Use AI Tools:</strong> AI writing, summarizing, and study tools are free to use with per-minute rate limits to keep the service responsive for everyone.</li>
+            <li><strong>How SmartToolHub Is Funded:</strong> Site hosting and development are supported by clearly labeled display advertisements rather than paywalls or paid user tiers.</li>
+          </ul>
+        </section>
+      `,
     },
     '/changelog': {
       title: 'Product Changelog & New Releases | SmartToolHub',
       desc: 'Track the latest tool releases, mobile UI improvements, client-side PDF and image converters, and software directory updates on SmartToolHub.',
       h1: 'Product Changelog',
-      bodyHtml: `<p>Follow recent additions to SmartToolHub, including the HEIC to JPG Converter, Image Compressor &amp; Converter, PDF Merge &amp; Split, and AI Task Breaker.</p>`,
+      bodyHtml: `
+        <section style="margin-top: 1.5rem; color: #d1dced; line-height: 1.7;">
+          <h2>Recent Updates &amp; Releases</h2>
+          <ul>
+            <li><strong>November 2026:</strong> Added round-trip latency (ms) and protocol overhead (%) to the File Transfer Time Calculator, expanded QR code printing and safety guides, added Shizuku wireless ADB troubleshooting steps, and updated the iMazing vs 3uTools comparison.</li>
+            <li><strong>October 2026:</strong> Launched client-side HEIC to JPG Converter, Image Compressor &amp; Converter, PDF Merge &amp; Split, and 10 developer utilities including Cron Expression Generator, Regex Tester, and Password Entropy Generator.</li>
+            <li><strong>September 2026:</strong> Added curated software directories for Windows (winget), macOS (Homebrew), and Android along with side-by-side comparison guides.</li>
+          </ul>
+        </section>
+      `,
     },
     '/saved': {
       title: 'Saved History & Local Bookmarks | SmartToolHub',
       desc: 'View and manage your recently generated tool outputs and saved items stored locally inside your browser localStorage on your own device.',
       h1: 'Your Saved History',
-      bodyHtml: `<p>Your saved tool history is kept in your browser's local storage on this device. You can copy or clear your local history at any time.</p>`,
+      bodyHtml: `
+        <section style="margin-top: 1.5rem; color: #d1dced; line-height: 1.7;">
+          <h2>Local Browser History</h2>
+          <p>When you save a result or generate outputs in supported tools, SmartToolHub stores a copy inside your browser's <code>localStorage</code> on this device so you can revisit it later without creating an account.</p>
+          <p>Your saved items are never synced to a cloud server. You can copy any saved output to your clipboard or clear your local history at any time with a single click.</p>
+        </section>
+      `,
     },
   };
 

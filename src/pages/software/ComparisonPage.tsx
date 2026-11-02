@@ -105,6 +105,19 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ slug, navigate }
           </p>
         </div>
 
+        {/* Quick Verdict Box at Top */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] space-y-3">
+          <div className="flex items-center gap-2">
+            <Trophy className="w-5 h-5 text-[#ffb840]" />
+            <h2 className="text-lg font-bold text-[#f2f7ff]">
+              Quick Verdict
+            </h2>
+          </div>
+          <p className="text-sm sm:text-base text-[#9aaccb] leading-relaxed">
+            {comparison.verdictSummary}
+          </p>
+        </div>
+
         {/* Apple Official Tools Notice (Requirement for 3uTools vs iMazing) */}
         {comparison.appleOfficialNote && (
           <div className="p-5 sm:p-6 rounded-3xl bg-[#101c33] border border-[rgba(10,132,255,0.3)] space-y-2 text-xs sm:text-sm text-[#f2f7ff] leading-relaxed">
@@ -174,7 +187,7 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ slug, navigate }
               onClick={() => navigate(comparison.optionBPermalink)}
               className="mt-4 px-4 py-2.5 rounded-xl bg-[#101c33] border border-[rgba(52,224,161,0.3)] text-xs font-semibold text-[#34e0a1] hover:bg-[#34e0a1] hover:text-[#050a14] transition-all text-center focus-ring"
             >
-              Read {comparison.optionBName} Profile &rarr;
+              Explore Companion Utility &rarr;
             </button>
           </div>
         </div>
@@ -182,9 +195,9 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ slug, navigate }
         {/* Feature Comparison Table (Scrolls horizontally inside container on mobile) */}
         <div className="p-5 sm:p-8 rounded-3xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-mono uppercase text-[#6c7dff] font-bold">
-              Feature-by-Feature Comparison Matrix
-            </span>
+            <h2 className="text-xs font-mono uppercase text-[#6c7dff] font-bold">
+              Feature Comparison Table
+            </h2>
             <span className="text-[11px] font-mono text-[#9aaccb] sm:hidden">
               Swipe horizontally &rarr;
             </span>
@@ -236,18 +249,65 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ slug, navigate }
           </div>
         </div>
 
-        {/* Verdict Box */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] space-y-3">
-          <div className="flex items-center gap-2">
-            <Trophy className="w-5 h-5 text-[#ffb840]" />
-            <h2 className="text-lg font-bold text-[#f2f7ff]">
-              Our Final Editorial Verdict
-            </h2>
+        {/* Pricing Section (When present) */}
+        {comparison.pricingDetails && comparison.pricingDetails.length > 0 && (
+          <div className="p-6 sm:p-8 rounded-3xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] space-y-4">
+            <div className="space-y-1">
+              <span className="text-xs font-mono uppercase text-[#34e0a1] font-bold">
+                Cost &amp; Licensing
+              </span>
+              <h2 className="text-lg sm:text-xl font-bold text-[#f2f7ff]">
+                Pricing Breakdown: Free vs Paid Options
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {comparison.pricingDetails.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 sm:p-5 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.14)] space-y-2.5 flex flex-col justify-between"
+                >
+                  <div className="space-y-2">
+                    <span className="inline-block text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg bg-[#101c33] text-[#34e0a1] border border-[rgba(52,224,161,0.25)]">
+                      {item.priceBadge}
+                    </span>
+                    <h3 className="text-sm font-bold text-[#f2f7ff]">{item.name}</h3>
+                    <p className="text-xs text-[#9aaccb] leading-relaxed">{item.summary}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <p className="text-sm sm:text-base text-[#9aaccb] leading-relaxed">
-            {comparison.verdictSummary}
-          </p>
-        </div>
+        )}
+
+        {/* Which One Should You Pick by Use Case (When present) */}
+        {comparison.useCases && comparison.useCases.length > 0 && (
+          <div className="p-6 sm:p-8 rounded-3xl bg-[#0a1424] border border-[rgba(143,163,192,0.18)] space-y-4">
+            <div className="space-y-1">
+              <span className="text-xs font-mono uppercase text-[#0a84ff] font-bold">
+                Scenario Guide
+              </span>
+              <h2 className="text-lg sm:text-xl font-bold text-[#f2f7ff]">
+                Which One Should You Pick? (By Use Case)
+              </h2>
+            </div>
+            <div className="space-y-3">
+              {comparison.useCases.map((uc, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 sm:p-5 rounded-2xl bg-[#050a14] border border-[rgba(143,163,192,0.14)] space-y-1.5"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                    <h3 className="text-xs sm:text-sm font-bold text-[#f2f7ff]">{uc.scenario}</h3>
+                    <span className="text-xs font-mono font-semibold text-[#0a84ff] shrink-0">
+                      Best Pick: {uc.pick}
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#9aaccb] leading-relaxed">{uc.reason}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Link to Matching Tool */}
         {matchingTool && (
